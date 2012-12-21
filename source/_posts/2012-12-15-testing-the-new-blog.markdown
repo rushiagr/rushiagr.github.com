@@ -6,8 +6,6 @@ comments: true
 categories: [blabber, nontech]
 ---
 
-
-
 This is a test blog, just to check out some of the basic functionalities of
 MarkDown. Visit the MarkDown source of this blog post [here](https://raw.github.com/rushiagr/rushiagr.github.com/source/source/_posts/2012-12-15-testing-the-new-blog.markdown)
 to understand the simplicity with which a post can be written using MarkDown!
