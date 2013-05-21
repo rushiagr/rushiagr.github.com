@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Sense, and Simplicity]]></title>
+  <link href="http://rushiagr.github.io/atom.xml" rel="self"/>
+  <link href="http://rushiagr.github.io/"/>
+  <updated>2013-05-22T01:58:30+05:30</updated>
+  <id>http://rushiagr.github.io/</id>
+  <author>
+    <name><![CDATA[Rushi Agrawal]]></name>
+    <email><![CDATA[rushi.agr@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[OpenStack Tempest quick start with DevStack]]></title>
+    <link href="http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/"/>
+    <updated>2013-03-20T04:54:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack</id>
+    <content type="html"><![CDATA[<p>This quick start guide explains setting up Tempest with a DevStack environment
+for Grizzly release. Most of the information here is taken from
+<a href="http://www.joinfu.com/2012/03/testing-essex-rc1-with-devstack-and-tempest/">here</a>, the only difference being this blog post is more recent, and is based on Grizzly.</p>
+
+<!--more-->
+
+
+<p>Assumptions made are that you understand:
+1. What is a <code>localrc</code> file in DevStack.
+2. What does <code>./stack.sh</code> do in DevStack.
+3. How to clone using git.</p>
+
+<h2>Setting up DevStack</h2>
+
+<p>Clone DevStack</p>
+
+<pre><code>git clone https://github.com/openstack-dev/devstack.git
+cd devstack
+</code></pre>
+
+<p>Tempest requires that the rate-limiting for DevStack is turned off. By default, it is turned on, so turn it off by adding this line to the localrc file.</p>
+
+<pre><code>API_RATE_LIMIT=False
+</code></pre>
+
+<p>If you have already created a DevStack environment, you will have to go through the labour of setting it all again by unstacking and restacking it with this parameter in localrc.
+Quick tip: If you already had a working DevStack in your computer, adding <code>OFFLINE=True</code> line in localrc will create the DevStack environment in your computer WITHOUT
+downloading all the OpenStack code all over again from the Github repos, but will build the environment from the existing code (thus saving you some Internet bandwidth and time).</p>
+
+<p>Build the DevStack environment</p>
+
+<pre><code>./stack.sh
+</code></pre>
+
+<p>Supply all the five passwords. (If you are just playing around, just like me, then
+you can easily supply <code>nova</code> to all the passwords.)</p>
+
+<p>Note the IP of the system where DevStack is running (The &#8216;host IP&#8217; mentioned at the last of the output after running <code>stack.sh</code>).</p>
+
+<h2>Setting up Tempest</h2>
+
+<p>Clone latest Tempest code</p>
+
+<pre><code>git clone https://github.com/openstack/tempest.git
+cd tempest
+</code></pre>
+
+<p>Create tempest.conf file from the sample configuration file. This file will contain the configuration information of the OpenStack environment (here, the DevStack
+environment)</p>
+
+<pre><code>cp etc/tempest.conf.sample etc/tempest.conf
+</code></pre>
+
+<p>Now open the file tempest.conf in an editor, and replace all instance of word <code>secret</code> with the appropriate password (<code>nova</code> if you followed me, and just typed <code>nova</code> whenever the
+<code>stack.sh</code> script asked for passwords)</p>
+
+<p>If, for example, your host IP is 10.0.24.30, change this line in tempest.conf</p>
+
+<pre><code>uri = http://127.0.0.1:5000/v2.0/
+</code></pre>
+
+<p>to make it</p>
+
+<pre><code>uri = http://10.0.24.30:5000/v2.0/
+</code></pre>
+
+<p>The last thing to update in the tempest.conf file is the ID of the Cirros image. The image ID can be obtained by two ways</p>
+
+<h4>Image ID using glance</h4>
+
+<p>This command will return the image ID. Note that I have used the password <code>nova</code> in this line. You might also need to change the host IP address</p>
+
+<pre><code>glance -I admin -K nova -T admin -N http://10.0.24.30:5000/v2.0 -S keystone index | grep ami | cut -f1 | awk '{print $1}'
+</code></pre>
+
+<h4>Image ID using OpenStack CLI</h4>
+
+<p>Become stack user</p>
+
+<pre><code>su - stack
+</code></pre>
+
+<p>Source the sample credentials file</p>
+
+<pre><code>. /opt/stack/devstack/eucarc
+</code></pre>
+
+<p>OR</p>
+
+<pre><code>. /opt/stack/devstack/openrc
+</code></pre>
+
+<p>Show all the images, with their IDs</p>
+
+<pre><code>$ nova image-list
++--------------------------------------+---------------------------------+--------+--------+
+| ID                                   | Name                            | Status | Server |
++--------------------------------------+---------------------------------+--------+--------+
+| 13abf9c8-5603-48cb-802e-e27162e10b58 | cirros-0.3.0-x86_64-uec         | ACTIVE |        |
+| 39b023ae-9201-427d-8350-4f30e5bbc01a | cirros-0.3.0-x86_64-uec-kernel  | ACTIVE |        |
+| 431a9c04-47b1-47e4-9521-7f12295c78e0 | cirros-0.3.0-x86_64-uec-ramdisk | ACTIVE |        |
++--------------------------------------+---------------------------------+--------+--------+
+</code></pre>
+
+<p>The ID of the smallest image name is what we&#8217;re interested in.</p>
+
+<p>Now replace <code>{$IMAGE_ID}</code> and <code>{$IMAGE_ID_ALT}</code> with this value, to make those two lines appear in tempest.conf as</p>
+
+<pre><code>image_ref = 13abf9c8-5603-48cb-802e-e27162e10b58
+image_ref_alt = 13abf9c8-5603-48cb-802e-e27162e10b58
+</code></pre>
+
+<h2>Installing required dependencies</h2>
+
+<p>Install all the required packages needed to run Tempest integration test suite. (The list of required packages is maintained in file <code>tools/pip-requires</code>)</p>
+
+<pre><code>$ sudo pip install -r tools/pip-requires 
+</code></pre>
+
+<h2>Show time!</h2>
+
+<p>We&#8217;ll run all the tests in verbose mode. To run all the tests:</p>
+
+<pre><code>nosetests -v tempest
+</code></pre>
+
+<p>To run tests only from a specific file, say <code>tempest/tests/volume/test_volumes_list.py</code>:</p>
+
+<pre><code>nosetests -sv tempest.tests.volume.test_volumes_list
+</code></pre>
+
+<p>OR</p>
+
+<pre><code>nosetests -sv tempest.tests.volume.test_volumes_list.py
+</code></pre>
+
+<p>To run a specific test <code>test_volume_list_with_details</code> from test class <code>VolumeListTest</code>, which resides in the above file:</p>
+
+<pre><code>    nosetests -sv tempest.tests.volume.test_volumes_list:VolumeListTest.test_volume_list_with_details
+</code></pre>
+
+<p>And that ladies and gentlemen, is the end! :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GitHub Cheat Sheet]]></title>
+    <link href="http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet/"/>
+    <updated>2013-03-19T04:22:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet</id>
+    <content type="html"><![CDATA[<p>I am posting my github cheat sheet here. I started writing it as soon as I started
+learning Github and Git. So, some of the content here can appear quite naive.
+I will try to keep this blog post as updated as I can, and if you find any
+suggestion, please comment!</p>
+
+<p>This post is just for a reference of commands. This post will be a bad way to learn
+how git works. A basic understanding of git is assumed.</p>
+
+<!--more-->
+
+
+<h2>Initial configuration</h2>
+
+<p>Configure user details only for the first time</p>
+
+<pre><code>git config --global user.name "Rushi Agrawal"
+git config --global user.email "rushi.agr@gmail.com"
+</code></pre>
+
+<p>To check your git configuration</p>
+
+<pre><code>git config --list
+</code></pre>
+
+<h2>Branches</h2>
+
+<p>List all branches in the local repo</p>
+
+<pre><code>git branch
+</code></pre>
+
+<p>List all branches including remote-tracking branches</p>
+
+<pre><code>git branch -r
+</code></pre>
+
+<p>List all branches (including the ones at remote)</p>
+
+<pre><code>git branch -a
+</code></pre>
+
+<p>Creating your own branch <code>my_branch</code>, with content same as your current branch</p>
+
+<pre><code>git branch my_branch
+</code></pre>
+
+<p>Switch to the newly created branch</p>
+
+<pre><code>git checkout my_branch
+</code></pre>
+
+<p>Execute the above two commands in one line:</p>
+
+<pre><code>git checkout -b my_branch
+</code></pre>
+
+<p>to pull a branch <code>only_remote</code> which exists at github (at remote <code>rushiagr</code> but not in local repo. (More about <code>git remote update</code> later)</p>
+
+<pre><code>git remote update
+git checkout -b only_remote rushiagr/only_remote
+</code></pre>
+
+<h2>Remotes</h2>
+
+<p>Create a new remote <code>rushiagr</code> which will track <code>cinder</code> repository by user <code>rushiagr</code></p>
+
+<pre><code>git remote add rushiagr https://github.com/rushiagr/cinder.git
+</code></pre>
+
+<p>If this is your personal repo, you can append the username in the remote as shown. After that, every time you push to the origin,
+github will not ask for your username but only password.</p>
+
+<pre><code>git remote add rushiagr https://rushiagr@github.com/rushiagr/cinder.git
+</code></pre>
+
+<p>Delete the remote <code>rushiagr</code></p>
+
+<pre><code>git remote rm rushiagr
+</code></pre>
+
+<p>List all the remotes</p>
+
+<pre><code>git remote
+</code></pre>
+
+<p>The above command only shows the names of remotes. To also check the links to the remotes:</p>
+
+<pre><code>git remote -v
+</code></pre>
+
+<p>Now this is very important command.</p>
+
+<pre><code>git remote update
+</code></pre>
+
+<p>This will contact the git server, and will update the local repository with ALL the content at ALL those remotes. The interesting part is, nothing will actually change. That is, no more new branches (which got created at the server after you last pulled from the server) were created, and the existing branches are also not updated. BUT, all the content goes into the magic <code>.git</code> directory. After you&#8217;ve run this command, when you create a branch only existing at remote, the local git repo will not contact the server but will fetch all the contents from within the repository.</p>
+
+<p>To take a new branch from remote, and create a new branch having contents of that remote branch. (You might need to run &#8216;git remote update&#8217;)</p>
+
+<pre><code>git checkout -b stable/folsom origin/stable/folsom
+</code></pre>
+
+<h2>Push</h2>
+
+<p>Pushing this newly created branch to remote <code>rushiagr</code></p>
+
+<pre><code>git push rushiagr my_branch
+</code></pre>
+
+<p>If you want to push the local branch <code>my_branch</code> with a different name to
+remote, say <code>my_remote_branch</code>:</p>
+
+<pre><code>git push rushiagr my_branch:my_remote_branch
+</code></pre>
+
+<p>To create an association with the remote (only first time):</p>
+
+<pre><code>git push -u origin my_branch
+</code></pre>
+
+<p>or</p>
+
+<pre><code>git push --set-upstream origin my_branch
+</code></pre>
+
+<h2>Pull</h2>
+
+<p>Git pull is nothing more than a macro that does git fetch and git merge, in
+that order. The common syntax to pull from branch <code>remote_branch</code> located at remote <code>remote_name</code> to the current active branch in the local repo:</p>
+
+<pre><code>git pull remote_name remote_branch
+</code></pre>
+
+<h2>Oops! I didn&#8217;t intend to do that!</h2>
+
+<h4>To undo last commit.</h4>
+
+<p>This will just undo the commit, but will keep changes, so that you can modify the files and commit again</p>
+
+<pre><code>git reset --soft HEAD^
+</code></pre>
+
+<h4>To not keep the uncommitted changes.</h4>
+
+<p>This command will wipe off all the changes which are not committed. Very useful when you made some changes but dont want to commit it. All the more useful when you <code>pull</code>ed something but everything became a mess (possibly due to a merge conflict, or pulling to/from a different branch!)</p>
+
+<pre><code>git reset --hard
+</code></pre>
+
+<h4>To delete a branch <code>timepass_testing</code> from github server</h4>
+
+<pre><code>git push rushiagr --delete timepass_testing
+</code></pre>
+
+<p>(NOT <code>git push rushiagr --delete rushiagr/timepass_testing</code>)</p>
+
+<h4>Change author of the last commit</h4>
+
+<pre><code>git commit --amend --author="Rushi Agrawal &lt;rushi.agr@gmail.com&gt;"
+</code></pre>
+
+<p>You committed some changes, but then you realised you wanted to add this one line to the commit. In such a case
+just add that one line, and run this command to have this last change incorporated into that previous commit. This command also gives you an option to
+change the commit message.</p>
+
+<pre><code>git commit -a --amend
+</code></pre>
+
+<h2>Show me the money</h2>
+
+<p>To see the patch of the last commit without undoing the last commit</p>
+
+<pre><code>git show
+</code></pre>
+
+<p>To see the changes introduced by any earlier commit with commit id <code>c5bb6d821e10ca8f114fa0b3b0149bc8b7257a92</code></p>
+
+<pre><code>git show c5bb6d821e10ca8f114fa0b3b0149bc8b7257a92
+</code></pre>
+
+<p>To see the latest changes you made &#8211; the changes which have not been staged to be committed</p>
+
+<pre><code>git diff
+</code></pre>
+
+<p>You can redirect the output from the above three commands to a file, to create corresponding patch file.</p>
+
+<h2>Patching in git</h2>
+
+<p>Check the status of patch. How many lines changed, etc</p>
+
+<pre><code>git apply --stat patchfile
+</code></pre>
+
+<p>Check if the patch can be applied.
+If no output or no error, patch can be applied safely</p>
+
+<pre><code>git apply --check patchfile
+</code></pre>
+
+<p>Apply patch with signing-off (better way)</p>
+
+<pre><code>git am --signoff &lt; patchfile
+</code></pre>
+
+<p>Normal way of applying patch</p>
+
+<pre><code>git apply patchfile
+</code></pre>
+
+<h2>Miscellaneous</h2>
+
+<p>To pull only specific files from another branch: (here, assuming that we have two branches, &#8216;test&#8217;, and &#8216;master&#8217;, and currently we are on &#8216;master&#8217; branch. If you want to pull ##only &#8216;testfile.py&#8217; file from &#8216;test&#8217; branch to &#8216;master&#8217; branch, do this:)</p>
+
+<pre><code>git checkout test testfile.py1
+</code></pre>
+
+<p>If your master changed while you were working on your topic_branch, and if you want to merge the master&#8217;s changes, and also get an option to squash the changes you made on topic_branch:</p>
+
+<pre><code>git checkout master
+git pull origin master
+git checkout topic_branch
+git rebase -i master
+</code></pre>
+
+<p><a href="http://christoph.ruegg.name/blog/2010/5/5/git-howto-revert-a-commit-already-pushed-to-a-remote-reposit.html}%0A(you%20can%20use%20git%20revert,%20but%20don%E2%80%99t%20know%20how%20exactly%20it%20works">Undo last commit at the remote repo</a></p>
+
+<p>Clone a specific branch git repository from github</p>
+
+<pre><code>git clone -b stable/essex https://github.com/openstack-dev/devstack.git
+</code></pre>
+
+<p><a href="https://makandracards.com/makandra/527-squash-several-git-commits-into-a-single-commit">Squash several commits into one single commit</a></p>
+
+<p>Checkout a previous commit with SHA commit id cff2580ad7bc16934b72dd9be7463eb090b31d55 from the current branch to a new branch &#8216;neew&#8217;</p>
+
+<pre><code>git checkout -b neew cff2580ad7bc16934b72dd9be7463eb090b31d55
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Bye-Bye 2012, Welcome 2013]]></title>
+    <link href="http://rushiagr.github.io/blog/2013/01/02/bye-bye-2012/"/>
+    <updated>2013-01-02T00:54:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2013/01/02/bye-bye-2012</id>
+    <content type="html"><![CDATA[<p>Listing down the things which went well for me in 2012, and which didn&#8217;t, and the plans for upcoming year 2013. Beware: More technical stuff than emotional.</p>
+
+<!--more-->
+
+
+<h2>Things which went well in 2012</h2>
+
+<h4>Python</h4>
+
+<p>Started learning Python at the start of year 2012, early January, and this same language landed me in the job which I absolutely love: working in one of the biggest &#8216;OpenSource&#8217; project in the world, written in Python! Getting paid for working on an opensource project is as awesome as it can become for me.</p>
+
+<h4>The hunger to become different from the rest</h4>
+
+<p>Gathered a lot of info on how things work in computer industry. Kept myself in contact with various hot topics, opensource projects.</p>
+
+<h4>The job</h4>
+
+<p>Not faring too well on this front - the full time job. But still, I would consider I did good enough with regards to the work assigned to me. I, after six months into the job, still goes to office every morning with a thirst to make a difference.</p>
+
+<h4>Cleanliness</h4>
+
+<p>Scored much better in the second half. Spent dedicated amount of time each week to keep my room and flat clean and in order.</p>
+
+<h4>Maintaining a TODO list</h4>
+
+<p>Started late in the year, but seems a good progress on that front.</p>
+
+<h2>Things which didn&#8217;t go that well in 2012</h2>
+
+<h4>Concentration</h4>
+
+<p>Still not able to concentrate on one thing for long. Get distracted too easily. Only rarely I sat at one place, focussed on one thing, for more than 50 minutes. Also, the last year&#8217;s resolution of opening FaceBook only once a day was put in trashcan on in the very first week of January!</p>
+
+<h4>Not focussed enough on the future direction</h4>
+
+<p>Poor goal setting. Peeked into a lot of opensource projects, dedicated proper time into none. Opensourced my projects too, but did not work on it much either. Made myself a perfect example of &#8216;naam bade aur darshan chhote&#8217; (appearing like an eminent personality, acting like a jerk).</p>
+
+<h4>Programming contest</h4>
+
+<p>Only kept in touch. Not solved much problems. This year, need to focus a lot on this front.</p>
+
+<h4>Time management</h4>
+
+<p>Never was able to manage time. Was not working on the same thing for even a week. Somewhere in the middle of working on a project, I find out &#8216;hey, this looks cool! Time to try hands on it!&#8217;. What about the thingy you were currently working on? Into the TODO list! Such an idiot.</p>
+
+<h4>Work life balance</h4>
+
+<p>Went for a toss. Not able to regularise job timings. Started and stopped gym. Started and stopped working on many projects. Completed none. Wasted a heck of a lot of time.</p>
+
+<h2>Plans for upcoming year</h2>
+
+<h4>Better planning</h4>
+
+<p>I need to plan things before acting on it. I would take everything into consideration before jumping into hacking something, and then set a deadline for it. And till that deadline, I would promise I would not digress getting enticed by something which makes my mouth watery.</p>
+
+<h4>Don&#8217;t just outright neglect daytime job</h4>
+
+<p>I agree my daytime job is awesome. But I end up considering the work I do at office as secondary. Need to value it much higher. I concentrate on other projects and aim to complete and polish them. What I did not thought was the work I am doing in my job itself is a project! If I am not faring well in the project on which I work 8 hours a day, how can I expect myself to do good in something I am spending only a fraction of time I spend on the daytime project! And expectedly, none of my projects are in good enough shape to talk about it confidently in public. I need to value OpenStack more. Really.</p>
+
+<h4>START coding for programming contests</h4>
+
+<p>Enough of promises, enough of &#8216;From next month I&#8217;m gonna do it&#8217;. I SHOULD spend a specific time every week for coding for programming contests. Looks like I need to start with solving old problems from CodeChef.com alongwith the editorials provided with them.</p>
+
+<h4>Facebook once in a day</h4>
+
+<p>Period.</p>
+
+<h4>Need to plan breaks too</h4>
+
+<p>Realised only the last month that opening facebook, checking out news, and reading articles on Hacker News does not count in a break. A break is not in front of a computer screen. A break is something which gives your strained eyes a rest, especially when you end up spending half of your year staring at a computer screen!</p>
+
+<p>PS. The article is for the writer himself. It is okay if you are finding it a bad piece of English text.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Testing the new blog]]></title>
+    <link href="http://rushiagr.github.io/blog/2012/12/15/testing-the-new-blog/"/>
+    <updated>2012-12-15T17:49:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2012/12/15/testing-the-new-blog</id>
+    <content type="html"><![CDATA[<p>This is a test blog, just to check out some of the basic functionalities of
+MarkDown. Visit the MarkDown source of this blog post <a href="https://raw.github.com/rushiagr/rushiagr.github.com/source/source/_posts/2012-12-15-testing-the-new-blog.markdown">here</a>
+to understand the simplicity with which a post can be written using MarkDown!</p>
+
+<!-- more -->
+
+
+<h2>This is a subheading</h2>
+
+<p>And below is an example of H1 heading in the main text</p>
+
+<h1>THE heading</h1>
+
+<p>And below is sub-subheading</p>
+
+<h3>The H3 heading</h3>
+
+<p>Trying a smaller heading:</p>
+
+<h4>The sub sub subheading</h4>
+
+<p>Following is a block of syntax-highlighted python code.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">answer</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">counter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">number</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">answer</span> <span class="o">*=</span> <span class="n">counter</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">answer</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To write a monospace block, enclose it in backticks. An example would be a directory location: <code>/home/rushi/Desktop/</code> is where the files on my desktop
+reside.</p>
+
+<p>Here is an embedded image:</p>
+
+<p><img src="http://rushiagr.github.com/images/bird_32_gray.png"></p>
+
+<p>Thank you!</p>
+]]></content>
+  </entry>
+  
+</feed>
