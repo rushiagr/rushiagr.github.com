@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: linux, | Sense, and Simplicity]]></title>
+  <link href="http://rushiagr.github.io/blog/categories/linux/atom.xml" rel="self"/>
+  <link href="http://rushiagr.github.io/"/>
+  <updated>2013-06-05T23:42:20+05:30</updated>
+  <id>http://rushiagr.github.io/</id>
+  <author>
+    <name><![CDATA[Rushi Agrawal]]></name>
+    <email><![CDATA[rushi.agr@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Linux Screens in DevStack]]></title>
+    <link href="http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/"/>
+    <updated>2013-06-05T21:49:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack</id>
+    <content type="html"><![CDATA[<p>This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.</p>
+
+<!--more-->
+
+
+<p>In a DevStack environment, all the processes run under something special in Linux, called as a <code>screen</code>. For now, you can think of a 'screen' as a
+terminal running inside a terminal, with the special property that when you close your current terminal, your 'screens' will not actually die, so that
+you can reconnect to them when you connect to the Linux system through another terminal again! Now that should give you a hint why people use screens :)</p>
+
+<p>Each screen runs a special 'service' of OpenStack. So the logs of each service will go to the respective screen.
+If you created the DevStack environment as a root user, the process of going to a screen is slightly complicated:
+You first need to become the <code>stack</code> user if you are currently <code>root</code>, and even before that, you need to run this command in most of the cases:</p>
+
+<p><code>
+chown stack:stack `readlink /proc/self/fd/0`
+</code>
+Else it will produce this error <code>Cannot open your terminal '/dev/pts/2' - please check.</code> <sigh>, and then you can proceed to run this
+command to get to the screens:
+<code>
+screen -x
+</code>
+And if you ran the DevStack <code>stack.sh</code> script as a non-root user, you just need to run that last little thingy to see the screens. One more reason why you <em>should</em>
+run DevStack as a non-root.</p>
+
+<p>The way to detach from a screen is <code>CTRL+A</code> <code>D</code>, that is, first press <code>CTRL+A</code>, and then press <code>D</code>.</p>
+
+<h3>Navigating across screens</h3>
+
+<p>You will see names of all the screens at the bottom of the terminal. The screen on which you currently are bears an asterisk (<code>*</code>) near its name.
+To move to the right screen, do a <code>CTRL+A</code> <code>N</code>. Keep in mind that you are going to use <code>CTRL+A</code> a lot of times
+during your adventures with screen. Similar to the command <code>CTRL+A</code> <code>N</code> to move to the right ("next") screen, to move to the left screen the command is <code>CTRL+A</code> <code>P</code>.</p>
+
+<p>There is one more way to jump directly to a screen. Lets say you want to directly jump to the fourth screen. You just need to do a <code>CTRL+A</code> <code>4</code>, to go to fourth
+screen!
+Wasn't that easy? But hey! How do I get to the seventeenth screen? Frankly, I don't know a 'direct' way. I do a <code>CTRL+A</code> <code>9</code> once, and <code>CTRL+A</code> <code>N</code> eight more times. :(
+If you have a better way, please do tell me.</p>
+
+<h3>Navigating inside a screen</h3>
+
+<p>The first and biggest difficulty I faced while tracking an error in the screen logs is the periodic updates in Cinder dumps some lines to the Cinder
+screens every now and then. So if you have a stack trace of an error on the screen, it will go up and up and up till you can no more see it! Nope, scrolling
+your mouse up, or pulling the scrollbar up won't help either (why not try it once :) ).</p>
+
+<p>Within a few days, I thought "Hey, I'll just reduce the font of the terminal and I'll be able to see more lines of screen logs on my screen!". I knew the
+command to reduce the font size of the terminal font: <code>CTRL</code> +<code>-</code> (just for the sake of completeness, the command to increase font is <code>CTRL</code>+<code>SHIFT</code>+<code>+</code>). That
+worked pretty okay upto a point.
+It actually helps to have logs in small font, as the logs will fit in one line on the screen and will look prettier. But what if I come after say a ten-minute
+break, and see all my logs are too far up to be able to see even by reducing font size?</p>
+
+<p>Then I got to know the command which saved a ton of time in my life: The command to actually scroll up and down the screen.</p>
+
+<p>To scroll up, first press <code>CTRL</code>+<code>[</code>. After that, you can use arrow keys to scroll up and down. You can also use <code>page-up</code> and <code>page-down</code> buttons to scroll
+one complete page up or down. This isn't all of it. If you are vim user, you will find that the <code>H</code> <code>J</code> <code>K</code> <code>L</code> will work for for <code>left</code>, <code>down</code>, <code>up</code>, and <code>right</code>
+respectively.
+And the last and most convenient thing: once you press <code>CTRL</code> <code>[</code>, that is, once you are in 'copy mode', you can then use your mouse scroll wheel too to scroll
+up and down!!
+Now that is a perfect delight :)</p>
+
+<p>To come out of this copy mode (so that you can switch to another screen, and do other such stuff), press <code>[</code> and you are back to normal once again.</p>
+
+<h2>Some more 'generic' screen commands</h2>
+
+<p>So that you can start playing around with screens outside OpenStack too</p>
+
+<p>Create a new screen
+<code>
+screen
+</code></p>
+
+<p>To detach from current screen
+<code>
+ctrl+A,D
+</code></p>
+
+<p>To reattach to an existing screen
+<code>
+screen -rd
+</code></p>
+
+<p>To view all the screens, their states and IDs
+<code>
+screen -list
+</code></p>
+
+<p>To kill a screen with id SCREENID
+<code>
+screen -X -S SCREENID kill
+</code></p>
+
+<p>Cheers!</p>
+
+<p>-Rushi Agrawal</p>
+]]></content>
+  </entry>
+  
+</feed>
