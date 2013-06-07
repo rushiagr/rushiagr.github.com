@@ -4,7 +4,7 @@
   <title><![CDATA[Category: OpenStack, | Sense, and Simplicity]]></title>
   <link href="http://rushiagr.github.io/blog/categories/openstack/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
-  <updated>2013-06-05T23:42:20+05:30</updated>
+  <updated>2013-06-08T01:05:06+05:30</updated>
   <id>http://rushiagr.github.io/</id>
   <author>
     <name><![CDATA[Rushi Agrawal]]></name>
@@ -18,7 +18,8 @@
     <link href="http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/"/>
     <updated>2013-05-27T22:33:00+05:30</updated>
     <id>http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start</id>
-    <content type="html"><![CDATA[<p>This blog post covers all the important commands for OpenStack Cinder - The block storage project.
+    <content type="html"><![CDATA[<p>This blog post covers many of the important commands for OpenStack Cinder - The block storage project.
+Remaining functionality will be covered in an upcoming post soon.
 Although this guide is written based on DevStack, it will work with actual deployment of OpenStack
 cloud also (except the DevStack/Linux specific bits).</p>
 
