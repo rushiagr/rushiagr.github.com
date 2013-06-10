@@ -4,7 +4,7 @@
   <title><![CDATA[Sense, and Simplicity]]></title>
   <link href="http://rushiagr.github.io/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
-  <updated>2013-06-08T01:05:06+05:30</updated>
+  <updated>2013-06-10T07:07:37+05:30</updated>
   <id>http://rushiagr.github.io/</id>
   <author>
     <name><![CDATA[Rushi Agrawal]]></name>
@@ -1288,6 +1288,15 @@ git rebase -i master
 
 <pre><code>git checkout -b neew cff2580ad7bc16934b72dd9be7463eb090b31d55
 </code></pre>
+
+<p>Check out code from a tag <code>some_tag</code> to a new branch <code>code_at_some_tag</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout -b code_at_some_tag tags/some_tag</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Cheers!
+Rushi Agrawal</p>
 ]]></content>
   </entry>
   
