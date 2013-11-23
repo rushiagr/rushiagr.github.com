@@ -1,0 +1,541 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>GitHub Cheat Sheet - Sense, and Simplicity</title>
+  <meta name="author" content="Rushi Agrawal">
+
+  
+  <meta name="description" content="I am posting my github cheat sheet here. I started writing it as soon as I started
+learning Github and Git. So, some of the content here can appear &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Sense, and Simplicity" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Sense, and Simplicity</a></h1>
+  
+    <h2>Blog-cum-shoutbox of Rushi Agrawal</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:rushiagr.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">GitHub Cheat Sheet</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-19T04:22:00+05:30" pubdate data-updated="true">Mar 19<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I am posting my github cheat sheet here. I started writing it as soon as I started
+learning Github and Git. So, some of the content here can appear quite naive.
+I will try to keep this blog post as updated as I can, and if you find any
+suggestion, please comment!</p>
+
+<p>This post is just for a reference of commands. This post will be a bad way to learn
+how git works. A basic understanding of git is assumed.</p>
+
+<!--more-->
+
+
+<h2>Initial configuration</h2>
+
+<p>Configure user details only for the first time</p>
+
+<pre><code>git config --global user.name "Rushi Agrawal"
+git config --global user.email "rushi.agr@gmail.com"
+</code></pre>
+
+<p>To check your git configuration</p>
+
+<pre><code>git config --list
+</code></pre>
+
+<h2>Branches</h2>
+
+<p>List all branches in the local repo</p>
+
+<pre><code>git branch
+</code></pre>
+
+<p>List all branches including remote-tracking branches</p>
+
+<pre><code>git branch -r
+</code></pre>
+
+<p>List all branches (including the ones at remote)</p>
+
+<pre><code>git branch -a
+</code></pre>
+
+<p>Creating your own branch <code>my_branch</code>, with content same as your current branch</p>
+
+<pre><code>git branch my_branch
+</code></pre>
+
+<p>Switch to the newly created branch</p>
+
+<pre><code>git checkout my_branch
+</code></pre>
+
+<p>Execute the above two commands in one line:</p>
+
+<pre><code>git checkout -b my_branch
+</code></pre>
+
+<p>to pull a branch <code>only_remote</code> which exists at github (at remote <code>rushiagr</code> but not in local repo. (More about <code>git remote update</code> later)</p>
+
+<pre><code>git remote update
+git checkout -b only_remote rushiagr/only_remote
+</code></pre>
+
+<h2>Remotes</h2>
+
+<p>Create a new remote <code>rushiagr</code> which will track <code>cinder</code> repository by user <code>rushiagr</code></p>
+
+<pre><code>git remote add rushiagr https://github.com/rushiagr/cinder.git
+</code></pre>
+
+<p>If this is your personal repo, you can append the username in the remote as shown. After that, every time you push to the origin,
+github will not ask for your username but only password.</p>
+
+<pre><code>git remote add rushiagr https://rushiagr@github.com/rushiagr/cinder.git
+</code></pre>
+
+<p>Delete the remote <code>rushiagr</code></p>
+
+<pre><code>git remote rm rushiagr
+</code></pre>
+
+<p>List all the remotes</p>
+
+<pre><code>git remote
+</code></pre>
+
+<p>The above command only shows the names of remotes. To also check the links to the remotes:</p>
+
+<pre><code>git remote -v
+</code></pre>
+
+<p>Now this is very important command.</p>
+
+<pre><code>git remote update
+</code></pre>
+
+<p>This will contact the git server, and will update the local repository with ALL the content at ALL those remotes. The interesting part is, nothing will actually change. That is, no more new branches (which got created at the server after you last pulled from the server) were created, and the existing branches are also not updated. BUT, all the content goes into the magic <code>.git</code> directory. After you&#8217;ve run this command, when you create a branch only existing at remote, the local git repo will not contact the server but will fetch all the contents from within the repository.</p>
+
+<p>To take a new branch from remote, and create a new branch having contents of that remote branch. (You might need to run &#8216;git remote update&#8217;)</p>
+
+<pre><code>git checkout -b stable/folsom origin/stable/folsom
+</code></pre>
+
+<h2>Push</h2>
+
+<p>Pushing this newly created branch to remote <code>rushiagr</code></p>
+
+<pre><code>git push rushiagr my_branch
+</code></pre>
+
+<p>If you want to push the local branch <code>my_branch</code> with a different name to
+remote, say <code>my_remote_branch</code>:</p>
+
+<pre><code>git push rushiagr my_branch:my_remote_branch
+</code></pre>
+
+<p>To create an association with the remote (only first time):</p>
+
+<pre><code>git push -u origin my_branch
+</code></pre>
+
+<p>or</p>
+
+<pre><code>git push --set-upstream origin my_branch
+</code></pre>
+
+<h2>Pull</h2>
+
+<p>Git pull is nothing more than a macro that does git fetch and git merge, in
+that order. The common syntax to pull from branch <code>remote_branch</code> located at remote <code>remote_name</code> to the current active branch in the local repo:</p>
+
+<pre><code>git pull remote_name remote_branch
+</code></pre>
+
+<h2>Oops! I didn&#8217;t intend to do that!</h2>
+
+<h4>To undo last commit.</h4>
+
+<p>This will just undo the commit, but will keep changes, so that you can modify the files and commit again</p>
+
+<pre><code>git reset --soft HEAD^
+</code></pre>
+
+<h4>To not keep the uncommitted changes.</h4>
+
+<p>This command will wipe off all the changes which are not committed. Very useful when you made some changes but dont want to commit it. All the more useful when you <code>pull</code>ed something but everything became a mess (possibly due to a merge conflict, or pulling to/from a different branch!)</p>
+
+<pre><code>git reset --hard
+</code></pre>
+
+<h4>To delete a branch <code>timepass_testing</code> from github server</h4>
+
+<pre><code>git push rushiagr --delete timepass_testing
+</code></pre>
+
+<p>(NOT <code>git push rushiagr --delete rushiagr/timepass_testing</code>)</p>
+
+<h4>Change author of the last commit</h4>
+
+<pre><code>git commit --amend --author="Rushi Agrawal &lt;rushi.agr@gmail.com&gt;"
+</code></pre>
+
+<p>You committed some changes, but then you realised you wanted to add this one line to the commit. In such a case
+just add that one line, and run this command to have this last change incorporated into that previous commit. This command also gives you an option to
+change the commit message.</p>
+
+<pre><code>git commit -a --amend
+</code></pre>
+
+<h2>Show me the money</h2>
+
+<p>To see the patch of the last commit without undoing the last commit</p>
+
+<pre><code>git show
+</code></pre>
+
+<p>To see the changes introduced by any earlier commit with commit id <code>c5bb6d821e10ca8f114fa0b3b0149bc8b7257a92</code></p>
+
+<pre><code>git show c5bb6d821e10ca8f114fa0b3b0149bc8b7257a92
+</code></pre>
+
+<p>To see the latest changes you made &#8211; the changes which have not been staged to be committed</p>
+
+<pre><code>git diff
+</code></pre>
+
+<p>You can redirect the output from the above three commands to a file, to create corresponding patch file.</p>
+
+<h2>Patching in git</h2>
+
+<p>Check the status of patch. How many lines changed, etc</p>
+
+<pre><code>git apply --stat patchfile
+</code></pre>
+
+<p>Check if the patch can be applied.
+If no output or no error, patch can be applied safely</p>
+
+<pre><code>git apply --check patchfile
+</code></pre>
+
+<p>Apply patch with signing-off (better way)</p>
+
+<pre><code>git am --signoff &lt; patchfile
+</code></pre>
+
+<p>Normal way of applying patch</p>
+
+<pre><code>git apply patchfile
+</code></pre>
+
+<h2>Miscellaneous</h2>
+
+<p>To pull only specific files from another branch: (here, assuming that we have two branches, &#8216;test&#8217;, and &#8216;master&#8217;, and currently we are on &#8216;master&#8217; branch. If you want to pull ##only &#8216;testfile.py&#8217; file from &#8216;test&#8217; branch to &#8216;master&#8217; branch, do this:)</p>
+
+<pre><code>git checkout test testfile.py1
+</code></pre>
+
+<p>If your master changed while you were working on your topic_branch, and if you want to merge the master&#8217;s changes, and also get an option to squash the changes you made on topic_branch:</p>
+
+<pre><code>git checkout master
+git pull origin master
+git checkout topic_branch
+git rebase -i master
+</code></pre>
+
+<p><a href="http://christoph.ruegg.name/blog/2010/5/5/git-howto-revert-a-commit-already-pushed-to-a-remote-reposit.html}%0A(you%20can%20use%20git%20revert,%20but%20don%E2%80%99t%20know%20how%20exactly%20it%20works">Undo last commit at the remote repo</a></p>
+
+<p>Clone a specific branch git repository from github</p>
+
+<pre><code>git clone -b stable/essex https://github.com/openstack-dev/devstack.git
+</code></pre>
+
+<p><a href="https://makandracards.com/makandra/527-squash-several-git-commits-into-a-single-commit">Squash several commits into one single commit</a></p>
+
+<p>Checkout a previous commit with SHA commit id cff2580ad7bc16934b72dd9be7463eb090b31d55 from the current branch to a new branch &#8216;neew&#8217;</p>
+
+<pre><code>git checkout -b neew cff2580ad7bc16934b72dd9be7463eb090b31d55
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rushi Agrawal</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-19T04:22:00+05:30" pubdate data-updated="true">Mar 19<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/cheat-sheet/'>cheat-sheet,</a>, <a class='category' href='/blog/categories/git/'>git,</a>, <a class='category' href='/blog/categories/github/'>github,</a>, <a class='category' href='/blog/categories/tech/'>tech</a>, <a class='category' href='/blog/categories/web/'>web,</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/02/bye-bye-2012/" title="Previous Post: Bye-Bye 2012, Welcome 2013">&laquo; Bye-Bye 2012, Welcome 2013</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/" title="Next Post: OpenStack Tempest quick start with DevStack">OpenStack Tempest quick start with DevStack &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/05/linux-screens-in-devstack/">Linux Screens in DevStack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/27/cinder-on-devstack-quick-start/">Cinder on DevStack - Quick Start</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/">OpenStack Tempest Quick Start With DevStack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/19/github-cheat-sheet/">GitHub Cheat Sheet</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/02/bye-bye-2012/">Bye-Bye 2012, Welcome 2013</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'rushiagr',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rushi Agrawal -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'rushiagr';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet/';
+        var disqus_url = 'http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

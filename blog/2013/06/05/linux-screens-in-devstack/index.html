@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux Screens in DevStack - Sense, and Simplicity</title>
+  <meta name="author" content="Rushi Agrawal">
+
+  
+  <meta name="description" content="This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Sense, and Simplicity" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Sense, and Simplicity</a></h1>
+  
+    <h2>Blog-cum-shoutbox of Rushi Agrawal</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:rushiagr.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Linux Screens in DevStack</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-05T20:50:00+05:30" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.</p>
+
+<!--more-->
+
+
+<p>In a DevStack environment, all the processes run under something special in Linux, called as a <code>screen</code>. For now, you can think of a ‘screen’ as a terminal running inside a terminal, with the special property that when you close your current terminal, your ‘screens’ will not actually die, so that you can reconnect to them when you connect to the Linux system through another terminal again! Now that should give you a hint why people use screens :)</p>
+
+<p>Each screen runs a special ‘service’ of OpenStack. So the logs of each service will go to the respective screen. If you created the DevStack environment as a root user, the process of going to a screen is slightly complicated: You first need to become the <code>stack</code> user if you are currently <code>root</code>, and even before that, you need to run this command in most of the cases:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>chown stack:stack `readlink /proc/self/fd/0`</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Else it will produce this error <code>Cannot open your terminal '/dev/pts/2' - please check.</code> , and then you can proceed to run this command to get to the screens:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>screen -x</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And if you ran the DevStack <code>stack.sh</code> script as a non-root user, you just need to run that last little thingy to see the screens. One more reason why you should run DevStack as a non-root.</p>
+
+<p>The way to detach from a screen is <code>CTRL+A</code> <code>D</code>, that is, first press <code>CTRL+A</code>, and then press <code>D</code>.</p>
+
+<h2>Navigating across screens</h2>
+
+<p>You will see names of all the screens at the bottom of the terminal. The screen on which you currently are bears an asterisk (<code>*</code>) near its name. To move to the right screen, do a <code>CTRL+A</code> <code>N</code>. Keep in mind that you are going to use <code>CTRL+A</code> a lot of times during your adventures with screen. Similar to the command <code>CTRL+A</code> <code>N</code> to move to the right (“next”) screen, to move to the left screen the command is <code>CTRL+A</code> <code>P</code>.</p>
+
+<p>There is one more way to jump directly to a screen. Lets say you want to directly jump to the fourth screen. You just need to do a <code>CTRL+A</code> <code>4</code>, to go to fourth screen! Wasn’t that easy? But hey! How do I get to the seventeenth screen? Frankly, I don’t know a ‘direct’ way. I do a <code>CTRL+A</code> <code>9</code> once, and <code>CTRL+A</code> <code>N</code> eight more times. :( If you have a better way, please do tell me.</p>
+
+<p>Navigating inside a screen</p>
+
+<p>The first and biggest difficulty I faced while tracking an error in the screen logs is the periodic updates in Cinder dumps some lines to the Cinder screens every now and then. So if you have a stack trace of an error on the screen, it will go up and up and up till you can no more see it! Nope, scrolling your mouse up, or pulling the scrollbar up won’t help either (why not try it once :) ).</p>
+
+<p>Within a few days, I thought “Hey, I’ll just reduce the font of the terminal and I’ll be able to see more lines of screen logs on my screen!”. I knew the command to reduce the font size of the terminal font: <code>CTRL</code>+<code>-</code> (just for the sake of completeness, the command to increase font is <code>CTRL</code>+<code>SHIFT</code>+<code>+</code>). That worked pretty okay upto a point. It actually helps to have logs in small font, as the logs will fit in one line on the screen and will look prettier. But what if I come after say a ten-minute break, and see all my logs are too far up to be able to see even by reducing font size?</p>
+
+<p>Then I got to know the command which saved a ton of time in my life: The command to actually scroll up and down the screen.</p>
+
+<p>To scroll up, first press <code>CTRL</code>+<code>[</code>. After that, you can use arrow keys to scroll up and down. You can also use <code>page-up</code> and <code>page-down</code> buttons to scroll one complete page up or down. This isn’t all of it. If you are vim user, you will find that the <code>H</code> <code>J</code> <code>K</code> <code>L</code> will work for for <code>left</code>, <code>down</code>, <code>up</code>, and <code>right</code> respectively. And the last and most convenient thing: once you press <code>CTRL</code> <code>[</code>, that is, once you are in ‘copy mode’, you can then use your mouse scroll wheel too to scroll up and down!! Now that is a perfect delight :)</p>
+
+<p>To come out of this copy mode (so that you can switch to another screen, and do other such stuff), press <code>]</code> and you are back to normal once again.</p>
+
+<h2>Some more ‘generic’ screen commands</h2>
+
+<p>So that you can start playing around with screens outside OpenStack too</p>
+
+<p>Create a new screen</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>screen</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To detach from current screen</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ctrl+A,D</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To reattach to an existing screen</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>screen -rd</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To view all the screens, their states and IDs</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>screen -list</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To kill a screen with id SCREENID</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>screen -X -S SCREENID kill</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Cheers!</p>
+
+<p>-Rushi Agrawal</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rushi Agrawal</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-05T20:50:00+05:30" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/27/cinder-on-devstack-quick-start/" title="Previous Post: Cinder on DevStack - Quick Start">&laquo; Cinder on DevStack - Quick Start</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/05/linux-screens-in-devstack/">Linux Screens in DevStack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/27/cinder-on-devstack-quick-start/">Cinder on DevStack - Quick Start</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/">OpenStack Tempest Quick Start With DevStack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/19/github-cheat-sheet/">GitHub Cheat Sheet</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/02/bye-bye-2012/">Bye-Bye 2012, Welcome 2013</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'rushiagr',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rushi Agrawal -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'rushiagr';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/';
+        var disqus_url = 'http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
