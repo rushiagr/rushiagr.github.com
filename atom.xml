@@ -4,7 +4,7 @@
   <title><![CDATA[Sense, and Simplicity]]></title>
   <link href="http://rushiagr.github.io/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
-  <updated>2013-11-23T22:17:02+05:30</updated>
+  <updated>2014-01-04T13:46:13+05:30</updated>
   <id>http://rushiagr.github.io/</id>
   <author>
     <name><![CDATA[Rushi Agrawal]]></name>
@@ -14,88 +14,94 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Linux Screens in DevStack]]></title>
-    <link href="http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/"/>
-    <updated>2013-06-05T20:50:00+05:30</updated>
-    <id>http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack</id>
-    <content type="html"><![CDATA[<p>This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.</p>
+    <title type="html"><![CDATA[Bye bye 2013. Welcome 2014]]></title>
+    <link href="http://rushiagr.github.io/blog/2014/01/01/bye-bye-2013-welcome-2014/"/>
+    <updated>2014-01-01T13:40:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2014/01/01/bye-bye-2013-welcome-2014</id>
+    <content type="html"><![CDATA[<p>How year 2013 fared for me, and my plans for 2014.</p>
 
 <!--more-->
 
 
-<p>In a DevStack environment, all the processes run under something special in Linux, called as a <code>screen</code>. For now, you can think of a ‘screen’ as a terminal running inside a terminal, with the special property that when you close your current terminal, your ‘screens’ will not actually die, so that you can reconnect to them when you connect to the Linux system through another terminal again! Now that should give you a hint why people use screens :)</p>
+<p>Mixed bag of a year. Some pretty hard decisions were made by me. I left the job I loved so much &#8211; joined Amazon,
+rival of the technology I was working on (OpenStack). I knew my life was going to be tougher at Amazon. It was not only about
+the work, but also about the philosophy. In NetApp, it was a complete opensource, collaborative model of development. Nothing
+of this sort of freedom I was going to get at Amazon. But there were some internal issues of working at NetApp which prompted
+me to switch over to another company. It wasn&#8217;t me who approached them for the job but it was the other way round.  The funny part was, I didn&#8217;t think of joining Amazon till I got the offer letter. I said okay, anyways I will need to move out of this job
+(due to those internal conflicts, and partly due to the lower salary), so why not get some interviewing practice by appearing
+for them at Amazon! The compensation they were offering was significantly higher than my then salary, which just gave me another reason to accept the offer. I convinced myself that I am going to anyway leave the job at Amazon as soon as I get a better opportunity
+at a more freedom-loving place (freedom both in the sense of work-life balance as well as freedom of working on opensource softwares).
+I made a mental note for myself that I am going to work for Amazon for 6 months at the max.</p>
 
-<p>Each screen runs a special ‘service’ of OpenStack. So the logs of each service will go to the respective screen. If you created the DevStack environment as a root user, the process of going to a screen is slightly complicated: You first need to become the <code>stack</code> user if you are currently <code>root</code>, and even before that, you need to run this command in most of the cases:</p>
+<p>But God has different plans. Within a week of joining Amazon, I got a mail that Rick Clark, one of the founders of OpenStack wants to meet me, and wants me on his team which is going to work on OpenStack. The way in which he likes to work, as was told by him over a phone call, impressed me, and I quickly switched jobs. Again, in just over a month. Believe me, joining Reliance, a name not at all known in the software industry, was one heck of a decision. Not to say that switching over to Amazon from NetApp was any less emotionally draining.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>chown stack:stack `readlink /proc/self/fd/0`</span></code></pre></td></tr></table></div></figure>
+<p>Even after joining Reliance (Reliance Jio Infocomm to be precise), as the Bangalore office was not completely set up by the time I joined, I worked from Mumbai office, and then from home for a couple of months. Life before and after this four-month period starting from leaving job at NetApp was more sedate and stable.</p>
 
+<h2>Things that went well for me</h2>
 
-<p>Else it will produce this error <code>Cannot open your terminal '/dev/pts/2' - please check.</code> , and then you can proceed to run this command to get to the screens:</p>
+<h4>Day job</h4>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>screen -x</span></code></pre></td></tr></table></div></figure>
+<p>Absolutely happy with the day job. Totally in love with the ownership model we have in place. I get to decide which project I will be most interested to work on. I decide what needs to be done in what time. Though this causes laziness, I manage it by following a stricter schedule, and by giving importance of the sense of trust shown in me &#8211; if someone trusts me this much, it is my moral responsibility to not disappoint him by underperforming.</p>
 
+<p>Our chief arhitect, Soren Hansen, is exceptionally brilliant, and equally understanding. I can talk to him just like a friend.</p>
 
-<p>And if you ran the DevStack <code>stack.sh</code> script as a non-root user, you just need to run that last little thingy to see the screens. One more reason why you should run DevStack as a non-root.</p>
+<h4>Day job compensation</h4>
 
-<p>The way to detach from a screen is <code>CTRL+A</code> <code>D</code>, that is, first press <code>CTRL+A</code>, and then press <code>D</code>.</p>
+<p>My salary has grown to an amount that my spendings are now less than 1/5th of my total salary. This means I have fairly early in my career reached a level where I don&#8217;t care too much about my salary, and how much it is going to increase, and related stuff. It is just another number reflected in my bank account.</p>
 
-<h2>Navigating across screens</h2>
+<h4>Task tracking</h4>
 
-<p>You will see names of all the screens at the bottom of the terminal. The screen on which you currently are bears an asterisk (<code>*</code>) near its name. To move to the right screen, do a <code>CTRL+A</code> <code>N</code>. Keep in mind that you are going to use <code>CTRL+A</code> a lot of times during your adventures with screen. Similar to the command <code>CTRL+A</code> <code>N</code> to move to the right (“next”) screen, to move to the left screen the command is <code>CTRL+A</code> <code>P</code>.</p>
+<p>Be it tracking articles to read, blogposts to write, side projects to do, or things to learn; I am tracking each of them very efficiently thanks to the Trello. An awesome tool, and I definitely recommend you to use it. Till last year, I used to rely upon Microsoft OneNote, and thankfully I have found a better alternative for that after quite some time.</p>
 
-<p>There is one more way to jump directly to a screen. Lets say you want to directly jump to the fourth screen. You just need to do a <code>CTRL+A</code> <code>4</code>, to go to fourth screen! Wasn’t that easy? But hey! How do I get to the seventeenth screen? Frankly, I don’t know a ‘direct’ way. I do a <code>CTRL+A</code> <code>9</code> once, and <code>CTRL+A</code> <code>N</code> eight more times. :( If you have a better way, please do tell me.</p>
+<p>I also now maintain a notebook and a pen. This helps a lot for things to do in a short time, as I can have my notebook always open at my desk &#8211; not the same case with any software in the computer which always gets hidden in the background once we start working. It is a nice feeling to strike off items one-by-one from the bullet list you write down on a paper. I also find paper notebooks very helpful when I am planning something, e.g. a side project. The free form writing/drawing it allows is still not possible in the digital world, I believe.</p>
 
-<p>Navigating inside a screen</p>
+<h4>Setting up priorities in life</h4>
 
-<p>The first and biggest difficulty I faced while tracking an error in the screen logs is the periodic updates in Cinder dumps some lines to the Cinder screens every now and then. So if you have a stack trace of an error on the screen, it will go up and up and up till you can no more see it! Nope, scrolling your mouse up, or pulling the scrollbar up won’t help either (why not try it once :) ).</p>
+<p>Not anymore in mood of going for higher studies. Not going to prepare for interviews, and algorithmic questions. Going to work on side projects, and will look for opportunities of starting something of my own. Marriage? Don&#8217;t talk about it just yet.</p>
 
-<p>Within a few days, I thought “Hey, I’ll just reduce the font of the terminal and I’ll be able to see more lines of screen logs on my screen!”. I knew the command to reduce the font size of the terminal font: <code>CTRL</code>+<code>-</code> (just for the sake of completeness, the command to increase font is <code>CTRL</code>+<code>SHIFT</code>+<code>+</code>). That worked pretty okay upto a point. It actually helps to have logs in small font, as the logs will fit in one line on the screen and will look prettier. But what if I come after say a ten-minute break, and see all my logs are too far up to be able to see even by reducing font size?</p>
+<h2>Things that didn&#8217;t go that well</h2>
 
-<p>Then I got to know the command which saved a ton of time in my life: The command to actually scroll up and down the screen.</p>
+<p>As always, more negatives than positives :)</p>
 
-<p>To scroll up, first press <code>CTRL</code>+<code>[</code>. After that, you can use arrow keys to scroll up and down. You can also use <code>page-up</code> and <code>page-down</code> buttons to scroll one complete page up or down. This isn’t all of it. If you are vim user, you will find that the <code>H</code> <code>J</code> <code>K</code> <code>L</code> will work for for <code>left</code>, <code>down</code>, <code>up</code>, and <code>right</code> respectively. And the last and most convenient thing: once you press <code>CTRL</code> <code>[</code>, that is, once you are in ‘copy mode’, you can then use your mouse scroll wheel too to scroll up and down!! Now that is a perfect delight :)</p>
+<h4>Side projects</h4>
 
-<p>To come out of this copy mode (so that you can switch to another screen, and do other such stuff), press <code>]</code> and you are back to normal once again.</p>
+<p>Two job changes, time spent in decision making and relocation, and day job work from four cities all made my life a little unsettled for a majority of this year. As a result, I couldn&#8217;t spend much time on any of them. I started with ResumAppGAE (I know, a poor name by any standards), an application to create your resume in a single-page HTML file, but left it completely as soon as I was offered a job at Amazon. Another one, <a href="http://www.rushiagr.com/202020rule/" target="_blank">20-20-20 rule</a>, is a simple one, and I am pretty happy with its progress. Not much learning involved in it, but it gave me important lessons with respect to time and priority management.</p>
 
-<h2>Some more ‘generic’ screen commands</h2>
+<h4>Very less blogs</h4>
 
-<p>So that you can start playing around with screens outside OpenStack too</p>
+<p>I did work on a lot of items on which I can write blog articles, but always fell short of doing that. This article can be thought of an attempt to start fixing that.</p>
 
-<p>Create a new screen</p>
+<h4>Feeble Concentration</h4>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>screen</span></code></pre></td></tr></table></div></figure>
+<p>Failed hopelessly on the promise of using less online social networking. Still spending too much time on online news and social networks. I still think that at the most half an hour each day is enough to keep oneself abreast of all the happenings in the world, plus keeping in contact with friends. The harder part is execution :)</p>
 
+<p>Also, there is still a very long way to go before I am confident of my breaks between working. Proper management of breaks directly affect the productivity when one is not on a break.</p>
 
-<p>To detach from current screen</p>
+<h4>Poor time management</h4>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ctrl+A,D</span></code></pre></td></tr></table></div></figure>
+<p>Only in the last months was I able to reasonably balance my time between my day job, family and friends. I hope to continue the same in the coming year.</p>
 
+<h4>Very less travelling/vacation</h4>
 
-<p>To reattach to an existing screen</p>
+<p>Not a single trip to any place worth visiting in the whole year. Whatever vacations I took I spent time at home. I am going to repent in my old age if I continue like this.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>screen -rd</span></code></pre></td></tr></table></div></figure>
+<h2>Plans for upcoming year</h2>
 
+<h4>Better planning</h4>
 
-<p>To view all the screens, their states and IDs</p>
+<p>Of day job, side projects, blog writing, vacations, time for friends and family.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>screen -list</span></code></pre></td></tr></table></div></figure>
+<h4>Write blogs</h4>
 
+<p>Write as much as I can. It is the easiest, simplest and cheapest medium by which I can help people gain knowledge.</p>
 
-<p>To kill a screen with id SCREENID</p>
+<h4>Final goal, plus some resolutions</h4>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>screen -X -S SCREENID kill</span></code></pre></td></tr></table></div></figure>
+<p>Become expert in OpenStack. Implement and popularize a couple side projects (i.e. get people to love it). Lose weight. Do a simple workout daily.</p>
 
+<p>All in all, a decent year. Not as good as I wanted it to be, but definitely better than the last one.</p>
 
 <p>Cheers!</p>
-
-<p>-Rushi Agrawal</p>
 ]]></content>
   </entry>
   
