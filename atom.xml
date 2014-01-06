@@ -1,0 +1,1435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Sense, and Simplicity]]></title>
+  <link href="http://rushiagr.github.io/atom.xml" rel="self"/>
+  <link href="http://rushiagr.github.io/"/>
+  <updated>2013-06-10T07:07:37+05:30</updated>
+  <id>http://rushiagr.github.io/</id>
+  <author>
+    <name><![CDATA[Rushi Agrawal]]></name>
+    <email><![CDATA[rushi.agr@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Linux Screens in DevStack]]></title>
+    <link href="http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/"/>
+    <updated>2013-06-05T21:49:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack</id>
+    <content type="html"><![CDATA[<p>This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.</p>
+
+<!--more-->
+
+
+<p>In a DevStack environment, all the processes run under something special in Linux, called as a <code>screen</code>. For now, you can think of a &#8216;screen&#8217; as a
+terminal running inside a terminal, with the special property that when you close your current terminal, your &#8216;screens&#8217; will not actually die, so that
+you can reconnect to them when you connect to the Linux system through another terminal again! Now that should give you a hint why people use screens :)</p>
+
+<p>Each screen runs a special &#8216;service&#8217; of OpenStack. So the logs of each service will go to the respective screen.
+If you created the DevStack environment as a root user, the process of going to a screen is slightly complicated:
+You first need to become the <code>stack</code> user if you are currently <code>root</code>, and even before that, you need to run this command in most of the cases:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>chown stack:stack `readlink /proc/self/fd/0`</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Else it will produce this error <code>Cannot open your terminal '/dev/pts/2' - please check.</code> <sigh>, and then you can proceed to run this
+command to get to the screens:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>screen -x</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And if you ran the DevStack <code>stack.sh</code> script as a non-root user, you just need to run that last little thingy to see the screens. One more reason why you <em>should</em>
+run DevStack as a non-root.</p>
+
+<p>The way to detach from a screen is <code>CTRL+A</code> <code>D</code>, that is, first press <code>CTRL+A</code>, and then press <code>D</code>.</p>
+
+<h3>Navigating across screens</h3>
+
+<p>You will see names of all the screens at the bottom of the terminal. The screen on which you currently are bears an asterisk (<code>*</code>) near its name.
+To move to the right screen, do a <code>CTRL+A</code> <code>N</code>. Keep in mind that you are going to use <code>CTRL+A</code> a lot of times
+during your adventures with screen. Similar to the command <code>CTRL+A</code> <code>N</code> to move to the right (&#8220;next&#8221;) screen, to move to the left screen the command is <code>CTRL+A</code> <code>P</code>.</p>
+
+<p>There is one more way to jump directly to a screen. Lets say you want to directly jump to the fourth screen. You just need to do a <code>CTRL+A</code> <code>4</code>, to go to fourth
+screen!
+Wasn&#8217;t that easy? But hey! How do I get to the seventeenth screen? Frankly, I don&#8217;t know a &#8216;direct&#8217; way. I do a <code>CTRL+A</code> <code>9</code> once, and <code>CTRL+A</code> <code>N</code> eight more times. :(
+If you have a better way, please do tell me.</p>
+
+<h3>Navigating inside a screen</h3>
+
+<p>The first and biggest difficulty I faced while tracking an error in the screen logs is the periodic updates in Cinder dumps some lines to the Cinder
+screens every now and then. So if you have a stack trace of an error on the screen, it will go up and up and up till you can no more see it! Nope, scrolling
+your mouse up, or pulling the scrollbar up won&#8217;t help either (why not try it once :) ).</p>
+
+<p>Within a few days, I thought &#8220;Hey, I&#8217;ll just reduce the font of the terminal and I&#8217;ll be able to see more lines of screen logs on my screen!&#8221;. I knew the
+command to reduce the font size of the terminal font: <code>CTRL</code> +<code>-</code> (just for the sake of completeness, the command to increase font is <code>CTRL</code>+<code>SHIFT</code>+<code>+</code>). That
+worked pretty okay upto a point.
+It actually helps to have logs in small font, as the logs will fit in one line on the screen and will look prettier. But what if I come after say a ten-minute
+break, and see all my logs are too far up to be able to see even by reducing font size?</p>
+
+<p>Then I got to know the command which saved a ton of time in my life: The command to actually scroll up and down the screen.</p>
+
+<p>To scroll up, first press <code>CTRL</code>+<code>[</code>. After that, you can use arrow keys to scroll up and down. You can also use <code>page-up</code> and <code>page-down</code> buttons to scroll
+one complete page up or down. This isn&#8217;t all of it. If you are vim user, you will find that the <code>H</code> <code>J</code> <code>K</code> <code>L</code> will work for for <code>left</code>, <code>down</code>, <code>up</code>, and <code>right</code>
+respectively.
+And the last and most convenient thing: once you press <code>CTRL</code> <code>[</code>, that is, once you are in &#8216;copy mode&#8217;, you can then use your mouse scroll wheel too to scroll
+up and down!!
+Now that is a perfect delight :)</p>
+
+<p>To come out of this copy mode (so that you can switch to another screen, and do other such stuff), press <code>[</code> and you are back to normal once again.</p>
+
+<h2>Some more &#8216;generic&#8217; screen commands</h2>
+
+<p>So that you can start playing around with screens outside OpenStack too</p>
+
+<p>Create a new screen</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>screen</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To detach from current screen</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ctrl+A,D</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To reattach to an existing screen</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>screen -rd</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To view all the screens, their states and IDs</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>screen -list</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To kill a screen with id SCREENID</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>screen -X -S SCREENID kill</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Cheers!</p>
+
+<p>-Rushi Agrawal</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cinder on DevStack - Quick Start]]></title>
+    <link href="http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/"/>
+    <updated>2013-05-27T22:33:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start</id>
+    <content type="html"><![CDATA[<p>This blog post covers many of the important commands for OpenStack Cinder - The block storage project.
+Remaining functionality will be covered in an upcoming post soon.
+Although this guide is written based on DevStack, it will work with actual deployment of OpenStack
+cloud also (except the DevStack/Linux specific bits).</p>
+
+<!--more-->
+
+
+<p>All the Cinder operations can be performed via either of these three means:</p>
+
+<ol>
+<li>CLI (Cinder&#8217;s <code>python-cinderclient</code> command line module)</li>
+<li>GUI (Using OpenStack&#8217;s GUI project <code>horizon</code>)</li>
+<li>Directly calling the Cinder APIs</li>
+</ol>
+
+
+<p>Internally, the CLI and GUI both use Cinder APIs to interact with the Cinder API server, but for
+a relatively new guy to OpenStack, I think an introduction through CLI would make the most sense.</p>
+
+<p>Assumptions made:</p>
+
+<ol>
+<li>You understand how to setup a DevStack environment and already have one ready at hand (remember <code>./stack.sh</code>?)</li>
+<li>You know how to pass default credentials to local shell environment (<code>. /home/path_to_your_devstack_repo/eucarc</code> will do)</li>
+</ol>
+
+
+<p>Let&#8217;s start.</p>
+
+<h3>Creation and deletion of volumes</h3>
+
+<p>Create a 1-GB cinder volume with no name by running command <code>cinder create 1</code>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder create 1
+</span><span class='line'>+---------------------+--------------------------------------+
+</span><span class='line'>|       Property      |                Value                 |
+</span><span class='line'>+---------------------+--------------------------------------+
+</span><span class='line'>|     attachments     |                  []                  |
+</span><span class='line'>|  availability_zone  |                 nova                 |
+</span><span class='line'>|       bootable      |                false                 |
+</span><span class='line'>|      created_at     |      2013-05-28T10:32:47.243613      |
+</span><span class='line'>| display_description |                 None                 |
+</span><span class='line'>|     display_name    |                 None                 |
+</span><span class='line'>|          id         | 6754d216-4792-4a38-964a-d002686c8f92 |
+</span><span class='line'>|       metadata      |                  {}                  |
+</span><span class='line'>|         size        |                  1                   |
+</span><span class='line'>|     snapshot_id     |                 None                 |
+</span><span class='line'>|     source_volid    |                 None                 |
+</span><span class='line'>|        status       |               creating               |
+</span><span class='line'>|     volume_type     |                 None                 |
+</span><span class='line'>+---------------------+--------------------------------------+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here I am describing only the minimal functionality of a command. If you wish to see more info about what all you
+can do with that command, just type <code>cinder help &lt;command&gt;</code>, so to see all the optional parameters you can pass
+while creating a Cinder volume, execute <code>cinder help create</code>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder help create
+</span><span class='line'>usage: cinder create [--snapshot-id &lt;snapshot-id&gt;]
+</span><span class='line'>                     [--source-volid &lt;source-volid&gt;] [--image-id &lt;image-id&gt;]
+</span><span class='line'>                     [--display-name &lt;display-name&gt;]
+</span><span class='line'>                     [--display-description &lt;display-description&gt;]
+</span><span class='line'>                     [--volume-type &lt;volume-type&gt;]
+</span><span class='line'>                     [--availability-zone &lt;availability-zone&gt;]
+</span><span class='line'>                     [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
+</span><span class='line'>                     &lt;size&gt;
+</span><span class='line'>
+</span><span class='line'>Add a new volume.
+</span><span class='line'>
+</span><span class='line'>Positional arguments:
+</span><span class='line'>  &lt;size&gt;                Size of volume in GB
+</span><span class='line'>
+</span><span class='line'>Optional arguments:
+</span><span class='line'>  --snapshot-id &lt;snapshot-id&gt;
+</span><span class='line'>                        Create volume from snapshot id (Optional,
+</span><span class='line'>                        Default=None)
+</span><span class='line'>  --source-volid &lt;source-volid&gt;
+</span><span class='line'>                        Create volume from volume id (Optional, Default=None)
+</span><span class='line'>  --image-id &lt;image-id&gt;
+</span><span class='line'>                        Create volume from image id (Optional, Default=None)
+</span><span class='line'>  --display-name &lt;display-name&gt;
+</span><span class='line'>                        Volume name (Optional, Default=None)
+</span><span class='line'>  --display-description &lt;display-description&gt;
+</span><span class='line'>                        Volume description (Optional, Default=None)
+</span><span class='line'>  --volume-type &lt;volume-type&gt;
+</span><span class='line'>                        Volume type (Optional, Default=None)
+</span><span class='line'>  --availability-zone &lt;availability-zone&gt;
+</span><span class='line'>                        Availability zone for volume (Optional, Default=None)
+</span><span class='line'>  --metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]
+</span><span class='line'>                        Metadata key=value pairs (Optional, Default=None)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Don&#8217;t worry about the parameters, we&#8217;ll use most of them in a short time.</p>
+
+<p>Let&#8217;s create a Cinder volume of size 1GB with a name, using <code>cinder create --display-name my_second_vol 1</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder create --display-name my_second_vol 1
+</span><span class='line'>+---------------------+--------------------------------------+
+</span><span class='line'>|       Property      |                Value                 |
+</span><span class='line'>+---------------------+--------------------------------------+
+</span><span class='line'>|     attachments     |                  []                  |
+</span><span class='line'>|  availability_zone  |                 nova                 |
+</span><span class='line'>|       bootable      |                false                 |
+</span><span class='line'>|      created_at     |      2013-05-28T10:40:32.801981      |
+</span><span class='line'>| display_description |                 None                 |
+</span><span class='line'>|     display_name    |            my_second_vol             |
+</span><span class='line'>|          id         | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
+</span><span class='line'>|       metadata      |                  {}                  |
+</span><span class='line'>|         size        |                  1                   |
+</span><span class='line'>|     snapshot_id     |                 None                 |
+</span><span class='line'>|     source_volid    |                 None                 |
+</span><span class='line'>|        status       |               creating               |
+</span><span class='line'>|     volume_type     |                 None                 |
+</span><span class='line'>+---------------------+--------------------------------------+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now lets list out all the Cinder volumes, using <code>cinder list</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder list
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+</span><span class='line'>|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+</span><span class='line'>| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
+</span><span class='line'>| 6754d216-4792-4a38-964a-d002686c8f92 | available |      None     |  1   |     None    |  false   |             |
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now lets delete the first volume (the one without a name), using <code>cinder delete &lt;volume_id&gt;</code> command. If you
+execute <code>cinder list</code> real quick, you will see the status of the volume going to &#8216;deleting&#8217;, and after some time
+the volume will be deleted:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder delete 6754d216-4792-4a38-964a-d002686c8f92
+</span><span class='line'>stack@stlrx300s7-27:/$ cinder list 
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+</span><span class='line'>|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+</span><span class='line'>| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
+</span><span class='line'>| 6754d216-4792-4a38-964a-d002686c8f92 |  deleting |      None     |  1   |     None    |  false   |             |
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+</span><span class='line'>stack@stlrx300s7-27:/$ 
+</span><span class='line'>stack@stlrx300s7-27:/$ 
+</span><span class='line'>stack@stlrx300s7-27:/$ cinder list
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+</span><span class='line'>|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+</span><span class='line'>| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On a default DevStack installation, for a volume in Cinder, a &#8216;logical volume&#8217; is created on the Linux machine,
+inside the &#8216;physical volume&#8217; named <code>stack-volumes</code>. To see the logical volumes, and physical volumes on the
+ubuntu machine, just run <code>lvs</code> (logical volume scan) and <code>pvs</code> (physical volume scan) respectively (this is just
+for information and you can entirely skip this part):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ sudo lvs
+</span><span class='line'>  LV                                          VG            Attr   LSize Origin Snap%  Move Log Copy%  Convert
+</span><span class='line'>  volume-25fa2028-46dc-4870-84c5-d062ae99dd7a stack-volumes -wi-ao 1.00g
+</span><span class='line'>stack@stlrx300s7-27:/$
+</span><span class='line'>stack@stlrx300s7-27:/$ sudo pvs
+</span><span class='line'>  PV         VG            Fmt  Attr PSize PFree
+</span><span class='line'>  /dev/loop0 stack-volumes lvm2 a-   5.01g 4.01g</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Volume snapshots</h3>
+
+<p>Create the snapshot of volume:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder snapshot-create 25fa2028-46dc-4870-84c5-d062ae99dd7a
+</span><span class='line'>+---------------------+--------------------------------------+
+</span><span class='line'>|       Property      |                Value                 |
+</span><span class='line'>+---------------------+--------------------------------------+
+</span><span class='line'>|      created_at     |      2013-05-28T10:55:03.966690      |
+</span><span class='line'>| display_description |                 None                 |
+</span><span class='line'>|     display_name    |                 None                 |
+</span><span class='line'>|          id         | baf8764f-4c9b-496a-b2ff-bd49825c5d09 |
+</span><span class='line'>|       metadata      |                  {}                  |
+</span><span class='line'>|         size        |                  1                   |
+</span><span class='line'>|        status       |               creating               |
+</span><span class='line'>|      volume_id      | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
+</span><span class='line'>+---------------------+--------------------------------------+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>List all the snapshots:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder snapshot-list
+</span><span class='line'>+--------------------------------------+--------------------------------------+-----------+--------------+------+
+</span><span class='line'>|                  ID                  |              Volume ID               |   Status  | Display Name | Size |
+</span><span class='line'>+--------------------------------------+--------------------------------------+-----------+--------------+------+
+</span><span class='line'>| baf8764f-4c9b-496a-b2ff-bd49825c5d09 | 25fa2028-46dc-4870-84c5-d062ae99dd7a | available |     None     |  1   |
+</span><span class='line'>+--------------------------------------+--------------------------------------+-----------+--------------+------+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now lets create a new volume of 1GB from the snapshot:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder create --snapshot-id baf8764f-4c9b-496a-b2ff-bd49825c5d09 1
+</span><span class='line'>+---------------------+--------------------------------------+
+</span><span class='line'>|       Property      |                Value                 |
+</span><span class='line'>+---------------------+--------------------------------------+
+</span><span class='line'>|     attachments     |                  []                  |
+</span><span class='line'>|  availability_zone  |                 nova                 |
+</span><span class='line'>|       bootable      |                false                 |
+</span><span class='line'>|      created_at     |      2013-05-28T10:56:20.478141      |
+</span><span class='line'>| display_description |                 None                 |
+</span><span class='line'>|     display_name    |                 None                 |
+</span><span class='line'>|          id         | 99ebe1d0-678b-4a9a-8ec4-438f9804d327 |
+</span><span class='line'>|       metadata      |                  {}                  |
+</span><span class='line'>|         size        |                  1                   |
+</span><span class='line'>|     snapshot_id     | baf8764f-4c9b-496a-b2ff-bd49825c5d09 |
+</span><span class='line'>|     source_volid    |                 None                 |
+</span><span class='line'>|        status       |               creating               |
+</span><span class='line'>|     volume_type     |                 None                 |
+</span><span class='line'>+---------------------+--------------------------------------+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you will see two volumes when you&#8217;ll do a <code>cinder list</code>.</p>
+
+<h3>Accessing volumes from inside a virtual instance</h3>
+
+<p>You can attach a volume to a VM instance, to provide additional persistent storage to that VM. It
+works just like you attach an external HDD to your computer/laptop. But first, we&#8217;ll need to create a
+virtual machine for that.</p>
+
+<p>List out all the virtual machine images present in our DevStack setup, from which we can boot a
+brand new VM instance, using <code>glance image-list</code> or &#8216;nova image-list`:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ nova image-list
+</span><span class='line'>+--------------------------------------+---------------------------------+--------+--------+
+</span><span class='line'>| ID                                   | Name                            | Status | Server |
+</span><span class='line'>+--------------------------------------+---------------------------------+--------+--------+
+</span><span class='line'>| 291fe347-3a6f-4a21-9e85-e8809cb05d6e | cirros-0.3.1-x86_64-uec         | ACTIVE |        |
+</span><span class='line'>| 69d14d74-4185-4ba3-9666-1e7f569f38c6 | cirros-0.3.1-x86_64-uec-kernel  | ACTIVE |        |
+</span><span class='line'>| 8793532d-0c09-4b1c-aab8-d10832f13c09 | cirros-0.3.1-x86_64-uec-ramdisk | ACTIVE |        |
+</span><span class='line'>+--------------------------------------+---------------------------------+--------+--------+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&#8217;ll use the image with the shortest name, and boot an instance, giving it a name <code>myinstance</code>.
+You can list all the virtual machine instances registered with Nova using command <code>nova list</code>.
+If just after running the command to boot the virtual machine, you run <code>nova list</code> a few times,
+you will see the machine state going from &#8216;BUILD&#8217; to &#8216;ACTIVE&#8217; in a few seconds.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ nova boot --flavor m1.tiny --image 291fe347-3a6f-4a21-9e85-e8809cb05d6e myinstance
+</span><span class='line'>+-----------------------------+--------------------------------------+
+</span><span class='line'>| Property                    | Value                                |
+</span><span class='line'>+-----------------------------+--------------------------------------+
+</span><span class='line'>| status                      | BUILD                                |
+</span><span class='line'>| updated                     | 2013-05-28T11:03:47Z                 |
+</span><span class='line'>| OS-EXT-STS:task_state       | scheduling                           |
+</span><span class='line'>| key_name                    | None                                 |
+</span><span class='line'>| image                       | cirros-0.3.1-x86_64-uec              |
+</span><span class='line'>| hostId                      |                                      |
+</span><span class='line'>| OS-EXT-STS:vm_state         | building                             |
+</span><span class='line'>| flavor                      | m1.tiny                              |
+</span><span class='line'>| id                          | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
+</span><span class='line'>| security_groups             | [{u'name': u'default'}]              |
+</span><span class='line'>| user_id                     | 35708cb6795845fcab6362e908e6b0cf     |
+</span><span class='line'>| name                        | myinstance                           |
+</span><span class='line'>| adminPass                   | cQh34G96dCHX                         |
+</span><span class='line'>| tenant_id                   | 11f8fde7d627422d84036cabd6cbb7f8     |
+</span><span class='line'>| created                     | 2013-05-28T11:03:47Z                 |
+</span><span class='line'>| OS-DCF:diskConfig           | MANUAL                               |
+</span><span class='line'>| metadata                    | {}                                   |
+</span><span class='line'>| accessIPv4                  |                                      |
+</span><span class='line'>| accessIPv6                  |                                      |
+</span><span class='line'>| progress                    | 0                                    |
+</span><span class='line'>| OS-EXT-STS:power_state      | 0                                    |
+</span><span class='line'>| OS-EXT-AZ:availability_zone | nova                                 |
+</span><span class='line'>| config_drive                |                                      |
+</span><span class='line'>+-----------------------------+--------------------------------------+
+</span><span class='line'>stack@stlrx300s7-27:/$ nova list
+</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+----------+
+</span><span class='line'>| ID                                   | Name       | Status | Task State | Power State | Networks |
+</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+----------+
+</span><span class='line'>| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | BUILD  | networking | NOSTATE     |          |
+</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+----------+
+</span><span class='line'>stack@stlrx300s7-27:/$ nova list
+</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+----------+
+</span><span class='line'>| ID                                   | Name       | Status | Task State | Power State | Networks |
+</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+----------+
+</span><span class='line'>| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | BUILD  | spawning   | NOSTATE     |          |
+</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+----------+
+</span><span class='line'>stack@stlrx300s7-27:/$ nova list
+</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+------------------+
+</span><span class='line'>| ID                                   | Name       | Status | Task State | Power State | Networks         |
+</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+------------------+
+</span><span class='line'>| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | ACTIVE | None       | Running     | private=10.0.0.2 |
+</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+------------------+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now lets attach one of our volume to this instance, and then try to peek into this volume after logging into the instance.</p>
+
+<p>Attach volume using command <code>nova volume-attach &lt;instance_id&gt; &lt;volume_id&gt; &lt;attach_location&gt;</code>. We&#8217;ll attach at the first
+free device location: <code>/dev/vdb</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ nova volume-attach 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f 25fa2028-46dc-4870-84c5-d062ae99dd7a /dev/vdb
+</span><span class='line'>+----------+--------------------------------------+
+</span><span class='line'>| Property | Value                                |
+</span><span class='line'>+----------+--------------------------------------+
+</span><span class='line'>| device   | /dev/vdb                             |
+</span><span class='line'>| serverId | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
+</span><span class='line'>| id       | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
+</span><span class='line'>| volumeId | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
+</span><span class='line'>+----------+--------------------------------------+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now listing the volume will tell you that the volume is attached to an instance (in use):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder list
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+</span><span class='line'>|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable |             Attached to              |
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+</span><span class='line'>| 25fa2028-46dc-4870-84c5-d062ae99dd7a |   in-use  | my_second_vol |  1   |     None    |  false   | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
+</span><span class='line'>| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |                                      |
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now let&#8217;s login into this virtual machine using the private IP of the instance (<code>10.0.0.2</code> in our case). Note how an
+error message pops up if you have already created an instance last time when you installed DevStack. If such an error
+appears on your screen too, follow the instructions just like the way I did. The default password for the cirros image
+we used is <code>cubswin:)</code>. Enter into the instance, and then become root:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ ssh cirros@10.0.0.2
+</span><span class='line'>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+</span><span class='line'>@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+</span><span class='line'>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+</span><span class='line'>IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+</span><span class='line'>Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+</span><span class='line'>It is also possible that a host key has just been changed.
+</span><span class='line'>The fingerprint for the RSA key sent by the remote host is
+</span><span class='line'>f5:ac:45:4c:63:8e:e4:19:cc:5a:76:7e:a1:08:e7:c8.
+</span><span class='line'>Please contact your system administrator.
+</span><span class='line'>Add correct host key in /opt/stack/.ssh/known_hosts to get rid of this message.
+</span><span class='line'>Offending RSA key in /opt/stack/.ssh/known_hosts:4
+</span><span class='line'>  remove with: ssh-keygen -f "/opt/stack/.ssh/known_hosts" -R 10.0.0.2
+</span><span class='line'>RSA host key for 10.0.0.2 has changed and you have requested strict checking.
+</span><span class='line'>Host key verification failed.
+</span><span class='line'>
+</span><span class='line'>stack@stlrx300s7-27:/$ ssh-keygen -f "/opt/stack/.ssh/known_hosts" -R 10.0.0.2
+</span><span class='line'>/opt/stack/.ssh/known_hosts updated.
+</span><span class='line'>Original contents retained as /opt/stack/.ssh/known_hosts.old</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ ssh cirros@10.0.0.2
+</span><span class='line'>The authenticity of host '10.0.0.2 (10.0.0.2)' can't be established.
+</span><span class='line'>RSA key fingerprint is f5:ac:45:4c:63:8e:e4:19:cc:5a:76:7e:a1:08:e7:c8.
+</span><span class='line'>Are you sure you want to continue connecting (yes/no)? yes
+</span><span class='line'>Warning: Permanently added '10.0.0.2' (RSA) to the list of known hosts.
+</span><span class='line'>cirros@10.0.0.2's password: 
+</span><span class='line'>$sudo -i
+</span><span class='line'>#</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Run <code>fdisk -l</code> to see the disks present for the instance. You will see that your newly attached disk
+<code>/dev/vdb</code> of size 1GB is now present:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># fdisk -l
+</span><span class='line'>
+</span><span class='line'>Disk /dev/vda: 1073 MB, 1073741824 bytes
+</span><span class='line'>16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors
+</span><span class='line'>Units = sectors of 1 * 512 = 512 bytes
+</span><span class='line'>Sector size (logical/physical): 512 bytes / 512 bytes
+</span><span class='line'>I/O size (minimum/optimal): 512 bytes / 512 bytes
+</span><span class='line'>Disk identifier: 0x00000000
+</span><span class='line'>
+</span><span class='line'>Disk /dev/vda doesn't contain a valid partition table
+</span><span class='line'>
+</span><span class='line'>Disk /dev/vdb: 1073 MB, 1073741824 bytes
+</span><span class='line'>16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors
+</span><span class='line'>Units = sectors of 1 * 512 = 512 bytes
+</span><span class='line'>Sector size (logical/physical): 512 bytes / 512 bytes
+</span><span class='line'>I/O size (minimum/optimal): 512 bytes / 512 bytes
+</span><span class='line'>Disk identifier: 0x00000000
+</span><span class='line'>
+</span><span class='line'>Disk /dev/vdb doesn't contain a valid partition table</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Command <code>blkid /dev/vd*</code> lists out the IDs of block devices for this machine and some related info. Running
+this command you will see that info of only the virtual disk <code>/dev/vda</code> is present, meaning our disk <code>/dev/vdb</code>
+needs formatting.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># blkid /dev/vd*
+</span><span class='line'>/dev/vda: LABEL="cirros-rootfs" UUID="74251bb8-3a28-4a46-9a78-064497b26b9d" SEC_TYPE="ext2" TYPE="ext3" </span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lets format it to make an EXT3 partition with block-size 1024 bytes using command <code>mkfs.ext3 -b 1024 /dev/vdb</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># mkfs.ext3 -b 1024 /dev/vdb
+</span><span class='line'>mke2fs 1.42.2 (27-Mar-2012)
+</span><span class='line'>Filesystem label=
+</span><span class='line'>OS type: Linux
+</span><span class='line'>Block size=1024 (log=0)
+</span><span class='line'>Fragment size=1024 (log=0)
+</span><span class='line'>Stride=0 blocks, Stripe width=0 blocks
+</span><span class='line'>65536 inodes, 1048576 blocks
+</span><span class='line'>52428 blocks (5.00%) reserved for the super user
+</span><span class='line'>First data block=1
+</span><span class='line'>Maximum filesystem blocks=68157440
+</span><span class='line'>128 block groups
+</span><span class='line'>8192 blocks per group, 8192 fragments per group
+</span><span class='line'>512 inodes per group
+</span><span class='line'>Superblock backups stored on blocks: 
+</span><span class='line'>        8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409, 663553, 
+</span><span class='line'>        1024001
+</span><span class='line'>
+</span><span class='line'>Allocating group tables: done                            
+</span><span class='line'>Writing inode tables: done                            
+</span><span class='line'>Creating journal (32768 blocks): done
+</span><span class='line'>Writing superblocks and filesystem accounting information: done</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Run <code>blkid</code> again to see the newly partitioned disk listed:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># blkid /dev/vd*
+</span><span class='line'>/dev/vda: LABEL="cirros-rootfs" UUID="74251bb8-3a28-4a46-9a78-064497b26b9d" SEC_TYPE="ext2" TYPE="ext3" 
+</span><span class='line'>/dev/vdb: UUID="22838e81-eb97-457d-b1e0-4ff3d8e45b05" SEC_TYPE="ext2" TYPE="ext3" </span></code></pre></td></tr></table></div></figure>
+
+
+<p>In order to use this disk, you need to mount it at some location. I&#8217;ll create a directory <code>/tempmount</code>
+and mount our virtual block device there:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># mkdir /tempmount
+</span><span class='line'># mount /dev/vdb /tempmount/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you can see the disk listed in the machine disks, using <code>df -h</code> command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># df -h
+</span><span class='line'>Filesystem                Size      Used Available Use% Mounted on
+</span><span class='line'>/dev                    242.3M         0    242.3M   0% /dev
+</span><span class='line'>/dev/vda                 31.0M      9.7M     19.7M  33% /
+</span><span class='line'>tmpfs                   245.9M         0    245.9M   0% /dev/shm
+</span><span class='line'>tmpfs                   200.0K     76.0K    124.0K  38% /run
+</span><span class='line'>/dev/vdb               1007.7M     34.9M    921.6M   4% /tempmount</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you can <code>cd</code> into <code>/tempmount</code> directory, and do whatever you want to do with the new disk &#8211; put some files there,
+or download one!</p>
+
+<p>Lets wrap up this part. Unmount this volume by <code>umount /tempmount</code>, and log out from the machine by pressing <code>CTRL+D</code> twice, and execute <code>nova volume-detach &lt;volume_id&gt;
+&lt;server_id&gt;</code> to detach this volume. You can now see the &#8216;Attached to&#8217; column becomes empty again after detaching.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder list
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+</span><span class='line'>|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable |             Attached to              |
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+</span><span class='line'>| 25fa2028-46dc-4870-84c5-d062ae99dd7a |   in-use  | my_second_vol |  1   |     None    |  false   | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
+</span><span class='line'>| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |                                      |
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+</span><span class='line'>stack@stlrx300s7-27:/$ nova volume-detach 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f 25fa2028-46dc-4870-84c5-d062ae99dd7a
+</span><span class='line'>stack@stlrx300s7-27:/$ cinder list
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+</span><span class='line'>|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+</span><span class='line'>| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
+</span><span class='line'>| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |             |
+</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>More features</h3>
+
+<p>(Will update shortly)</p>
+
+<p>Cheers!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[OpenStack Tempest quick start with DevStack]]></title>
+    <link href="http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/"/>
+    <updated>2013-03-20T04:54:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack</id>
+    <content type="html"><![CDATA[<p>This quick start guide explains setting up Tempest with a DevStack environment
+for Grizzly release. Most of the information here is taken from
+<a href="http://www.joinfu.com/2012/03/testing-essex-rc1-with-devstack-and-tempest/">here</a>, the only difference being this blog post is more recent, and is based on Grizzly.</p>
+
+<!--more-->
+
+
+<p>Assumptions made are that you understand:
+1. What is a <code>localrc</code> file in DevStack.
+2. What does <code>./stack.sh</code> do in DevStack.
+3. How to clone using git.</p>
+
+<h2>Setting up DevStack</h2>
+
+<p>Clone DevStack</p>
+
+<pre><code>git clone https://github.com/openstack-dev/devstack.git
+cd devstack
+</code></pre>
+
+<p>Tempest requires that the rate-limiting for DevStack is turned off. By default, it is turned on, so turn it off by adding this line to the localrc file.</p>
+
+<pre><code>API_RATE_LIMIT=False
+</code></pre>
+
+<p>If you have already created a DevStack environment, you will have to go through the labour of setting it all again by unstacking and restacking it with this parameter in localrc.
+Quick tip: If you already had a working DevStack in your computer, adding <code>OFFLINE=True</code> line in localrc will create the DevStack environment in your computer WITHOUT
+downloading all the OpenStack code all over again from the Github repos, but will build the environment from the existing code (thus saving you some Internet bandwidth and time).</p>
+
+<p>Build the DevStack environment</p>
+
+<pre><code>./stack.sh
+</code></pre>
+
+<p>Supply all the five passwords. (If you are just playing around, just like me, then
+you can easily supply <code>nova</code> to all the passwords.)</p>
+
+<p>Note the IP of the system where DevStack is running (The &#8216;host IP&#8217; mentioned at the last of the output after running <code>stack.sh</code>).</p>
+
+<h2>Setting up Tempest</h2>
+
+<p>Clone latest Tempest code</p>
+
+<pre><code>git clone https://github.com/openstack/tempest.git
+cd tempest
+</code></pre>
+
+<p>Create tempest.conf file from the sample configuration file. This file will contain the configuration information of the OpenStack environment (here, the DevStack
+environment)</p>
+
+<pre><code>cp etc/tempest.conf.sample etc/tempest.conf
+</code></pre>
+
+<p>Now open the file tempest.conf in an editor, and replace all instance of word <code>secret</code> with the appropriate password (<code>nova</code> if you followed me, and just typed <code>nova</code> whenever the
+<code>stack.sh</code> script asked for passwords)</p>
+
+<p>If, for example, your host IP is 10.0.24.30, change this line in tempest.conf</p>
+
+<pre><code>uri = http://127.0.0.1:5000/v2.0/
+</code></pre>
+
+<p>to make it</p>
+
+<pre><code>uri = http://10.0.24.30:5000/v2.0/
+</code></pre>
+
+<p>The last thing to update in the tempest.conf file is the ID of the Cirros image. The image ID can be obtained by two ways</p>
+
+<h4>Image ID using glance</h4>
+
+<p>This command will return the image ID. Note that I have used the password <code>nova</code> in this line. You might also need to change the host IP address</p>
+
+<pre><code>glance -I admin -K nova -T admin -N http://10.0.24.30:5000/v2.0 -S keystone index | grep ami | cut -f1 | awk '{print $1}'
+</code></pre>
+
+<h4>Image ID using OpenStack CLI</h4>
+
+<p>Become stack user</p>
+
+<pre><code>su - stack
+</code></pre>
+
+<p>Source the sample credentials file</p>
+
+<pre><code>. /opt/stack/devstack/eucarc
+</code></pre>
+
+<p>OR</p>
+
+<pre><code>. /opt/stack/devstack/openrc
+</code></pre>
+
+<p>Show all the images, with their IDs</p>
+
+<pre><code>$ nova image-list
++--------------------------------------+---------------------------------+--------+--------+
+| ID                                   | Name                            | Status | Server |
++--------------------------------------+---------------------------------+--------+--------+
+| 13abf9c8-5603-48cb-802e-e27162e10b58 | cirros-0.3.0-x86_64-uec         | ACTIVE |        |
+| 39b023ae-9201-427d-8350-4f30e5bbc01a | cirros-0.3.0-x86_64-uec-kernel  | ACTIVE |        |
+| 431a9c04-47b1-47e4-9521-7f12295c78e0 | cirros-0.3.0-x86_64-uec-ramdisk | ACTIVE |        |
++--------------------------------------+---------------------------------+--------+--------+
+</code></pre>
+
+<p>The ID of the smallest image name is what we&#8217;re interested in.</p>
+
+<p>Now replace <code>{$IMAGE_ID}</code> and <code>{$IMAGE_ID_ALT}</code> with this value, to make those two lines appear in tempest.conf as</p>
+
+<pre><code>image_ref = 13abf9c8-5603-48cb-802e-e27162e10b58
+image_ref_alt = 13abf9c8-5603-48cb-802e-e27162e10b58
+</code></pre>
+
+<h2>Installing required dependencies</h2>
+
+<p>Install all the required packages needed to run Tempest integration test suite. (The list of required packages is maintained in file <code>tools/pip-requires</code>)</p>
+
+<pre><code>$ sudo pip install -r tools/pip-requires 
+</code></pre>
+
+<h2>Show time!</h2>
+
+<p>We&#8217;ll run all the tests in verbose mode. To run all the tests:</p>
+
+<pre><code>nosetests -v tempest
+</code></pre>
+
+<p>To run tests only from a specific file, say <code>tempest/tests/volume/test_volumes_list.py</code>:</p>
+
+<pre><code>nosetests -sv tempest.tests.volume.test_volumes_list
+</code></pre>
+
+<p>OR</p>
+
+<pre><code>nosetests -sv tempest.tests.volume.test_volumes_list.py
+</code></pre>
+
+<p>To run a specific test <code>test_volume_list_with_details</code> from test class <code>VolumeListTest</code>, which resides in the above file:</p>
+
+<pre><code>    nosetests -sv tempest.tests.volume.test_volumes_list:VolumeListTest.test_volume_list_with_details
+</code></pre>
+
+<p>And that ladies and gentlemen, is the end! :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GitHub Cheat Sheet]]></title>
+    <link href="http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet/"/>
+    <updated>2013-03-19T04:22:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet</id>
+    <content type="html"><![CDATA[<p>I am posting my github cheat sheet here. I started writing it as soon as I started
+learning Github and Git. So, some of the content here can appear quite naive.
+I will try to keep this blog post as updated as I can, and if you find any
+suggestion, please comment!</p>
+
+<p>This post is just for a reference of commands. This post will be a bad way to learn
+how git works. A basic understanding of git is assumed.</p>
+
+<!--more-->
+
+
+<h2>Initial configuration</h2>
+
+<p>Configure user details only for the first time</p>
+
+<pre><code>git config --global user.name "Rushi Agrawal"
+git config --global user.email "rushi.agr@gmail.com"
+</code></pre>
+
+<p>To check your git configuration</p>
+
+<pre><code>git config --list
+</code></pre>
+
+<h2>Branches</h2>
+
+<p>List all branches in the local repo</p>
+
+<pre><code>git branch
+</code></pre>
+
+<p>List all branches including remote-tracking branches</p>
+
+<pre><code>git branch -r
+</code></pre>
+
+<p>List all branches (including the ones at remote)</p>
+
+<pre><code>git branch -a
+</code></pre>
+
+<p>Creating your own branch <code>my_branch</code>, with content same as your current branch</p>
+
+<pre><code>git branch my_branch
+</code></pre>
+
+<p>Switch to the newly created branch</p>
+
+<pre><code>git checkout my_branch
+</code></pre>
+
+<p>Execute the above two commands in one line:</p>
+
+<pre><code>git checkout -b my_branch
+</code></pre>
+
+<p>to pull a branch <code>only_remote</code> which exists at github (at remote <code>rushiagr</code> but not in local repo. (More about <code>git remote update</code> later)</p>
+
+<pre><code>git remote update
+git checkout -b only_remote rushiagr/only_remote
+</code></pre>
+
+<h2>Remotes</h2>
+
+<p>Create a new remote <code>rushiagr</code> which will track <code>cinder</code> repository by user <code>rushiagr</code></p>
+
+<pre><code>git remote add rushiagr https://github.com/rushiagr/cinder.git
+</code></pre>
+
+<p>If this is your personal repo, you can append the username in the remote as shown. After that, every time you push to the origin,
+github will not ask for your username but only password.</p>
+
+<pre><code>git remote add rushiagr https://rushiagr@github.com/rushiagr/cinder.git
+</code></pre>
+
+<p>Delete the remote <code>rushiagr</code></p>
+
+<pre><code>git remote rm rushiagr
+</code></pre>
+
+<p>List all the remotes</p>
+
+<pre><code>git remote
+</code></pre>
+
+<p>The above command only shows the names of remotes. To also check the links to the remotes:</p>
+
+<pre><code>git remote -v
+</code></pre>
+
+<p>Now this is very important command.</p>
+
+<pre><code>git remote update
+</code></pre>
+
+<p>This will contact the git server, and will update the local repository with ALL the content at ALL those remotes. The interesting part is, nothing will actually change. That is, no more new branches (which got created at the server after you last pulled from the server) were created, and the existing branches are also not updated. BUT, all the content goes into the magic <code>.git</code> directory. After you&#8217;ve run this command, when you create a branch only existing at remote, the local git repo will not contact the server but will fetch all the contents from within the repository.</p>
+
+<p>To take a new branch from remote, and create a new branch having contents of that remote branch. (You might need to run &#8216;git remote update&#8217;)</p>
+
+<pre><code>git checkout -b stable/folsom origin/stable/folsom
+</code></pre>
+
+<h2>Push</h2>
+
+<p>Pushing this newly created branch to remote <code>rushiagr</code></p>
+
+<pre><code>git push rushiagr my_branch
+</code></pre>
+
+<p>If you want to push the local branch <code>my_branch</code> with a different name to
+remote, say <code>my_remote_branch</code>:</p>
+
+<pre><code>git push rushiagr my_branch:my_remote_branch
+</code></pre>
+
+<p>To create an association with the remote (only first time):</p>
+
+<pre><code>git push -u origin my_branch
+</code></pre>
+
+<p>or</p>
+
+<pre><code>git push --set-upstream origin my_branch
+</code></pre>
+
+<h2>Pull</h2>
+
+<p>Git pull is nothing more than a macro that does git fetch and git merge, in
+that order. The common syntax to pull from branch <code>remote_branch</code> located at remote <code>remote_name</code> to the current active branch in the local repo:</p>
+
+<pre><code>git pull remote_name remote_branch
+</code></pre>
+
+<h2>Oops! I didn&#8217;t intend to do that!</h2>
+
+<h4>To undo last commit.</h4>
+
+<p>This will just undo the commit, but will keep changes, so that you can modify the files and commit again</p>
+
+<pre><code>git reset --soft HEAD^
+</code></pre>
+
+<h4>To not keep the uncommitted changes.</h4>
+
+<p>This command will wipe off all the changes which are not committed. Very useful when you made some changes but dont want to commit it. All the more useful when you <code>pull</code>ed something but everything became a mess (possibly due to a merge conflict, or pulling to/from a different branch!)</p>
+
+<pre><code>git reset --hard
+</code></pre>
+
+<h4>To delete a branch <code>timepass_testing</code> from github server</h4>
+
+<pre><code>git push rushiagr --delete timepass_testing
+</code></pre>
+
+<p>(NOT <code>git push rushiagr --delete rushiagr/timepass_testing</code>)</p>
+
+<h4>Change author of the last commit</h4>
+
+<pre><code>git commit --amend --author="Rushi Agrawal &lt;rushi.agr@gmail.com&gt;"
+</code></pre>
+
+<p>You committed some changes, but then you realised you wanted to add this one line to the commit. In such a case
+just add that one line, and run this command to have this last change incorporated into that previous commit. This command also gives you an option to
+change the commit message.</p>
+
+<pre><code>git commit -a --amend
+</code></pre>
+
+<h2>Show me the money</h2>
+
+<p>To see the patch of the last commit without undoing the last commit</p>
+
+<pre><code>git show
+</code></pre>
+
+<p>To see the changes introduced by any earlier commit with commit id <code>c5bb6d821e10ca8f114fa0b3b0149bc8b7257a92</code></p>
+
+<pre><code>git show c5bb6d821e10ca8f114fa0b3b0149bc8b7257a92
+</code></pre>
+
+<p>To see the latest changes you made &#8211; the changes which have not been staged to be committed</p>
+
+<pre><code>git diff
+</code></pre>
+
+<p>You can redirect the output from the above three commands to a file, to create corresponding patch file.</p>
+
+<h2>Patching in git</h2>
+
+<p>Check the status of patch. How many lines changed, etc</p>
+
+<pre><code>git apply --stat patchfile
+</code></pre>
+
+<p>Check if the patch can be applied.
+If no output or no error, patch can be applied safely</p>
+
+<pre><code>git apply --check patchfile
+</code></pre>
+
+<p>Apply patch with signing-off (better way)</p>
+
+<pre><code>git am --signoff &lt; patchfile
+</code></pre>
+
+<p>Normal way of applying patch</p>
+
+<pre><code>git apply patchfile
+</code></pre>
+
+<h2>Miscellaneous</h2>
+
+<p>To pull only specific files from another branch: (here, assuming that we have two branches, &#8216;test&#8217;, and &#8216;master&#8217;, and currently we are on &#8216;master&#8217; branch. If you want to pull ##only &#8216;testfile.py&#8217; file from &#8216;test&#8217; branch to &#8216;master&#8217; branch, do this:)</p>
+
+<pre><code>git checkout test testfile.py1
+</code></pre>
+
+<p>If your master changed while you were working on your topic_branch, and if you want to merge the master&#8217;s changes, and also get an option to squash the changes you made on topic_branch:</p>
+
+<pre><code>git checkout master
+git pull origin master
+git checkout topic_branch
+git rebase -i master
+</code></pre>
+
+<p><a href="http://christoph.ruegg.name/blog/2010/5/5/git-howto-revert-a-commit-already-pushed-to-a-remote-reposit.html}%0A(you%20can%20use%20git%20revert,%20but%20don%E2%80%99t%20know%20how%20exactly%20it%20works">Undo last commit at the remote repo</a></p>
+
+<p>Clone a specific branch git repository from github</p>
+
+<pre><code>git clone -b stable/essex https://github.com/openstack-dev/devstack.git
+</code></pre>
+
+<p><a href="https://makandracards.com/makandra/527-squash-several-git-commits-into-a-single-commit">Squash several commits into one single commit</a></p>
+
+<p>Checkout a previous commit with SHA commit id cff2580ad7bc16934b72dd9be7463eb090b31d55 from the current branch to a new branch &#8216;neew&#8217;</p>
+
+<pre><code>git checkout -b neew cff2580ad7bc16934b72dd9be7463eb090b31d55
+</code></pre>
+
+<p>Check out code from a tag <code>some_tag</code> to a new branch <code>code_at_some_tag</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout -b code_at_some_tag tags/some_tag</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Cheers!
+Rushi Agrawal</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Bye-Bye 2012, Welcome 2013]]></title>
+    <link href="http://rushiagr.github.io/blog/2013/01/02/bye-bye-2012/"/>
+    <updated>2013-01-02T00:54:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2013/01/02/bye-bye-2012</id>
+    <content type="html"><![CDATA[<p>Listing down the things which went well for me in 2012, and which didn&#8217;t, and the plans for upcoming year 2013. Beware: More technical stuff than emotional.</p>
+
+<!--more-->
+
+
+<h2>Things which went well in 2012</h2>
+
+<h4>Python</h4>
+
+<p>Started learning Python at the start of year 2012, early January, and this same language landed me in the job which I absolutely love: working in one of the biggest &#8216;OpenSource&#8217; project in the world, written in Python! Getting paid for working on an opensource project is as awesome as it can become for me.</p>
+
+<h4>The hunger to become different from the rest</h4>
+
+<p>Gathered a lot of info on how things work in computer industry. Kept myself in contact with various hot topics, opensource projects.</p>
+
+<h4>The job</h4>
+
+<p>Not faring too well on this front - the full time job. But still, I would consider I did good enough with regards to the work assigned to me. I, after six months into the job, still goes to office every morning with a thirst to make a difference.</p>
+
+<h4>Cleanliness</h4>
+
+<p>Scored much better in the second half. Spent dedicated amount of time each week to keep my room and flat clean and in order.</p>
+
+<h4>Maintaining a TODO list</h4>
+
+<p>Started late in the year, but seems a good progress on that front.</p>
+
+<h2>Things which didn&#8217;t go that well in 2012</h2>
+
+<h4>Concentration</h4>
+
+<p>Still not able to concentrate on one thing for long. Get distracted too easily. Only rarely I sat at one place, focussed on one thing, for more than 50 minutes. Also, the last year&#8217;s resolution of opening FaceBook only once a day was put in trashcan on in the very first week of January!</p>
+
+<h4>Not focussed enough on the future direction</h4>
+
+<p>Poor goal setting. Peeked into a lot of opensource projects, dedicated proper time into none. Opensourced my projects too, but did not work on it much either. Made myself a perfect example of &#8216;naam bade aur darshan chhote&#8217; (appearing like an eminent personality, acting like a jerk).</p>
+
+<h4>Programming contest</h4>
+
+<p>Only kept in touch. Not solved much problems. This year, need to focus a lot on this front.</p>
+
+<h4>Time management</h4>
+
+<p>Never was able to manage time. Was not working on the same thing for even a week. Somewhere in the middle of working on a project, I find out &#8216;hey, this looks cool! Time to try hands on it!&#8217;. What about the thingy you were currently working on? Into the TODO list! Such an idiot.</p>
+
+<h4>Work life balance</h4>
+
+<p>Went for a toss. Not able to regularise job timings. Started and stopped gym. Started and stopped working on many projects. Completed none. Wasted a heck of a lot of time.</p>
+
+<h2>Plans for upcoming year</h2>
+
+<h4>Better planning</h4>
+
+<p>I need to plan things before acting on it. I would take everything into consideration before jumping into hacking something, and then set a deadline for it. And till that deadline, I would promise I would not digress getting enticed by something which makes my mouth watery.</p>
+
+<h4>Don&#8217;t just outright neglect daytime job</h4>
+
+<p>I agree my daytime job is awesome. But I end up considering the work I do at office as secondary. Need to value it much higher. I concentrate on other projects and aim to complete and polish them. What I did not thought was the work I am doing in my job itself is a project! If I am not faring well in the project on which I work 8 hours a day, how can I expect myself to do good in something I am spending only a fraction of time I spend on the daytime project! And expectedly, none of my projects are in good enough shape to talk about it confidently in public. I need to value OpenStack more. Really.</p>
+
+<h4>START coding for programming contests</h4>
+
+<p>Enough of promises, enough of &#8216;From next month I&#8217;m gonna do it&#8217;. I SHOULD spend a specific time every week for coding for programming contests. Looks like I need to start with solving old problems from CodeChef.com alongwith the editorials provided with them.</p>
+
+<h4>Facebook once in a day</h4>
+
+<p>Period.</p>
+
+<h4>Need to plan breaks too</h4>
+
+<p>Realised only the last month that opening facebook, checking out news, and reading articles on Hacker News does not count in a break. A break is not in front of a computer screen. A break is something which gives your strained eyes a rest, especially when you end up spending half of your year staring at a computer screen!</p>
+
+<p>PS. The article is for the writer himself. It is okay if you are finding it a bad piece of English text.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Testing the new blog]]></title>
+    <link href="http://rushiagr.github.io/blog/2012/12/15/testing-the-new-blog/"/>
+    <updated>2012-12-15T17:49:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2012/12/15/testing-the-new-blog</id>
+    <content type="html"><![CDATA[<p>This is a test blog, just to check out some of the basic functionalities of
+MarkDown. Visit the MarkDown source of this blog post <a href="https://raw.github.com/rushiagr/rushiagr.github.com/source/source/_posts/2012-12-15-testing-the-new-blog.markdown">here</a>
+to understand the simplicity with which a post can be written using MarkDown!</p>
+
+<!-- more -->
+
+
+<h2>This is a subheading</h2>
+
+<p>And below is an example of H1 heading in the main text</p>
+
+<h1>THE heading</h1>
+
+<p>And below is sub-subheading</p>
+
+<h3>The H3 heading</h3>
+
+<p>Trying a smaller heading:</p>
+
+<h4>The sub sub subheading</h4>
+
+<p>Following is a block of syntax-highlighted python code.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">answer</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">counter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">number</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">answer</span> <span class="o">*=</span> <span class="n">counter</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">answer</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To write a monospace block, enclose it in backticks. An example would be a directory location: <code>/home/rushi/Desktop/</code> is where the files on my desktop
+reside.</p>
+
+<p>Here is an embedded image:</p>
+
+<p><img src="http://rushiagr.github.com/images/bird_32_gray.png"></p>
+
+<p>Thank you!</p>
+]]></content>
+  </entry>
+  
+</feed>
