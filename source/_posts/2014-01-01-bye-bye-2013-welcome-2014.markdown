@@ -37,7 +37,7 @@ My salary has grown to an amount that my spendings are now less than 1/5th of my
 #### Task tracking
 Be it tracking articles to read, blogposts to write, side projects to do, or things to learn; I am tracking each of them very efficiently thanks to the Trello. An awesome tool, and I definitely recommend you to use it. Till last year, I used to rely upon Microsoft OneNote, and thankfully I have found a better alternative for that after quite some time. 
 
-I also now maintain a notebook and a pen. This helps a lot for things to do in a short time, as I can have my notebook always open at my desk -- not tha same case with any software in the computer which always gets hidden in the background once we start working. It is a nice feeling to strike off items one-by-one from the bullet list you write down on a paper. I also find paper notebooks very helpful when I am planning something, e.g. a side project. The free form writing/drawing it allows is still not possible in the digital world I believe.
+I also now maintain a notebook and a pen. This helps a lot for things to do in a short time, as I can have my notebook always open at my desk -- not the same case with any software in the computer which always gets hidden in the background once we start working. It is a nice feeling to strike off items one-by-one from the bullet list you write down on a paper. I also find paper notebooks very helpful when I am planning something, e.g. a side project. The free form writing/drawing it allows is still not possible in the digital world, I believe.
 
 #### Setting up priorities in life
 Not anymore in mood of going for higher studies. Not going to prepare for interviews, and algorithmic questions. Going to work on side projects, and will look for opportunities of starting something of my own. Marriage? Don't talk about it just yet.
@@ -46,7 +46,7 @@ Not anymore in mood of going for higher studies. Not going to prepare for interv
 As always, more negatives than positives :)
 
 #### Side projects
-Two job changes, time spent in decision making and relocation, and day job work from four cities all made my life a little unsettled for a majority of this year. As a result, I couldn't spend much time on any of them. I started with ResumApp (I know, a poor name by any standards), an application to create your resume in a single-page HTML file, but left it completely as soon as I was offered a job at Amazon. Another one, '202020rule', is a simple one, and I am pretty happy with its progress. Not much learning involved in it, but it gave me important lessons with respect to time and priority management. 
+Two job changes, time spent in decision making and relocation, and day job work from four cities all made my life a little unsettled for a majority of this year. As a result, I couldn't spend much time on any of them. I started with ResumAppGAE (I know, a poor name by any standards), an application to create your resume in a single-page HTML file, but left it completely as soon as I was offered a job at Amazon. Another one, <a href="http://www.rushiagr.com/202020rule/" target="_blank">20-20-20 rule</a>, is a simple one, and I am pretty happy with its progress. Not much learning involved in it, but it gave me important lessons with respect to time and priority management. 
 
 #### Very less blogs
 I did work on a lot of items on which I can write blog articles, but always fell short of doing that. This article can be thought of an attempt to start fixing that.
@@ -54,13 +54,13 @@ I did work on a lot of items on which I can write blog articles, but always fell
 #### Feeble Concentration
 Failed hopelessly on the promise of using less online social networking. Still spending too much time on online news and social networks. I still think that at the most half an hour each day is enough to keep oneself abreast of all the happenings in the world, plus keeping in contact with friends. The harder part is execution :)
 
-Also, there is still a very long way to go before I am confident of my breaks between working. Proper management of breaks is directly affects the productivity when he/she is not on a break.
+Also, there is still a very long way to go before I am confident of my breaks between working. Proper management of breaks directly affect the productivity when one is not on a break.
 
 #### Poor time management
 Only in the last months was I able to reasonably balance my time between my day job, family and friends. I hope to continue the same in the coming year.
 
 #### Very less travelling/vacation
-Not a single trip to any place worth visiting in the whole year. Whatever vacations I took I spent time at home. I am going to repent it in my old age if I continue like this.
+Not a single trip to any place worth visiting in the whole year. Whatever vacations I took I spent time at home. I am going to repent in my old age if I continue like this.
 
 
 ## Plans for upcoming year
@@ -71,11 +71,10 @@ Of day job, side projects, blog writing, vacations, time for friends and family.
 #### Write blogs
 Write as much as I can. It is the easiest, simplest and cheapest medium by which I can help people gain knowledge.
 
+#### Final goal, plus some resolutions
+Become expert in OpenStack. Implement and popularize a couple side projects (i.e. get people to love it). Lose weight. Do a simple workout daily.
 
-#### Final goal
-Become expert in OpenStack. Implement and popularize a couple side projects (i.e. get people to love it)
 
-
-All in all a decent year. Definitely better than the last one, but not as good as I wanted it to be.
+All in all, a decent year. Not as good as I wanted it to be, but definitely better than the last one.
 
 Cheers!
