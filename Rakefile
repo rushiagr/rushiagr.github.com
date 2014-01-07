@@ -260,6 +260,8 @@ multitask :push do
     puts "\n## Commiting: Site updated at #{Time.now.utc}"
     message = "Site updated at #{Time.now.utc}"
     system "git commit -m \"#{message}\""
+    puts "\n(rushiagr)$ ## Pulling master from remote 'origin'"
+    puts "\n(rushiagr)$ git pull origin master. OK, not changed anything so far"
     puts "\n## Pushing generated #{deploy_dir} website"
     system "git push origin #{deploy_branch}"
     puts "\n## Github Pages deploy complete"
