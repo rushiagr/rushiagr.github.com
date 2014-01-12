@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Installing OpenID plugin for MediaWiki - Sense, and Simplicity</title>
+  <meta name="author" content="Rushi Agrawal">
+
+  
+  <meta name="description" content="This post is about setting up your wiki such that their users access the wiki
+only via an OpenID provider login (e.g. Google or Facebook login) This &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://rushiagr.github.io/blog/2014/01/12/installing-openid-plugin-for-mediawiki">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Sense, and Simplicity" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Sense, and Simplicity</a></h1>
+  
+    <h2>Blog-cum-shoutbox of Rushi Agrawal</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:rushiagr.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Installing OpenID Plugin for MediaWiki</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-12T13:09:00+05:30" pubdate data-updated="true">Jan 12<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This post is about setting up your wiki such that their users access the wiki
+only via an OpenID provider login (e.g. Google or Facebook login)</p>
+
+<p>This post assumes MediaWiki is already installed (which in my case was installed
+via Puppet, but it shouldn&#8217;t matter).</p>
+
+<!--more-->
+
+
+<h3>Assumptions, prerequisites and requirements</h3>
+
+<p>All of what this blogpost says has been tried on an Ubuntu machine, but it
+should work well on other Linux distros too (except for the <code>apt-get</code> package
+installs, for which you&#8217;ll need to find alternatives on your favourite distro).</p>
+
+<p><code>$IP</code> is assumed to be the root of your wiki directory (which in my case is
+<code>/var/www/wikis/&lt;my_wiki&gt;/</code>.</p>
+
+<p>Install all the required packages for the plugin to work</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install php5-mcrypt php5-gmp</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Installing the plugin</h2>
+
+<p>Get the source code for the extension into <code>$IP/extensions</code> directory</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd extensions
+</span><span class='line'>git clone http://gerrit.wikimedia.org/r/p/mediawiki/extensions/OpenID.git </span></code></pre></td></tr></table></div></figure>
+
+
+<p>Check your mediawiki version by going to <code>&lt;your_wiki_URL&gt;/index.php?title=Special:Version</code>. Say your version is 1.19.x.
+  Check out branch for the same version of OpenID code</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git branch -a 
+</span><span class='line'>git checkout -b stable_REL1_19 origin/REL1_19 </span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add this line at the end of LocalSettings.php file</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require_once "$IP/extensions/OpenID/OpenID.php"; </span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now install Auth subdirectory as following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd $IP/extensions/OpenID 
+</span><span class='line'>git clone http://github.com/openid/php-openid.git 
+</span><span class='line'>mv php-openid/Auth Auth 
+</span><span class='line'>rm -r php-openid 
+</span><span class='line'>cd $IP 
+</span><span class='line'>php maintenance/update.php --conf LocalSettings.php </span></code></pre></td></tr></table></div></figure>
+
+
+<p>Restart apache server::</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/init.d/apache2 restart </span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Editing &#8216;Login required&#8217; page.</h3>
+
+<p>By default, the main page of the wiki is not editable. Generally we would like
+to give some information to a user, e.g. what this wiki is all about, how
+to log into it, which OpenIDs are permitted, etc.</p>
+
+<p>Now we&#8217;ll give any registered user the ability to edit the protected pages and the
+&#8216;interface&#8217; pages, of which our special login page is a part of. Add these lines
+ to <code>$IP/LocalSettings.php</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$wgGroupPermissions['user']['editprotected'] = true; 
+</span><span class='line'>$wgGroupPermissions['user']['editinterface'] = true; </span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you can edit the <code>&lt;your_wiki_URL&gt;/jiocloud/index.phpmediawiki:loginreqpagetext</code>
+ page which is presented when the user is not logged in.</p>
+
+<h3>Other settings</h3>
+
+<p>Below you can see a snip of LocalSettings.php file, which contains many other
+fields which I used to customize my wiki. I allowed only the registered user
+an edit permission (which most of you would also want I guess). Also, I have disabled
+regular login, and made it mandatory users to login via only OpenID, and that too,
+only using their launchpad.net accounts (an issue tracking software from Canonical).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Disable reading by anonymous users
+</span><span class='line'>$wgGroupPermissions['*']['read'] = false;
+</span><span class='line'>
+</span><span class='line'># Disable anonymous editing too
+</span><span class='line'>$wgGroupPermissions['*']['edit'] = false;
+</span><span class='line'> 
+</span><span class='line'># But allow them to access the OpenID login page or else there will be no way to log in!
+</span><span class='line'>$wgWhitelistRead = array ("Special:OpenIDLogin", "Special:OpenIDFinish", 
+</span><span class='line'>"MediaWiki:Common.css", "MediaWiki:Common.js", "MediaWiki:Monobook.css", 
+</span><span class='line'>"MediaWiki:Monobook.js", "-");
+</span><span class='line'> 
+</span><span class='line'># For registered users, allow editing protected pages
+</span><span class='line'>$wgGroupPermissions['user']['editprotected'] = true;
+</span><span class='line'>$wgGroupPermissions['user']['editinterface'] = true;
+</span><span class='line'>
+</span><span class='line'># Only allow OpenIDs for login
+</span><span class='line'>$wgOpenIDLoginOnly = true;
+</span><span class='line'>$wgOpenIDOnly = true;       # a value used with older versions. Optional
+</span><span class='line'>
+</span><span class='line'># Your wiki web URL
+</span><span class='line'>$wgOpenIDTrustRoot = "http://your.wiki.url.com/";
+</span><span class='line'>
+</span><span class='line'># By default, deny all OpenID
+</span><span class='line'>$wgOpenIDConsumerDenyByDefault = true;
+</span><span class='line'>
+</span><span class='line'># Then allow only launchpad.net OpenID (with and without HTTPS both)
+</span><span class='line'>$wgOpenIDConsumerAllow = array("@^(https://)?launchpad.net/@");</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Troubleshooting</h2>
+
+<p>If there are troubles uploading a file via the MediaWiki web interface, go to the wiki directory on the server and chown the <code>images</code> folder::</p>
+
+<pre><code>sudo chown -R www-data:www-data images/
+</code></pre>
+
+<p>Don&#8217;t forget to comment if you find the information presented here is outdated, or is not working for you.</p>
+
+<p>Cheers,
+Rushi</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rushi Agrawal</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-12T13:09:00+05:30" pubdate data-updated="true">Jan 12<span>th</span>, 2014</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2014/01/12/installing-openid-plugin-for-mediawiki/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2014/01/12/installing-openid-plugin-for-mediawiki/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/01/01/bye-bye-2013-welcome-2014/" title="Previous Post: Bye bye 2013. Welcome 2014">&laquo; Bye bye 2013. Welcome 2014</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/01/12/installing-openid-plugin-for-mediawiki/">Installing OpenID Plugin for MediaWiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/01/bye-bye-2013-welcome-2014/">Bye Bye 2013. Welcome 2014</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/05/linux-screens-in-devstack/">Linux Screens in DevStack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/27/cinder-on-devstack-quick-start/">Cinder on DevStack - Quick Start</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/">OpenStack Tempest Quick Start With DevStack</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'rushiagr',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Rushi Agrawal -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'rushiagr';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://rushiagr.github.io/blog/2014/01/12/installing-openid-plugin-for-mediawiki/';
+        var disqus_url = 'http://rushiagr.github.io/blog/2014/01/12/installing-openid-plugin-for-mediawiki/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
