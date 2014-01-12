@@ -4,7 +4,7 @@
   <title><![CDATA[Sense, and Simplicity]]></title>
   <link href="http://rushiagr.github.io/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
-  <updated>2014-01-12T16:43:58+05:30</updated>
+  <updated>2014-01-12T16:47:33+05:30</updated>
   <id>http://rushiagr.github.io/</id>
   <author>
     <name><![CDATA[Rushi Agrawal]]></name>
@@ -115,7 +115,7 @@ regular login, and made it mandatory users to login via only OpenID, and that to
 only using their launchpad.net accounts (an issue tracking software from Canonical).</p>
 
 <p>If you want to get more information regarding these (and more)
-configuration options, see this link.</p>
+configuration options, see <a href="http://www.mediawiki.org/wiki/Extension:OpenID" target="_blank">this</a> link.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -175,7 +175,7 @@ configuration options, see this link.</p>
 
 <h2>Troubleshooting</h2>
 
-<p>If there are troubles uploading a file via the MediaWiki web interface, go to the wiki directory on the server and chown the <code>images</code> folder::</p>
+<p>If there are troubles uploading a file via the MediaWiki web interface, go to the wiki directory on the server and chown the <code>images</code> folder.</p>
 
 <pre><code>sudo chown -R www-data:www-data images/
 </code></pre>
