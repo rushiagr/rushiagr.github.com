@@ -4,7 +4,7 @@
   <title><![CDATA[Sense, and Simplicity]]></title>
   <link href="http://rushiagr.github.io/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
-  <updated>2014-01-12T15:59:23+05:30</updated>
+  <updated>2014-01-12T16:43:58+05:30</updated>
   <id>http://rushiagr.github.io/</id>
   <author>
     <name><![CDATA[Rushi Agrawal]]></name>
@@ -19,10 +19,8 @@
     <updated>2014-01-12T13:09:00+05:30</updated>
     <id>http://rushiagr.github.io/blog/2014/01/12/installing-openid-plugin-for-mediawiki</id>
     <content type="html"><![CDATA[<p>This post is about setting up your wiki such that their users access the wiki
-only via an OpenID provider login (e.g. Google or Facebook login)</p>
-
-<p>This post assumes MediaWiki is already installed (which in my case was installed
-via Puppet, but it shouldn&#8217;t matter).</p>
+only via an OpenID provider login (e.g. Google or Facebook login). This post assumes
+MediaWiki is already installed.</p>
 
 <!--more-->
 
@@ -83,7 +81,7 @@ installs, for which you&#8217;ll need to find alternatives on your favourite dis
 </span><span class='line'>php maintenance/update.php --conf LocalSettings.php </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Restart apache server::</p>
+<p>Restart apache server</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>/etc/init.d/apache2 restart </span></code></pre></td></tr></table></div></figure>
@@ -115,6 +113,9 @@ fields which I used to customize my wiki. I allowed only the registered user
 an edit permission (which most of you would also want I guess). Also, I have disabled
 regular login, and made it mandatory users to login via only OpenID, and that too,
 only using their launchpad.net accounts (an issue tracking software from Canonical).</p>
+
+<p>If you want to get more information regarding these (and more)
+configuration options, see this link.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
