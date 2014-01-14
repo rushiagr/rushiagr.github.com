@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Quick Start: Linux Logical Volume Manager - Sense, and Simplicity</title>
+  <meta name="author" content="Rushi Agrawal">
+
+  
+  <meta name="description" content="While installing the latest Ubuntu OS on your computer, you will see that
+you can install the OS using LVM (Logical Volume Manager) utility. Ever &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Sense, and Simplicity" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Sense, and Simplicity</a></h1>
+  
+    <h2>Blog-cum-shoutbox of Rushi Agrawal</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:rushiagr.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Quick Start: Linux Logical Volume Manager</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-14T20:09:00+05:30" pubdate data-updated="true">Jan 14<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>While installing the latest Ubuntu OS on your computer, you will see that
+you can install the OS using LVM (Logical Volume Manager) utility. Ever wonder what is it?
+LVM (Logical Volume Manager) is that fantastic utility for storage administration.
+It provide the users with abilities which were not possible with raw disks.
+The storage is now &#8216;virtualized&#8217;. You can now easily create, move and extend volumes (for now, think of it as disk partitions)
+without bothering about data corruption. You can carve partitions out of multiple disks,
+and can add and remove disks from a &#8216;volume group&#8217; containing such volumes without the user noticing anything!
+List of all the features of LVM can be found at it&#8217;s <a href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)"
+target="_blank">wiki page</a>.</p>
+
+<p>This blog scratches the surface of LVM, and gives some basic insights into some storage concepts.</p>
+
+<!-- more -->
+
+
+<p>I&#8217;ll give you a simple example to better explain what a &#8216;physical volume&#8217;, a &#8216;volume group&#8217; and a
+&#8216;logical volume&#8217; is. Say I have two 1 TB hard disks - disk A and disk B. I have two equal-sized partitions on
+disk B, one of which I want to keep it to myself for my personal data. The &#8216;partition&#8217; term used here is
+same as what you see in a file explorer. For the unpartitioned disk, the complete disk is one single partition.</p>
+
+<p>The partitions I described above are &#8216;physical volumes&#8217;. That is, on the disk, these are physically separate bytes (think of that
+partitioned disk as a spiral on disk divided in its length at the midpoint).
+Out of the first disk and one partition of the second disk, we create a &#8216;volume group&#8217; &#8211; a logical pool of storage, out of which we can
+create lots of &#8216;logical volumes&#8217;. Even after you&#8217;ve created logical volumes over this volume group, you can add and remove physical volumes (partitions) from the volume group. You can do many more operations such as resize, move and extend.</p>
+
+<p>I hope the basic idea written above is sufficiently clear. Else, head over to this Ubuntu <a href="https://wiki.ubuntu.com/Lvm" target="_blank">wiki</a> for a slightly more detailed, but still an overview, of LVM. Anyway, I&#8217;m concentrating more on the demo, so lets move on.</p>
+
+<h4>Hands-on</h4>
+
+<p>I&#8217;m demo&#8217;ing everything on an Ubuntu machine, but it should work on any Linux distro (after you install the LVM2 package)</p>
+
+<p>Install LVM2 package</p>
+
+<pre><code>sudo apt-get install lvm2
+</code></pre>
+
+<p>One nice thing is you don&#8217;t need to create actual partitions on disks. We&#8217;ll use files as <a href="http://en.wikipedia.org/wiki/Loop_device" target="_blank">loopback devices</a>, which will appear to the operating system as partitions. Neat.</p>
+
+<p>Create a file of size 1G to be later used as a physical volume.</p>
+
+<pre><code>rushi@jio:~$ truncate --size 1G backing_file_1
+</code></pre>
+
+<p>Create a loopback device over this file. Find the first free loopback device available and show its name.</p>
+
+<pre><code>rushi@jio:~$ sudo losetup --find --show backing_file_1 
+/dev/loop0
+</code></pre>
+
+<p>List all the loopback devices.</p>
+
+<pre><code>rushi@jio:~$ sudo losetup --all
+/dev/loop0: [fc00]:22811987 (/home/rushi/backing_file_1)
+</code></pre>
+
+<p>Create a physical volume over this loopback device. Note that</p>
+
+<pre><code>rushi@jio:~$ sudo pvcreate /dev/loop0 
+  Physical volume "/dev/loop0" successfully created
+</code></pre>
+
+<p>List physical volumes. Apart from <code>pvs</code> (Physical Volume Scan), there are two more
+commands which do the same thing, but with different level of verbosity and formatting: <code>pvscan</code> and <code>pvdisplay</code>. (Try them out too!)</p>
+
+<pre><code>rushi@jio:~$ sudo pvs
+  PV         VG        Fmt  Attr PSize   PFree 
+  /dev/loop0           lvm2 a--    1.00g  1.00g
+  /dev/sda5  ubuntu-vg lvm2 a--  931.27g 44.00m
+</code></pre>
+
+<p>Let us repeat the steps to create another physical volume:</p>
+
+<pre><code>rushi@jio:~$ truncate --size 1G backing_file_2
+rushi@jio:~$ sudo losetup --find --show backing_file_2 
+/dev/loop1
+rushi@jio:~$ sudo losetup --all
+/dev/loop0: [fc00]:22811987 (/home/rushi/backing_file_1)
+/dev/loop1: [fc00]:22812001 (/home/rushi/backing_file_2)
+rushi@jio:~$ sudo pvcreate /dev/loop1
+  Physical volume "/dev/loop1" successfully created
+rushi@jio:~$ sudo pvs
+  PV         VG        Fmt  Attr PSize   PFree 
+  /dev/loop0           lvm2 a--    1.00g  1.00g
+  /dev/loop1           lvm2 a--    1.00g  1.00g
+  /dev/sda5  ubuntu-vg lvm2 a--  931.27g 44.00m
+</code></pre>
+
+<p>Create a volume group <code>test-volgroup</code> over these two physical volumes. (Actually, even if you don&#8217;t create physical volumes over loopback devices, while creating volume groups it will automatically create physical volumes over them).</p>
+
+<pre><code>rushi@jio:~$ sudo vgcreate test-volgroup /dev/loop0 /dev/loop1
+  Volume group "test-volgroup" successfully created
+</code></pre>
+
+<p>List the volume groups. (<code>vgs</code>, <code>vgscan</code> or <code>vgdisplay</code> can be used)</p>
+
+<pre><code>rushi@jio:~$ sudo vgs
+  VG            #PV #LV #SN Attr   VSize   VFree 
+  test-volgroup   2   0   0 wz--n-   1.99g  1.99g
+  ubuntu-vg       1   2   0 wz--n- 931.27g 44.00m
+</code></pre>
+
+<p>Create a logical volume <code>test-logicalvol</code> over the <code>test-volgroup</code> volume group.</p>
+
+<pre><code>rushi@jio:~$ sudo lvcreate --size 400M --name test-logicalvol test-volgroup
+  Logical volume "test-logicalvol" created
+</code></pre>
+
+<p>List logical volumes. (<code>lvs</code>, <code>lvscan</code>, <code>lvdisplay</code> can be used)</p>
+
+<pre><code>rushi@jio:~$ sudo lvs
+  LV              VG            Attr      LSize   Pool Origin Data%  Move Log Copy%  Convert
+  test-logicalvol test-volgroup -wi-a---- 400.00m                                           
+  root            ubuntu-vg     -wi-ao--- 923.35g                                           
+  swap_1          ubuntu-vg     -wi-ao---   7.88g                                           
+</code></pre>
+
+<p>Easy, isn&#8217;t it? Let&#8217;s tear down everything. Though a simpler way would be to just remove the loopback device, which will automatically
+remove all the physical, logical volumes/volume groups created over them, let&#8217;s do it step-by-step. Note that you need to specify volume group while deleting logical volumes.</p>
+
+<pre><code>rushi@jio:~$ sudo lvremove test-volgroup
+Do you really want to remove active logical volume test-logicalvol? [y/n]: y
+  Logical volume "test-logicalvol" successfully removed
+rushi@jio:~$ sudo vgremove test-volgroup
+  Volume group "test-volgroup" successfully removed
+rushi@jio:~$ sudo pvremove /dev/loop0 /dev/loop1
+  Labels on physical volume "/dev/loop0" successfully wiped
+  Labels on physical volume "/dev/loop1" successfully wiped
+rushi@jio:~$ sudo losetup --detach /dev/loop0 /dev/loop1
+rushi@jio:~$ rm backing_file_1 backing_file_2
+</code></pre>
+
+<p>Cheers!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rushi Agrawal</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-14T20:09:00+05:30" pubdate data-updated="true">Jan 14<span>th</span>, 2014</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/01/12/installing-openid-plugin-for-mediawiki/" title="Previous Post: Installing OpenID plugin for MediaWiki">&laquo; Installing OpenID plugin for MediaWiki</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/quick-start-linux-logical-volume-manager/">Quick Start: Linux Logical Volume Manager</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/12/installing-openid-plugin-for-mediawiki/">Installing OpenID Plugin for MediaWiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/01/bye-bye-2013-welcome-2014/">Bye Bye 2013. Welcome 2014</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/05/linux-screens-in-devstack/">Linux Screens in DevStack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/27/cinder-on-devstack-quick-start/">Cinder on DevStack - Quick Start</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'rushiagr',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Rushi Agrawal -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'rushiagr';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/';
+        var disqus_url = 'http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
