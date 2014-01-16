@@ -4,7 +4,7 @@
   <title><![CDATA[Sense, and Simplicity]]></title>
   <link href="http://rushiagr.github.io/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
-  <updated>2014-01-14T23:01:42+05:30</updated>
+  <updated>2014-01-17T00:04:16+05:30</updated>
   <id>http://rushiagr.github.io/</id>
   <author>
     <name><![CDATA[Rushi Agrawal]]></name>
@@ -12,6 +12,385 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Playing around with Cinder multi-backend]]></title>
+    <link href="http://rushiagr.github.io/blog/2014/01/16/cinder-playing-with-multi-backend/"/>
+    <updated>2014-01-16T22:42:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2014/01/16/cinder-playing-with-multi-backend</id>
+    <content type="html"><![CDATA[<p>With Grizzly release, Cinder got equipped with another major feature &#8211; multi-backends
+with filter scheduler. So now you can have more than one storage boxes for block storage
+and manage them with one Cinder deployment. Here, I&#8217;m going to test it out using our
+favourite method &#8211; trying it out on DevStack!</p>
+
+<!--more-->
+
+
+<p>DevStack can provide you with two LVM backends to play around with them. But you&#8217;ll need to restack it.</p>
+
+<p>Go to the devstack directory and pull the latest code. Destroy previous DevStack deployment if it exists.</p>
+
+<pre><code>rushi@jio:~/devstack$ git pull origin master
+rushi@jio:~/devstack$ ./unstack.sh
+</code></pre>
+
+<p>Add the config option to <code>localrc</code> which give you pre-cooked multi-backend setup with two LVM backends, both of 10G. Stack</p>
+
+<pre><code>rushi@jio:~$ echo "CINDER_MULTI_LVM_BACKEND=True" &gt;&gt; localrc
+rushi@jio:~$ ./devstack/stack.sh
+</code></pre>
+
+<p>You can see that the cinder.conf file now has two values for enabled backends:</p>
+
+<pre><code>rushi@jio:~$ less /etc/cinder/cinder.conf | grep enabled_backends
+enabled_backends = lvmdriver-1,lvmdriver-2
+#enabled_backends=&lt;None&gt;
+</code></pre>
+
+<p>Also, you can see that there are two configuration groups created at the end of that config file, one each for configurations
+corresponding to that particular backend</p>
+
+<pre><code>rushi@jio:~$ tail /etc/cinder/cinder.conf 
+
+[lvmdriver-1]
+volume_backend_name = LVM_iSCSI
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes
+
+[lvmdriver-2]
+volume_backend_name = LVM_iSCSI_2
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes2
+</code></pre>
+
+<p>So you have two volume groups created for respective backends. Lets check it directly without using Cinder.</p>
+
+<pre><code>rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g 10.01g
+  stack-volumes2   1   0   0 wz--n-  10.01g 10.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+</code></pre>
+
+<p>Hmmm. Two volume groups, each of size 10G.</p>
+
+<h3>Case 1: Spreading volumes across backends</h3>
+
+<p>Now, lets create a volume and see where it ends up.</p>
+
+<pre><code>rushi@jio:~$ cinder create 1
+ERROR: You must provide a username via either --os-username or env[OS_USERNAME]
+</code></pre>
+
+<p>Oops! Let me try again..</p>
+
+<pre><code>rushi@jio:~$ . devstack/openrc 
+rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:29:49.241493      |
+|    description    |                 None                 |
+|         id        | ecfbfebb-73d5-4faf-b625-e69f18020378 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ cinder list
++--------------------------------------+-----------+------+------+-------------+----------+-------------+
+|                  ID                  |   Status  | Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+------+------+-------------+----------+-------------+
+| ecfbfebb-73d5-4faf-b625-e69f18020378 | available | None |  1   |     None    |  false   |             |
++--------------------------------------+-----------+------+------+-------------+----------+-------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g 10.01g
+  stack-volumes2   1   2   0 wz--n-  10.01g  9.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+</code></pre>
+
+<p>So it went to backend number 2. If you are admin (<code>source devstack/openrc admin admin</code>), you can do a <code>cinder show</code> too, to get information
+as to which host did this volume go to. Only the admin is allowed to view the host information.</p>
+
+<p>The scheduler now gets reported of the capabilities which the backends have (check out the <code>c-shr</code> screen to see it). The scheduler then weighs the backend based on these capabilities and decides which of them has higher &#8216;weight&#8217; to serve the next &#8216;create&#8217; request. By default, the &#8216;weigher&#8217; for scheduler is <code>CapacityWeigher</code>. That is, whichever backend has higher capacity, that backend will be chosen for the next &#8216;create&#8217; request.</p>
+
+<p>So in our case, when we&#8217;ll do another &#8216;create volume&#8217; it will now land on to the first backend.</p>
+
+<pre><code>rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:39:23.958468      |
+|    description    |                 None                 |
+|         id        | aa79c608-47cc-44e3-a614-f4bddaab68e5 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g  9.01g
+  stack-volumes2   1   2   0 wz--n-  10.01g  9.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+</code></pre>
+
+<p>Neat!</p>
+
+<h3>Case 2 : Stacking all volumes at one backend</h3>
+
+<p>What if we want to keep all the volumes at only one backend? Cinder allows you to do that too!
+There is a configuration option in cinder.conf, <code>capacity_weight_multiplier</code>, which allows you to multiply the &#8216;capacity weight&#8217; by a number.
+So if the multiplier is 1, a backend with higher capacity will have higher weight, and will be the choice for the next volume creation request.
+This is the default case. BUT what if we set it to -1? The backend with higher available capacity will have more negative weight, which will make that backend less preferable for next &#8216;create&#8217; request, and hence the request will go to the backend which has lesser capacity!</p>
+
+<p>Let us see this too in action.</p>
+
+<p>Check out the config option from cinder.conf file.</p>
+
+<pre><code>rushi@jio:~$ cat /etc/cinder/cinder.conf | grep -B 3 ^capacity_weight_multiplier
+
+# Multiplier used for weighing volume capacity. Negative
+# numbers mean to stack vs spread. (floating point value)
+# capacity_weight_multiplier=1.0
+</code></pre>
+
+<p>The config option is commented out and is there just so that you can easily change it. Now uncomment it and change it&#8217;s value to -1.</p>
+
+<p>Delete previously created volumes. Kill all the three Cinder screen processes (<code>c-api</code>, <code>c-sch</code> and <code>c-vol</code>), and restart them.</p>
+
+<p>Lets create two volumes and see where they end up..</p>
+
+<pre><code>rushi@jio:~$ cinder list
++----+--------+------+------+-------------+----------+-------------+
+| ID | Status | Name | Size | Volume Type | Bootable | Attached to |
++----+--------+------+------+-------------+----------+-------------+
++----+--------+------+------+-------------+----------+-------------+
+rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:56:59.845733      |
+|    description    |                 None                 |
+|         id        | b927b328-5ae0-411a-9de2-22ed732b4946 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:57:01.132756      |
+|    description    |                 None                 |
+|         id        | 9f643f2d-7221-4a5c-bf48-1977c9b89fd3 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g 10.01g
+  stack-volumes2   1   2   0 wz--n-  10.01g  8.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+</code></pre>
+
+<p>:)</p>
+
+<h3>Case 3 : Custom choice</h3>
+
+<p>What if I have two different backends (maybe one is slower, or costlier, than the other), and my users want to exactly specify how many volumes they want of each &#8216;type&#8217; of backends? Here, Cinder&#8217;s &#8216;volume types&#8217; have us covered.</p>
+
+<p>We can associate a volume type with a backend, and then the users can create a volume of whatever &#8216;type&#8217; they want.
+Let&#8217;s throw some discrimination at these backends. I&#8217;ll create two volume types: &#8216;gold&#8217; and &#8216;bronze&#8217;, and associate &#8216;stack-volumes&#8217; with &#8216;gold&#8217; and similarly for &#8216;stack-volumes2&#8217;. Note that this job can only be done by the administrator.</p>
+
+<p>Let us be admins</p>
+
+<pre><code>rushi@jio:~$ . devstack/openrc admin admin
+</code></pre>
+
+<p>Create both the volume types and list them.</p>
+
+<pre><code>rushi@jio:~$ cinder type-create gold
++--------------------------------------+------+
+|                  ID                  | Name |
++--------------------------------------+------+
+| dd883ee0-24be-42e1-ab2e-b9a01454f2f9 | gold |
++--------------------------------------+------+
+rushi@jio:~$ cinder type-create bronze
++--------------------------------------+--------+
+|                  ID                  |  Name  |
++--------------------------------------+--------+
+| f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze |
++--------------------------------------+--------+
+
+rushi@jio:~$ cinder type-list
++--------------------------------------+--------+
+|                  ID                  |  Name  |
++--------------------------------------+--------+
+| dd883ee0-24be-42e1-ab2e-b9a01454f2f9 |  gold  |
+| f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze |
++--------------------------------------+--------+
+</code></pre>
+
+<p>Get the backend names (<code>volume_backend_name</code> config option) from cinder.conf file.</p>
+
+<pre><code>rushi@jio:~$ tail /etc/cinder/cinder.conf 
+
+[lvmdriver-1]
+volume_backend_name = LVM_iSCSI
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes
+
+[lvmdriver-2]
+volume_backend_name = LVM_iSCSI_2
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes2
+</code></pre>
+
+<p>Now let&#8217;s associate backend <code>LVM_iSCSI</code> with volume type &#8216;gold&#8217;, and similarly for the other one.</p>
+
+<pre><code>rushi@jio:~$ cinder type-key gold set volume_backend_name=LVM_iSCSI
+rushi@jio:~$ cinder type-key bronze set volume_backend_name=LVM_iSCSI_2
+</code></pre>
+
+<p>These association are stored as key-value pairs in the volume type&#8217;s &#8216;extra specs&#8217;. Let&#8217;s see them</p>
+
+<pre><code>rushi@jio:~$ cinder extra-specs-list 
++--------------------------------------+--------+------------------------------------------+
+|                  ID                  |  Name  |               extra_specs                |
++--------------------------------------+--------+------------------------------------------+
+| dd883ee0-24be-42e1-ab2e-b9a01454f2f9 |  gold  |  {u'volume_backend_name': u'LVM_iSCSI'}  |
+| f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze | {u'volume_backend_name': u'LVM_iSCSI_2'} |
++--------------------------------------+--------+------------------------------------------+
+</code></pre>
+
+<p>You can add more key-value pairs for these volume types with different key names. <code>volume_backend_name</code> is a reserved key name, though.</p>
+
+<p>Let&#8217;s create two volumes of type &#8216;gold&#8217; and see where they end up being created:</p>
+
+<pre><code>rushi@jio:~$ cinder create --volume-type gold --name costly_vol_1 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T18:24:07.670635      |
+|    description    |                 None                 |
+|         id        | 767d4c56-6d3d-46f7-b0a3-4a00f696bcad |
+|      metadata     |                  {}                  |
+|        name       |             costly_vol_1             |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   c271eb32e71b411bb98ad7b93792d6d5   |
+|    volume_type    |                 gold                 |
++-------------------+--------------------------------------+
+rushi@jio:~$ cinder create --volume-type gold --name costly_vol_2 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T18:24:58.382180      |
+|    description    |                 None                 |
+|         id        | a938e556-65cf-4547-87ff-513d60f626d3 |
+|      metadata     |                  {}                  |
+|        name       |             costly_vol_2             |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   c271eb32e71b411bb98ad7b93792d6d5   |
+|    volume_type    |                 gold                 |
++-------------------+--------------------------------------+
+rushi@jio:~$ cinder list
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |     Name     | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+| 767d4c56-6d3d-46f7-b0a3-4a00f696bcad | available | costly_vol_1 |  1   |     gold    |  false   |             |
+| a938e556-65cf-4547-87ff-513d60f626d3 | available | costly_vol_2 |  1   |     gold    |  false   |             |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   2   0 wz--n-  10.01g  8.01g
+  stack-volumes2   1   0   0 wz--n-  10.01g 10.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+</code></pre>
+
+<p>Now create another one, but with type &#8216;bronze&#8217; and ensure it is created on the other backend.</p>
+
+<pre><code>rushi@jio:~$ cinder create --volume-type bronze --name cheap_vol_1 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T18:27:05.852092      |
+|    description    |                 None                 |
+|         id        | 97f62c7a-b974-41e8-a659-1e6d3eb876d5 |
+|      metadata     |                  {}                  |
+|        name       |             cheap_vol_1              |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   c271eb32e71b411bb98ad7b93792d6d5   |
+|    volume_type    |                bronze                |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ sudo pvs
+  PV         VG             Fmt  Attr PSize   PFree 
+  /dev/loop0 stack-volumes  lvm2 a--   10.01g  8.01g
+  /dev/loop1 stack-volumes2 lvm2 a--   10.01g  9.01g
+  /dev/sda5  ubuntu-vg      lvm2 a--  931.27g 44.00m
+</code></pre>
+
+<p>Done :)</p>
+
+<p>Cheers!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Quick Start: Linux Logical Volume Manager]]></title>
