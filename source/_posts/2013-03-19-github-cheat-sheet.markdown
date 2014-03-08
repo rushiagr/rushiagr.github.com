@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "GitHub Cheat Sheet"
+title: "Git(hub) Cheat Sheet"
 date: 2013-03-19 04:22
 comments: true
 categories: git, github, cheat-sheet, web, tech
