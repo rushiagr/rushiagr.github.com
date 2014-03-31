@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>OpenStack Tempest quick start with DevStack - Sense, and Simplicity</title>
+  <title>MySQL Cheat Sheet - Sense, and Simplicity</title>
   <meta name="author" content="Rushi Agrawal">
 
   
-  <meta name="description" content="This quick start guide explains setting up Tempest with a DevStack environment
-for Grizzly release. Most of the information here is taken from
-here, &hellip;">
+  <meta name="description" content="Databases are so important, yet almost all the time I need to work with it, I find that I have already forgotten all the syntax! So here I am writing &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@ here, &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack">
+  <link rel="canonical" href="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Sense, and Simplicity" type="application/atom+xml">
@@ -82,7 +80,7 @@ here, &hellip;">
   
   <header>
     
-      <h1 class="entry-title">OpenStack Tempest Quick Start With DevStack</h1>
+      <h1 class="entry-title">MySQL Cheat Sheet</h1>
     
     
       <p class="meta">
@@ -98,155 +96,226 @@ here, &hellip;">
   
 
 
-<time datetime="2013-03-20T04:54:00+05:30" pubdate data-updated="true">Mar 20<span>th</span>, 2013</time>
+<time datetime="2014-03-31T18:49:00+05:30" pubdate data-updated="true">Mar 31<span>st</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>This quick start guide explains setting up Tempest with a DevStack environment
-for Grizzly release. Most of the information here is taken from
-<a href="http://www.joinfu.com/2012/03/testing-essex-rc1-with-devstack-and-tempest/">here</a>, the only difference being this blog post is more recent, and is based on Grizzly.</p>
+<div class="entry-content"><p>Databases are so important, yet almost all the time I need to work with it, I find that I have already forgotten all the syntax! So here I am writing down a quick cheat sheet to get me up and running when I&#8217;m waking up from slumber. I hope this will help atleast one other guy on this planet.</p>
 
-<!--more-->
+<!-- more -->
 
 
-<p>Assumptions made are that you understand:
-1. What is a <code>localrc</code> file in DevStack.
-2. What does <code>./stack.sh</code> do in DevStack.
-3. How to clone using git.</p>
+<p>I use mostly Ubuntu, so some of the commands might be Ubuntu specific.</p>
 
-<h2>Setting up DevStack</h2>
+<p>Install mysql</p>
 
-<p>Clone DevStack</p>
-
-<pre><code>git clone https://github.com/openstack-dev/devstack.git
-cd devstack
+<pre><code>sudo apt-get install mysql-server
 </code></pre>
 
-<p>Tempest requires that the rate-limiting for DevStack is turned off. By default, it is turned on, so turn it off by adding this line to the localrc file.</p>
+<p>A prompt will ask for the root password.</p>
 
-<pre><code>API_RATE_LIMIT=False
+<p>To change the root password:</p>
+
+<pre><code>UPDATE mysql.user SET password=PASSWORD('nova') WHERE user='root';
 </code></pre>
 
-<p>If you have already created a DevStack environment, you will have to go through the labour of setting it all again by unstacking and restacking it with this parameter in localrc.
-Quick tip: If you already had a working DevStack in your computer, adding <code>OFFLINE=True</code> line in localrc will create the DevStack environment in your computer WITHOUT
-downloading all the OpenStack code all over again from the Github repos, but will build the environment from the existing code (thus saving you some Internet bandwidth and time).</p>
+<p>NOTE: MySQL keywords are case insensitive. They&#8217;re represented in capital here just so that they appear different than the rest. When you&#8217;re just testing out some things logging into the DB console, people generally prefer writing in small caps.</p>
 
-<p>Build the DevStack environment</p>
+<p>Note that <code>PASSWORD</code> is a function, and unlike other MySQL keywords cannot be used in small caps.</p>
 
-<pre><code>./stack.sh
+<p>Log into MySQL console with user <code>root</code> and password <code>mysecretpassword</code>:</p>
+
+<pre><code>mysql -uroot -pmysecretpassword
 </code></pre>
 
-<p>Supply all the five passwords. (If you are just playing around, just like me, then
-you can easily supply <code>nova</code> to all the passwords.)</p>
+<p>or</p>
 
-<p>Note the IP of the system where DevStack is running (The &#8216;host IP&#8217; mentioned at the last of the output after running <code>stack.sh</code>).</p>
-
-<h2>Setting up Tempest</h2>
-
-<p>Clone latest Tempest code</p>
-
-<pre><code>git clone https://github.com/openstack/tempest.git
-cd tempest
+<pre><code>mysql -u'root' -p'mysecretpassword'
 </code></pre>
 
-<p>Create tempest.conf file from the sample configuration file. This file will contain the configuration information of the OpenStack environment (here, the DevStack
-environment)</p>
+<p>or entering the password in &#8216;secret&#8217; mode:</p>
 
-<pre><code>cp etc/tempest.conf.sample etc/tempest.conf
+<pre><code>$ mysql -uroot -p
+Enter password: 
 </code></pre>
 
-<p>Now open the file tempest.conf in an editor, and replace all instance of word <code>secret</code> with the appropriate password (<code>nova</code> if you followed me, and just typed <code>nova</code> whenever the
-<code>stack.sh</code> script asked for passwords)</p>
+<h3>MySQL console</h3>
 
-<p>If, for example, your host IP is 10.0.24.30, change this line in tempest.conf</p>
+<p>List all databases:</p>
 
-<pre><code>uri = http://127.0.0.1:5000/v2.0/
+<pre><code>mysql&gt; SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+4 rows in set (0.01 sec)
 </code></pre>
 
-<p>to make it</p>
+<p>Create a new database <code>rushi</code>:</p>
 
-<pre><code>uri = http://10.0.24.30:5000/v2.0/
+<pre><code>mysql&gt; CREATE DATABASE rushi;
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| rushi              |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
 </code></pre>
 
-<p>The last thing to update in the tempest.conf file is the ID of the Cirros image. The image ID can be obtained by two ways</p>
+<p>Select database <code>rushi</code>, so that all the further operations are executed inside this database:</p>
 
-<h4>Image ID using glance</h4>
-
-<p>This command will return the image ID. Note that I have used the password <code>nova</code> in this line. You might also need to change the host IP address</p>
-
-<pre><code>glance -I admin -K nova -T admin -N http://10.0.24.30:5000/v2.0 -S keystone index | grep ami | cut -f1 | awk '{print $1}'
+<pre><code>mysql&gt; USE rushi;
+Database changed
 </code></pre>
 
-<h4>Image ID using OpenStack CLI</h4>
+<p>Create a table <code>friends</code> inside <code>rushi</code> database:</p>
 
-<p>Become stack user</p>
-
-<pre><code>su - stack
+<pre><code>mysql&gt; CREATE TABLE friends (name VARCHAR(20), age INT);
+Query OK, 0 rows affected (0.03 sec)
 </code></pre>
 
-<p>Source the sample credentials file</p>
+<p>If you didn&#8217;t select the database in the last to last command, you need to specify table in this format:<code>&lt;database&gt;.&lt;tablename&gt;</code>. So the last command would look like:</p>
 
-<pre><code>. /opt/stack/devstack/eucarc
+<pre><code>mysql&gt; CREATE TABLE rushi.friends (name VARCHAR(20), age INT);
 </code></pre>
 
-<p>OR</p>
+<p>List all the tables:</p>
 
-<pre><code>. /opt/stack/devstack/openrc
+<pre><code>mysql&gt; show tables;
++-----------------+
+| Tables_in_rushi |
++-----------------+
+| friends         |
++-----------------+
+1 rows in set (0.00 sec)
 </code></pre>
 
-<p>Show all the images, with their IDs</p>
+<p>Insert data into <code>friends</code>:</p>
 
-<pre><code>$ nova image-list
-+--------------------------------------+---------------------------------+--------+--------+
-| ID                                   | Name                            | Status | Server |
-+--------------------------------------+---------------------------------+--------+--------+
-| 13abf9c8-5603-48cb-802e-e27162e10b58 | cirros-0.3.0-x86_64-uec         | ACTIVE |        |
-| 39b023ae-9201-427d-8350-4f30e5bbc01a | cirros-0.3.0-x86_64-uec-kernel  | ACTIVE |        |
-| 431a9c04-47b1-47e4-9521-7f12295c78e0 | cirros-0.3.0-x86_64-uec-ramdisk | ACTIVE |        |
-+--------------------------------------+---------------------------------+--------+--------+
+<pre><code>mysql&gt; INSERT INTO friends VALUES ('arvind', 24);
+Query OK, 1 row affected (0.01 sec)
 </code></pre>
 
-<p>The ID of the smallest image name is what we&#8217;re interested in.</p>
+<p>Display all the data from the table:</p>
 
-<p>Now replace <code>{$IMAGE_ID}</code> and <code>{$IMAGE_ID_ALT}</code> with this value, to make those two lines appear in tempest.conf as</p>
-
-<pre><code>image_ref = 13abf9c8-5603-48cb-802e-e27162e10b58
-image_ref_alt = 13abf9c8-5603-48cb-802e-e27162e10b58
+<pre><code>mysql&gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
++--------+------+
+1 row in set (0.00 sec)
 </code></pre>
 
-<h2>Installing required dependencies</h2>
+<p>Insert another friend:</p>
 
-<p>Install all the required packages needed to run Tempest integration test suite. (The list of required packages is maintained in file <code>tools/pip-requires</code>)</p>
+<pre><code>mysql&gt; INSERT INTO friends VALUES ('honshu', 23);
+Query OK, 1 row affected (0.00 sec)
 
-<pre><code>$ sudo pip install -r tools/pip-requires 
+mysql&gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
+| honshu |   23 |
++--------+------+
+2 rows in set (0.00 sec)
 </code></pre>
 
-<h2>Show time!</h2>
+<p>Update a row in the table:</p>
 
-<p>We&#8217;ll run all the tests in verbose mode. To run all the tests:</p>
+<pre><code>mysql&gt; UPDATE friends SET age=22 WHERE name='honshu';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
 
-<pre><code>nosetests -v tempest
+mysql&gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
+| honshu |   22 |
++--------+------+
+2 rows in set (0.00 sec)
 </code></pre>
 
-<p>To run tests only from a specific file, say <code>tempest/tests/volume/test_volumes_list.py</code>:</p>
+<p>Delete a row from table:</p>
 
-<pre><code>nosetests -sv tempest.tests.volume.test_volumes_list
+<pre><code>mysql&gt; DELETE FROM friends WHERE age=24;
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; select * from friends;
++--------+------+
+| name   | age  |
++--------+------+
+| honshu |   22 |
++--------+------+
+1 row in set (0.00 sec)
 </code></pre>
 
-<p>OR</p>
+<p>Delete all rows from the table in one go, and reset the autoincrement if any:</p>
 
-<pre><code>nosetests -sv tempest.tests.volume.test_volumes_list.py
+<pre><code>mysql&gt; TRUNCATE friends;
+Query OK, 0 rows affected (0.04 sec)
 </code></pre>
 
-<p>To run a specific test <code>test_volume_list_with_details</code> from test class <code>VolumeListTest</code>, which resides in the above file:</p>
+<p>Delete the table and all of its contents:</p>
 
-<pre><code>    nosetests -sv tempest.tests.volume.test_volumes_list:VolumeListTest.test_volume_list_with_details
+<pre><code>mysql&gt; DROP TABLE friends;
 </code></pre>
 
-<p>And that ladies and gentlemen, is the end! :)</p>
+<p>Other commonly used commands are listed below. Try to try all of them out atleast once.
+Count the number of rows in a table:</p>
+
+<pre><code>SELECT COUNT(*) FROM friends;
+</code></pre>
+
+<p>Select distinct values for a row, and order them too:</p>
+
+<pre><code>SELECT DISTINCT age FROM friends ORDER BY age;
+</code></pre>
+
+<p>Modify table to add one more column to it:</p>
+
+<pre><code>ALTER TABLE friend ADD height varchar(10);
+</code></pre>
+
+<p>Use regular expressions:</p>
+
+<pre><code>SELECT * FROM friend WHERE name REGEXP 'arv*';
+</code></pre>
+
+<p>CAUTION: Regular expressions comes with some binary/encoding trickery. Use it with a lot of caution.</p>
+
+<p>Create a new user for the database, and give it all the root privileges</p>
+
+<pre><code>CREATE USER 'rushiagr'@'localhost' IDENTIFIED BY 'mysecretpass'
+GRANT ALL PRIVILEGES ON * . * TO 'rushiagr'@'localhost'
+</code></pre>
+
+<p>Take a dump of database <code>rushi</code> and store it in a file <code>db.dump</code>. Execute this command in bash shell, and not in the MySQL shell.:</p>
+
+<pre><code>mysqldump --user root rushi &gt; db.dump
+</code></pre>
+
+<p>The End!</p>
+
+<p>Comments/suggestions/feedback? Please feel free to comment and I&#8217;ll make sure I acknowledge them to the fullest.</p>
+
+<p>Cheers!</p>
 </div>
 
 
@@ -269,21 +338,15 @@ image_ref_alt = 13abf9c8-5603-48cb-802e-e27162e10b58
   
 
 
-<time datetime="2013-03-20T04:54:00+05:30" pubdate data-updated="true">Mar 20<span>th</span>, 2013</time>
+<time datetime="2014-03-31T18:49:00+05:30" pubdate data-updated="true">Mar 31<span>st</span>, 2014</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/tech/'>tech</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -296,10 +359,8 @@ image_ref_alt = 13abf9c8-5603-48cb-802e-e27162e10b58
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/03/19/github-cheat-sheet/" title="Previous Post: Git(hub) Cheat Sheet">&laquo; Git(hub) Cheat Sheet</a>
+        <a class="basic-alignment left" href="/blog/2014/01/16/cinder-playing-with-multi-backend/" title="Previous Post: Playing around with Cinder multi-backend">&laquo; Playing around with Cinder multi-backend</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/05/27/cinder-on-devstack-quick-start/" title="Next Post: Cinder on DevStack - Quick Start">Cinder on DevStack - Quick Start &raquo;</a>
       
     </p>
   </footer>
@@ -394,8 +455,8 @@ image_ref_alt = 13abf9c8-5603-48cb-802e-e27162e10b58
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/';
-        var disqus_url = 'http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/';
+        var disqus_identifier = 'http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/';
+        var disqus_url = 'http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/';
         var disqus_script = 'embed.js';
       
     (function () {
