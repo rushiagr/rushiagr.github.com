@@ -4,7 +4,7 @@
   <title><![CDATA[Category: devdoc | Sense, and Simplicity]]></title>
   <link href="http://rushiagr.github.io/blog/categories/devdoc/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
-  <updated>2014-04-05T15:15:01+05:30</updated>
+  <updated>2014-04-05T16:27:17+05:30</updated>
   <id>http://rushiagr.github.io/</id>
   <author>
     <name><![CDATA[Rushi Agrawal]]></name>
@@ -195,6 +195,8 @@ ADMIN_PASSWORD=nova
 <p>Note that this guide just gets you started with OpenStack using DevStack. OpenStack, and cloud in general, is not about virtual machines or volumes or networks only. It is a philosophy. It is a complete paradigm shift, and as such, it is impossible to cover all of it by me. Your quest to know more about it has just started. Keep reading more and more about it and I guarantee you you will be fascinated by it's limitless possibilities.</p>
 
 <p>This post is written keeping in mind that it will be consumed by a newbie to OpenStack development. If you are one of the one benefitting from this guide, I would love it if you can provide me with suggestions to improve this post, and any feedback you have about it.</p>
+
+<p>Now you can go to the <a href="http://devstack.org">DevStack</a> website :)</p>
 
 <p>Cheers!
 Rushi</p>
