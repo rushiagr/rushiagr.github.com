@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: openstack, | Sense, and Simplicity]]></title>
-  <link href="http://rushiagr.github.io/blog/categories/openstack/atom.xml" rel="self"/>
+  <title><![CDATA[Category: devdoc | Sense, and Simplicity]]></title>
+  <link href="http://rushiagr.github.io/blog/categories/devdoc/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
   <updated>2014-04-05T15:15:01+05:30</updated>
   <id>http://rushiagr.github.io/</id>

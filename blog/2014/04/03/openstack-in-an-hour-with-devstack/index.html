@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>OpenStack in an hour with DevStack - Sense, and Simplicity</title>
+  <meta name="author" content="Rushi Agrawal">
+
+  
+  <meta name="description" content="So you found out a cool new technology &#8220;OpenStack&#8221; and want to try it real quick? Or probably you are hired in a company for your Python &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Sense, and Simplicity" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Sense, and Simplicity</a></h1>
+  
+    <h2>Blog-cum-shoutbox of Rushi Agrawal</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:rushiagr.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">OpenStack in an Hour With DevStack</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-03T22:01:00+05:30" pubdate data-updated="true">Apr 3<span>rd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>So you found out a cool new technology &#8220;OpenStack&#8221; and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. <a href="http://devstack.org">DevStack</a> is your friend-in-need. No, don&#8217;t click that hyperlink just yet :)</p>
+
+<!--more-->
+
+
+<p>To put it in a sentence, DevStack is &#8220;OpenStack in a box&#8221;. You just need a popular Linux based distribution with 2GB RAM and you&#8217;re all set to start. DevStack is basically a set of scripts which will install all the important OpenStack services in your computer. For this, it will first download all the essential packages, pull in the OpenStack code from various OpenStack projects, and set everything up for you to try out all of it.</p>
+
+<p>NOTE: DO NOT set up DevStack for production clouds.</p>
+
+<p>Here, in this tutorial, I&#8217;ll be setting up DevStack in a 64-bit Ubuntu 12.04 virtual machine. All your virtual machine needs to have is an Internet connection, and 2GB RAM.</p>
+
+<p>NOTE: Do not run any of the script as a root user, unless specified otherwise explicitly.</p>
+
+<h3>Getting started</h3>
+
+<p>Install git</p>
+
+<pre><code>sudo apt-get install git
+</code></pre>
+
+<p>Clone the DevStack repository into your computer and <code>cd</code> into it. This is the code which will set up the cloud for you.</p>
+
+<pre><code>git clone http://github.com/openstack-dev/devstack
+cd devstack/
+</code></pre>
+
+<p>If you do a <code>ls</code>, you will see <code>stack.sh</code>, <code>unstack.sh</code> and <code>rejoin-stack.sh</code> files in there. These are the most important files.</p>
+
+<pre><code>r@ra:~/devstack$ ls
+accrc         exercises         HACKING.rst  rejoin-stack.sh  tests
+AUTHORS       exercise.sh       lib          run_tests.sh     tools
+clean.sh      extras.d          LICENSE      samples          unstack.sh
+driver_certs  files             localrc      stackrc
+eucarc        functions         openrc       stack-screenrc
+exerciserc    functions-common  README.md    stack.sh
+</code></pre>
+
+<p>File <code>stack.sh</code> is the most important of them all. Running this script will:
+1. Pull OpenStack code from all of it&#8217;s important projects&#8217; repositories and put them in <code>/opt/stack</code> directory. TODO: say that this directory is configurable.
+2. Installs all the dependencies these OpenStack projects have &#8211; both in the form of Ubuntu packages, and also the Python &#8220;PIP&#8221; repositories.
+3. Starts all the OpenStack services with a default configuration.</p>
+
+<p>Bringing down the DevStack-created cloud is easy too &#8211; just invoke the <code>unstack.sh</code> script, and all the services are down again, freeing up the memory that these services consume. I&#8217;ll talk about <code>rejoin-stack.sh</code> in some time. Let&#8217;s get started before I start writing at lengths again :)</p>
+
+<p>Execute the <code>stack.sh</code> script</p>
+
+<pre><code>r@ra:~/devstack$ ./stack.sh 
+
+################################################################################
+ENTER A PASSWORD TO USE FOR THE DATABASE.
+################################################################################
+This value will be written to your localrc file so you don't have to enter it 
+again.  Use only alphanumeric characters.
+If you leave this blank, a random default value will be used.
+Enter a password now:
+</code></pre>
+
+<p>You need to add the MySQL database password here. Don&#8217;t worry if you have not installed MySQL on this system. Just provide a password here and this script will install MySQL and use this password there.</p>
+
+<p>As you can see, MySQL is where all the important data is stored by different OpenStack components. You can peep into the database later if you want to see what data is stored, etc.</p>
+
+<p>Also, note the first line after the heading. If the <code>stack.sh</code> script finishes successfully, all the inputs you specify (this, and four more after this) will be written to a file named as <code>localrc</code>. All the local configuration setting pertaining to the DevStack environment will go in this file. I&#8217;ll provide you with details of all of them very soon. Have patience :)</p>
+
+<p>For the other four prompts, enter &#8216;nova&#8217;. Just use &#8216;nova&#8217; for this MySQL prompt too if it is not installed yet.</p>
+
+<p>You will see that the script now starts spewing a lot of output on our screen. It is downloading all the required code, packages, dependencies, etc, and setting everything up for us &#8211; databases, services, network, configurations, message queues. Pretty much everything. For the first time, the script might take about 30-minutes, but it again depends upon the speed of your Internet connection, and the processing speed of your virtual machine. From the next time, it can provide you with a cloud in less than 10 minutes!</p>
+
+<p>If the script ends with something like this:</p>
+
+<pre><code>+ merge_config_group /home/r/devstack/local.conf post-extra
++ local localfile=/home/r/devstack/local.conf
++ shift
++ local matchgroups=post-extra
++ [[ -r /home/r/devstack/local.conf ]]
++ return 0
++ [[ -x /home/r/devstack/local.sh ]]
++ service_check
++ local service
++ local failures
++ SCREEN_NAME=stack
++ SERVICE_DIR=/opt/stack/status
++ [[ ! -d /opt/stack/status/stack ]]
+++ ls '/opt/stack/status/stack/*.failure'
+++ /bin/true
++ failures=
++ '[' -n '' ']'
++ set +o xtrace
+
+
+
+Horizon is now available at http://10.0.2.15/
+Keystone is serving at http://10.0.2.15:5000/v2.0/
+Examples on using novaclient command line is in exercise.sh
+The default users are: admin and demo
+The password: nova
+This is your host ip: 10.0.2.15
+stack.sh completed in 269 seconds.
+</code></pre>
+
+<p>That means your machine is now home to a Cloud! :)</p>
+
+<p>Here, <code>10.0.2.15</code> is the IP of my first network interface. Don&#8217;t worry about that for now.</p>
+
+<p>So now you can head over to my blog <a href="http://www.rushiagr.com/blog/2013/05/27/cinder-on-devstack-quick-start/">Cinder on DevStack - Quick Start</a> to get started with creating volumes (persistent storage in cloud) with Cinder &#8211; OpenStack&#8217;s block-storage project. In that guide, you will also be creating a virtual machine, so it will be a good start to OpenStack. But let&#8217;s get back in our current scope.</p>
+
+<p>You can type the host IP provided by the script into your browser, to access the dashboard &#8216;Horizon&#8217;. Log into it using username &#8216;admin&#8217;, or &#8216;demo&#8217; and password &#8216;nova&#8217;. (For simplicity&#8217;s sake, lets just assume there are two users who are allowed to access this cloud &#8211; one has all the administrative privilages, and the other one is just a normal user).</p>
+
+<p>You can view all the process logs inside screen, by typing:</p>
+
+<pre><code>screen -x
+</code></pre>
+
+<p>Head over to <a href="http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/">Linux Screens in DevStack</a> for more information on how to work with <code>screen</code>.</p>
+
+<h3>Housekeeping and customizations</h3>
+
+<p>In your life as an OpenStack developer, you will be setting up and destroying DevStack instance quite a number of times. So it is good to know how to do that in the most efficient manner.</p>
+
+<p>Just like <code>stack.sh</code> script is used to set up DevStack, <code>unstack.sh</code> is used to destroy the DevStack setup. Running it will kill all the services, BUT it will not delete any of the code. If you want to bring down all the services manually, just do a:</p>
+
+<pre><code>sudo killall screen
+</code></pre>
+
+<p>Note that this will just kill all the process which were running, for which you were able to see the logs inside screen. <code>unstack.sh</code> does some cleanups as well along with killing processes.</p>
+
+<p>If you had previously run <code>./stack.sh</code>, but have brought down the environment, you can bring it up back by executing the <code>rejoin_stack.sh</code> script.</p>
+
+<p>NOTE: DevStack environment doesn&#8217;t persist across reboots!</p>
+
+<p>So you need to bring back up the DevStack environment manually everytime you reboot. Here is where using a virtual machine comes handy. You can take a snapshot of the virtual machine, and then go back to it when you want a clean DevStack environment.</p>
+
+<p>Nonetheless, the best way to reboot is: first execute <code>unstack.sh</code> to bring down the current running DevStack instance. Then reboot, and when your machine comes up again, run <code>rejoin_stack.sh</code>. If you don&#8217;t run <code>unstack.sh</code>, you will need to execute <code>stack.sh</code> again to have the environment up.</p>
+
+<h3>localrc configurations</h3>
+
+<p><code>localrc</code> is the file where all the local configurations (local = your local machine) are kept.</p>
+
+<p>After first successful <code>stack.sh</code> run, will see that a localrc file gets created with the configuration values you specified while running that script.</p>
+
+<pre><code>$ cat localrc 
+DATABASE_PASSWORD=nova
+RABBIT_PASSWORD=nova
+SERVICE_TOKEN=nova
+SERVICE_PASSWORD=nova
+ADMIN_PASSWORD=nova
+</code></pre>
+
+<p>Sometimes you will forget to unstack, and will reboot the machine. And then you will find that running <code>stack.sh</code> will again do an <code>apt-get update</code>, and check for all packages, etc.</p>
+
+<p>If you specify an option <code>OFFLINE=True</code> in a file named <code>localrc</code>, inside the devstack directory, and if after specifying this you run <code>stack.sh</code>, it will not check anything over the Internet, and will set up DevStack using all the packages and code residing in your machine. Setting up a DevStack using this config option will give you a running cloud in the shortest amount of time (after <code>rejoin_stack.sh</code>, but you have already forgotten to do <code>unstack.sh</code>, right :) ).</p>
+
+<p>Note that <code>stack.sh</code> will see if the git repositories of the OpenStack projects are present in <code>/opt/stack/</code> directory. If they are, it will not fetch any latest code into them from Github. But if any of the directory (say, <code>nova</code>), is absent, it will pull latest code into the newly created <code>nova</code> directory inside <code>/opt/stack</code>.</p>
+
+<p>What if you want to get the latest code into all the OpenStack repositories inside <code>/opt/stack</code>? Just specify a <code>RECLONE=yes</code> parameter in localrc, and rerun <code>./stack.sh</code>. This comes particularly handy when you are developing new code.</p>
+
+<p>NOTE: Keep in mind that while developing code, you need to <strong>commit your local changes</strong> in, say, <code>/opt/stack/nova</code> repository, before you restack (re-run <code>stack.sh</code>) with <code>RECLONE=yes</code> option, as otherwise, the changes will be wiped off. Save yourself from a rude shock. You have been warned.</p>
+
+<p>Configuration options <code>RECLONE=yes</code> and <code>OFFLINE=True</code> are complementary, and hence, use only one of them at a time in <code>localrc</code>.</p>
+
+<p>If you have more than one interfaces, you can specify which one to use for external IP using this configuration:</p>
+
+<pre><code>HOST_IP=192.168.xxx.xxx
+</code></pre>
+
+<h3>Developing code</h3>
+
+<p>If you want to immediately test out your code by running it inside DevStack, you need to make the changes in the code, and restart the affected services.</p>
+
+<p>For example, let us say you are making code changes in <code>nova</code>. Just after you are done making the changes, go to the screen, and restart all the services which start with &#8220;n-&#8220;. If you are very sure that only one of the Nova service is affected, just restart that. Or if you don&#8217;t know which one to restart, it is safe to restart all of them.</p>
+
+<p>In order to restart, go to the respective screen and press <code>CTRL</code>+<code>C</code>. Then, press the up arrow once to get the last command which started this screen session, and then press <code>ENTER</code>.</p>
+
+<h3>Final words</h3>
+
+<p>Note that this guide just gets you started with OpenStack using DevStack. OpenStack, and cloud in general, is not about virtual machines or volumes or networks only. It is a philosophy. It is a complete paradigm shift, and as such, it is impossible to cover all of it by me. Your quest to know more about it has just started. Keep reading more and more about it and I guarantee you you will be fascinated by it&#8217;s limitless possibilities.</p>
+
+<p>This post is written keeping in mind that it will be consumed by a newbie to OpenStack development. If you are one of the one benefitting from this guide, I would love it if you can provide me with suggestions to improve this post, and any feedback you have about it.</p>
+
+<p>Cheers!
+Rushi</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rushi Agrawal</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-03T22:01:00+05:30" pubdate data-updated="true">Apr 3<span>rd</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/devdoc/'>devdoc</a>, <a class='category' href='/blog/categories/devstack/'>devstack,</a>, <a class='category' href='/blog/categories/openstack/'>openstack,</a>, <a class='category' href='/blog/categories/tech/'>tech,</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/03/31/mysql-cheat-sheet/" title="Previous Post: MySQL Cheat Sheet">&laquo; MySQL Cheat Sheet</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/04/03/openstack-in-an-hour-with-devstack/">OpenStack in an Hour With DevStack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/31/mysql-cheat-sheet/">MySQL Cheat Sheet</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/16/cinder-playing-with-multi-backend/">Playing Around With Cinder Multi-backend</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/14/quick-start-linux-logical-volume-manager/">Quick Start: Linux Logical Volume Manager</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/12/installing-openid-plugin-for-mediawiki/">Installing OpenID Plugin for MediaWiki</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'rushiagr',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Rushi Agrawal -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'rushiagr';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack/';
+        var disqus_url = 'http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

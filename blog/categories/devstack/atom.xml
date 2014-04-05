@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: DevStack, | Sense, and Simplicity]]></title>
+  <title><![CDATA[Category: devstack, | Sense, and Simplicity]]></title>
   <link href="http://rushiagr.github.io/blog/categories/devstack/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
-  <updated>2014-03-31T20:06:57+05:30</updated>
+  <updated>2014-04-05T15:15:01+05:30</updated>
   <id>http://rushiagr.github.io/</id>
   <author>
     <name><![CDATA[Rushi Agrawal]]></name>
@@ -14,512 +14,190 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Cinder on DevStack - Quick Start]]></title>
-    <link href="http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/"/>
-    <updated>2013-05-27T22:33:00+05:30</updated>
-    <id>http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start</id>
-    <content type="html"><![CDATA[<p>This blog post covers all the important commands for OpenStack Cinder - The block storage project.
-Although this guide is written based on DevStack, it will work with actual deployment of OpenStack
-cloud also (except the DevStack/Linux specific bits).</p>
+    <title type="html"><![CDATA[OpenStack in an hour with DevStack]]></title>
+    <link href="http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack/"/>
+    <updated>2014-04-03T22:01:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack</id>
+    <content type="html"><![CDATA[<p>So you found out a cool new technology "OpenStack" and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. <a href="http://devstack.org">DevStack</a> is your friend-in-need. No, don't click that hyperlink just yet :)</p>
 
 <!--more-->
 
 
-<p>All the Cinder operations can be performed via either of these three means:</p>
+<p>To put it in a sentence, DevStack is "OpenStack in a box". You just need a popular Linux based distribution with 2GB RAM and you're all set to start. DevStack is basically a set of scripts which will install all the important OpenStack services in your computer. For this, it will first download all the essential packages, pull in the OpenStack code from various OpenStack projects, and set everything up for you to try out all of it.</p>
 
-<ol>
-<li>CLI (Cinder's <code>python-cinderclient</code> command line module)</li>
-<li>GUI (Using OpenStack's GUI project <code>horizon</code>)</li>
-<li>Directly calling the Cinder APIs</li>
-</ol>
+<p>NOTE: DO NOT set up DevStack for production clouds.</p>
 
+<p>Here, in this tutorial, I'll be setting up DevStack in a 64-bit Ubuntu 12.04 virtual machine. All your virtual machine needs to have is an Internet connection, and 2GB RAM.</p>
 
-<p>Internally, the CLI and GUI both use Cinder APIs to interact with the Cinder API server, but for
-a relatively new guy to OpenStack, I think an introduction through CLI would make the most sense.</p>
+<p>NOTE: Do not run any of the script as a root user, unless specified otherwise explicitly.</p>
 
-<p>Assumptions made:</p>
+<h3>Getting started</h3>
 
-<ol>
-<li>You understand how to setup a DevStack environment and already have one ready at hand (remember <code>./stack.sh</code>?)</li>
-<li>You know how to pass default credentials to local shell environment (<code>. /home/path_to_your_devstack_repo/eucarc</code> will do)</li>
-</ol>
+<p>Install git</p>
 
-
-<p>Let's start.</p>
-
-<h3>Creation and deletion of volumes</h3>
-
-<p>Create a 1-GB cinder volume with no name by running command <code>cinder create 1</code>.
-<code>
-stack@stlrx300s7-27:/$ cinder create 1
-+---------------------+--------------------------------------+
-|       Property      |                Value                 |
-+---------------------+--------------------------------------+
-|     attachments     |                  []                  |
-|  availability_zone  |                 nova                 |
-|       bootable      |                false                 |
-|      created_at     |      2013-05-28T10:32:47.243613      |
-| display_description |                 None                 |
-|     display_name    |                 None                 |
-|          id         | 6754d216-4792-4a38-964a-d002686c8f92 |
-|       metadata      |                  {}                  |
-|         size        |                  1                   |
-|     snapshot_id     |                 None                 |
-|     source_volid    |                 None                 |
-|        status       |               creating               |
-|     volume_type     |                 None                 |
-+---------------------+--------------------------------------+
-</code></p>
-
-<p>Here I am describing only the minimal functionality of a command. If you wish to see more info about what all you
-can do with that command, just type <code>cinder help &lt;command&gt;</code>, so to see all the optional parameters you can pass
-while creating a Cinder volume, execute <code>cinder help create</code>.</p>
-
-<p>```
-stack@stlrx300s7-27:/$ cinder help create
-usage: cinder create [--snapshot-id &lt;snapshot-id>]</p>
-
-<pre><code>                 [--source-volid &lt;source-volid&gt;] [--image-id &lt;image-id&gt;]
-                 [--display-name &lt;display-name&gt;]
-                 [--display-description &lt;display-description&gt;]
-                 [--volume-type &lt;volume-type&gt;]
-                 [--availability-zone &lt;availability-zone&gt;]
-                 [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
-                 &lt;size&gt;
+<pre><code>sudo apt-get install git
 </code></pre>
 
-<p>Add a new volume.</p>
+<p>Clone the DevStack repository into your computer and <code>cd</code> into it. This is the code which will set up the cloud for you.</p>
 
-<p>Positional arguments:
-  <size>                Size of volume in GB</p>
-
-<p>Optional arguments:
-  --snapshot-id &lt;snapshot-id></p>
-
-<pre><code>                    Create volume from snapshot id (Optional,
-                    Default=None)
+<pre><code>git clone http://github.com/openstack-dev/devstack
+cd devstack/
 </code></pre>
 
-<p>  --source-volid &lt;source-volid></p>
+<p>If you do a <code>ls</code>, you will see <code>stack.sh</code>, <code>unstack.sh</code> and <code>rejoin-stack.sh</code> files in there. These are the most important files.</p>
 
-<pre><code>                    Create volume from volume id (Optional, Default=None)
+<pre><code>r@ra:~/devstack$ ls
+accrc         exercises         HACKING.rst  rejoin-stack.sh  tests
+AUTHORS       exercise.sh       lib          run_tests.sh     tools
+clean.sh      extras.d          LICENSE      samples          unstack.sh
+driver_certs  files             localrc      stackrc
+eucarc        functions         openrc       stack-screenrc
+exerciserc    functions-common  README.md    stack.sh
 </code></pre>
 
-<p>  --image-id &lt;image-id></p>
+<p>File <code>stack.sh</code> is the most important of them all. Running this script will:
+1. Pull OpenStack code from all of it's important projects' repositories and put them in <code>/opt/stack</code> directory. TODO: say that this directory is configurable.
+2. Installs all the dependencies these OpenStack projects have -- both in the form of Ubuntu packages, and also the Python "PIP" repositories.
+3. Starts all the OpenStack services with a default configuration.</p>
 
-<pre><code>                    Create volume from image id (Optional, Default=None)
+<p>Bringing down the DevStack-created cloud is easy too -- just invoke the <code>unstack.sh</code> script, and all the services are down again, freeing up the memory that these services consume. I'll talk about <code>rejoin-stack.sh</code> in some time. Let's get started before I start writing at lengths again :)</p>
+
+<p>Execute the <code>stack.sh</code> script</p>
+
+<pre><code>r@ra:~/devstack$ ./stack.sh 
+
+################################################################################
+ENTER A PASSWORD TO USE FOR THE DATABASE.
+################################################################################
+This value will be written to your localrc file so you don't have to enter it 
+again.  Use only alphanumeric characters.
+If you leave this blank, a random default value will be used.
+Enter a password now:
 </code></pre>
 
-<p>  --display-name &lt;display-name></p>
+<p>You need to add the MySQL database password here. Don't worry if you have not installed MySQL on this system. Just provide a password here and this script will install MySQL and use this password there.</p>
 
-<pre><code>                    Volume name (Optional, Default=None)
+<p>As you can see, MySQL is where all the important data is stored by different OpenStack components. You can peep into the database later if you want to see what data is stored, etc.</p>
+
+<p>Also, note the first line after the heading. If the <code>stack.sh</code> script finishes successfully, all the inputs you specify (this, and four more after this) will be written to a file named as <code>localrc</code>. All the local configuration setting pertaining to the DevStack environment will go in this file. I'll provide you with details of all of them very soon. Have patience :)</p>
+
+<p>For the other four prompts, enter 'nova'. Just use 'nova' for this MySQL prompt too if it is not installed yet.</p>
+
+<p>You will see that the script now starts spewing a lot of output on our screen. It is downloading all the required code, packages, dependencies, etc, and setting everything up for us -- databases, services, network, configurations, message queues. Pretty much everything. For the first time, the script might take about 30-minutes, but it again depends upon the speed of your Internet connection, and the processing speed of your virtual machine. From the next time, it can provide you with a cloud in less than 10 minutes!</p>
+
+<p>If the script ends with something like this:</p>
+
+<pre><code>+ merge_config_group /home/r/devstack/local.conf post-extra
++ local localfile=/home/r/devstack/local.conf
++ shift
++ local matchgroups=post-extra
++ [[ -r /home/r/devstack/local.conf ]]
++ return 0
++ [[ -x /home/r/devstack/local.sh ]]
++ service_check
++ local service
++ local failures
++ SCREEN_NAME=stack
++ SERVICE_DIR=/opt/stack/status
++ [[ ! -d /opt/stack/status/stack ]]
+++ ls '/opt/stack/status/stack/*.failure'
+++ /bin/true
++ failures=
++ '[' -n '' ']'
++ set +o xtrace
+
+
+
+Horizon is now available at http://10.0.2.15/
+Keystone is serving at http://10.0.2.15:5000/v2.0/
+Examples on using novaclient command line is in exercise.sh
+The default users are: admin and demo
+The password: nova
+This is your host ip: 10.0.2.15
+stack.sh completed in 269 seconds.
 </code></pre>
 
-<p>  --display-description &lt;display-description></p>
+<p>That means your machine is now home to a Cloud! :)</p>
 
-<pre><code>                    Volume description (Optional, Default=None)
+<p>Here, <code>10.0.2.15</code> is the IP of my first network interface. Don't worry about that for now.</p>
+
+<p>So now you can head over to my blog <a href="http://www.rushiagr.com/blog/2013/05/27/cinder-on-devstack-quick-start/">Cinder on DevStack - Quick Start</a> to get started with creating volumes (persistent storage in cloud) with Cinder -- OpenStack's block-storage project. In that guide, you will also be creating a virtual machine, so it will be a good start to OpenStack. But let's get back in our current scope.</p>
+
+<p>You can type the host IP provided by the script into your browser, to access the dashboard 'Horizon'. Log into it using username 'admin', or 'demo' and password 'nova'. (For simplicity's sake, lets just assume there are two users who are allowed to access this cloud -- one has all the administrative privilages, and the other one is just a normal user).</p>
+
+<p>You can view all the process logs inside screen, by typing:</p>
+
+<pre><code>screen -x
 </code></pre>
 
-<p>  --volume-type &lt;volume-type></p>
+<p>Head over to <a href="http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/">Linux Screens in DevStack</a> for more information on how to work with <code>screen</code>.</p>
 
-<pre><code>                    Volume type (Optional, Default=None)
+<h3>Housekeeping and customizations</h3>
+
+<p>In your life as an OpenStack developer, you will be setting up and destroying DevStack instance quite a number of times. So it is good to know how to do that in the most efficient manner.</p>
+
+<p>Just like <code>stack.sh</code> script is used to set up DevStack, <code>unstack.sh</code> is used to destroy the DevStack setup. Running it will kill all the services, BUT it will not delete any of the code. If you want to bring down all the services manually, just do a:</p>
+
+<pre><code>sudo killall screen
 </code></pre>
 
-<p>  --availability-zone &lt;availability-zone></p>
+<p>Note that this will just kill all the process which were running, for which you were able to see the logs inside screen. <code>unstack.sh</code> does some cleanups as well along with killing processes.</p>
 
-<pre><code>                    Availability zone for volume (Optional, Default=None)
+<p>If you had previously run <code>./stack.sh</code>, but have brought down the environment, you can bring it up back by executing the <code>rejoin_stack.sh</code> script.</p>
+
+<p>NOTE: DevStack environment doesn't persist across reboots!</p>
+
+<p>So you need to bring back up the DevStack environment manually everytime you reboot. Here is where using a virtual machine comes handy. You can take a snapshot of the virtual machine, and then go back to it when you want a clean DevStack environment.</p>
+
+<p>Nonetheless, the best way to reboot is: first execute <code>unstack.sh</code> to bring down the current running DevStack instance. Then reboot, and when your machine comes up again, run <code>rejoin_stack.sh</code>. If you don't run <code>unstack.sh</code>, you will need to execute <code>stack.sh</code> again to have the environment up.</p>
+
+<h3>localrc configurations</h3>
+
+<p><code>localrc</code> is the file where all the local configurations (local = your local machine) are kept.</p>
+
+<p>After first successful <code>stack.sh</code> run, will see that a localrc file gets created with the configuration values you specified while running that script.</p>
+
+<pre><code>$ cat localrc 
+DATABASE_PASSWORD=nova
+RABBIT_PASSWORD=nova
+SERVICE_TOKEN=nova
+SERVICE_PASSWORD=nova
+ADMIN_PASSWORD=nova
 </code></pre>
 
-<p>  --metadata [&lt;key=value> [&lt;key=value> ...]]</p>
+<p>Sometimes you will forget to unstack, and will reboot the machine. And then you will find that running <code>stack.sh</code> will again do an <code>apt-get update</code>, and check for all packages, etc.</p>
 
-<pre><code>                    Metadata key=value pairs (Optional, Default=None)
+<p>If you specify an option <code>OFFLINE=True</code> in a file named <code>localrc</code>, inside the devstack directory, and if after specifying this you run <code>stack.sh</code>, it will not check anything over the Internet, and will set up DevStack using all the packages and code residing in your machine. Setting up a DevStack using this config option will give you a running cloud in the shortest amount of time (after <code>rejoin_stack.sh</code>, but you have already forgotten to do <code>unstack.sh</code>, right :) ).</p>
+
+<p>Note that <code>stack.sh</code> will see if the git repositories of the OpenStack projects are present in <code>/opt/stack/</code> directory. If they are, it will not fetch any latest code into them from Github. But if any of the directory (say, <code>nova</code>), is absent, it will pull latest code into the newly created <code>nova</code> directory inside <code>/opt/stack</code>.</p>
+
+<p>What if you want to get the latest code into all the OpenStack repositories inside <code>/opt/stack</code>? Just specify a <code>RECLONE=yes</code> parameter in localrc, and rerun <code>./stack.sh</code>. This comes particularly handy when you are developing new code.</p>
+
+<p>NOTE: Keep in mind that while developing code, you need to <strong>commit your local changes</strong> in, say, <code>/opt/stack/nova</code> repository, before you restack (re-run <code>stack.sh</code>) with <code>RECLONE=yes</code> option, as otherwise, the changes will be wiped off. Save yourself from a rude shock. You have been warned.</p>
+
+<p>Configuration options <code>RECLONE=yes</code> and <code>OFFLINE=True</code> are complementary, and hence, use only one of them at a time in <code>localrc</code>.</p>
+
+<p>If you have more than one interfaces, you can specify which one to use for external IP using this configuration:</p>
+
+<pre><code>HOST_IP=192.168.xxx.xxx
 </code></pre>
 
-<p>```</p>
+<h3>Developing code</h3>
 
-<p>Don't worry about the parameters, we'll use most of them in a short time.</p>
+<p>If you want to immediately test out your code by running it inside DevStack, you need to make the changes in the code, and restart the affected services.</p>
 
-<p>Let's create a Cinder volume of size 1GB with a name, using <code>cinder create --display-name my_second_vol 1</code>:
-<code>
-stack@stlrx300s7-27:/$ cinder create --display-name my_second_vol 1
-+---------------------+--------------------------------------+
-|       Property      |                Value                 |
-+---------------------+--------------------------------------+
-|     attachments     |                  []                  |
-|  availability_zone  |                 nova                 |
-|       bootable      |                false                 |
-|      created_at     |      2013-05-28T10:40:32.801981      |
-| display_description |                 None                 |
-|     display_name    |            my_second_vol             |
-|          id         | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
-|       metadata      |                  {}                  |
-|         size        |                  1                   |
-|     snapshot_id     |                 None                 |
-|     source_volid    |                 None                 |
-|        status       |               creating               |
-|     volume_type     |                 None                 |
-+---------------------+--------------------------------------+
-</code></p>
+<p>For example, let us say you are making code changes in <code>nova</code>. Just after you are done making the changes, go to the screen, and restart all the services which start with "n-". If you are very sure that only one of the Nova service is affected, just restart that. Or if you don't know which one to restart, it is safe to restart all of them.</p>
 
-<p>Now lets list out all the Cinder volumes, using <code>cinder list</code>:
-<code>
-stack@stlrx300s7-27:/$ cinder list
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
-| 6754d216-4792-4a38-964a-d002686c8f92 | available |      None     |  1   |     None    |  false   |             |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</code></p>
+<p>In order to restart, go to the respective screen and press <code>CTRL</code>+<code>C</code>. Then, press the up arrow once to get the last command which started this screen session, and then press <code>ENTER</code>.</p>
 
-<p>Now lets delete the first volume (the one without a name), using <code>cinder delete &lt;volume_id&gt;</code> command. If you
-execute <code>cinder list</code> real quick, you will see the status of the volume going to 'deleting', and after some time
-the volume will be deleted:
-<code>
-stack@stlrx300s7-27:/$ cinder delete 6754d216-4792-4a38-964a-d002686c8f92
-stack@stlrx300s7-27:/$ cinder list
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
-| 6754d216-4792-4a38-964a-d002686c8f92 |  deleting |      None     |  1   |     None    |  false   |             |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-stack@stlrx300s7-27:/$
-stack@stlrx300s7-27:/$
-stack@stlrx300s7-27:/$ cinder list
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</code></p>
+<h3>Final words</h3>
 
-<p>On a default DevStack installation, for a volume in Cinder, a 'logical volume' is created on the Linux machine,
-inside the 'physical volume' named <code>stack-volumes</code>. To see the logical volumes, and physical volumes on the
-ubuntu machine, just run <code>lvs</code> (logical volume scan) and <code>pvs</code> (physical volume scan) respectively (this is just
-for information and you can entirely skip this part):
-<code>
-stack@stlrx300s7-27:/$ sudo lvs
-  LV                                          VG            Attr   LSize Origin Snap%  Move Log Copy%  Convert
-  volume-25fa2028-46dc-4870-84c5-d062ae99dd7a stack-volumes -wi-ao 1.00g
-stack@stlrx300s7-27:/$
-stack@stlrx300s7-27:/$ sudo pvs
-  PV         VG            Fmt  Attr PSize PFree
-  /dev/loop0 stack-volumes lvm2 a-   5.01g 4.01g
-</code></p>
+<p>Note that this guide just gets you started with OpenStack using DevStack. OpenStack, and cloud in general, is not about virtual machines or volumes or networks only. It is a philosophy. It is a complete paradigm shift, and as such, it is impossible to cover all of it by me. Your quest to know more about it has just started. Keep reading more and more about it and I guarantee you you will be fascinated by it's limitless possibilities.</p>
 
-<h3>Volume snapshots</h3>
+<p>This post is written keeping in mind that it will be consumed by a newbie to OpenStack development. If you are one of the one benefitting from this guide, I would love it if you can provide me with suggestions to improve this post, and any feedback you have about it.</p>
 
-<p>Create the snapshot of volume:
-<code>
-stack@stlrx300s7-27:/$ cinder snapshot-create 25fa2028-46dc-4870-84c5-d062ae99dd7a
-+---------------------+--------------------------------------+
-|       Property      |                Value                 |
-+---------------------+--------------------------------------+
-|      created_at     |      2013-05-28T10:55:03.966690      |
-| display_description |                 None                 |
-|     display_name    |                 None                 |
-|          id         | baf8764f-4c9b-496a-b2ff-bd49825c5d09 |
-|       metadata      |                  {}                  |
-|         size        |                  1                   |
-|        status       |               creating               |
-|      volume_id      | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
-+---------------------+--------------------------------------+
-</code></p>
-
-<p>List all the snapshots:
-<code>
-stack@stlrx300s7-27:/$ cinder snapshot-list
-+--------------------------------------+--------------------------------------+-----------+--------------+------+
-|                  ID                  |              Volume ID               |   Status  | Display Name | Size |
-+--------------------------------------+--------------------------------------+-----------+--------------+------+
-| baf8764f-4c9b-496a-b2ff-bd49825c5d09 | 25fa2028-46dc-4870-84c5-d062ae99dd7a | available |     None     |  1   |
-+--------------------------------------+--------------------------------------+-----------+--------------+------+
-</code></p>
-
-<p>Now lets create a new volume of 1GB from the snapshot:
-<code>
-stack@stlrx300s7-27:/$ cinder create --snapshot-id baf8764f-4c9b-496a-b2ff-bd49825c5d09 1
-+---------------------+--------------------------------------+
-|       Property      |                Value                 |
-+---------------------+--------------------------------------+
-|     attachments     |                  []                  |
-|  availability_zone  |                 nova                 |
-|       bootable      |                false                 |
-|      created_at     |      2013-05-28T10:56:20.478141      |
-| display_description |                 None                 |
-|     display_name    |                 None                 |
-|          id         | 99ebe1d0-678b-4a9a-8ec4-438f9804d327 |
-|       metadata      |                  {}                  |
-|         size        |                  1                   |
-|     snapshot_id     | baf8764f-4c9b-496a-b2ff-bd49825c5d09 |
-|     source_volid    |                 None                 |
-|        status       |               creating               |
-|     volume_type     |                 None                 |
-+---------------------+--------------------------------------+
-</code>
-Now you will see two volumes when you'll do a <code>cinder list</code>.</p>
-
-<h3>Accessing volumes from inside a virtual instance</h3>
-
-<p>You can attach a volume to a VM instance, to provide additional persistent storage to that VM. It
-works just like you attach an external HDD to your computer/laptop. But first, we'll need to create a
-virtual machine for that.</p>
-
-<p>List out all the virtual machine images present in our DevStack setup, from which we can boot a
-brand new VM instance, using <code>glance image-list</code> or 'nova image-list`:
-<code>
-stack@stlrx300s7-27:/$ nova image-list
-+--------------------------------------+---------------------------------+--------+--------+
-| ID                                   | Name                            | Status | Server |
-+--------------------------------------+---------------------------------+--------+--------+
-| 291fe347-3a6f-4a21-9e85-e8809cb05d6e | cirros-0.3.1-x86_64-uec         | ACTIVE |        |
-| 69d14d74-4185-4ba3-9666-1e7f569f38c6 | cirros-0.3.1-x86_64-uec-kernel  | ACTIVE |        |
-| 8793532d-0c09-4b1c-aab8-d10832f13c09 | cirros-0.3.1-x86_64-uec-ramdisk | ACTIVE |        |
-+--------------------------------------+---------------------------------+--------+--------+
-</code></p>
-
-<p>We'll use the image with the shortest name, and boot an instance, giving it a name <code>myinstance</code>.
-You can list all the virtual machine instances registered with Nova using command <code>nova list</code>.
-If just after running the command to boot the virtual machine, you run <code>nova list</code> a few times,
-you will see the machine state going from 'BUILD' to 'ACTIVE' in a few seconds.
-<code>
-stack@stlrx300s7-27:/$ nova boot --flavor m1.tiny --image 291fe347-3a6f-4a21-9e85-e8809cb05d6e myinstance
-+-----------------------------+--------------------------------------+
-| Property                    | Value                                |
-+-----------------------------+--------------------------------------+
-| status                      | BUILD                                |
-| updated                     | 2013-05-28T11:03:47Z                 |
-| OS-EXT-STS:task_state       | scheduling                           |
-| key_name                    | None                                 |
-| image                       | cirros-0.3.1-x86_64-uec              |
-| hostId                      |                                      |
-| OS-EXT-STS:vm_state         | building                             |
-| flavor                      | m1.tiny                              |
-| id                          | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
-| security_groups             | [{u'name': u'default'}]              |
-| user_id                     | 35708cb6795845fcab6362e908e6b0cf     |
-| name                        | myinstance                           |
-| adminPass                   | cQh34G96dCHX                         |
-| tenant_id                   | 11f8fde7d627422d84036cabd6cbb7f8     |
-| created                     | 2013-05-28T11:03:47Z                 |
-| OS-DCF:diskConfig           | MANUAL                               |
-| metadata                    | {}                                   |
-| accessIPv4                  |                                      |
-| accessIPv6                  |                                      |
-| progress                    | 0                                    |
-| OS-EXT-STS:power_state      | 0                                    |
-| OS-EXT-AZ:availability_zone | nova                                 |
-| config_drive                |                                      |
-+-----------------------------+--------------------------------------+
-stack@stlrx300s7-27:/$ nova list
-+--------------------------------------+------------+--------+------------+-------------+----------+
-| ID                                   | Name       | Status | Task State | Power State | Networks |
-+--------------------------------------+------------+--------+------------+-------------+----------+
-| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | BUILD  | networking | NOSTATE     |          |
-+--------------------------------------+------------+--------+------------+-------------+----------+
-stack@stlrx300s7-27:/$ nova list
-+--------------------------------------+------------+--------+------------+-------------+----------+
-| ID                                   | Name       | Status | Task State | Power State | Networks |
-+--------------------------------------+------------+--------+------------+-------------+----------+
-| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | BUILD  | spawning   | NOSTATE     |          |
-+--------------------------------------+------------+--------+------------+-------------+----------+
-stack@stlrx300s7-27:/$ nova list
-+--------------------------------------+------------+--------+------------+-------------+------------------+
-| ID                                   | Name       | Status | Task State | Power State | Networks         |
-+--------------------------------------+------------+--------+------------+-------------+------------------+
-| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | ACTIVE | None       | Running     | private=10.0.0.2 |
-+--------------------------------------+------------+--------+------------+-------------+------------------+
-</code></p>
-
-<p>Now lets attach one of our volume to this instance, and then try to peek into this volume after logging into the instance.</p>
-
-<p>Attach volume using command <code>nova volume-attach &lt;instance_id&gt; &lt;volume_id&gt; &lt;attach_location&gt;</code>. We'll attach at the first
-free device location: <code>/dev/vdb</code>:
-<code>
-stack@stlrx300s7-27:/$ nova volume-attach 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f 25fa2028-46dc-4870-84c5-d062ae99dd7a /dev/vdb
-+----------+--------------------------------------+
-| Property | Value                                |
-+----------+--------------------------------------+
-| device   | /dev/vdb                             |
-| serverId | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
-| id       | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
-| volumeId | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
-+----------+--------------------------------------+
-</code></p>
-
-<p>Now listing the volume will tell you that the volume is attached to an instance (in use):
-<code>
-stack@stlrx300s7-27:/$ cinder list
-+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable |             Attached to              |
-+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-| 25fa2028-46dc-4870-84c5-d062ae99dd7a |   in-use  | my_second_vol |  1   |     None    |  false   | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
-| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |                                      |
-+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-</code></p>
-
-<p>Now let's login into this virtual machine using the private IP of the instance (<code>10.0.0.2</code> in our case). Note how an
-error message pops up if you have already created an instance last time when you installed DevStack. If such an error
-appears on your screen too, follow the instructions just like the way I did. The default password for the cirros image
-we used is <code>cubswin:)</code>. Enter into the instance, and then become root:
-```
-stack@stlrx300s7-27:/$ ssh cirros@10.0.0.2
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
-Someone could be eavesdropping on you right now (man-in-the-middle attack)!
-It is also possible that a host key has just been changed.
-The fingerprint for the RSA key sent by the remote host is
-f5:ac:45:4c:63:8e:e4:19:cc:5a:76:7e:a1:08:e7:c8.
-Please contact your system administrator.
-Add correct host key in /opt/stack/.ssh/known_hosts to get rid of this message.
-Offending RSA key in /opt/stack/.ssh/known_hosts:4
-  remove with: ssh-keygen -f "/opt/stack/.ssh/known_hosts" -R 10.0.0.2
-RSA host key for 10.0.0.2 has changed and you have requested strict checking.
-Host key verification failed.</p>
-
-<p>stack@stlrx300s7-27:/$ ssh-keygen -f "/opt/stack/.ssh/known_hosts" -R 10.0.0.2
-/opt/stack/.ssh/known_hosts updated.
-Original contents retained as /opt/stack/.ssh/known_hosts.old
-<code>
-</code>
-stack@stlrx300s7-27:/$ ssh cirros@10.0.0.2
-The authenticity of host '10.0.0.2 (10.0.0.2)' can't be established.
-RSA key fingerprint is f5:ac:45:4c:63:8e:e4:19:cc:5a:76:7e:a1:08:e7:c8.
-Are you sure you want to continue connecting (yes/no)? yes
-Warning: Permanently added '10.0.0.2' (RSA) to the list of known hosts.
-cirros@10.0.0.2's password:
-$sudo -i
-#
-```</p>
-
-<p>Run <code>fdisk -l</code> to see the disks present for the instance. You will see that your newly attached disk
-<code>/dev/vdb</code> of size 1GB is now present:
-```</p>
-
-<h1>fdisk -l</h1>
-
-<p>Disk /dev/vda: 1073 MB, 1073741824 bytes
-16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0x00000000</p>
-
-<p>Disk /dev/vda doesn't contain a valid partition table</p>
-
-<p>Disk /dev/vdb: 1073 MB, 1073741824 bytes
-16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0x00000000</p>
-
-<p>Disk /dev/vdb doesn't contain a valid partition table
-```</p>
-
-<p>Command <code>blkid /dev/vd*</code> lists out the IDs of block devices for this machine and some related info. Running
-this command you will see that info of only the virtual disk <code>/dev/vda</code> is present, meaning our disk <code>/dev/vdb</code>
-needs formatting.
-```</p>
-
-<h1>blkid /dev/vd*</h1>
-
-<p>/dev/vda: LABEL="cirros-rootfs" UUID="74251bb8-3a28-4a46-9a78-064497b26b9d" SEC_TYPE="ext2" TYPE="ext3"
-```</p>
-
-<p>Lets format it to make an EXT3 partition with block-size 1024 bytes using command <code>mkfs.ext3 -b 1024 /dev/vdb</code>:
-```</p>
-
-<h1>mkfs.ext3 -b 1024 /dev/vdb</h1>
-
-<p>mke2fs 1.42.2 (27-Mar-2012)
-Filesystem label=
-OS type: Linux
-Block size=1024 (log=0)
-Fragment size=1024 (log=0)
-Stride=0 blocks, Stripe width=0 blocks
-65536 inodes, 1048576 blocks
-52428 blocks (5.00%) reserved for the super user
-First data block=1
-Maximum filesystem blocks=68157440
-128 block groups
-8192 blocks per group, 8192 fragments per group
-512 inodes per group
-Superblock backups stored on blocks:</p>
-
-<pre><code>    8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409, 663553, 
-    1024001
-</code></pre>
-
-<p>Allocating group tables: done                          <br/>
-Writing inode tables: done                          <br/>
-Creating journal (32768 blocks): done
-Writing superblocks and filesystem accounting information: done
-```</p>
-
-<p>Run <code>blkid</code> again to see the newly partitioned disk listed:
-```</p>
-
-<h1>blkid /dev/vd*</h1>
-
-<p>/dev/vda: LABEL="cirros-rootfs" UUID="74251bb8-3a28-4a46-9a78-064497b26b9d" SEC_TYPE="ext2" TYPE="ext3"
-/dev/vdb: UUID="22838e81-eb97-457d-b1e0-4ff3d8e45b05" SEC_TYPE="ext2" TYPE="ext3"
-```</p>
-
-<p>In order to use this disk, you need to mount it at some location. I'll create a directory <code>/tempmount</code>
-and mount our virtual block device there:
-```</p>
-
-<h1>mkdir /tempmount</h1>
-
-<h1>mount /dev/vdb /tempmount/</h1>
-
-<p>```</p>
-
-<p>Now you can see the disk listed in the machine disks, using <code>df -h</code> command:
-```</p>
-
-<h1>df -h</h1>
-
-<p>Filesystem                Size      Used Available Use% Mounted on
-/dev                    242.3M         0    242.3M   0% /dev
-/dev/vda                 31.0M      9.7M     19.7M  33% /
-tmpfs                   245.9M         0    245.9M   0% /dev/shm
-tmpfs                   200.0K     76.0K    124.0K  38% /run
-/dev/vdb               1007.7M     34.9M    921.6M   4% /tempmount
-```</p>
-
-<p>Now you can <code>cd</code> into <code>/tempmount</code> directory, and do whatever you want to do with the new disk -- put some files there,
-or download one!</p>
-
-<p>Lets wrap up this part. Unmount this volume by <code>umount /tempmount</code>, and log out from the machine by pressing <code>CTRL+D</code> twice, and execute <code>nova volume-detach &lt;volume_id&gt;
-&lt;server_id&gt;</code> to detach this volume. You can now see the 'Attached to' column becomes empty again after detaching.
-<code>
-stack@stlrx300s7-27:/$ cinder list
-+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable |             Attached to              |
-+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-| 25fa2028-46dc-4870-84c5-d062ae99dd7a |   in-use  | my_second_vol |  1   |     None    |  false   | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
-| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |                                      |
-+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-stack@stlrx300s7-27:/$ nova volume-detach 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f 25fa2028-46dc-4870-84c5-d062ae99dd7a
-stack@stlrx300s7-27:/$ cinder list
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
-| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |             |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</code></p>
-
-<h3>More features</h3>
-
-<p>(Will update shortly)</p>
-
-<p>Cheers!</p>
+<p>Cheers!
+Rushi</p>
 ]]></content>
   </entry>
   
