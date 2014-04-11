@@ -3,7 +3,7 @@ layout: post
 title: "Linux Screens in DevStack"
 date: 2013-06-05 20:50
 comments: true
-categories: 
+categories: [tech, openstack, cloud]
 ---
 
 This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.

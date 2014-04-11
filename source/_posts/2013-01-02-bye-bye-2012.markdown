@@ -3,7 +3,7 @@ layout: post
 title: "Bye-Bye 2012, Welcome 2013"
 date: 2013-01-02 00:54
 comments: true
-categories: 
+categories: nontech
 ---
 
 Listing down the things which went well for me in 2012, and which didn't, and the plans for upcoming year 2013. Beware: More technical stuff than emotional.

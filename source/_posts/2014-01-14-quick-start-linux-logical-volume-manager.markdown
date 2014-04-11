@@ -3,7 +3,7 @@ layout: post
 title: "Quick Start: Linux Logical Volume Manager"
 date: 2014-01-14 20:09
 comments: true
-categories: 
+categories: [tech]
 ---
 
 While installing the latest Ubuntu OS on your computer, you will see that 

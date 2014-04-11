@@ -3,7 +3,7 @@ layout: post
 title: "Testing the new blog"
 date: 2012-12-15 17:49
 comments: true
-categories: [blabber, nontech]
+categories: nontech
 ---
 
 This is a test blog, just to check out some of the basic functionalities of

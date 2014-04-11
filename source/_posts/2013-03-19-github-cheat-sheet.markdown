@@ -3,7 +3,7 @@ layout: post
 title: "Git(hub) Cheat Sheet"
 date: 2013-03-19 04:22
 comments: true
-categories: git, github, cheat-sheet, web, tech
+categories: [tech, cheatsheet]
 ---
 
 

@@ -3,7 +3,7 @@ layout: post
 title: "MySQL Cheat Sheet"
 date: 2014-03-31 18:49
 comments: true
-categories: 
+categories: [tech, cheatsheet]
 ---
 
 Databases are so important, yet almost all the time I need to work with it, I find that I have already forgotten all the syntax! So here I am writing down a quick cheat sheet to get me up and running when I'm waking up from slumber. I hope this will help atleast one other guy on this planet.

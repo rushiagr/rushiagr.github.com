@@ -3,7 +3,7 @@ layout: post
 title: "Bye bye 2013. Welcome 2014"
 date: 2014-01-01 13:40
 comments: true
-categories: 
+categories: nontech
 ---
 
 How year 2013 fared for me, and my plans for 2014.

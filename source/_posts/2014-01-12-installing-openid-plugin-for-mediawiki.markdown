@@ -3,7 +3,7 @@ layout: post
 title: "Installing OpenID plugin for MediaWiki"
 date: 2014-01-12 13:09
 comments: true
-categories: 
+categories: [tech]
 ---
 
 This post is about setting up your wiki such that their users access the wiki

@@ -3,7 +3,7 @@ layout: post
 title: "Playing around with Cinder multi-backend"
 date: 2014-01-16 22:42
 comments: true
-categories: 
+categories: [tech, openstack, cloud]
 ---
 
 

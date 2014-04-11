@@ -3,7 +3,7 @@ layout: post
 title: "Cinder on DevStack - Quick Start"
 date: 2013-05-27 22:33
 comments: true
-categories: OpenStack, DevStack, tech, Cinder
+categories: [tech, cloud, openstack]
 ---
 
 This blog post covers all the important commands for OpenStack Cinder - The block storage project.

@@ -3,8 +3,10 @@ layout: post
 title: "OpenStack Tempest quick start with DevStack"
 date: 2013-03-20 04:54
 comments: true
-categories: tech
+categories: [tech, cloud, openstack]
 ---
+
+UPDATE(April 2014): Now when you set up DevStack, Tempest is automatically set up for you.
 
 This quick start guide explains setting up Tempest with a DevStack environment
 for Grizzly release. Most of the information here is taken from
