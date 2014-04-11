@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: git, | Sense, and Simplicity]]></title>
-  <link href="http://rushiagr.github.io/blog/categories/git/atom.xml" rel="self"/>
+  <title><![CDATA[Category: cheatsheet | Sense, and Simplicity]]></title>
+  <link href="http://rushiagr.github.io/blog/categories/cheatsheet/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
-  <updated>2014-04-05T16:27:17+05:30</updated>
+  <updated>2014-04-11T21:17:10+05:30</updated>
   <id>http://rushiagr.github.io/</id>
   <author>
     <name><![CDATA[Rushi Agrawal]]></name>
@@ -12,6 +12,227 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MySQL Cheat Sheet]]></title>
+    <link href="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/"/>
+    <updated>2014-03-31T18:49:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet</id>
+    <content type="html"><![CDATA[<p>Databases are so important, yet almost all the time I need to work with it, I find that I have already forgotten all the syntax! So here I am writing down a quick cheat sheet to get me up and running when I'm waking up from slumber. I hope this will help atleast one other guy on this planet.</p>
+
+<!-- more -->
+
+
+<p>I use mostly Ubuntu, so some of the commands might be Ubuntu specific.</p>
+
+<p>Install mysql</p>
+
+<pre><code>sudo apt-get install mysql-server
+</code></pre>
+
+<p>A prompt will ask for the root password.</p>
+
+<p>To change the root password:</p>
+
+<pre><code>UPDATE mysql.user SET password=PASSWORD('nova') WHERE user='root';
+</code></pre>
+
+<p>NOTE: MySQL keywords are case insensitive. They're represented in capital here just so that they appear different than the rest. When you're just testing out some things logging into the DB console, people generally prefer writing in small caps.</p>
+
+<p>Note that <code>PASSWORD</code> is a function, and unlike other MySQL keywords cannot be used in small caps.</p>
+
+<p>Log into MySQL console with user <code>root</code> and password <code>mysecretpassword</code>:</p>
+
+<pre><code>mysql -uroot -pmysecretpassword
+</code></pre>
+
+<p>or</p>
+
+<pre><code>mysql -u'root' -p'mysecretpassword'
+</code></pre>
+
+<p>or entering the password in 'secret' mode:</p>
+
+<pre><code>$ mysql -uroot -p
+Enter password: 
+</code></pre>
+
+<h3>MySQL console</h3>
+
+<p>List all databases:</p>
+
+<pre><code>mysql&gt; SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+4 rows in set (0.01 sec)
+</code></pre>
+
+<p>Create a new database <code>rushi</code>:</p>
+
+<pre><code>mysql&gt; CREATE DATABASE rushi;
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| rushi              |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+</code></pre>
+
+<p>Select database <code>rushi</code>, so that all the further operations are executed inside this database:</p>
+
+<pre><code>mysql&gt; USE rushi;
+Database changed
+</code></pre>
+
+<p>Create a table <code>friends</code> inside <code>rushi</code> database:</p>
+
+<pre><code>mysql&gt; CREATE TABLE friends (name VARCHAR(20), age INT);
+Query OK, 0 rows affected (0.03 sec)
+</code></pre>
+
+<p>If you didn't select the database in the last to last command, you need to specify table in this format:<code>&lt;database&gt;.&lt;tablename&gt;</code>. So the last command would look like:</p>
+
+<pre><code>mysql&gt; CREATE TABLE rushi.friends (name VARCHAR(20), age INT);
+</code></pre>
+
+<p>List all the tables:</p>
+
+<pre><code>mysql&gt; show tables;
++-----------------+
+| Tables_in_rushi |
++-----------------+
+| friends         |
++-----------------+
+1 rows in set (0.00 sec)
+</code></pre>
+
+<p>Insert data into <code>friends</code>:</p>
+
+<pre><code>mysql&gt; INSERT INTO friends VALUES ('arvind', 24);
+Query OK, 1 row affected (0.01 sec)
+</code></pre>
+
+<p>Display all the data from the table:</p>
+
+<pre><code>mysql&gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
++--------+------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<p>Insert another friend:</p>
+
+<pre><code>mysql&gt; INSERT INTO friends VALUES ('honshu', 23);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
+| honshu |   23 |
++--------+------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<p>Update a row in the table:</p>
+
+<pre><code>mysql&gt; UPDATE friends SET age=22 WHERE name='honshu';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql&gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
+| honshu |   22 |
++--------+------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<p>Delete a row from table:</p>
+
+<pre><code>mysql&gt; DELETE FROM friends WHERE age=24;
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; select * from friends;
++--------+------+
+| name   | age  |
++--------+------+
+| honshu |   22 |
++--------+------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<p>Delete all rows from the table in one go, and reset the autoincrement if any:</p>
+
+<pre><code>mysql&gt; TRUNCATE friends;
+Query OK, 0 rows affected (0.04 sec)
+</code></pre>
+
+<p>Delete the table and all of its contents:</p>
+
+<pre><code>mysql&gt; DROP TABLE friends;
+</code></pre>
+
+<p>Other commonly used commands are listed below. Try to try all of them out atleast once.
+Count the number of rows in a table:</p>
+
+<pre><code>SELECT COUNT(*) FROM friends;
+</code></pre>
+
+<p>Select distinct values for a row, and order them too:</p>
+
+<pre><code>SELECT DISTINCT age FROM friends ORDER BY age;
+</code></pre>
+
+<p>Modify table to add one more column to it:</p>
+
+<pre><code>ALTER TABLE friend ADD height varchar(10);
+</code></pre>
+
+<p>Use regular expressions:</p>
+
+<pre><code>SELECT * FROM friend WHERE name REGEXP 'arv*';
+</code></pre>
+
+<p>CAUTION: Regular expressions comes with some binary/encoding trickery. Use it with a lot of caution.</p>
+
+<p>Create a new user for the database, and give it all the root privileges</p>
+
+<pre><code>CREATE USER 'rushiagr'@'localhost' IDENTIFIED BY 'mysecretpass'
+GRANT ALL PRIVILEGES ON * . * TO 'rushiagr'@'localhost'
+</code></pre>
+
+<p>Take a dump of database <code>rushi</code> and store it in a file <code>db.dump</code>. Execute this command in bash shell, and not in the MySQL shell.:</p>
+
+<pre><code>mysqldump --user root rushi &gt; db.dump
+</code></pre>
+
+<p>The End!</p>
+
+<p>Comments/suggestions/feedback? Please feel free to comment and I'll make sure I acknowledge them to the fullest.</p>
+
+<p>Cheers!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git(hub) Cheat Sheet]]></title>

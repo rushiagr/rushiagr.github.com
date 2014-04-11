@@ -2,61 +2,61 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://rushiagr.github.io/blog/2012/12/15/testing-the-new-blog/</loc>
-        <lastmod>2014-01-06T22:19:55+05:30</lastmod>
+        <lastmod>2014-04-05T16:48:48+05:30</lastmod>
     </url>
     <url>
         <loc>http://rushiagr.github.io/blog/2013/01/02/bye-bye-2012/</loc>
-        <lastmod>2014-01-06T22:19:55+05:30</lastmod>
+        <lastmod>2014-04-05T16:49:28+05:30</lastmod>
     </url>
     <url>
         <loc>http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet/</loc>
-        <lastmod>2014-01-27T14:11:31+05:30</lastmod>
+        <lastmod>2014-04-05T16:49:57+05:30</lastmod>
     </url>
     <url>
         <loc>
             http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/
         </loc>
-        <lastmod>2014-01-06T22:19:55+05:30</lastmod>
+        <lastmod>2014-04-05T16:51:04+05:30</lastmod>
     </url>
     <url>
         <loc>http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/</loc>
-        <lastmod>2014-01-06T22:19:55+05:30</lastmod>
+        <lastmod>2014-04-05T16:51:16+05:30</lastmod>
     </url>
     <url>
         <loc>http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/</loc>
-        <lastmod>2014-01-06T22:19:55+05:30</lastmod>
+        <lastmod>2014-04-05T16:51:42+05:30</lastmod>
     </url>
     <url>
         <loc>http://rushiagr.github.io/blog/2014/01/01/bye-bye-2013-welcome-2014/</loc>
-        <lastmod>2014-01-06T22:19:55+05:30</lastmod>
+        <lastmod>2014-04-05T16:51:50+05:30</lastmod>
     </url>
     <url>
         <loc>
             http://rushiagr.github.io/blog/2014/01/12/installing-openid-plugin-for-mediawiki/
         </loc>
-        <lastmod>2014-01-12T16:47:24+05:30</lastmod>
+        <lastmod>2014-04-05T16:59:31+05:30</lastmod>
     </url>
     <url>
         <loc>
             http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/
         </loc>
-        <lastmod>2014-01-14T23:00:19+05:30</lastmod>
+        <lastmod>2014-04-05T16:52:44+05:30</lastmod>
     </url>
     <url>
         <loc>http://rushiagr.github.io/blog/2014/01/16/cinder-playing-with-multi-backend/</loc>
-        <lastmod>2014-01-17T00:04:16+05:30</lastmod>
+        <lastmod>2014-04-05T16:58:29+05:30</lastmod>
     </url>
     <url>
         <loc>http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/</loc>
-        <lastmod>2014-03-31T20:04:41+05:30</lastmod>
+        <lastmod>2014-04-05T16:58:36+05:30</lastmod>
     </url>
     <url>
         <loc>http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack/</loc>
-        <lastmod>2014-04-05T16:27:08+05:30</lastmod>
+        <lastmod>2014-04-05T16:53:30+05:30</lastmod>
     </url>
     <url>
         <loc>http://rushiagr.github.io/</loc>
-        <lastmod>2014-04-05T16:27:08+05:30</lastmod>
+        <lastmod>2014-04-05T16:59:31+05:30</lastmod>
     </url>
     <url>
         <loc>http://rushiagr.github.io/robots.txt</loc>
@@ -64,10 +64,11 @@
     </url>
     <url>
         <loc>http://rushiagr.github.io/blog/archives/</loc>
-        <lastmod>2014-04-05T16:27:08+05:30</lastmod>
+        <lastmod>2014-04-05T16:59:31+05:30</lastmod>
     </url>
     <url>
         <loc>http://rushiagr.github.io/202020rule/</loc>
         <lastmod>2013-06-10T07:07:28+05:30</lastmod>
     </url>
+
 </urlset>

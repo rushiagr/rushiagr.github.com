@@ -4,7 +4,7 @@
   <title><![CDATA[Sense, and Simplicity]]></title>
   <link href="http://rushiagr.github.io/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
-  <updated>2014-04-05T16:27:17+05:30</updated>
+  <updated>2014-04-11T21:17:10+05:30</updated>
   <id>http://rushiagr.github.io/</id>
   <author>
     <name><![CDATA[Rushi Agrawal]]></name>
@@ -2073,7 +2073,9 @@ or download one!</p>
     <link href="http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/"/>
     <updated>2013-03-20T04:54:00+05:30</updated>
     <id>http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack</id>
-    <content type="html"><![CDATA[<p>This quick start guide explains setting up Tempest with a DevStack environment
+    <content type="html"><![CDATA[<p>UPDATE(April 2014): Now when you set up DevStack, Tempest is automatically set up for you.</p>
+
+<p>This quick start guide explains setting up Tempest with a DevStack environment
 for Grizzly release. Most of the information here is taken from
 <a href="http://www.joinfu.com/2012/03/testing-essex-rc1-with-devstack-and-tempest/">here</a>, the only difference being this blog post is more recent, and is based on Grizzly.</p>
 

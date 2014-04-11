@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: tech, | Sense, and Simplicity]]></title>
+  <title><![CDATA[Category: tech | Sense, and Simplicity]]></title>
   <link href="http://rushiagr.github.io/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
-  <updated>2014-04-05T16:27:17+05:30</updated>
+  <updated>2014-04-11T21:17:10+05:30</updated>
   <id>http://rushiagr.github.io/</id>
   <author>
     <name><![CDATA[Rushi Agrawal]]></name>
@@ -204,512 +204,896 @@ Rushi</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Cinder on DevStack - Quick Start]]></title>
-    <link href="http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/"/>
-    <updated>2013-05-27T22:33:00+05:30</updated>
-    <id>http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start</id>
-    <content type="html"><![CDATA[<p>This blog post covers all the important commands for OpenStack Cinder - The block storage project.
-Although this guide is written based on DevStack, it will work with actual deployment of OpenStack
-cloud also (except the DevStack/Linux specific bits).</p>
+    <title type="html"><![CDATA[MySQL Cheat Sheet]]></title>
+    <link href="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/"/>
+    <updated>2014-03-31T18:49:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet</id>
+    <content type="html"><![CDATA[<p>Databases are so important, yet almost all the time I need to work with it, I find that I have already forgotten all the syntax! So here I am writing down a quick cheat sheet to get me up and running when I'm waking up from slumber. I hope this will help atleast one other guy on this planet.</p>
+
+<!-- more -->
+
+
+<p>I use mostly Ubuntu, so some of the commands might be Ubuntu specific.</p>
+
+<p>Install mysql</p>
+
+<pre><code>sudo apt-get install mysql-server
+</code></pre>
+
+<p>A prompt will ask for the root password.</p>
+
+<p>To change the root password:</p>
+
+<pre><code>UPDATE mysql.user SET password=PASSWORD('nova') WHERE user='root';
+</code></pre>
+
+<p>NOTE: MySQL keywords are case insensitive. They're represented in capital here just so that they appear different than the rest. When you're just testing out some things logging into the DB console, people generally prefer writing in small caps.</p>
+
+<p>Note that <code>PASSWORD</code> is a function, and unlike other MySQL keywords cannot be used in small caps.</p>
+
+<p>Log into MySQL console with user <code>root</code> and password <code>mysecretpassword</code>:</p>
+
+<pre><code>mysql -uroot -pmysecretpassword
+</code></pre>
+
+<p>or</p>
+
+<pre><code>mysql -u'root' -p'mysecretpassword'
+</code></pre>
+
+<p>or entering the password in 'secret' mode:</p>
+
+<pre><code>$ mysql -uroot -p
+Enter password: 
+</code></pre>
+
+<h3>MySQL console</h3>
+
+<p>List all databases:</p>
+
+<pre><code>mysql&gt; SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+4 rows in set (0.01 sec)
+</code></pre>
+
+<p>Create a new database <code>rushi</code>:</p>
+
+<pre><code>mysql&gt; CREATE DATABASE rushi;
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| rushi              |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+</code></pre>
+
+<p>Select database <code>rushi</code>, so that all the further operations are executed inside this database:</p>
+
+<pre><code>mysql&gt; USE rushi;
+Database changed
+</code></pre>
+
+<p>Create a table <code>friends</code> inside <code>rushi</code> database:</p>
+
+<pre><code>mysql&gt; CREATE TABLE friends (name VARCHAR(20), age INT);
+Query OK, 0 rows affected (0.03 sec)
+</code></pre>
+
+<p>If you didn't select the database in the last to last command, you need to specify table in this format:<code>&lt;database&gt;.&lt;tablename&gt;</code>. So the last command would look like:</p>
+
+<pre><code>mysql&gt; CREATE TABLE rushi.friends (name VARCHAR(20), age INT);
+</code></pre>
+
+<p>List all the tables:</p>
+
+<pre><code>mysql&gt; show tables;
++-----------------+
+| Tables_in_rushi |
++-----------------+
+| friends         |
++-----------------+
+1 rows in set (0.00 sec)
+</code></pre>
+
+<p>Insert data into <code>friends</code>:</p>
+
+<pre><code>mysql&gt; INSERT INTO friends VALUES ('arvind', 24);
+Query OK, 1 row affected (0.01 sec)
+</code></pre>
+
+<p>Display all the data from the table:</p>
+
+<pre><code>mysql&gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
++--------+------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<p>Insert another friend:</p>
+
+<pre><code>mysql&gt; INSERT INTO friends VALUES ('honshu', 23);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
+| honshu |   23 |
++--------+------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<p>Update a row in the table:</p>
+
+<pre><code>mysql&gt; UPDATE friends SET age=22 WHERE name='honshu';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql&gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
+| honshu |   22 |
++--------+------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<p>Delete a row from table:</p>
+
+<pre><code>mysql&gt; DELETE FROM friends WHERE age=24;
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; select * from friends;
++--------+------+
+| name   | age  |
++--------+------+
+| honshu |   22 |
++--------+------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<p>Delete all rows from the table in one go, and reset the autoincrement if any:</p>
+
+<pre><code>mysql&gt; TRUNCATE friends;
+Query OK, 0 rows affected (0.04 sec)
+</code></pre>
+
+<p>Delete the table and all of its contents:</p>
+
+<pre><code>mysql&gt; DROP TABLE friends;
+</code></pre>
+
+<p>Other commonly used commands are listed below. Try to try all of them out atleast once.
+Count the number of rows in a table:</p>
+
+<pre><code>SELECT COUNT(*) FROM friends;
+</code></pre>
+
+<p>Select distinct values for a row, and order them too:</p>
+
+<pre><code>SELECT DISTINCT age FROM friends ORDER BY age;
+</code></pre>
+
+<p>Modify table to add one more column to it:</p>
+
+<pre><code>ALTER TABLE friend ADD height varchar(10);
+</code></pre>
+
+<p>Use regular expressions:</p>
+
+<pre><code>SELECT * FROM friend WHERE name REGEXP 'arv*';
+</code></pre>
+
+<p>CAUTION: Regular expressions comes with some binary/encoding trickery. Use it with a lot of caution.</p>
+
+<p>Create a new user for the database, and give it all the root privileges</p>
+
+<pre><code>CREATE USER 'rushiagr'@'localhost' IDENTIFIED BY 'mysecretpass'
+GRANT ALL PRIVILEGES ON * . * TO 'rushiagr'@'localhost'
+</code></pre>
+
+<p>Take a dump of database <code>rushi</code> and store it in a file <code>db.dump</code>. Execute this command in bash shell, and not in the MySQL shell.:</p>
+
+<pre><code>mysqldump --user root rushi &gt; db.dump
+</code></pre>
+
+<p>The End!</p>
+
+<p>Comments/suggestions/feedback? Please feel free to comment and I'll make sure I acknowledge them to the fullest.</p>
+
+<p>Cheers!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Playing around with Cinder multi-backend]]></title>
+    <link href="http://rushiagr.github.io/blog/2014/01/16/cinder-playing-with-multi-backend/"/>
+    <updated>2014-01-16T22:42:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2014/01/16/cinder-playing-with-multi-backend</id>
+    <content type="html"><![CDATA[<p>With Grizzly release, Cinder got equipped with another major feature -- multi-backends
+with filter scheduler. So now you can have more than one storage boxes for block storage
+and manage them with one Cinder deployment. Here, I'm going to test it out using our
+favourite method -- trying it out on DevStack!</p>
 
 <!--more-->
 
 
-<p>All the Cinder operations can be performed via either of these three means:</p>
+<p>DevStack can provide you with two LVM backends to play around with them. But you'll need to restack it.</p>
 
-<ol>
-<li>CLI (Cinder's <code>python-cinderclient</code> command line module)</li>
-<li>GUI (Using OpenStack's GUI project <code>horizon</code>)</li>
-<li>Directly calling the Cinder APIs</li>
-</ol>
+<p>Go to the devstack directory and pull the latest code. Destroy previous DevStack deployment if it exists.</p>
 
-
-<p>Internally, the CLI and GUI both use Cinder APIs to interact with the Cinder API server, but for
-a relatively new guy to OpenStack, I think an introduction through CLI would make the most sense.</p>
-
-<p>Assumptions made:</p>
-
-<ol>
-<li>You understand how to setup a DevStack environment and already have one ready at hand (remember <code>./stack.sh</code>?)</li>
-<li>You know how to pass default credentials to local shell environment (<code>. /home/path_to_your_devstack_repo/eucarc</code> will do)</li>
-</ol>
-
-
-<p>Let's start.</p>
-
-<h3>Creation and deletion of volumes</h3>
-
-<p>Create a 1-GB cinder volume with no name by running command <code>cinder create 1</code>.
-<code>
-stack@stlrx300s7-27:/$ cinder create 1
-+---------------------+--------------------------------------+
-|       Property      |                Value                 |
-+---------------------+--------------------------------------+
-|     attachments     |                  []                  |
-|  availability_zone  |                 nova                 |
-|       bootable      |                false                 |
-|      created_at     |      2013-05-28T10:32:47.243613      |
-| display_description |                 None                 |
-|     display_name    |                 None                 |
-|          id         | 6754d216-4792-4a38-964a-d002686c8f92 |
-|       metadata      |                  {}                  |
-|         size        |                  1                   |
-|     snapshot_id     |                 None                 |
-|     source_volid    |                 None                 |
-|        status       |               creating               |
-|     volume_type     |                 None                 |
-+---------------------+--------------------------------------+
-</code></p>
-
-<p>Here I am describing only the minimal functionality of a command. If you wish to see more info about what all you
-can do with that command, just type <code>cinder help &lt;command&gt;</code>, so to see all the optional parameters you can pass
-while creating a Cinder volume, execute <code>cinder help create</code>.</p>
-
-<p>```
-stack@stlrx300s7-27:/$ cinder help create
-usage: cinder create [--snapshot-id &lt;snapshot-id>]</p>
-
-<pre><code>                 [--source-volid &lt;source-volid&gt;] [--image-id &lt;image-id&gt;]
-                 [--display-name &lt;display-name&gt;]
-                 [--display-description &lt;display-description&gt;]
-                 [--volume-type &lt;volume-type&gt;]
-                 [--availability-zone &lt;availability-zone&gt;]
-                 [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
-                 &lt;size&gt;
+<pre><code>rushi@jio:~/devstack$ git pull origin master
+rushi@jio:~/devstack$ ./unstack.sh
 </code></pre>
 
-<p>Add a new volume.</p>
+<p>Add the config option to <code>localrc</code> which give you pre-cooked multi-backend setup with two LVM backends, both of 10G. Stack</p>
 
-<p>Positional arguments:
-  <size>                Size of volume in GB</p>
-
-<p>Optional arguments:
-  --snapshot-id &lt;snapshot-id></p>
-
-<pre><code>                    Create volume from snapshot id (Optional,
-                    Default=None)
+<pre><code>rushi@jio:~$ echo "CINDER_MULTI_LVM_BACKEND=True" &gt;&gt; localrc
+rushi@jio:~$ ./devstack/stack.sh
 </code></pre>
 
-<p>  --source-volid &lt;source-volid></p>
+<p>You can see that the cinder.conf file now has two values for enabled backends:</p>
 
-<pre><code>                    Create volume from volume id (Optional, Default=None)
+<pre><code>rushi@jio:~$ less /etc/cinder/cinder.conf | grep enabled_backends
+enabled_backends = lvmdriver-1,lvmdriver-2
+#enabled_backends=&lt;None&gt;
 </code></pre>
 
-<p>  --image-id &lt;image-id></p>
+<p>Also, you can see that there are two configuration groups created at the end of that config file, one each for configurations
+corresponding to that particular backend</p>
 
-<pre><code>                    Create volume from image id (Optional, Default=None)
+<pre><code>rushi@jio:~$ tail /etc/cinder/cinder.conf 
+
+[lvmdriver-1]
+volume_backend_name = LVM_iSCSI
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes
+
+[lvmdriver-2]
+volume_backend_name = LVM_iSCSI_2
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes2
 </code></pre>
 
-<p>  --display-name &lt;display-name></p>
+<p>So you have two volume groups created for respective backends. Lets check it directly without using Cinder.</p>
 
-<pre><code>                    Volume name (Optional, Default=None)
+<pre><code>rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g 10.01g
+  stack-volumes2   1   0   0 wz--n-  10.01g 10.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
 </code></pre>
 
-<p>  --display-description &lt;display-description></p>
+<p>Hmmm. Two volume groups, each of size 10G.</p>
 
-<pre><code>                    Volume description (Optional, Default=None)
+<h3>Case 1: Spreading volumes across backends</h3>
+
+<p>Now, lets create a volume and see where it ends up.</p>
+
+<pre><code>rushi@jio:~$ cinder create 1
+ERROR: You must provide a username via either --os-username or env[OS_USERNAME]
 </code></pre>
 
-<p>  --volume-type &lt;volume-type></p>
+<p>Oops! Let me try again..</p>
 
-<pre><code>                    Volume type (Optional, Default=None)
+<pre><code>rushi@jio:~$ . devstack/openrc 
+rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:29:49.241493      |
+|    description    |                 None                 |
+|         id        | ecfbfebb-73d5-4faf-b625-e69f18020378 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ cinder list
++--------------------------------------+-----------+------+------+-------------+----------+-------------+
+|                  ID                  |   Status  | Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+------+------+-------------+----------+-------------+
+| ecfbfebb-73d5-4faf-b625-e69f18020378 | available | None |  1   |     None    |  false   |             |
++--------------------------------------+-----------+------+------+-------------+----------+-------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g 10.01g
+  stack-volumes2   1   2   0 wz--n-  10.01g  9.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
 </code></pre>
 
-<p>  --availability-zone &lt;availability-zone></p>
+<p>So it went to backend number 2. If you are admin (<code>source devstack/openrc admin admin</code>), you can do a <code>cinder show</code> too, to get information
+as to which host did this volume go to. Only the admin is allowed to view the host information.</p>
 
-<pre><code>                    Availability zone for volume (Optional, Default=None)
+<p>The scheduler now gets reported of the capabilities which the backends have (check out the <code>c-shr</code> screen to see it). The scheduler then weighs the backend based on these capabilities and decides which of them has higher 'weight' to serve the next 'create' request. By default, the 'weigher' for scheduler is <code>CapacityWeigher</code>. That is, whichever backend has higher capacity, that backend will be chosen for the next 'create' request.</p>
+
+<p>So in our case, when we'll do another 'create volume' it will now land on to the first backend.</p>
+
+<pre><code>rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:39:23.958468      |
+|    description    |                 None                 |
+|         id        | aa79c608-47cc-44e3-a614-f4bddaab68e5 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g  9.01g
+  stack-volumes2   1   2   0 wz--n-  10.01g  9.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
 </code></pre>
 
-<p>  --metadata [&lt;key=value> [&lt;key=value> ...]]</p>
+<p>Neat!</p>
 
-<pre><code>                    Metadata key=value pairs (Optional, Default=None)
+<h3>Case 2 : Stacking all volumes at one backend</h3>
+
+<p>What if we want to keep all the volumes at only one backend? Cinder allows you to do that too!
+There is a configuration option in cinder.conf, <code>capacity_weight_multiplier</code>, which allows you to multiply the 'capacity weight' by a number.
+So if the multiplier is 1, a backend with higher capacity will have higher weight, and will be the choice for the next volume creation request.
+This is the default case. BUT what if we set it to -1? The backend with higher available capacity will have more negative weight, which will make that backend less preferable for next 'create' request, and hence the request will go to the backend which has lesser capacity!</p>
+
+<p>Let us see this too in action.</p>
+
+<p>Check out the config option from cinder.conf file.</p>
+
+<pre><code>rushi@jio:~$ cat /etc/cinder/cinder.conf | grep -B 3 ^capacity_weight_multiplier
+
+# Multiplier used for weighing volume capacity. Negative
+# numbers mean to stack vs spread. (floating point value)
+# capacity_weight_multiplier=1.0
 </code></pre>
 
-<p>```</p>
+<p>The config option is commented out and is there just so that you can easily change it. Now uncomment it and change it's value to -1.</p>
 
-<p>Don't worry about the parameters, we'll use most of them in a short time.</p>
+<p>Delete previously created volumes. Kill all the three Cinder screen processes (<code>c-api</code>, <code>c-sch</code> and <code>c-vol</code>), and restart them.</p>
 
-<p>Let's create a Cinder volume of size 1GB with a name, using <code>cinder create --display-name my_second_vol 1</code>:
-<code>
-stack@stlrx300s7-27:/$ cinder create --display-name my_second_vol 1
-+---------------------+--------------------------------------+
-|       Property      |                Value                 |
-+---------------------+--------------------------------------+
-|     attachments     |                  []                  |
-|  availability_zone  |                 nova                 |
-|       bootable      |                false                 |
-|      created_at     |      2013-05-28T10:40:32.801981      |
-| display_description |                 None                 |
-|     display_name    |            my_second_vol             |
-|          id         | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
-|       metadata      |                  {}                  |
-|         size        |                  1                   |
-|     snapshot_id     |                 None                 |
-|     source_volid    |                 None                 |
-|        status       |               creating               |
-|     volume_type     |                 None                 |
-+---------------------+--------------------------------------+
-</code></p>
+<p>Lets create two volumes and see where they end up..</p>
 
-<p>Now lets list out all the Cinder volumes, using <code>cinder list</code>:
-<code>
-stack@stlrx300s7-27:/$ cinder list
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
-| 6754d216-4792-4a38-964a-d002686c8f92 | available |      None     |  1   |     None    |  false   |             |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</code></p>
+<pre><code>rushi@jio:~$ cinder list
++----+--------+------+------+-------------+----------+-------------+
+| ID | Status | Name | Size | Volume Type | Bootable | Attached to |
++----+--------+------+------+-------------+----------+-------------+
++----+--------+------+------+-------------+----------+-------------+
+rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:56:59.845733      |
+|    description    |                 None                 |
+|         id        | b927b328-5ae0-411a-9de2-22ed732b4946 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:57:01.132756      |
+|    description    |                 None                 |
+|         id        | 9f643f2d-7221-4a5c-bf48-1977c9b89fd3 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
 
-<p>Now lets delete the first volume (the one without a name), using <code>cinder delete &lt;volume_id&gt;</code> command. If you
-execute <code>cinder list</code> real quick, you will see the status of the volume going to 'deleting', and after some time
-the volume will be deleted:
-<code>
-stack@stlrx300s7-27:/$ cinder delete 6754d216-4792-4a38-964a-d002686c8f92
-stack@stlrx300s7-27:/$ cinder list
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
-| 6754d216-4792-4a38-964a-d002686c8f92 |  deleting |      None     |  1   |     None    |  false   |             |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-stack@stlrx300s7-27:/$
-stack@stlrx300s7-27:/$
-stack@stlrx300s7-27:/$ cinder list
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</code></p>
-
-<p>On a default DevStack installation, for a volume in Cinder, a 'logical volume' is created on the Linux machine,
-inside the 'physical volume' named <code>stack-volumes</code>. To see the logical volumes, and physical volumes on the
-ubuntu machine, just run <code>lvs</code> (logical volume scan) and <code>pvs</code> (physical volume scan) respectively (this is just
-for information and you can entirely skip this part):
-<code>
-stack@stlrx300s7-27:/$ sudo lvs
-  LV                                          VG            Attr   LSize Origin Snap%  Move Log Copy%  Convert
-  volume-25fa2028-46dc-4870-84c5-d062ae99dd7a stack-volumes -wi-ao 1.00g
-stack@stlrx300s7-27:/$
-stack@stlrx300s7-27:/$ sudo pvs
-  PV         VG            Fmt  Attr PSize PFree
-  /dev/loop0 stack-volumes lvm2 a-   5.01g 4.01g
-</code></p>
-
-<h3>Volume snapshots</h3>
-
-<p>Create the snapshot of volume:
-<code>
-stack@stlrx300s7-27:/$ cinder snapshot-create 25fa2028-46dc-4870-84c5-d062ae99dd7a
-+---------------------+--------------------------------------+
-|       Property      |                Value                 |
-+---------------------+--------------------------------------+
-|      created_at     |      2013-05-28T10:55:03.966690      |
-| display_description |                 None                 |
-|     display_name    |                 None                 |
-|          id         | baf8764f-4c9b-496a-b2ff-bd49825c5d09 |
-|       metadata      |                  {}                  |
-|         size        |                  1                   |
-|        status       |               creating               |
-|      volume_id      | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
-+---------------------+--------------------------------------+
-</code></p>
-
-<p>List all the snapshots:
-<code>
-stack@stlrx300s7-27:/$ cinder snapshot-list
-+--------------------------------------+--------------------------------------+-----------+--------------+------+
-|                  ID                  |              Volume ID               |   Status  | Display Name | Size |
-+--------------------------------------+--------------------------------------+-----------+--------------+------+
-| baf8764f-4c9b-496a-b2ff-bd49825c5d09 | 25fa2028-46dc-4870-84c5-d062ae99dd7a | available |     None     |  1   |
-+--------------------------------------+--------------------------------------+-----------+--------------+------+
-</code></p>
-
-<p>Now lets create a new volume of 1GB from the snapshot:
-<code>
-stack@stlrx300s7-27:/$ cinder create --snapshot-id baf8764f-4c9b-496a-b2ff-bd49825c5d09 1
-+---------------------+--------------------------------------+
-|       Property      |                Value                 |
-+---------------------+--------------------------------------+
-|     attachments     |                  []                  |
-|  availability_zone  |                 nova                 |
-|       bootable      |                false                 |
-|      created_at     |      2013-05-28T10:56:20.478141      |
-| display_description |                 None                 |
-|     display_name    |                 None                 |
-|          id         | 99ebe1d0-678b-4a9a-8ec4-438f9804d327 |
-|       metadata      |                  {}                  |
-|         size        |                  1                   |
-|     snapshot_id     | baf8764f-4c9b-496a-b2ff-bd49825c5d09 |
-|     source_volid    |                 None                 |
-|        status       |               creating               |
-|     volume_type     |                 None                 |
-+---------------------+--------------------------------------+
-</code>
-Now you will see two volumes when you'll do a <code>cinder list</code>.</p>
-
-<h3>Accessing volumes from inside a virtual instance</h3>
-
-<p>You can attach a volume to a VM instance, to provide additional persistent storage to that VM. It
-works just like you attach an external HDD to your computer/laptop. But first, we'll need to create a
-virtual machine for that.</p>
-
-<p>List out all the virtual machine images present in our DevStack setup, from which we can boot a
-brand new VM instance, using <code>glance image-list</code> or 'nova image-list`:
-<code>
-stack@stlrx300s7-27:/$ nova image-list
-+--------------------------------------+---------------------------------+--------+--------+
-| ID                                   | Name                            | Status | Server |
-+--------------------------------------+---------------------------------+--------+--------+
-| 291fe347-3a6f-4a21-9e85-e8809cb05d6e | cirros-0.3.1-x86_64-uec         | ACTIVE |        |
-| 69d14d74-4185-4ba3-9666-1e7f569f38c6 | cirros-0.3.1-x86_64-uec-kernel  | ACTIVE |        |
-| 8793532d-0c09-4b1c-aab8-d10832f13c09 | cirros-0.3.1-x86_64-uec-ramdisk | ACTIVE |        |
-+--------------------------------------+---------------------------------+--------+--------+
-</code></p>
-
-<p>We'll use the image with the shortest name, and boot an instance, giving it a name <code>myinstance</code>.
-You can list all the virtual machine instances registered with Nova using command <code>nova list</code>.
-If just after running the command to boot the virtual machine, you run <code>nova list</code> a few times,
-you will see the machine state going from 'BUILD' to 'ACTIVE' in a few seconds.
-<code>
-stack@stlrx300s7-27:/$ nova boot --flavor m1.tiny --image 291fe347-3a6f-4a21-9e85-e8809cb05d6e myinstance
-+-----------------------------+--------------------------------------+
-| Property                    | Value                                |
-+-----------------------------+--------------------------------------+
-| status                      | BUILD                                |
-| updated                     | 2013-05-28T11:03:47Z                 |
-| OS-EXT-STS:task_state       | scheduling                           |
-| key_name                    | None                                 |
-| image                       | cirros-0.3.1-x86_64-uec              |
-| hostId                      |                                      |
-| OS-EXT-STS:vm_state         | building                             |
-| flavor                      | m1.tiny                              |
-| id                          | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
-| security_groups             | [{u'name': u'default'}]              |
-| user_id                     | 35708cb6795845fcab6362e908e6b0cf     |
-| name                        | myinstance                           |
-| adminPass                   | cQh34G96dCHX                         |
-| tenant_id                   | 11f8fde7d627422d84036cabd6cbb7f8     |
-| created                     | 2013-05-28T11:03:47Z                 |
-| OS-DCF:diskConfig           | MANUAL                               |
-| metadata                    | {}                                   |
-| accessIPv4                  |                                      |
-| accessIPv6                  |                                      |
-| progress                    | 0                                    |
-| OS-EXT-STS:power_state      | 0                                    |
-| OS-EXT-AZ:availability_zone | nova                                 |
-| config_drive                |                                      |
-+-----------------------------+--------------------------------------+
-stack@stlrx300s7-27:/$ nova list
-+--------------------------------------+------------+--------+------------+-------------+----------+
-| ID                                   | Name       | Status | Task State | Power State | Networks |
-+--------------------------------------+------------+--------+------------+-------------+----------+
-| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | BUILD  | networking | NOSTATE     |          |
-+--------------------------------------+------------+--------+------------+-------------+----------+
-stack@stlrx300s7-27:/$ nova list
-+--------------------------------------+------------+--------+------------+-------------+----------+
-| ID                                   | Name       | Status | Task State | Power State | Networks |
-+--------------------------------------+------------+--------+------------+-------------+----------+
-| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | BUILD  | spawning   | NOSTATE     |          |
-+--------------------------------------+------------+--------+------------+-------------+----------+
-stack@stlrx300s7-27:/$ nova list
-+--------------------------------------+------------+--------+------------+-------------+------------------+
-| ID                                   | Name       | Status | Task State | Power State | Networks         |
-+--------------------------------------+------------+--------+------------+-------------+------------------+
-| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | ACTIVE | None       | Running     | private=10.0.0.2 |
-+--------------------------------------+------------+--------+------------+-------------+------------------+
-</code></p>
-
-<p>Now lets attach one of our volume to this instance, and then try to peek into this volume after logging into the instance.</p>
-
-<p>Attach volume using command <code>nova volume-attach &lt;instance_id&gt; &lt;volume_id&gt; &lt;attach_location&gt;</code>. We'll attach at the first
-free device location: <code>/dev/vdb</code>:
-<code>
-stack@stlrx300s7-27:/$ nova volume-attach 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f 25fa2028-46dc-4870-84c5-d062ae99dd7a /dev/vdb
-+----------+--------------------------------------+
-| Property | Value                                |
-+----------+--------------------------------------+
-| device   | /dev/vdb                             |
-| serverId | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
-| id       | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
-| volumeId | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
-+----------+--------------------------------------+
-</code></p>
-
-<p>Now listing the volume will tell you that the volume is attached to an instance (in use):
-<code>
-stack@stlrx300s7-27:/$ cinder list
-+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable |             Attached to              |
-+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-| 25fa2028-46dc-4870-84c5-d062ae99dd7a |   in-use  | my_second_vol |  1   |     None    |  false   | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
-| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |                                      |
-+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-</code></p>
-
-<p>Now let's login into this virtual machine using the private IP of the instance (<code>10.0.0.2</code> in our case). Note how an
-error message pops up if you have already created an instance last time when you installed DevStack. If such an error
-appears on your screen too, follow the instructions just like the way I did. The default password for the cirros image
-we used is <code>cubswin:)</code>. Enter into the instance, and then become root:
-```
-stack@stlrx300s7-27:/$ ssh cirros@10.0.0.2
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
-Someone could be eavesdropping on you right now (man-in-the-middle attack)!
-It is also possible that a host key has just been changed.
-The fingerprint for the RSA key sent by the remote host is
-f5:ac:45:4c:63:8e:e4:19:cc:5a:76:7e:a1:08:e7:c8.
-Please contact your system administrator.
-Add correct host key in /opt/stack/.ssh/known_hosts to get rid of this message.
-Offending RSA key in /opt/stack/.ssh/known_hosts:4
-  remove with: ssh-keygen -f "/opt/stack/.ssh/known_hosts" -R 10.0.0.2
-RSA host key for 10.0.0.2 has changed and you have requested strict checking.
-Host key verification failed.</p>
-
-<p>stack@stlrx300s7-27:/$ ssh-keygen -f "/opt/stack/.ssh/known_hosts" -R 10.0.0.2
-/opt/stack/.ssh/known_hosts updated.
-Original contents retained as /opt/stack/.ssh/known_hosts.old
-<code>
-</code>
-stack@stlrx300s7-27:/$ ssh cirros@10.0.0.2
-The authenticity of host '10.0.0.2 (10.0.0.2)' can't be established.
-RSA key fingerprint is f5:ac:45:4c:63:8e:e4:19:cc:5a:76:7e:a1:08:e7:c8.
-Are you sure you want to continue connecting (yes/no)? yes
-Warning: Permanently added '10.0.0.2' (RSA) to the list of known hosts.
-cirros@10.0.0.2's password:
-$sudo -i
-#
-```</p>
-
-<p>Run <code>fdisk -l</code> to see the disks present for the instance. You will see that your newly attached disk
-<code>/dev/vdb</code> of size 1GB is now present:
-```</p>
-
-<h1>fdisk -l</h1>
-
-<p>Disk /dev/vda: 1073 MB, 1073741824 bytes
-16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0x00000000</p>
-
-<p>Disk /dev/vda doesn't contain a valid partition table</p>
-
-<p>Disk /dev/vdb: 1073 MB, 1073741824 bytes
-16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0x00000000</p>
-
-<p>Disk /dev/vdb doesn't contain a valid partition table
-```</p>
-
-<p>Command <code>blkid /dev/vd*</code> lists out the IDs of block devices for this machine and some related info. Running
-this command you will see that info of only the virtual disk <code>/dev/vda</code> is present, meaning our disk <code>/dev/vdb</code>
-needs formatting.
-```</p>
-
-<h1>blkid /dev/vd*</h1>
-
-<p>/dev/vda: LABEL="cirros-rootfs" UUID="74251bb8-3a28-4a46-9a78-064497b26b9d" SEC_TYPE="ext2" TYPE="ext3"
-```</p>
-
-<p>Lets format it to make an EXT3 partition with block-size 1024 bytes using command <code>mkfs.ext3 -b 1024 /dev/vdb</code>:
-```</p>
-
-<h1>mkfs.ext3 -b 1024 /dev/vdb</h1>
-
-<p>mke2fs 1.42.2 (27-Mar-2012)
-Filesystem label=
-OS type: Linux
-Block size=1024 (log=0)
-Fragment size=1024 (log=0)
-Stride=0 blocks, Stripe width=0 blocks
-65536 inodes, 1048576 blocks
-52428 blocks (5.00%) reserved for the super user
-First data block=1
-Maximum filesystem blocks=68157440
-128 block groups
-8192 blocks per group, 8192 fragments per group
-512 inodes per group
-Superblock backups stored on blocks:</p>
-
-<pre><code>    8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409, 663553, 
-    1024001
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g 10.01g
+  stack-volumes2   1   2   0 wz--n-  10.01g  8.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
 </code></pre>
 
-<p>Allocating group tables: done                          <br/>
-Writing inode tables: done                          <br/>
-Creating journal (32768 blocks): done
-Writing superblocks and filesystem accounting information: done
-```</p>
+<p>:)</p>
 
-<p>Run <code>blkid</code> again to see the newly partitioned disk listed:
-```</p>
+<h3>Case 3 : Custom choice</h3>
 
-<h1>blkid /dev/vd*</h1>
+<p>What if I have two different backends (maybe one is slower, or costlier, than the other), and my users want to exactly specify how many volumes they want of each 'type' of backends? Here, Cinder's 'volume types' have us covered.</p>
 
-<p>/dev/vda: LABEL="cirros-rootfs" UUID="74251bb8-3a28-4a46-9a78-064497b26b9d" SEC_TYPE="ext2" TYPE="ext3"
-/dev/vdb: UUID="22838e81-eb97-457d-b1e0-4ff3d8e45b05" SEC_TYPE="ext2" TYPE="ext3"
-```</p>
+<p>We can associate a volume type with a backend, and then the users can create a volume of whatever 'type' they want.
+Let's throw some discrimination at these backends. I'll create two volume types: 'gold' and 'bronze', and associate 'stack-volumes' with 'gold' and similarly for 'stack-volumes2'. Note that this job can only be done by the administrator.</p>
 
-<p>In order to use this disk, you need to mount it at some location. I'll create a directory <code>/tempmount</code>
-and mount our virtual block device there:
-```</p>
+<p>Let us be admins</p>
 
-<h1>mkdir /tempmount</h1>
+<pre><code>rushi@jio:~$ . devstack/openrc admin admin
+</code></pre>
 
-<h1>mount /dev/vdb /tempmount/</h1>
+<p>Create both the volume types and list them.</p>
 
-<p>```</p>
+<pre><code>rushi@jio:~$ cinder type-create gold
++--------------------------------------+------+
+|                  ID                  | Name |
++--------------------------------------+------+
+| dd883ee0-24be-42e1-ab2e-b9a01454f2f9 | gold |
++--------------------------------------+------+
+rushi@jio:~$ cinder type-create bronze
++--------------------------------------+--------+
+|                  ID                  |  Name  |
++--------------------------------------+--------+
+| f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze |
++--------------------------------------+--------+
 
-<p>Now you can see the disk listed in the machine disks, using <code>df -h</code> command:
-```</p>
+rushi@jio:~$ cinder type-list
++--------------------------------------+--------+
+|                  ID                  |  Name  |
++--------------------------------------+--------+
+| dd883ee0-24be-42e1-ab2e-b9a01454f2f9 |  gold  |
+| f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze |
++--------------------------------------+--------+
+</code></pre>
 
-<h1>df -h</h1>
+<p>Get the backend names (<code>volume_backend_name</code> config option) from cinder.conf file.</p>
 
-<p>Filesystem                Size      Used Available Use% Mounted on
-/dev                    242.3M         0    242.3M   0% /dev
-/dev/vda                 31.0M      9.7M     19.7M  33% /
-tmpfs                   245.9M         0    245.9M   0% /dev/shm
-tmpfs                   200.0K     76.0K    124.0K  38% /run
-/dev/vdb               1007.7M     34.9M    921.6M   4% /tempmount
-```</p>
+<pre><code>rushi@jio:~$ tail /etc/cinder/cinder.conf 
 
-<p>Now you can <code>cd</code> into <code>/tempmount</code> directory, and do whatever you want to do with the new disk -- put some files there,
-or download one!</p>
+[lvmdriver-1]
+volume_backend_name = LVM_iSCSI
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes
 
-<p>Lets wrap up this part. Unmount this volume by <code>umount /tempmount</code>, and log out from the machine by pressing <code>CTRL+D</code> twice, and execute <code>nova volume-detach &lt;volume_id&gt;
-&lt;server_id&gt;</code> to detach this volume. You can now see the 'Attached to' column becomes empty again after detaching.
-<code>
-stack@stlrx300s7-27:/$ cinder list
-+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable |             Attached to              |
-+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-| 25fa2028-46dc-4870-84c5-d062ae99dd7a |   in-use  | my_second_vol |  1   |     None    |  false   | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
-| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |                                      |
-+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-stack@stlrx300s7-27:/$ nova volume-detach 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f 25fa2028-46dc-4870-84c5-d062ae99dd7a
-stack@stlrx300s7-27:/$ cinder list
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
-| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |             |
-+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</code></p>
+[lvmdriver-2]
+volume_backend_name = LVM_iSCSI_2
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes2
+</code></pre>
 
-<h3>More features</h3>
+<p>Now let's associate backend <code>LVM_iSCSI</code> with volume type 'gold', and similarly for the other one.</p>
 
-<p>(Will update shortly)</p>
+<pre><code>rushi@jio:~$ cinder type-key gold set volume_backend_name=LVM_iSCSI
+rushi@jio:~$ cinder type-key bronze set volume_backend_name=LVM_iSCSI_2
+</code></pre>
+
+<p>These association are stored as key-value pairs in the volume type's 'extra specs'. Let's see them</p>
+
+<pre><code>rushi@jio:~$ cinder extra-specs-list 
++--------------------------------------+--------+------------------------------------------+
+|                  ID                  |  Name  |               extra_specs                |
++--------------------------------------+--------+------------------------------------------+
+| dd883ee0-24be-42e1-ab2e-b9a01454f2f9 |  gold  |  {u'volume_backend_name': u'LVM_iSCSI'}  |
+| f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze | {u'volume_backend_name': u'LVM_iSCSI_2'} |
++--------------------------------------+--------+------------------------------------------+
+</code></pre>
+
+<p>You can add more key-value pairs for these volume types with different key names. <code>volume_backend_name</code> is a reserved key name, though.</p>
+
+<p>Let's create two volumes of type 'gold' and see where they end up being created:</p>
+
+<pre><code>rushi@jio:~$ cinder create --volume-type gold --name costly_vol_1 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T18:24:07.670635      |
+|    description    |                 None                 |
+|         id        | 767d4c56-6d3d-46f7-b0a3-4a00f696bcad |
+|      metadata     |                  {}                  |
+|        name       |             costly_vol_1             |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   c271eb32e71b411bb98ad7b93792d6d5   |
+|    volume_type    |                 gold                 |
++-------------------+--------------------------------------+
+rushi@jio:~$ cinder create --volume-type gold --name costly_vol_2 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T18:24:58.382180      |
+|    description    |                 None                 |
+|         id        | a938e556-65cf-4547-87ff-513d60f626d3 |
+|      metadata     |                  {}                  |
+|        name       |             costly_vol_2             |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   c271eb32e71b411bb98ad7b93792d6d5   |
+|    volume_type    |                 gold                 |
++-------------------+--------------------------------------+
+rushi@jio:~$ cinder list
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |     Name     | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+| 767d4c56-6d3d-46f7-b0a3-4a00f696bcad | available | costly_vol_1 |  1   |     gold    |  false   |             |
+| a938e556-65cf-4547-87ff-513d60f626d3 | available | costly_vol_2 |  1   |     gold    |  false   |             |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   2   0 wz--n-  10.01g  8.01g
+  stack-volumes2   1   0   0 wz--n-  10.01g 10.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+</code></pre>
+
+<p>Now create another one, but with type 'bronze' and ensure it is created on the other backend.</p>
+
+<pre><code>rushi@jio:~$ cinder create --volume-type bronze --name cheap_vol_1 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T18:27:05.852092      |
+|    description    |                 None                 |
+|         id        | 97f62c7a-b974-41e8-a659-1e6d3eb876d5 |
+|      metadata     |                  {}                  |
+|        name       |             cheap_vol_1              |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   c271eb32e71b411bb98ad7b93792d6d5   |
+|    volume_type    |                bronze                |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ sudo pvs
+  PV         VG             Fmt  Attr PSize   PFree 
+  /dev/loop0 stack-volumes  lvm2 a--   10.01g  8.01g
+  /dev/loop1 stack-volumes2 lvm2 a--   10.01g  9.01g
+  /dev/sda5  ubuntu-vg      lvm2 a--  931.27g 44.00m
+</code></pre>
+
+<p>Done :)</p>
 
 <p>Cheers!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Quick Start: Linux Logical Volume Manager]]></title>
+    <link href="http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/"/>
+    <updated>2014-01-14T20:09:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager</id>
+    <content type="html"><![CDATA[<p>While installing the latest Ubuntu OS on your computer, you will see that
+you can install the OS using LVM (Logical Volume Manager) utility. Ever wonder what is it?
+LVM (Logical Volume Manager) is that fantastic utility for storage administration.
+It provide the users with abilities which were not possible with raw disks.
+The storage is now 'virtualized'. You can now easily create, move and extend volumes (for now, think of it as disk partitions)
+without bothering about data corruption. You can carve partitions out of multiple disks,
+and can add and remove disks from a 'volume group' containing such volumes without the user noticing anything!
+List of all the features of LVM can be found at it's <a href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)"
+target="_blank">wiki page</a>.</p>
+
+<p>This blog scratches the surface of LVM, and gives some basic insights into some storage concepts.</p>
+
+<!-- more -->
+
+
+<p>I'll give you a simple example to better explain what a 'physical volume', a 'volume group' and a
+'logical volume' is. Say I have two 1 TB hard disks - disk A and disk B. I have two equal-sized partitions on
+disk B, one of which I want to keep it to myself for my personal data. The 'partition' term used here is
+same as what you see in a file explorer. For the unpartitioned disk, the complete disk is one single partition.</p>
+
+<p>The partitions I described above are 'physical volumes'. That is, on the disk, these are physically separate bytes (think of that
+partitioned disk as a spiral on disk divided in its length at the midpoint).
+Out of the first disk and one partition of the second disk, we create a 'volume group' -- a logical pool of storage, out of which we can
+create lots of 'logical volumes'. Even after you've created logical volumes over this volume group, you can add and remove physical volumes (partitions) from the volume group. You can do many more operations such as resize, move and extend.</p>
+
+<p>I hope the basic idea written above is sufficiently clear. Else, head over to this Ubuntu <a href="https://wiki.ubuntu.com/Lvm" target="_blank">wiki</a> for a slightly more detailed, but still an overview, of LVM. Anyway, I'm concentrating more on the demo, so lets move on.</p>
+
+<h4>Hands-on</h4>
+
+<p>I'm demo'ing everything on an Ubuntu machine, but it should work on any Linux distro (after you install the LVM2 package)</p>
+
+<p>Install LVM2 package</p>
+
+<pre><code>sudo apt-get install lvm2
+</code></pre>
+
+<p>One nice thing is you don't need to create actual partitions on disks. We'll use files as <a href="http://en.wikipedia.org/wiki/Loop_device" target="_blank">loopback devices</a>, which will appear to the operating system as partitions. Neat.</p>
+
+<p>Create a file of size 1G to be later used as a physical volume.</p>
+
+<pre><code>rushi@jio:~$ truncate --size 1G backing_file_1
+</code></pre>
+
+<p>Create a loopback device over this file. Find the first free loopback device available and show its name.</p>
+
+<pre><code>rushi@jio:~$ sudo losetup --find --show backing_file_1 
+/dev/loop0
+</code></pre>
+
+<p>List all the loopback devices.</p>
+
+<pre><code>rushi@jio:~$ sudo losetup --all
+/dev/loop0: [fc00]:22811987 (/home/rushi/backing_file_1)
+</code></pre>
+
+<p>Create a physical volume over this loopback device. Note that</p>
+
+<pre><code>rushi@jio:~$ sudo pvcreate /dev/loop0 
+  Physical volume "/dev/loop0" successfully created
+</code></pre>
+
+<p>List physical volumes. Apart from <code>pvs</code> (Physical Volume Scan), there are two more
+commands which do the same thing, but with different level of verbosity and formatting: <code>pvscan</code> and <code>pvdisplay</code>. (Try them out too!)</p>
+
+<pre><code>rushi@jio:~$ sudo pvs
+  PV         VG        Fmt  Attr PSize   PFree 
+  /dev/loop0           lvm2 a--    1.00g  1.00g
+  /dev/sda5  ubuntu-vg lvm2 a--  931.27g 44.00m
+</code></pre>
+
+<p>Let us repeat the steps to create another physical volume:</p>
+
+<pre><code>rushi@jio:~$ truncate --size 1G backing_file_2
+rushi@jio:~$ sudo losetup --find --show backing_file_2 
+/dev/loop1
+rushi@jio:~$ sudo losetup --all
+/dev/loop0: [fc00]:22811987 (/home/rushi/backing_file_1)
+/dev/loop1: [fc00]:22812001 (/home/rushi/backing_file_2)
+rushi@jio:~$ sudo pvcreate /dev/loop1
+  Physical volume "/dev/loop1" successfully created
+rushi@jio:~$ sudo pvs
+  PV         VG        Fmt  Attr PSize   PFree 
+  /dev/loop0           lvm2 a--    1.00g  1.00g
+  /dev/loop1           lvm2 a--    1.00g  1.00g
+  /dev/sda5  ubuntu-vg lvm2 a--  931.27g 44.00m
+</code></pre>
+
+<p>Create a volume group <code>test-volgroup</code> over these two physical volumes. (Actually, even if you don't create physical volumes over loopback devices, while creating volume groups it will automatically create physical volumes over them).</p>
+
+<pre><code>rushi@jio:~$ sudo vgcreate test-volgroup /dev/loop0 /dev/loop1
+  Volume group "test-volgroup" successfully created
+</code></pre>
+
+<p>List the volume groups. (<code>vgs</code>, <code>vgscan</code> or <code>vgdisplay</code> can be used)</p>
+
+<pre><code>rushi@jio:~$ sudo vgs
+  VG            #PV #LV #SN Attr   VSize   VFree 
+  test-volgroup   2   0   0 wz--n-   1.99g  1.99g
+  ubuntu-vg       1   2   0 wz--n- 931.27g 44.00m
+</code></pre>
+
+<p>Create a logical volume <code>test-logicalvol</code> over the <code>test-volgroup</code> volume group.</p>
+
+<pre><code>rushi@jio:~$ sudo lvcreate --size 400M --name test-logicalvol test-volgroup
+  Logical volume "test-logicalvol" created
+</code></pre>
+
+<p>List logical volumes. (<code>lvs</code>, <code>lvscan</code>, <code>lvdisplay</code> can be used)</p>
+
+<pre><code>rushi@jio:~$ sudo lvs
+  LV              VG            Attr      LSize   Pool Origin Data%  Move Log Copy%  Convert
+  test-logicalvol test-volgroup -wi-a---- 400.00m                                           
+  root            ubuntu-vg     -wi-ao--- 923.35g                                           
+  swap_1          ubuntu-vg     -wi-ao---   7.88g                                           
+</code></pre>
+
+<p>Easy, isn't it? Let's tear down everything. Though a simpler way would be to just remove the loopback device, which will automatically
+remove all the physical, logical volumes/volume groups created over them, let's do it step-by-step. Note that you need to specify volume group while deleting logical volumes.</p>
+
+<pre><code>rushi@jio:~$ sudo lvremove test-volgroup
+Do you really want to remove active logical volume test-logicalvol? [y/n]: y
+  Logical volume "test-logicalvol" successfully removed
+rushi@jio:~$ sudo vgremove test-volgroup
+  Volume group "test-volgroup" successfully removed
+rushi@jio:~$ sudo pvremove /dev/loop0 /dev/loop1
+  Labels on physical volume "/dev/loop0" successfully wiped
+  Labels on physical volume "/dev/loop1" successfully wiped
+rushi@jio:~$ sudo losetup --detach /dev/loop0 /dev/loop1
+rushi@jio:~$ rm backing_file_1 backing_file_2
+</code></pre>
+
+<p>Cheers!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Installing OpenID plugin for MediaWiki]]></title>
+    <link href="http://rushiagr.github.io/blog/2014/01/12/installing-openid-plugin-for-mediawiki/"/>
+    <updated>2014-01-12T13:09:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2014/01/12/installing-openid-plugin-for-mediawiki</id>
+    <content type="html"><![CDATA[<p>This post is about setting up your wiki such that their users access the wiki
+only via an OpenID provider login (e.g. Google or Facebook login). This post assumes
+MediaWiki is already installed.</p>
+
+<!--more-->
+
+
+<h3>Assumptions, prerequisites and requirements</h3>
+
+<p>All of what this blogpost says has been tried on an Ubuntu machine, but it
+should work well on other Linux distros too (except for the <code>apt-get</code> package
+installs, for which you'll need to find alternatives on your favourite distro).</p>
+
+<p><code>$IP</code> is assumed to be the root of your wiki directory (which in my case is
+<code>/var/www/wikis/&lt;my_wiki&gt;/</code>.</p>
+
+<p>Install all the required packages for the plugin to work
+<code>
+sudo apt-get install php5-mcrypt php5-gmp
+</code></p>
+
+<h2>Installing the plugin</h2>
+
+<p>Get the source code for the extension into <code>$IP/extensions</code> directory
+```</p>
+
+<pre><code>cd extensions
+git clone http://gerrit.wikimedia.org/r/p/mediawiki/extensions/OpenID.git 
+</code></pre>
+
+<p>```</p>
+
+<p>Check your mediawiki version by going to <code>&lt;your_wiki_URL&gt;/index.php?title=Special:Version</code>. Say your version is 1.19.x.
+  Check out branch for the same version of OpenID code
+```</p>
+
+<pre><code>git branch -a 
+git checkout -b stable_REL1_19 origin/REL1_19 
+</code></pre>
+
+<p>```</p>
+
+<p>Add this line at the end of LocalSettings.php file
+<code>
+require_once "$IP/extensions/OpenID/OpenID.php";
+</code>
+Now install Auth subdirectory as following:
+```</p>
+
+<pre><code>cd $IP/extensions/OpenID 
+git clone http://github.com/openid/php-openid.git 
+mv php-openid/Auth Auth 
+rm -r php-openid 
+cd $IP 
+php maintenance/update.php --conf LocalSettings.php 
+</code></pre>
+
+<p><code>
+Restart apache server
+</code></p>
+
+<pre><code>/etc/init.d/apache2 restart 
+</code></pre>
+
+<p>```</p>
+
+<h3>Editing 'Login required' page.</h3>
+
+<p>By default, the main page of the wiki is not editable. Generally we would like
+to give some information to a user, e.g. what this wiki is all about, how
+to log into it, which OpenIDs are permitted, etc.</p>
+
+<p>Now we'll give any registered user the ability to edit the protected pages and the
+'interface' pages, of which our special login page is a part of. Add these lines
+ to <code>$IP/LocalSettings.php</code>:
+```</p>
+
+<pre><code>$wgGroupPermissions['user']['editprotected'] = true; 
+$wgGroupPermissions['user']['editinterface'] = true; 
+</code></pre>
+
+<p><code>`
+Now you can edit the</code>&lt;your_wiki_URL>/jiocloud/index.phpmediawiki:loginreqpagetext``
+ page which is presented when the user is not logged in.</p>
+
+<h3>Other settings</h3>
+
+<p>Below you can see a snip of LocalSettings.php file, which contains many other
+fields which I used to customize my wiki. I allowed only the registered user
+an edit permission (which most of you would also want I guess). Also, I have disabled
+regular login, and made it mandatory users to login via only OpenID, and that too,
+only using their launchpad.net accounts (an issue tracking software from Canonical).</p>
+
+<p>If you want to get more information regarding these (and more)
+configuration options, see <a href="http://www.mediawiki.org/wiki/Extension:OpenID" target="_blank">this</a> link.</p>
+
+<p>```</p>
+
+<h1>Disable reading by anonymous users</h1>
+
+<p>$wgGroupPermissions['*']['read'] = false;</p>
+
+<h1>Disable anonymous editing too</h1>
+
+<p>$wgGroupPermissions['*']['edit'] = false;</p>
+
+<h1>But allow them to access the OpenID login page or else there will be no way to log in!</h1>
+
+<p>$wgWhitelistRead = array ("Special:OpenIDLogin", "Special:OpenIDFinish",
+"MediaWiki:Common.css", "MediaWiki:Common.js", "MediaWiki:Monobook.css",
+"MediaWiki:Monobook.js", "-");</p>
+
+<h1>For registered users, allow editing protected pages</h1>
+
+<p>$wgGroupPermissions['user']['editprotected'] = true;
+$wgGroupPermissions['user']['editinterface'] = true;</p>
+
+<h1>Only allow OpenIDs for login</h1>
+
+<p>$wgOpenIDLoginOnly = true;
+$wgOpenIDOnly = true;       # a value used with older versions. Optional</p>
+
+<h1>Your wiki web URL</h1>
+
+<p>$wgOpenIDTrustRoot = "http://your.wiki.url.com/";</p>
+
+<h1>By default, deny all OpenID</h1>
+
+<p>$wgOpenIDConsumerDenyByDefault = true;</p>
+
+<h1>Then allow only launchpad.net OpenID (with and without HTTPS both)</h1>
+
+<p>$wgOpenIDConsumerAllow = array("@^(https://)?launchpad.net/@");
+```</p>
+
+<h2>Troubleshooting</h2>
+
+<p>If there are troubles uploading a file via the MediaWiki web interface, go to the wiki directory on the server and chown the <code>images</code> folder.</p>
+
+<pre><code>sudo chown -R www-data:www-data images/
+</code></pre>
+
+<p>Don't forget to comment if you find the information presented here is outdated, or is not working for you.</p>
+
+<p>Cheers,
+Rushi</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: nontech | Sense, and Simplicity]]></title>
   <link href="http://rushiagr.github.io/blog/categories/nontech/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
-  <updated>2014-04-05T16:27:17+05:30</updated>
+  <updated>2014-04-11T21:17:10+05:30</updated>
   <id>http://rushiagr.github.io/</id>
   <author>
     <name><![CDATA[Rushi Agrawal]]></name>
@@ -12,6 +12,178 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Bye bye 2013. Welcome 2014]]></title>
+    <link href="http://rushiagr.github.io/blog/2014/01/01/bye-bye-2013-welcome-2014/"/>
+    <updated>2014-01-01T13:40:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2014/01/01/bye-bye-2013-welcome-2014</id>
+    <content type="html"><![CDATA[<p>How year 2013 fared for me, and my plans for 2014.</p>
+
+<!--more-->
+
+
+<p>Mixed bag of a year. Some pretty hard decisions were made by me. I left the job I loved so much -- joined Amazon,
+rival of the technology I was working on (OpenStack). I knew my life was going to be tougher at Amazon. It was not only about
+the work, but also about the philosophy. In NetApp, it was a complete opensource, collaborative model of development. Nothing
+of this sort of freedom I was going to get at Amazon. But there were some internal issues of working at NetApp which prompted
+me to switch over to another company. It wasn't me who approached them for the job but it was the other way round.  The funny part was, I didn't think of joining Amazon till I got the offer letter. I said okay, anyways I will need to move out of this job
+(due to those internal conflicts, and partly due to the lower salary), so why not get some interviewing practice by appearing
+for them at Amazon! The compensation they were offering was significantly higher than my then salary, which just gave me another reason to accept the offer. I convinced myself that I am going to anyway leave the job at Amazon as soon as I get a better opportunity
+at a more freedom-loving place (freedom both in the sense of work-life balance as well as freedom of working on opensource softwares).
+I made a mental note for myself that I am going to work for Amazon for 6 months at the max.</p>
+
+<p>But God has different plans. Within a week of joining Amazon, I got a mail that Rick Clark, one of the founders of OpenStack wants to meet me, and wants me on his team which is going to work on OpenStack. The way in which he likes to work, as was told by him over a phone call, impressed me, and I quickly switched jobs. Again, in just over a month. Believe me, joining Reliance, a name not at all known in the software industry, was one heck of a decision. Not to say that switching over to Amazon from NetApp was any less emotionally draining.</p>
+
+<p>Even after joining Reliance (Reliance Jio Infocomm to be precise), as the Bangalore office was not completely set up by the time I joined, I worked from Mumbai office, and then from home for a couple of months. Life before and after this four-month period starting from leaving job at NetApp was more sedate and stable.</p>
+
+<h2>Things that went well for me</h2>
+
+<h4>Day job</h4>
+
+<p>Absolutely happy with the day job. Totally in love with the ownership model we have in place. I get to decide which project I will be most interested to work on. I decide what needs to be done in what time. Though this causes laziness, I manage it by following a stricter schedule, and by giving importance of the sense of trust shown in me -- if someone trusts me this much, it is my moral responsibility to not disappoint him by underperforming.</p>
+
+<p>Our chief arhitect, Soren Hansen, is exceptionally brilliant, and equally understanding. I can talk to him just like a friend.</p>
+
+<h4>Day job compensation</h4>
+
+<p>My salary has grown to an amount that my spendings are now less than 1/5th of my total salary. This means I have fairly early in my career reached a level where I don't care too much about my salary, and how much it is going to increase, and related stuff. It is just another number reflected in my bank account.</p>
+
+<h4>Task tracking</h4>
+
+<p>Be it tracking articles to read, blogposts to write, side projects to do, or things to learn; I am tracking each of them very efficiently thanks to the Trello. An awesome tool, and I definitely recommend you to use it. Till last year, I used to rely upon Microsoft OneNote, and thankfully I have found a better alternative for that after quite some time.</p>
+
+<p>I also now maintain a notebook and a pen. This helps a lot for things to do in a short time, as I can have my notebook always open at my desk -- not the same case with any software in the computer which always gets hidden in the background once we start working. It is a nice feeling to strike off items one-by-one from the bullet list you write down on a paper. I also find paper notebooks very helpful when I am planning something, e.g. a side project. The free form writing/drawing it allows is still not possible in the digital world, I believe.</p>
+
+<h4>Setting up priorities in life</h4>
+
+<p>Not anymore in mood of going for higher studies. Not going to prepare for interviews, and algorithmic questions. Going to work on side projects, and will look for opportunities of starting something of my own. Marriage? Don't talk about it just yet.</p>
+
+<h2>Things that didn't go that well</h2>
+
+<p>As always, more negatives than positives :)</p>
+
+<h4>Side projects</h4>
+
+<p>Two job changes, time spent in decision making and relocation, and day job work from four cities all made my life a little unsettled for a majority of this year. As a result, I couldn't spend much time on any of them. I started with ResumAppGAE (I know, a poor name by any standards), an application to create your resume in a single-page HTML file, but left it completely as soon as I was offered a job at Amazon. Another one, <a href="http://www.rushiagr.com/202020rule/" target="_blank">20-20-20 rule</a>, is a simple one, and I am pretty happy with its progress. Not much learning involved in it, but it gave me important lessons with respect to time and priority management.</p>
+
+<h4>Very less blogs</h4>
+
+<p>I did work on a lot of items on which I can write blog articles, but always fell short of doing that. This article can be thought of an attempt to start fixing that.</p>
+
+<h4>Feeble Concentration</h4>
+
+<p>Failed hopelessly on the promise of using less online social networking. Still spending too much time on online news and social networks. I still think that at the most half an hour each day is enough to keep oneself abreast of all the happenings in the world, plus keeping in contact with friends. The harder part is execution :)</p>
+
+<p>Also, there is still a very long way to go before I am confident of my breaks between working. Proper management of breaks directly affect the productivity when one is not on a break.</p>
+
+<h4>Poor time management</h4>
+
+<p>Only in the last months was I able to reasonably balance my time between my day job, family and friends. I hope to continue the same in the coming year.</p>
+
+<h4>Very less travelling/vacation</h4>
+
+<p>Not a single trip to any place worth visiting in the whole year. Whatever vacations I took I spent time at home. I am going to repent in my old age if I continue like this.</p>
+
+<h2>Plans for upcoming year</h2>
+
+<h4>Better planning</h4>
+
+<p>Of day job, side projects, blog writing, vacations, time for friends and family.</p>
+
+<h4>Write blogs</h4>
+
+<p>Write as much as I can. It is the easiest, simplest and cheapest medium by which I can help people gain knowledge.</p>
+
+<h4>Final goal, plus some resolutions</h4>
+
+<p>Become expert in OpenStack. Implement and popularize a couple side projects (i.e. get people to love it). Lose weight. Do a simple workout daily.</p>
+
+<p>All in all, a decent year. Not as good as I wanted it to be, but definitely better than the last one.</p>
+
+<p>Cheers!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Bye-Bye 2012, Welcome 2013]]></title>
+    <link href="http://rushiagr.github.io/blog/2013/01/02/bye-bye-2012/"/>
+    <updated>2013-01-02T00:54:00+05:30</updated>
+    <id>http://rushiagr.github.io/blog/2013/01/02/bye-bye-2012</id>
+    <content type="html"><![CDATA[<p>Listing down the things which went well for me in 2012, and which didn't, and the plans for upcoming year 2013. Beware: More technical stuff than emotional.</p>
+
+<!--more-->
+
+
+<h2>Things which went well in 2012</h2>
+
+<h4>Python</h4>
+
+<p>Started learning Python at the start of year 2012, early January, and this same language landed me in the job which I absolutely love: working in one of the biggest 'OpenSource' project in the world, written in Python! Getting paid for working on an opensource project is as awesome as it can become for me.</p>
+
+<h4>The hunger to become different from the rest</h4>
+
+<p>Gathered a lot of info on how things work in computer industry. Kept myself in contact with various hot topics, opensource projects.</p>
+
+<h4>The job</h4>
+
+<p>Not faring too well on this front - the full time job. But still, I would consider I did good enough with regards to the work assigned to me. I, after six months into the job, still goes to office every morning with a thirst to make a difference.</p>
+
+<h4>Cleanliness</h4>
+
+<p>Scored much better in the second half. Spent dedicated amount of time each week to keep my room and flat clean and in order.</p>
+
+<h4>Maintaining a TODO list</h4>
+
+<p>Started late in the year, but seems a good progress on that front.</p>
+
+<h2>Things which didn't go that well in 2012</h2>
+
+<h4>Concentration</h4>
+
+<p>Still not able to concentrate on one thing for long. Get distracted too easily. Only rarely I sat at one place, focussed on one thing, for more than 50 minutes. Also, the last year's resolution of opening FaceBook only once a day was put in trashcan on in the very first week of January!</p>
+
+<h4>Not focussed enough on the future direction</h4>
+
+<p>Poor goal setting. Peeked into a lot of opensource projects, dedicated proper time into none. Opensourced my projects too, but did not work on it much either. Made myself a perfect example of 'naam bade aur darshan chhote' (appearing like an eminent personality, acting like a jerk).</p>
+
+<h4>Programming contest</h4>
+
+<p>Only kept in touch. Not solved much problems. This year, need to focus a lot on this front.</p>
+
+<h4>Time management</h4>
+
+<p>Never was able to manage time. Was not working on the same thing for even a week. Somewhere in the middle of working on a project, I find out 'hey, this looks cool! Time to try hands on it!'. What about the thingy you were currently working on? Into the TODO list! Such an idiot.</p>
+
+<h4>Work life balance</h4>
+
+<p>Went for a toss. Not able to regularise job timings. Started and stopped gym. Started and stopped working on many projects. Completed none. Wasted a heck of a lot of time.</p>
+
+<h2>Plans for upcoming year</h2>
+
+<h4>Better planning</h4>
+
+<p>I need to plan things before acting on it. I would take everything into consideration before jumping into hacking something, and then set a deadline for it. And till that deadline, I would promise I would not digress getting enticed by something which makes my mouth watery.</p>
+
+<h4>Don't just outright neglect daytime job</h4>
+
+<p>I agree my daytime job is awesome. But I end up considering the work I do at office as secondary. Need to value it much higher. I concentrate on other projects and aim to complete and polish them. What I did not thought was the work I am doing in my job itself is a project! If I am not faring well in the project on which I work 8 hours a day, how can I expect myself to do good in something I am spending only a fraction of time I spend on the daytime project! And expectedly, none of my projects are in good enough shape to talk about it confidently in public. I need to value OpenStack more. Really.</p>
+
+<h4>START coding for programming contests</h4>
+
+<p>Enough of promises, enough of 'From next month I'm gonna do it'. I SHOULD spend a specific time every week for coding for programming contests. Looks like I need to start with solving old problems from CodeChef.com alongwith the editorials provided with them.</p>
+
+<h4>Facebook once in a day</h4>
+
+<p>Period.</p>
+
+<h4>Need to plan breaks too</h4>
+
+<p>Realised only the last month that opening facebook, checking out news, and reading articles on Hacker News does not count in a break. A break is not in front of a computer screen. A break is something which gives your strained eyes a rest, especially when you end up spending half of your year staring at a computer screen!</p>
+
+<p>PS. The article is for the writer himself. It is okay if you are finding it a bad piece of English text.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Testing the new blog]]></title>
