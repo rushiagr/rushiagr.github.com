@@ -4,7 +4,7 @@
   <title><![CDATA[Category: automation | Sense, and Simplicity]]></title>
   <link href="http://rushiagr.github.io/blog/categories/automation/atom.xml" rel="self"/>
   <link href="http://rushiagr.github.io/"/>
-  <updated>2014-04-13T05:18:06+05:30</updated>
+  <updated>2014-04-22T18:12:27+05:30</updated>
   <id>http://rushiagr.github.io/</id>
   <author>
     <name><![CDATA[Rushi Agrawal]]></name>
@@ -19,6 +19,9 @@
     <updated>2014-04-12T20:18:00+05:30</updated>
     <id>http://rushiagr.github.io/blog/2014/04/12/open-source-puppet-quick-start</id>
     <content type="html"><![CDATA[<p>This post aims to be your quickest guide to get started with Puppet. We'll be using the open source version of Puppet. An hour of spare time and two Ubuntu machines (physical or virtual doesn't matter) is all that is needed.</p>
+
+<!-- more -->
+
 
 <h2>Quick Introduction</h2>
 
