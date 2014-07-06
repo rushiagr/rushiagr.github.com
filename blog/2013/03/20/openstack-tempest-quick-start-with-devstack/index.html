@@ -1,433 +1,305 @@
-
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>OpenStack Tempest quick start with DevStack - Sense, and Simplicity</title>
-  <meta name="author" content="Rushi Agrawal">
+  <title>OpenStack Tempest quick start with DevStack</title>
+  <meta name="author" content="">
 
-  
-  <meta name="description" content="UPDATE(April 2014): Now when you set up DevStack, Tempest is automatically set up for you. This quick start guide explains setting up Tempest with a &hellip;">
-  
+
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  
-  <link rel="canonical" href="http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Sense, and Simplicity" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://rushiagr.github.io/favicon.png" rel="icon">
+  <link href="http://rushiagr.github.io/theme/css/main.css" media="screen, projection"
+        rel="stylesheet" type="text/css">
+  <script src="http://rushiagr.github.io/theme/js/modernizr-2.0.js"></script>
+  <script src="http://rushiagr.github.io/theme/js/ender.js"></script>
+  <script src="http://rushiagr.github.io/theme/js/octopress.js" type="text/javascript"></script>
 
-  
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37074962-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
 </head>
 
-<body   >
+<body>
   <header role="banner"><hgroup>
-  <h1><a href="/">Sense, and Simplicity</a></h1>
-  
-    <h2>Blog-cum-shoutbox of Rushi Agrawal</h2>
-  
-</hgroup>
-
-</header>
+  <h1><a href="http://rushiagr.github.io/">A Pelican Blog</a></h1>
+</hgroup></header>
   <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:rushiagr.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
 </ul>
 
-</nav>
+
+
+<ul class="main-navigation">
+    <li class="active">
+    <a href="http://rushiagr.github.io/category/.html"></a>
+    </li>
+</ul></nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">OpenStack Tempest Quick Start With DevStack</h1>
-    
-    
-      <p class="meta">
-        
+<div>
+  <article class="hentry" role="article">
+<header>
+      <h1 class="entry-title">OpenStack Tempest quick start with DevStack</h1>
+      <p class="meta"><time datetime="2013-03-20T00:00:00" pubdate>Wed 20 March 2013</time></p>
+</header>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-20T04:54:00+05:30" pubdate data-updated="true">Mar 20<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>UPDATE(April 2014): Now when you set up DevStack, Tempest is automatically set up for you.</p>
-
+  <div class="entry-content"><p>UPDATE(April 2014): Now when you set up DevStack, Tempest is automatically set up for you.</p>
 <p>This quick start guide explains setting up Tempest with a DevStack environment
 for Grizzly release. Most of the information here is taken from
 <a href="http://www.joinfu.com/2012/03/testing-essex-rc1-with-devstack-and-tempest/">here</a>, the only difference being this blog post is more recent, and is based on Grizzly.</p>
-
 <!--more-->
-
 
 <p>Assumptions made are that you understand:
 1. What is a <code>localrc</code> file in DevStack.
 2. What does <code>./stack.sh</code> do in DevStack.
 3. How to clone using git.</p>
-
 <h2>Setting up DevStack</h2>
-
 <p>Clone DevStack</p>
+<div class="highlight"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/openstack-dev/devstack.git</span>
+<span class="n">cd</span> <span class="n">devstack</span>
+</pre></div>
 
-<pre><code>git clone https://github.com/openstack-dev/devstack.git
-cd devstack
-</code></pre>
 
 <p>Tempest requires that the rate-limiting for DevStack is turned off. By default, it is turned on, so turn it off by adding this line to the localrc file.</p>
+<div class="highlight"><pre><span class="n">API_RATE_LIMIT</span><span class="o">=</span><span class="n">False</span>
+</pre></div>
 
-<pre><code>API_RATE_LIMIT=False
-</code></pre>
 
 <p>If you have already created a DevStack environment, you will have to go through the labour of setting it all again by unstacking and restacking it with this parameter in localrc.
 Quick tip: If you already had a working DevStack in your computer, adding <code>OFFLINE=True</code> line in localrc will create the DevStack environment in your computer WITHOUT
 downloading all the OpenStack code all over again from the Github repos, but will build the environment from the existing code (thus saving you some Internet bandwidth and time).</p>
-
 <p>Build the DevStack environment</p>
+<div class="highlight"><pre><span class="p">.</span><span class="o">/</span><span class="n">stack</span><span class="p">.</span><span class="n">sh</span>
+</pre></div>
 
-<pre><code>./stack.sh
-</code></pre>
 
 <p>Supply all the five passwords. (If you are just playing around, just like me, then
 you can easily supply <code>nova</code> to all the passwords.)</p>
-
-<p>Note the IP of the system where DevStack is running (The &#8216;host IP&#8217; mentioned at the last of the output after running <code>stack.sh</code>).</p>
-
+<p>Note the IP of the system where DevStack is running (The 'host IP' mentioned at the last of the output after running <code>stack.sh</code>).</p>
 <h2>Setting up Tempest</h2>
-
 <p>Clone latest Tempest code</p>
+<div class="highlight"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/openstack/tempest.git</span>
+<span class="n">cd</span> <span class="n">tempest</span>
+</pre></div>
 
-<pre><code>git clone https://github.com/openstack/tempest.git
-cd tempest
-</code></pre>
 
 <p>Create tempest.conf file from the sample configuration file. This file will contain the configuration information of the OpenStack environment (here, the DevStack
 environment)</p>
+<div class="highlight"><pre><span class="n">cp</span> <span class="n">etc</span><span class="o">/</span><span class="n">tempest</span><span class="p">.</span><span class="n">conf</span><span class="p">.</span><span class="n">sample</span> <span class="n">etc</span><span class="o">/</span><span class="n">tempest</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
 
-<pre><code>cp etc/tempest.conf.sample etc/tempest.conf
-</code></pre>
 
 <p>Now open the file tempest.conf in an editor, and replace all instance of word <code>secret</code> with the appropriate password (<code>nova</code> if you followed me, and just typed <code>nova</code> whenever the
 <code>stack.sh</code> script asked for passwords)</p>
+<p>If, for example, your host IP is 10.0.24.30, change this line in tempest.conf </p>
+<div class="highlight"><pre><span class="n">uri</span> <span class="o">=</span> <span class="n">http</span><span class="o">:</span><span class="c1">//127.0.0.1:5000/v2.0/</span>
+</pre></div>
 
-<p>If, for example, your host IP is 10.0.24.30, change this line in tempest.conf</p>
-
-<pre><code>uri = http://127.0.0.1:5000/v2.0/
-</code></pre>
 
 <p>to make it</p>
+<div class="highlight"><pre><span class="n">uri</span> <span class="o">=</span> <span class="n">http</span><span class="o">:</span><span class="c1">//10.0.24.30:5000/v2.0/</span>
+</pre></div>
 
-<pre><code>uri = http://10.0.24.30:5000/v2.0/
-</code></pre>
 
 <p>The last thing to update in the tempest.conf file is the ID of the Cirros image. The image ID can be obtained by two ways</p>
-
 <h4>Image ID using glance</h4>
-
 <p>This command will return the image ID. Note that I have used the password <code>nova</code> in this line. You might also need to change the host IP address</p>
+<div class="highlight"><pre><span class="n">glance</span> <span class="o">-</span><span class="n">I</span> <span class="n">admin</span> <span class="o">-</span><span class="n">K</span> <span class="n">nova</span> <span class="o">-</span><span class="n">T</span> <span class="n">admin</span> <span class="o">-</span><span class="n">N</span> <span class="n">http</span><span class="o">:</span><span class="c1">//10.0.24.30:5000/v2.0 -S keystone index | grep ami | cut -f1 | awk &#39;{print $1}&#39;</span>
+</pre></div>
 
-<pre><code>glance -I admin -K nova -T admin -N http://10.0.24.30:5000/v2.0 -S keystone index | grep ami | cut -f1 | awk '{print $1}'
-</code></pre>
 
 <h4>Image ID using OpenStack CLI</h4>
-
 <p>Become stack user</p>
+<div class="highlight"><pre><span class="n">su</span> <span class="o">-</span> <span class="n">stack</span>
+</pre></div>
 
-<pre><code>su - stack
-</code></pre>
 
 <p>Source the sample credentials file</p>
+<div class="highlight"><pre><span class="p">.</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">stack</span><span class="o">/</span><span class="n">devstack</span><span class="o">/</span><span class="n">eucarc</span>
+</pre></div>
 
-<pre><code>. /opt/stack/devstack/eucarc
-</code></pre>
 
 <p>OR</p>
+<div class="highlight"><pre><span class="p">.</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">stack</span><span class="o">/</span><span class="n">devstack</span><span class="o">/</span><span class="n">openrc</span>
+</pre></div>
 
-<pre><code>. /opt/stack/devstack/openrc
-</code></pre>
 
 <p>Show all the images, with their IDs</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">nova</span> <span class="n">image</span><span class="o">-</span><span class="n">list</span>
+<span class="o">+--------------------------------------+---------------------------------+--------+--------+</span>
+<span class="o">|</span> <span class="n">ID</span>                                   <span class="o">|</span> <span class="n">Name</span>                            <span class="o">|</span> <span class="n">Status</span> <span class="o">|</span> <span class="n">Server</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+---------------------------------+--------+--------+</span>
+<span class="o">|</span> <span class="mi">13</span><span class="n">abf9c8</span><span class="o">-</span><span class="mi">5603</span><span class="o">-</span><span class="mi">48</span><span class="n">cb</span><span class="o">-</span><span class="mi">802</span><span class="n">e</span><span class="o">-</span><span class="n">e27162e10b58</span> <span class="o">|</span> <span class="n">cirros</span><span class="o">-</span><span class="mf">0.3.0</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">uec</span>         <span class="o">|</span> <span class="n">ACTIVE</span> <span class="o">|</span>        <span class="o">|</span>
+<span class="o">|</span> <span class="mi">39</span><span class="n">b023ae</span><span class="o">-</span><span class="mi">9201</span><span class="o">-</span><span class="mi">427</span><span class="n">d</span><span class="o">-</span><span class="mi">8350</span><span class="o">-</span><span class="mf">4f30e5</span><span class="n">bbc01a</span> <span class="o">|</span> <span class="n">cirros</span><span class="o">-</span><span class="mf">0.3.0</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">uec</span><span class="o">-</span><span class="n">kernel</span>  <span class="o">|</span> <span class="n">ACTIVE</span> <span class="o">|</span>        <span class="o">|</span>
+<span class="o">|</span> <span class="mi">431</span><span class="n">a9c04</span><span class="o">-</span><span class="mi">47</span><span class="n">b1</span><span class="o">-</span><span class="mf">47e4</span><span class="o">-</span><span class="mi">9521</span><span class="o">-</span><span class="mf">7f</span><span class="mi">12295</span><span class="n">c78e0</span> <span class="o">|</span> <span class="n">cirros</span><span class="o">-</span><span class="mf">0.3.0</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">uec</span><span class="o">-</span><span class="n">ramdisk</span> <span class="o">|</span> <span class="n">ACTIVE</span> <span class="o">|</span>        <span class="o">|</span>
+<span class="o">+--------------------------------------+---------------------------------+--------+--------+</span>
+</pre></div>
 
-<pre><code>$ nova image-list
-+--------------------------------------+---------------------------------+--------+--------+
-| ID                                   | Name                            | Status | Server |
-+--------------------------------------+---------------------------------+--------+--------+
-| 13abf9c8-5603-48cb-802e-e27162e10b58 | cirros-0.3.0-x86_64-uec         | ACTIVE |        |
-| 39b023ae-9201-427d-8350-4f30e5bbc01a | cirros-0.3.0-x86_64-uec-kernel  | ACTIVE |        |
-| 431a9c04-47b1-47e4-9521-7f12295c78e0 | cirros-0.3.0-x86_64-uec-ramdisk | ACTIVE |        |
-+--------------------------------------+---------------------------------+--------+--------+
-</code></pre>
 
-<p>The ID of the smallest image name is what we&#8217;re interested in.</p>
-
+<p>The ID of the smallest image name is what we're interested in.</p>
 <p>Now replace <code>{$IMAGE_ID}</code> and <code>{$IMAGE_ID_ALT}</code> with this value, to make those two lines appear in tempest.conf as</p>
+<div class="highlight"><pre><span class="n">image_ref</span> <span class="o">=</span> <span class="mi">13</span><span class="n">abf9c8</span><span class="o">-</span><span class="mi">5603</span><span class="o">-</span><span class="mi">48</span><span class="n">cb</span><span class="o">-</span><span class="mi">802</span><span class="n">e</span><span class="o">-</span><span class="n">e27162e10b58</span>
+<span class="n">image_ref_alt</span> <span class="o">=</span> <span class="mi">13</span><span class="n">abf9c8</span><span class="o">-</span><span class="mi">5603</span><span class="o">-</span><span class="mi">48</span><span class="n">cb</span><span class="o">-</span><span class="mi">802</span><span class="n">e</span><span class="o">-</span><span class="n">e27162e10b58</span>
+</pre></div>
 
-<pre><code>image_ref = 13abf9c8-5603-48cb-802e-e27162e10b58
-image_ref_alt = 13abf9c8-5603-48cb-802e-e27162e10b58
-</code></pre>
 
 <h2>Installing required dependencies</h2>
-
 <p>Install all the required packages needed to run Tempest integration test suite. (The list of required packages is maintained in file <code>tools/pip-requires</code>)</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">tools</span><span class="o">/</span><span class="n">pip</span><span class="o">-</span><span class="n">requires</span>
+</pre></div>
 
-<pre><code>$ sudo pip install -r tools/pip-requires 
-</code></pre>
 
 <h2>Show time!</h2>
+<p>We'll run all the tests in verbose mode. To run all the tests:</p>
+<div class="highlight"><pre><span class="n">nosetests</span> <span class="o">-</span><span class="n">v</span> <span class="n">tempest</span>
+</pre></div>
 
-<p>We&#8217;ll run all the tests in verbose mode. To run all the tests:</p>
-
-<pre><code>nosetests -v tempest
-</code></pre>
 
 <p>To run tests only from a specific file, say <code>tempest/tests/volume/test_volumes_list.py</code>:</p>
+<div class="highlight"><pre><span class="n">nosetests</span> <span class="o">-</span><span class="n">sv</span> <span class="n">tempest</span><span class="p">.</span><span class="n">tests</span><span class="p">.</span><span class="n">volume</span><span class="p">.</span><span class="n">test_volumes_list</span>
+</pre></div>
 
-<pre><code>nosetests -sv tempest.tests.volume.test_volumes_list
-</code></pre>
 
 <p>OR</p>
+<div class="highlight"><pre><span class="n">nosetests</span> <span class="o">-</span><span class="n">sv</span> <span class="n">tempest</span><span class="p">.</span><span class="n">tests</span><span class="p">.</span><span class="n">volume</span><span class="p">.</span><span class="n">test_volumes_list</span><span class="p">.</span><span class="n">py</span>
+</pre></div>
 
-<pre><code>nosetests -sv tempest.tests.volume.test_volumes_list.py
-</code></pre>
 
 <p>To run a specific test <code>test_volume_list_with_details</code> from test class <code>VolumeListTest</code>, which resides in the above file:</p>
-
-<pre><code>    nosetests -sv tempest.tests.volume.test_volumes_list:VolumeListTest.test_volume_list_with_details
-</code></pre>
-
-<p>And that ladies and gentlemen, is the end! :)</p>
-</div>
+<div class="highlight"><pre>    <span class="n">nosetests</span> <span class="o">-</span><span class="n">sv</span> <span class="n">tempest</span><span class="p">.</span><span class="n">tests</span><span class="p">.</span><span class="n">volume</span><span class="p">.</span><span class="n">test_volumes_list</span><span class="o">:</span><span class="n">VolumeListTest</span><span class="p">.</span><span class="n">test_volume_list_with_details</span>
+</pre></div>
 
 
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Rushi Agrawal</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-20T04:54:00+05:30" pubdate data-updated="true">Mar 20<span>th</span>, 2013</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/cloud/'>cloud</a>, <a class='category' href='/blog/categories/openstack/'>openstack</a>, <a class='category' href='/blog/categories/tech/'>tech</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
+<p>And that ladies and gentlemen, is the end! :)</p></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">Rushi Agrawal</span>
+  </span>
+<time datetime="2013-03-20T00:00:00" pubdate>Wed 20 March 2013</time>  <span class="categories">
+    <a class="category" href="http://rushiagr.github.io/tag/.html"></a>
+  </span>
+</p><div class="sharing">
   <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/" >Tweet</a>
-  
-  
   <div class="g-plusone" data-size="medium"></div>
-  
-  
     <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2013/03/19/github-cheat-sheet/" title="Previous Post: Git(hub) Cheat Sheet">&laquo; Git(hub) Cheat Sheet</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2013/05/27/cinder-on-devstack-quick-start/" title="Next Post: Cinder on DevStack - Quick Start">Cinder on DevStack - Quick Start &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
+</div>    </footer>
+  </article>
 
   <section>
     <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
 </div>
+<aside class="sidebar">
+  <section>
+    <h1>Recent Posts</h1>
+    <ul id="recent_posts">
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/04/12/open-source-puppet-quick-start/">Open Source Puppet - Quick Start</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack/">OpenStack in an hour with DevStack</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/">MySQL Cheat Sheet</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/01/16/playing-around-with-cinder-multi-backend/">Playing around with Cinder multi-backend</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/">Quick Start: Linux Logical Volume Manager</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+      
+    <h1>Categories</h1>
+    <ul id="recent_posts">
+        <li><a href="http://rushiagr.github.io/category/.html"></a></li>
+    </ul>
+  </section>
+ 
+
+  <section>
+  <h1>Tags</h1>
+    <a href="http://rushiagr.github.io/tag/.html"></a>  </section>
+
+
+
+  <section>
+    <h1>GitHub Repos</h1>
+    <ul id="gh_repos">
+      <li class="loading">Status updating...</li>
+    </ul>
+      <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
+    <script type="text/javascript">
+      $.domReady(function(){
+          if (!window.jXHR){
+              var jxhr = document.createElement('script');
+              jxhr.type = 'text/javascript';
+              jxhr.src = 'http://rushiagr.github.io/theme/js/jXHR.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(jxhr, s);
+          }
+
+          github.showRepos({
+              user: 'rushiagr',
+              count: 5,
+              skip_forks: true,
+              target: '#gh_repos'
+          });
+      });
+    </script>
+    <script src="http://rushiagr.github.io/theme/js/github.js" type="text/javascript"> </script>
   </section>
 
-</div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/04/12/open-source-puppet-quick-start/">Open Source Puppet - Quick Start</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/03/openstack-in-an-hour-with-devstack/">OpenStack in an Hour With DevStack</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/31/mysql-cheat-sheet/">MySQL Cheat Sheet</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/16/cinder-playing-with-multi-backend/">Playing Around With Cinder Multi-backend</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/14/quick-start-linux-logical-volume-manager/">Quick Start: Linux Logical Volume Manager</a>
-      </li>
-    
-  </ul>
-</section>
 
 <section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'rushiagr',
-            count: 5,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
+    <p>Follow <a href="http://twitter.com/reeshi_india">@reeshi_india</a></p>
 </section>
-
-
-
-
-
-  
-</aside>
-
-
-    </div>
+</aside>    </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Rushi Agrawal -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
-</footer>
-  
-
-<script type="text/javascript">
-      var disqus_shortname = 'rushiagr';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/';
-        var disqus_url = 'http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id; js.async = true;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-  <script type="text/javascript">
+    Copyright &copy;  2012-2014  -  -
+  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
+</p></footer>
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
     (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
-  </script>
 
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+	<script type="text/javascript">
+	  var disqus_shortname = 'rushiagr';
+          var disqus_identifier = '/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/';
+          var disqus_url = 'http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/';
+          var disqus_title = 'OpenStack Tempest quick start with DevStack';
+	  (function() {
+	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	   })();
+	</script>
   <script type="text/javascript">
     (function(){
       var twitterWidgets = document.createElement('script');
@@ -437,10 +309,20 @@ image_ref_alt = 13abf9c8-5603-48cb-802e-e27162e10b58
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
-
-
-
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 </body>
 </html>

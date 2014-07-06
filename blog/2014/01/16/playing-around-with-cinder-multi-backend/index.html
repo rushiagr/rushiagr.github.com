@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Playing around with Cinder multi-backend</title>
+  <meta name="author" content="">
+
+
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="http://rushiagr.github.io/favicon.png" rel="icon">
+  <link href="http://rushiagr.github.io/theme/css/main.css" media="screen, projection"
+        rel="stylesheet" type="text/css">
+  <script src="http://rushiagr.github.io/theme/js/modernizr-2.0.js"></script>
+  <script src="http://rushiagr.github.io/theme/js/ender.js"></script>
+  <script src="http://rushiagr.github.io/theme/js/octopress.js" type="text/javascript"></script>
+
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <header role="banner"><hgroup>
+  <h1><a href="http://rushiagr.github.io/">A Pelican Blog</a></h1>
+</hgroup></header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+</ul>
+
+
+
+<ul class="main-navigation">
+    <li class="active">
+    <a href="http://rushiagr.github.io/category/.html"></a>
+    </li>
+</ul></nav>
+  <div id="main">
+    <div id="content">
+<div>
+  <article class="hentry" role="article">
+<header>
+      <h1 class="entry-title">Playing around with Cinder multi-backend</h1>
+      <p class="meta"><time datetime="2014-01-16T00:00:00" pubdate>Thu 16 January 2014</time></p>
+</header>
+
+  <div class="entry-content"><p>With Grizzly release, Cinder got equipped with another major feature -- multi-backends
+with filter scheduler. So now you can have more than one storage boxes for block storage
+and manage them with one Cinder deployment. Here, I'm going to test it out using our 
+favourite method -- trying it out on DevStack!</p>
+<!--more-->
+
+<p>DevStack can provide you with two LVM backends to play around with them. But you'll need to restack it.</p>
+<p>Go to the devstack directory and pull the latest code. Destroy previous DevStack deployment if it exists.</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~/</span><span class="n">devstack</span><span class="err">$</span> <span class="n">git</span> <span class="n">pull</span> <span class="n">origin</span> <span class="n">master</span>
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~/</span><span class="n">devstack</span><span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">unstack</span><span class="p">.</span><span class="n">sh</span>
+</pre></div>
+
+
+<p>Add the config option to <code>localrc</code> which give you pre-cooked multi-backend setup with two LVM backends, both of 10G. Stack </p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">echo</span> <span class="s">&quot;CINDER_MULTI_LVM_BACKEND=True&quot;</span> <span class="o">&gt;&gt;</span> <span class="n">localrc</span>
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">devstack</span><span class="o">/</span><span class="n">stack</span><span class="p">.</span><span class="n">sh</span>
+</pre></div>
+
+
+<p>You can see that the cinder.conf file now has two values for enabled backends:</p>
+<div class="highlight"><pre><span class="nx">rushi</span><span class="p">@</span><span class="nx">jio</span><span class="p">:</span><span class="err">~$</span> <span class="nx">less</span> <span class="p">/</span><span class="nx">etc</span><span class="p">/</span><span class="nx">cinder</span><span class="p">/</span><span class="nx">cinder.conf</span> <span class="o">|</span> <span class="nx">grep</span> <span class="nx">enabled_backends</span>
+<span class="n">enabled_backends</span> <span class="o">=</span> <span class="nx">lvmdriver</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="nx">lvmdriver</span><span class="o">-</span><span class="mi">2</span>
+<span class="vi">#enabled_backends</span><span class="o">=&lt;</span><span class="kc">None</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>Also, you can see that there are two configuration groups created at the end of that config file, one each for configurations
+corresponding to that particular backend</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">tail</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cinder</span><span class="o">/</span><span class="n">cinder</span><span class="p">.</span><span class="n">conf</span>
+
+<span class="p">[</span><span class="n">lvmdriver</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">volume_backend_name</span> <span class="o">=</span> <span class="n">LVM_iSCSI</span>
+<span class="n">volume_driver</span> <span class="o">=</span> <span class="n">cinder</span><span class="p">.</span><span class="n">volume</span><span class="p">.</span><span class="n">drivers</span><span class="p">.</span><span class="n">lvm</span><span class="p">.</span><span class="n">LVMISCSIDriver</span>
+<span class="n">volume_group</span> <span class="o">=</span> <span class="n">stack</span><span class="o">-</span><span class="n">volumes</span>
+
+<span class="p">[</span><span class="n">lvmdriver</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">volume_backend_name</span> <span class="o">=</span> <span class="n">LVM_iSCSI_2</span>
+<span class="n">volume_driver</span> <span class="o">=</span> <span class="n">cinder</span><span class="p">.</span><span class="n">volume</span><span class="p">.</span><span class="n">drivers</span><span class="p">.</span><span class="n">lvm</span><span class="p">.</span><span class="n">LVMISCSIDriver</span>
+<span class="n">volume_group</span> <span class="o">=</span> <span class="n">stack</span><span class="o">-</span><span class="n">volumes2</span>
+</pre></div>
+
+
+<p>So you have two volume groups created for respective backends. Lets check it directly without using Cinder.</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">vgs</span>
+  <span class="n">VG</span>             <span class="err">#</span><span class="n">PV</span> <span class="err">#</span><span class="n">LV</span> <span class="err">#</span><span class="n">SN</span> <span class="n">Attr</span>   <span class="n">VSize</span>   <span class="n">VFree</span> 
+  <span class="n">stack</span><span class="o">-</span><span class="n">volumes</span>    <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span>  <span class="mf">10.01</span><span class="n">g</span> <span class="mf">10.01</span><span class="n">g</span>
+  <span class="n">stack</span><span class="o">-</span><span class="n">volumes2</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span>  <span class="mf">10.01</span><span class="n">g</span> <span class="mf">10.01</span><span class="n">g</span>
+  <span class="n">ubuntu</span><span class="o">-</span><span class="n">vg</span>        <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span> <span class="mf">931.27</span><span class="n">g</span> <span class="mf">44.00</span><span class="n">m</span>
+</pre></div>
+
+
+<p>Hmmm. Two volume groups, each of size 10G.</p>
+<h3>Case 1: Spreading volumes across backends</h3>
+<p>Now, lets create a volume and see where it ends up.</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">create</span> <span class="mi">1</span>
+<span class="nl">ERROR:</span> <span class="n">You</span> <span class="n">must</span> <span class="n">provide</span> <span class="n">a</span> <span class="n">username</span> <span class="n">via</span> <span class="n">either</span> <span class="o">--</span><span class="n">os</span><span class="o">-</span><span class="n">username</span> <span class="n">or</span> <span class="n">env</span><span class="p">[</span><span class="n">OS_USERNAME</span><span class="p">]</span>
+</pre></div>
+
+
+<p>Oops! Let me try again..</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="p">.</span> <span class="n">devstack</span><span class="o">/</span><span class="n">openrc</span> 
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">create</span> <span class="mi">1</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>      <span class="n">Property</span>     <span class="o">|</span>                <span class="n">Value</span>                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>    <span class="n">attachments</span>    <span class="o">|</span>                  <span class="p">[]</span>                  <span class="o">|</span>
+<span class="o">|</span> <span class="n">availability_zone</span> <span class="o">|</span>                 <span class="n">nova</span>                 <span class="o">|</span>
+<span class="o">|</span>      <span class="n">bootable</span>     <span class="o">|</span>                <span class="nb">false</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">created_at</span>    <span class="o">|</span>      <span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">16</span><span class="n">T17</span><span class="o">:</span><span class="mi">29</span><span class="o">:</span><span class="mf">49.241493</span>      <span class="o">|</span>
+<span class="o">|</span>    <span class="n">description</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>         <span class="n">id</span>        <span class="o">|</span> <span class="n">ecfbfebb</span><span class="o">-</span><span class="mi">73</span><span class="n">d5</span><span class="o">-</span><span class="mf">4f</span><span class="n">af</span><span class="o">-</span><span class="n">b625</span><span class="o">-</span><span class="n">e69f18020378</span> <span class="o">|</span>
+<span class="o">|</span>      <span class="n">metadata</span>     <span class="o">|</span>                  <span class="p">{}</span>                  <span class="o">|</span>
+<span class="o">|</span>        <span class="n">name</span>       <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>        <span class="n">size</span>       <span class="o">|</span>                  <span class="mi">1</span>                   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">snapshot_id</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>    <span class="n">source_volid</span>   <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>       <span class="n">status</span>      <span class="o">|</span>               <span class="n">creating</span>               <span class="o">|</span>
+<span class="o">|</span>      <span class="n">user_id</span>      <span class="o">|</span>   <span class="n">e441f49105f343da87316ab7157e2ab7</span>   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">volume_type</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">list</span>
+<span class="o">+--------------------------------------+-----------+------+------+-------------+----------+-------------+</span>
+<span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span>   <span class="n">Status</span>  <span class="o">|</span> <span class="n">Name</span> <span class="o">|</span> <span class="n">Size</span> <span class="o">|</span> <span class="n">Volume</span> <span class="n">Type</span> <span class="o">|</span> <span class="n">Bootable</span> <span class="o">|</span> <span class="n">Attached</span> <span class="n">to</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+------+------+-------------+----------+-------------+</span>
+<span class="o">|</span> <span class="n">ecfbfebb</span><span class="o">-</span><span class="mi">73</span><span class="n">d5</span><span class="o">-</span><span class="mf">4f</span><span class="n">af</span><span class="o">-</span><span class="n">b625</span><span class="o">-</span><span class="n">e69f18020378</span> <span class="o">|</span> <span class="n">available</span> <span class="o">|</span> <span class="n">None</span> <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">None</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span>             <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+------+------+-------------+----------+-------------+</span>
+
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">vgs</span>
+  <span class="n">VG</span>             <span class="err">#</span><span class="n">PV</span> <span class="err">#</span><span class="n">LV</span> <span class="err">#</span><span class="n">SN</span> <span class="n">Attr</span>   <span class="n">VSize</span>   <span class="n">VFree</span> 
+  <span class="n">stack</span><span class="o">-</span><span class="n">volumes</span>    <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span>  <span class="mf">10.01</span><span class="n">g</span> <span class="mf">10.01</span><span class="n">g</span>
+  <span class="n">stack</span><span class="o">-</span><span class="n">volumes2</span>   <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span>  <span class="mf">10.01</span><span class="n">g</span>  <span class="mf">9.01</span><span class="n">g</span>
+  <span class="n">ubuntu</span><span class="o">-</span><span class="n">vg</span>        <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span> <span class="mf">931.27</span><span class="n">g</span> <span class="mf">44.00</span><span class="n">m</span>
+</pre></div>
+
+
+<p>So it went to backend number 2. If you are admin (<code>source devstack/openrc admin admin</code>), you can do a <code>cinder show</code> too, to get information 
+as to which host did this volume go to. Only the admin is allowed to view the host information.</p>
+<p>The scheduler now gets reported of the capabilities which the backends have (check out the <code>c-shr</code> screen to see it). The scheduler then weighs the backend based on these capabilities and decides which of them has higher 'weight' to serve the next 'create' request. By default, the 'weigher' for scheduler is <code>CapacityWeigher</code>. That is, whichever backend has higher capacity, that backend will be chosen for the next 'create' request.</p>
+<p>So in our case, when we'll do another 'create volume' it will now land on to the first backend.</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">create</span> <span class="mi">1</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>      <span class="n">Property</span>     <span class="o">|</span>                <span class="n">Value</span>                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>    <span class="n">attachments</span>    <span class="o">|</span>                  <span class="p">[]</span>                  <span class="o">|</span>
+<span class="o">|</span> <span class="n">availability_zone</span> <span class="o">|</span>                 <span class="n">nova</span>                 <span class="o">|</span>
+<span class="o">|</span>      <span class="n">bootable</span>     <span class="o">|</span>                <span class="nb">false</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">created_at</span>    <span class="o">|</span>      <span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">16</span><span class="n">T17</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span><span class="mf">23.958468</span>      <span class="o">|</span>
+<span class="o">|</span>    <span class="n">description</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>         <span class="n">id</span>        <span class="o">|</span> <span class="n">aa79c608</span><span class="o">-</span><span class="mi">47</span><span class="n">cc</span><span class="o">-</span><span class="mf">44e3</span><span class="o">-</span><span class="n">a614</span><span class="o">-</span><span class="n">f4bddaab68e5</span> <span class="o">|</span>
+<span class="o">|</span>      <span class="n">metadata</span>     <span class="o">|</span>                  <span class="p">{}</span>                  <span class="o">|</span>
+<span class="o">|</span>        <span class="n">name</span>       <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>        <span class="n">size</span>       <span class="o">|</span>                  <span class="mi">1</span>                   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">snapshot_id</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>    <span class="n">source_volid</span>   <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>       <span class="n">status</span>      <span class="o">|</span>               <span class="n">creating</span>               <span class="o">|</span>
+<span class="o">|</span>      <span class="n">user_id</span>      <span class="o">|</span>   <span class="n">e441f49105f343da87316ab7157e2ab7</span>   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">volume_type</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">vgs</span>
+  <span class="n">VG</span>             <span class="err">#</span><span class="n">PV</span> <span class="err">#</span><span class="n">LV</span> <span class="err">#</span><span class="n">SN</span> <span class="n">Attr</span>   <span class="n">VSize</span>   <span class="n">VFree</span> 
+  <span class="n">stack</span><span class="o">-</span><span class="n">volumes</span>    <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span>  <span class="mf">10.01</span><span class="n">g</span>  <span class="mf">9.01</span><span class="n">g</span>
+  <span class="n">stack</span><span class="o">-</span><span class="n">volumes2</span>   <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span>  <span class="mf">10.01</span><span class="n">g</span>  <span class="mf">9.01</span><span class="n">g</span>
+  <span class="n">ubuntu</span><span class="o">-</span><span class="n">vg</span>        <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span> <span class="mf">931.27</span><span class="n">g</span> <span class="mf">44.00</span><span class="n">m</span>
+</pre></div>
+
+
+<p>Neat!</p>
+<h3>Case 2 : Stacking all volumes at one backend</h3>
+<p>What if we want to keep all the volumes at only one backend? Cinder allows you to do that too!
+There is a configuration option in cinder.conf, <code>capacity_weight_multiplier</code>, which allows you to multiply the 'capacity weight' by a number.
+So if the multiplier is 1, a backend with higher capacity will have higher weight, and will be the choice for the next volume creation request.
+This is the default case. BUT what if we set it to -1? The backend with higher available capacity will have more negative weight, which will make that backend less preferable for next 'create' request, and hence the request will go to the backend which has lesser capacity!</p>
+<p>Let us see this too in action.</p>
+<p>Check out the config option from cinder.conf file. </p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cinder</span><span class="o">/</span><span class="n">cinder</span><span class="p">.</span><span class="n">conf</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">B</span> <span class="mi">3</span> <span class="o">^</span><span class="n">capacity_weight_multiplier</span>
+
+<span class="cp"># Multiplier used for weighing volume capacity. Negative</span>
+<span class="cp"># numbers mean to stack vs spread. (floating point value)</span>
+<span class="cp"># capacity_weight_multiplier=1.0</span>
+</pre></div>
+
+
+<p>The config option is commented out and is there just so that you can easily change it. Now uncomment it and change it's value to -1.</p>
+<p>Delete previously created volumes. Kill all the three Cinder screen processes (<code>c-api</code>, <code>c-sch</code> and <code>c-vol</code>), and restart them.</p>
+<p>Lets create two volumes and see where they end up..</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">list</span>
+<span class="o">+----+--------+------+------+-------------+----------+-------------+</span>
+<span class="o">|</span> <span class="n">ID</span> <span class="o">|</span> <span class="n">Status</span> <span class="o">|</span> <span class="n">Name</span> <span class="o">|</span> <span class="n">Size</span> <span class="o">|</span> <span class="n">Volume</span> <span class="n">Type</span> <span class="o">|</span> <span class="n">Bootable</span> <span class="o">|</span> <span class="n">Attached</span> <span class="n">to</span> <span class="o">|</span>
+<span class="o">+----+--------+------+------+-------------+----------+-------------+</span>
+<span class="o">+----+--------+------+------+-------------+----------+-------------+</span>
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">create</span> <span class="mi">1</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>      <span class="n">Property</span>     <span class="o">|</span>                <span class="n">Value</span>                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>    <span class="n">attachments</span>    <span class="o">|</span>                  <span class="p">[]</span>                  <span class="o">|</span>
+<span class="o">|</span> <span class="n">availability_zone</span> <span class="o">|</span>                 <span class="n">nova</span>                 <span class="o">|</span>
+<span class="o">|</span>      <span class="n">bootable</span>     <span class="o">|</span>                <span class="nb">false</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">created_at</span>    <span class="o">|</span>      <span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">16</span><span class="n">T17</span><span class="o">:</span><span class="mi">56</span><span class="o">:</span><span class="mf">59.845733</span>      <span class="o">|</span>
+<span class="o">|</span>    <span class="n">description</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>         <span class="n">id</span>        <span class="o">|</span> <span class="n">b927b328</span><span class="o">-</span><span class="mi">5</span><span class="n">ae0</span><span class="o">-</span><span class="mi">411</span><span class="n">a</span><span class="o">-</span><span class="mi">9</span><span class="n">de2</span><span class="o">-</span><span class="mi">22</span><span class="n">ed732b4946</span> <span class="o">|</span>
+<span class="o">|</span>      <span class="n">metadata</span>     <span class="o">|</span>                  <span class="p">{}</span>                  <span class="o">|</span>
+<span class="o">|</span>        <span class="n">name</span>       <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>        <span class="n">size</span>       <span class="o">|</span>                  <span class="mi">1</span>                   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">snapshot_id</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>    <span class="n">source_volid</span>   <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>       <span class="n">status</span>      <span class="o">|</span>               <span class="n">creating</span>               <span class="o">|</span>
+<span class="o">|</span>      <span class="n">user_id</span>      <span class="o">|</span>   <span class="n">e441f49105f343da87316ab7157e2ab7</span>   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">volume_type</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">create</span> <span class="mi">1</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>      <span class="n">Property</span>     <span class="o">|</span>                <span class="n">Value</span>                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>    <span class="n">attachments</span>    <span class="o">|</span>                  <span class="p">[]</span>                  <span class="o">|</span>
+<span class="o">|</span> <span class="n">availability_zone</span> <span class="o">|</span>                 <span class="n">nova</span>                 <span class="o">|</span>
+<span class="o">|</span>      <span class="n">bootable</span>     <span class="o">|</span>                <span class="nb">false</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">created_at</span>    <span class="o">|</span>      <span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">16</span><span class="n">T17</span><span class="o">:</span><span class="mi">57</span><span class="o">:</span><span class="mf">01.132756</span>      <span class="o">|</span>
+<span class="o">|</span>    <span class="n">description</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>         <span class="n">id</span>        <span class="o">|</span> <span class="mf">9f643f</span><span class="mi">2</span><span class="n">d</span><span class="o">-</span><span class="mi">7221</span><span class="o">-</span><span class="mi">4</span><span class="n">a5c</span><span class="o">-</span><span class="n">bf48</span><span class="o">-</span><span class="mi">1977</span><span class="n">c9b89fd3</span> <span class="o">|</span>
+<span class="o">|</span>      <span class="n">metadata</span>     <span class="o">|</span>                  <span class="p">{}</span>                  <span class="o">|</span>
+<span class="o">|</span>        <span class="n">name</span>       <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>        <span class="n">size</span>       <span class="o">|</span>                  <span class="mi">1</span>                   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">snapshot_id</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>    <span class="n">source_volid</span>   <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>       <span class="n">status</span>      <span class="o">|</span>               <span class="n">creating</span>               <span class="o">|</span>
+<span class="o">|</span>      <span class="n">user_id</span>      <span class="o">|</span>   <span class="n">e441f49105f343da87316ab7157e2ab7</span>   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">volume_type</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">vgs</span>
+  <span class="n">VG</span>             <span class="err">#</span><span class="n">PV</span> <span class="err">#</span><span class="n">LV</span> <span class="err">#</span><span class="n">SN</span> <span class="n">Attr</span>   <span class="n">VSize</span>   <span class="n">VFree</span> 
+  <span class="n">stack</span><span class="o">-</span><span class="n">volumes</span>    <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span>  <span class="mf">10.01</span><span class="n">g</span> <span class="mf">10.01</span><span class="n">g</span>
+  <span class="n">stack</span><span class="o">-</span><span class="n">volumes2</span>   <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span>  <span class="mf">10.01</span><span class="n">g</span>  <span class="mf">8.01</span><span class="n">g</span>
+  <span class="n">ubuntu</span><span class="o">-</span><span class="n">vg</span>        <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span> <span class="mf">931.27</span><span class="n">g</span> <span class="mf">44.00</span><span class="n">m</span>
+</pre></div>
+
+
+<p>:)</p>
+<h3>Case 3 : Custom choice</h3>
+<p>What if I have two different backends (maybe one is slower, or costlier, than the other), and my users want to exactly specify how many volumes they want of each 'type' of backends? Here, Cinder's 'volume types' have us covered. </p>
+<p>We can associate a volume type with a backend, and then the users can create a volume of whatever 'type' they want.
+Let's throw some discrimination at these backends. I'll create two volume types: 'gold' and 'bronze', and associate 'stack-volumes' with 'gold' and similarly for 'stack-volumes2'. Note that this job can only be done by the administrator.</p>
+<p>Let us be admins</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="p">.</span> <span class="n">devstack</span><span class="o">/</span><span class="n">openrc</span> <span class="n">admin</span> <span class="n">admin</span>
+</pre></div>
+
+
+<p>Create both the volume types and list them.</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">type</span><span class="o">-</span><span class="n">create</span> <span class="n">gold</span>
+<span class="o">+--------------------------------------+------+</span>
+<span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span> <span class="n">Name</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+------+</span>
+<span class="o">|</span> <span class="n">dd883ee0</span><span class="o">-</span><span class="mi">24</span><span class="n">be</span><span class="o">-</span><span class="mf">42e1</span><span class="o">-</span><span class="n">ab2e</span><span class="o">-</span><span class="n">b9a01454f2f9</span> <span class="o">|</span> <span class="n">gold</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+------+</span>
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">type</span><span class="o">-</span><span class="n">create</span> <span class="n">bronze</span>
+<span class="o">+--------------------------------------+--------+</span>
+<span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span>  <span class="n">Name</span>  <span class="o">|</span>
+<span class="o">+--------------------------------------+--------+</span>
+<span class="o">|</span> <span class="n">f63dd2cb</span><span class="o">-</span><span class="n">f4e7</span><span class="o">-</span><span class="mi">4</span><span class="n">d6d</span><span class="o">-</span><span class="n">a84f</span><span class="o">-</span><span class="mi">5</span><span class="n">bf2cc6c5671</span> <span class="o">|</span> <span class="n">bronze</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+--------+</span>
+
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">type</span><span class="o">-</span><span class="n">list</span>
+<span class="o">+--------------------------------------+--------+</span>
+<span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span>  <span class="n">Name</span>  <span class="o">|</span>
+<span class="o">+--------------------------------------+--------+</span>
+<span class="o">|</span> <span class="n">dd883ee0</span><span class="o">-</span><span class="mi">24</span><span class="n">be</span><span class="o">-</span><span class="mf">42e1</span><span class="o">-</span><span class="n">ab2e</span><span class="o">-</span><span class="n">b9a01454f2f9</span> <span class="o">|</span>  <span class="n">gold</span>  <span class="o">|</span>
+<span class="o">|</span> <span class="n">f63dd2cb</span><span class="o">-</span><span class="n">f4e7</span><span class="o">-</span><span class="mi">4</span><span class="n">d6d</span><span class="o">-</span><span class="n">a84f</span><span class="o">-</span><span class="mi">5</span><span class="n">bf2cc6c5671</span> <span class="o">|</span> <span class="n">bronze</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+--------+</span>
+</pre></div>
+
+
+<p>Get the backend names (<code>volume_backend_name</code> config option) from cinder.conf file.</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">tail</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cinder</span><span class="o">/</span><span class="n">cinder</span><span class="p">.</span><span class="n">conf</span>
+
+<span class="p">[</span><span class="n">lvmdriver</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">volume_backend_name</span> <span class="o">=</span> <span class="n">LVM_iSCSI</span>
+<span class="n">volume_driver</span> <span class="o">=</span> <span class="n">cinder</span><span class="p">.</span><span class="n">volume</span><span class="p">.</span><span class="n">drivers</span><span class="p">.</span><span class="n">lvm</span><span class="p">.</span><span class="n">LVMISCSIDriver</span>
+<span class="n">volume_group</span> <span class="o">=</span> <span class="n">stack</span><span class="o">-</span><span class="n">volumes</span>
+
+<span class="p">[</span><span class="n">lvmdriver</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">volume_backend_name</span> <span class="o">=</span> <span class="n">LVM_iSCSI_2</span>
+<span class="n">volume_driver</span> <span class="o">=</span> <span class="n">cinder</span><span class="p">.</span><span class="n">volume</span><span class="p">.</span><span class="n">drivers</span><span class="p">.</span><span class="n">lvm</span><span class="p">.</span><span class="n">LVMISCSIDriver</span>
+<span class="n">volume_group</span> <span class="o">=</span> <span class="n">stack</span><span class="o">-</span><span class="n">volumes2</span>
+</pre></div>
+
+
+<p>Now let's associate backend <code>LVM_iSCSI</code> with volume type 'gold', and similarly for the other one.</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">type</span><span class="o">-</span><span class="n">key</span> <span class="n">gold</span> <span class="n">set</span> <span class="n">volume_backend_name</span><span class="o">=</span><span class="n">LVM_iSCSI</span>
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">type</span><span class="o">-</span><span class="n">key</span> <span class="n">bronze</span> <span class="n">set</span> <span class="n">volume_backend_name</span><span class="o">=</span><span class="n">LVM_iSCSI_2</span>
+</pre></div>
+
+
+<p>These association are stored as key-value pairs in the volume type's 'extra specs'. Let's see them</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">extra</span><span class="o">-</span><span class="n">specs</span><span class="o">-</span><span class="n">list</span> 
+<span class="o">+--------------------------------------+--------+------------------------------------------+</span>
+<span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span>  <span class="n">Name</span>  <span class="o">|</span>               <span class="n">extra_specs</span>                <span class="o">|</span>
+<span class="o">+--------------------------------------+--------+------------------------------------------+</span>
+<span class="o">|</span> <span class="n">dd883ee0</span><span class="o">-</span><span class="mi">24</span><span class="n">be</span><span class="o">-</span><span class="mf">42e1</span><span class="o">-</span><span class="n">ab2e</span><span class="o">-</span><span class="n">b9a01454f2f9</span> <span class="o">|</span>  <span class="n">gold</span>  <span class="o">|</span>  <span class="p">{</span><span class="n">u</span><span class="err">&#39;</span><span class="n">volume_backend_name</span><span class="err">&#39;</span><span class="o">:</span> <span class="n">u</span><span class="err">&#39;</span><span class="n">LVM_iSCSI</span><span class="err">&#39;</span><span class="p">}</span>  <span class="o">|</span>
+<span class="o">|</span> <span class="n">f63dd2cb</span><span class="o">-</span><span class="n">f4e7</span><span class="o">-</span><span class="mi">4</span><span class="n">d6d</span><span class="o">-</span><span class="n">a84f</span><span class="o">-</span><span class="mi">5</span><span class="n">bf2cc6c5671</span> <span class="o">|</span> <span class="n">bronze</span> <span class="o">|</span> <span class="p">{</span><span class="n">u</span><span class="err">&#39;</span><span class="n">volume_backend_name</span><span class="err">&#39;</span><span class="o">:</span> <span class="n">u</span><span class="err">&#39;</span><span class="n">LVM_iSCSI_2</span><span class="err">&#39;</span><span class="p">}</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+--------+------------------------------------------+</span>
+</pre></div>
+
+
+<p>You can add more key-value pairs for these volume types with different key names. <code>volume_backend_name</code> is a reserved key name, though.</p>
+<p>Let's create two volumes of type 'gold' and see where they end up being created:</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">create</span> <span class="o">--</span><span class="n">volume</span><span class="o">-</span><span class="n">type</span> <span class="n">gold</span> <span class="o">--</span><span class="n">name</span> <span class="n">costly_vol_1</span> <span class="mi">1</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>      <span class="n">Property</span>     <span class="o">|</span>                <span class="n">Value</span>                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>    <span class="n">attachments</span>    <span class="o">|</span>                  <span class="p">[]</span>                  <span class="o">|</span>
+<span class="o">|</span> <span class="n">availability_zone</span> <span class="o">|</span>                 <span class="n">nova</span>                 <span class="o">|</span>
+<span class="o">|</span>      <span class="n">bootable</span>     <span class="o">|</span>                <span class="nb">false</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">created_at</span>    <span class="o">|</span>      <span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">16</span><span class="n">T18</span><span class="o">:</span><span class="mi">24</span><span class="o">:</span><span class="mf">07.670635</span>      <span class="o">|</span>
+<span class="o">|</span>    <span class="n">description</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>         <span class="n">id</span>        <span class="o">|</span> <span class="mi">767</span><span class="n">d4c56</span><span class="o">-</span><span class="mi">6</span><span class="n">d3d</span><span class="o">-</span><span class="mf">46f</span><span class="mi">7</span><span class="o">-</span><span class="n">b0a3</span><span class="o">-</span><span class="mi">4</span><span class="n">a00f696bcad</span> <span class="o">|</span>
+<span class="o">|</span>      <span class="n">metadata</span>     <span class="o">|</span>                  <span class="p">{}</span>                  <span class="o">|</span>
+<span class="o">|</span>        <span class="n">name</span>       <span class="o">|</span>             <span class="n">costly_vol_1</span>             <span class="o">|</span>
+<span class="o">|</span>        <span class="n">size</span>       <span class="o">|</span>                  <span class="mi">1</span>                   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">snapshot_id</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>    <span class="n">source_volid</span>   <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>       <span class="n">status</span>      <span class="o">|</span>               <span class="n">creating</span>               <span class="o">|</span>
+<span class="o">|</span>      <span class="n">user_id</span>      <span class="o">|</span>   <span class="n">c271eb32e71b411bb98ad7b93792d6d5</span>   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">volume_type</span>    <span class="o">|</span>                 <span class="n">gold</span>                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">create</span> <span class="o">--</span><span class="n">volume</span><span class="o">-</span><span class="n">type</span> <span class="n">gold</span> <span class="o">--</span><span class="n">name</span> <span class="n">costly_vol_2</span> <span class="mi">1</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>      <span class="n">Property</span>     <span class="o">|</span>                <span class="n">Value</span>                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>    <span class="n">attachments</span>    <span class="o">|</span>                  <span class="p">[]</span>                  <span class="o">|</span>
+<span class="o">|</span> <span class="n">availability_zone</span> <span class="o">|</span>                 <span class="n">nova</span>                 <span class="o">|</span>
+<span class="o">|</span>      <span class="n">bootable</span>     <span class="o">|</span>                <span class="nb">false</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">created_at</span>    <span class="o">|</span>      <span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">16</span><span class="n">T18</span><span class="o">:</span><span class="mi">24</span><span class="o">:</span><span class="mf">58.382180</span>      <span class="o">|</span>
+<span class="o">|</span>    <span class="n">description</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>         <span class="n">id</span>        <span class="o">|</span> <span class="n">a938e556</span><span class="o">-</span><span class="mi">65</span><span class="n">cf</span><span class="o">-</span><span class="mi">4547</span><span class="o">-</span><span class="mf">87ff</span><span class="o">-</span><span class="mi">513</span><span class="n">d60f626d3</span> <span class="o">|</span>
+<span class="o">|</span>      <span class="n">metadata</span>     <span class="o">|</span>                  <span class="p">{}</span>                  <span class="o">|</span>
+<span class="o">|</span>        <span class="n">name</span>       <span class="o">|</span>             <span class="n">costly_vol_2</span>             <span class="o">|</span>
+<span class="o">|</span>        <span class="n">size</span>       <span class="o">|</span>                  <span class="mi">1</span>                   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">snapshot_id</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>    <span class="n">source_volid</span>   <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>       <span class="n">status</span>      <span class="o">|</span>               <span class="n">creating</span>               <span class="o">|</span>
+<span class="o">|</span>      <span class="n">user_id</span>      <span class="o">|</span>   <span class="n">c271eb32e71b411bb98ad7b93792d6d5</span>   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">volume_type</span>    <span class="o">|</span>                 <span class="n">gold</span>                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">list</span>
+<span class="o">+--------------------------------------+-----------+--------------+------+-------------+----------+-------------+</span>
+<span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span>   <span class="n">Status</span>  <span class="o">|</span>     <span class="n">Name</span>     <span class="o">|</span> <span class="n">Size</span> <span class="o">|</span> <span class="n">Volume</span> <span class="n">Type</span> <span class="o">|</span> <span class="n">Bootable</span> <span class="o">|</span> <span class="n">Attached</span> <span class="n">to</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+--------------+------+-------------+----------+-------------+</span>
+<span class="o">|</span> <span class="mi">767</span><span class="n">d4c56</span><span class="o">-</span><span class="mi">6</span><span class="n">d3d</span><span class="o">-</span><span class="mf">46f</span><span class="mi">7</span><span class="o">-</span><span class="n">b0a3</span><span class="o">-</span><span class="mi">4</span><span class="n">a00f696bcad</span> <span class="o">|</span> <span class="n">available</span> <span class="o">|</span> <span class="n">costly_vol_1</span> <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">gold</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span>             <span class="o">|</span>
+<span class="o">|</span> <span class="n">a938e556</span><span class="o">-</span><span class="mi">65</span><span class="n">cf</span><span class="o">-</span><span class="mi">4547</span><span class="o">-</span><span class="mf">87ff</span><span class="o">-</span><span class="mi">513</span><span class="n">d60f626d3</span> <span class="o">|</span> <span class="n">available</span> <span class="o">|</span> <span class="n">costly_vol_2</span> <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">gold</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span>             <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+--------------+------+-------------+----------+-------------+</span>
+
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">vgs</span>
+  <span class="n">VG</span>             <span class="err">#</span><span class="n">PV</span> <span class="err">#</span><span class="n">LV</span> <span class="err">#</span><span class="n">SN</span> <span class="n">Attr</span>   <span class="n">VSize</span>   <span class="n">VFree</span> 
+  <span class="n">stack</span><span class="o">-</span><span class="n">volumes</span>    <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span>  <span class="mf">10.01</span><span class="n">g</span>  <span class="mf">8.01</span><span class="n">g</span>
+  <span class="n">stack</span><span class="o">-</span><span class="n">volumes2</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span>  <span class="mf">10.01</span><span class="n">g</span> <span class="mf">10.01</span><span class="n">g</span>
+  <span class="n">ubuntu</span><span class="o">-</span><span class="n">vg</span>        <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span> <span class="mf">931.27</span><span class="n">g</span> <span class="mf">44.00</span><span class="n">m</span>
+</pre></div>
+
+
+<p>Now create another one, but with type 'bronze' and ensure it is created on the other backend.</p>
+<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">create</span> <span class="o">--</span><span class="n">volume</span><span class="o">-</span><span class="n">type</span> <span class="n">bronze</span> <span class="o">--</span><span class="n">name</span> <span class="n">cheap_vol_1</span> <span class="mi">1</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>      <span class="n">Property</span>     <span class="o">|</span>                <span class="n">Value</span>                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span>    <span class="n">attachments</span>    <span class="o">|</span>                  <span class="p">[]</span>                  <span class="o">|</span>
+<span class="o">|</span> <span class="n">availability_zone</span> <span class="o">|</span>                 <span class="n">nova</span>                 <span class="o">|</span>
+<span class="o">|</span>      <span class="n">bootable</span>     <span class="o">|</span>                <span class="nb">false</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">created_at</span>    <span class="o">|</span>      <span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">16</span><span class="n">T18</span><span class="o">:</span><span class="mi">27</span><span class="o">:</span><span class="mf">05.852092</span>      <span class="o">|</span>
+<span class="o">|</span>    <span class="n">description</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>         <span class="n">id</span>        <span class="o">|</span> <span class="mf">97f</span><span class="mi">62</span><span class="n">c7a</span><span class="o">-</span><span class="n">b974</span><span class="o">-</span><span class="mf">41e8</span><span class="o">-</span><span class="n">a659</span><span class="o">-</span><span class="mf">1e6</span><span class="n">d3eb876d5</span> <span class="o">|</span>
+<span class="o">|</span>      <span class="n">metadata</span>     <span class="o">|</span>                  <span class="p">{}</span>                  <span class="o">|</span>
+<span class="o">|</span>        <span class="n">name</span>       <span class="o">|</span>             <span class="n">cheap_vol_1</span>              <span class="o">|</span>
+<span class="o">|</span>        <span class="n">size</span>       <span class="o">|</span>                  <span class="mi">1</span>                   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">snapshot_id</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>    <span class="n">source_volid</span>   <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>       <span class="n">status</span>      <span class="o">|</span>               <span class="n">creating</span>               <span class="o">|</span>
+<span class="o">|</span>      <span class="n">user_id</span>      <span class="o">|</span>   <span class="n">c271eb32e71b411bb98ad7b93792d6d5</span>   <span class="o">|</span>
+<span class="o">|</span>    <span class="n">volume_type</span>    <span class="o">|</span>                <span class="n">bronze</span>                <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+
+<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">pvs</span>
+  <span class="n">PV</span>         <span class="n">VG</span>             <span class="n">Fmt</span>  <span class="n">Attr</span> <span class="n">PSize</span>   <span class="n">PFree</span> 
+  <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span> <span class="n">stack</span><span class="o">-</span><span class="n">volumes</span>  <span class="n">lvm2</span> <span class="n">a</span><span class="o">--</span>   <span class="mf">10.01</span><span class="n">g</span>  <span class="mf">8.01</span><span class="n">g</span>
+  <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop1</span> <span class="n">stack</span><span class="o">-</span><span class="n">volumes2</span> <span class="n">lvm2</span> <span class="n">a</span><span class="o">--</span>   <span class="mf">10.01</span><span class="n">g</span>  <span class="mf">9.01</span><span class="n">g</span>
+  <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda5</span>  <span class="n">ubuntu</span><span class="o">-</span><span class="n">vg</span>      <span class="n">lvm2</span> <span class="n">a</span><span class="o">--</span>  <span class="mf">931.27</span><span class="n">g</span> <span class="mf">44.00</span><span class="n">m</span>
+</pre></div>
+
+
+<p>Done :)</p>
+<p>Cheers!</p></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">Rushi Agrawal</span>
+  </span>
+<time datetime="2014-01-16T00:00:00" pubdate>Thu 16 January 2014</time>  <span class="categories">
+    <a class="category" href="http://rushiagr.github.io/tag/.html"></a>
+  </span>
+</p><div class="sharing">
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2014/01/16/playing-around-with-cinder-multi-backend/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2014/01/16/playing-around-with-cinder-multi-backend/" >Tweet</a>
+  <div class="g-plusone" data-size="medium"></div>
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
+</div>
+<aside class="sidebar">
+  <section>
+    <h1>Recent Posts</h1>
+    <ul id="recent_posts">
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/04/12/open-source-puppet-quick-start/">Open Source Puppet - Quick Start</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack/">OpenStack in an hour with DevStack</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/">MySQL Cheat Sheet</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/01/16/playing-around-with-cinder-multi-backend/">Playing around with Cinder multi-backend</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/">Quick Start: Linux Logical Volume Manager</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+      
+    <h1>Categories</h1>
+    <ul id="recent_posts">
+        <li><a href="http://rushiagr.github.io/category/.html"></a></li>
+    </ul>
+  </section>
+ 
+
+  <section>
+  <h1>Tags</h1>
+    <a href="http://rushiagr.github.io/tag/.html"></a>  </section>
+
+
+
+  <section>
+    <h1>GitHub Repos</h1>
+    <ul id="gh_repos">
+      <li class="loading">Status updating...</li>
+    </ul>
+      <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
+    <script type="text/javascript">
+      $.domReady(function(){
+          if (!window.jXHR){
+              var jxhr = document.createElement('script');
+              jxhr.type = 'text/javascript';
+              jxhr.src = 'http://rushiagr.github.io/theme/js/jXHR.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(jxhr, s);
+          }
+
+          github.showRepos({
+              user: 'rushiagr',
+              count: 5,
+              skip_forks: true,
+              target: '#gh_repos'
+          });
+      });
+    </script>
+    <script src="http://rushiagr.github.io/theme/js/github.js" type="text/javascript"> </script>
+  </section>
+
+
+<section>
+    <p>Follow <a href="http://twitter.com/reeshi_india">@reeshi_india</a></p>
+</section>
+</aside>    </div>
+  </div>
+  <footer role="contentinfo"><p>
+    Copyright &copy;  2012-2014  -  -
+  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
+</p></footer>
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+	<script type="text/javascript">
+	  var disqus_shortname = 'rushiagr';
+          var disqus_identifier = '/blog/2014/01/16/playing-around-with-cinder-multi-backend/';
+          var disqus_url = 'http://rushiagr.github.io/blog/2014/01/16/playing-around-with-cinder-multi-backend/';
+          var disqus_title = 'Playing around with Cinder multi-backend';
+	  (function() {
+	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	   })();
+	</script>
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</body>
+</html>

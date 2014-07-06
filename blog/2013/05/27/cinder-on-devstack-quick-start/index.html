@@ -1,1055 +1,620 @@
-
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Cinder on DevStack - Quick Start - Sense, and Simplicity</title>
-  <meta name="author" content="Rushi Agrawal">
+  <title>Cinder on DevStack - Quick Start</title>
+  <meta name="author" content="">
 
-  
-  <meta name="description" content="This blog post covers all the important commands for OpenStack Cinder - The block storage project.
-Although this guide is written based on DevStack, &hellip;">
-  
+
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  
-  <link rel="canonical" href="http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Sense, and Simplicity" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://rushiagr.github.io/favicon.png" rel="icon">
+  <link href="http://rushiagr.github.io/theme/css/main.css" media="screen, projection"
+        rel="stylesheet" type="text/css">
+  <script src="http://rushiagr.github.io/theme/js/modernizr-2.0.js"></script>
+  <script src="http://rushiagr.github.io/theme/js/ender.js"></script>
+  <script src="http://rushiagr.github.io/theme/js/octopress.js" type="text/javascript"></script>
 
-  
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37074962-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
 </head>
 
-<body   >
+<body>
   <header role="banner"><hgroup>
-  <h1><a href="/">Sense, and Simplicity</a></h1>
-  
-    <h2>Blog-cum-shoutbox of Rushi Agrawal</h2>
-  
-</hgroup>
-
-</header>
+  <h1><a href="http://rushiagr.github.io/">A Pelican Blog</a></h1>
+</hgroup></header>
   <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:rushiagr.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
 </ul>
 
-</nav>
+
+
+<ul class="main-navigation">
+    <li class="active">
+    <a href="http://rushiagr.github.io/category/.html"></a>
+    </li>
+</ul></nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
+<div>
+  <article class="hentry" role="article">
+<header>
       <h1 class="entry-title">Cinder on DevStack - Quick Start</h1>
-    
-    
-      <p class="meta">
-        
+      <p class="meta"><time datetime="2013-05-27T00:00:00" pubdate>Mon 27 May 2013</time></p>
+</header>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-27T22:33:00+05:30" pubdate data-updated="true">May 27<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>This blog post covers all the important commands for OpenStack Cinder - The block storage project.
+  <div class="entry-content"><p>This blog post covers all the important commands for OpenStack Cinder - The block storage project.
 Although this guide is written based on DevStack, it will work with actual deployment of OpenStack
 cloud also (except the DevStack/Linux specific bits).</p>
-
 <!--more-->
 
-
 <p>All the Cinder operations can be performed via either of these three means:</p>
-
 <ol>
-<li>CLI (Cinder&#8217;s <code>python-cinderclient</code> command line module)</li>
-<li>GUI (Using OpenStack&#8217;s GUI project <code>horizon</code>)</li>
+<li>CLI (Cinder's <code>python-cinderclient</code> command line module)</li>
+<li>GUI (Using OpenStack's GUI project <code>horizon</code>)</li>
 <li>Directly calling the Cinder APIs</li>
 </ol>
-
-
 <p>Internally, the CLI and GUI both use Cinder APIs to interact with the Cinder API server, but for
 a relatively new guy to OpenStack, I think an introduction through CLI would make the most sense.</p>
-
 <p>Assumptions made:</p>
-
 <ol>
 <li>You understand how to setup a DevStack environment and already have one ready at hand (remember <code>./stack.sh</code>?)</li>
 <li>You know how to pass default credentials to local shell environment (<code>. /home/path_to_your_devstack_repo/eucarc</code> will do)</li>
 </ol>
-
-
-<p>Let&#8217;s start.</p>
-
+<p>Let's start.</p>
 <h3>Creation and deletion of volumes</h3>
-
 <p>Create a 1-GB cinder volume with no name by running command <code>cinder create 1</code>.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder create 1
-</span><span class='line'>+---------------------+--------------------------------------+
-</span><span class='line'>|       Property      |                Value                 |
-</span><span class='line'>+---------------------+--------------------------------------+
-</span><span class='line'>|     attachments     |                  []                  |
-</span><span class='line'>|  availability_zone  |                 nova                 |
-</span><span class='line'>|       bootable      |                false                 |
-</span><span class='line'>|      created_at     |      2013-05-28T10:32:47.243613      |
-</span><span class='line'>| display_description |                 None                 |
-</span><span class='line'>|     display_name    |                 None                 |
-</span><span class='line'>|          id         | 6754d216-4792-4a38-964a-d002686c8f92 |
-</span><span class='line'>|       metadata      |                  {}                  |
-</span><span class='line'>|         size        |                  1                   |
-</span><span class='line'>|     snapshot_id     |                 None                 |
-</span><span class='line'>|     source_volid    |                 None                 |
-</span><span class='line'>|        status       |               creating               |
-</span><span class='line'>|     volume_type     |                 None                 |
-</span><span class='line'>+---------------------+--------------------------------------+</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">create</span> <span class="mi">1</span>
+<span class="o">+---------------------+--------------------------------------+</span>
+<span class="o">|</span>       <span class="n">Property</span>      <span class="o">|</span>                <span class="n">Value</span>                 <span class="o">|</span>
+<span class="o">+---------------------+--------------------------------------+</span>
+<span class="o">|</span>     <span class="n">attachments</span>     <span class="o">|</span>                  <span class="p">[]</span>                  <span class="o">|</span>
+<span class="o">|</span>  <span class="n">availability_zone</span>  <span class="o">|</span>                 <span class="n">nova</span>                 <span class="o">|</span>
+<span class="o">|</span>       <span class="n">bootable</span>      <span class="o">|</span>                <span class="nb">false</span>                 <span class="o">|</span>
+<span class="o">|</span>      <span class="n">created_at</span>     <span class="o">|</span>      <span class="mi">2013</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mi">28</span><span class="n">T10</span><span class="o">:</span><span class="mi">32</span><span class="o">:</span><span class="mf">47.243613</span>      <span class="o">|</span>
+<span class="o">|</span> <span class="n">display_description</span> <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">display_name</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>          <span class="n">id</span>         <span class="o">|</span> <span class="mi">6754</span><span class="n">d216</span><span class="o">-</span><span class="mi">4792</span><span class="o">-</span><span class="mi">4</span><span class="n">a38</span><span class="o">-</span><span class="mi">964</span><span class="n">a</span><span class="o">-</span><span class="n">d002686c8f92</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="n">metadata</span>      <span class="o">|</span>                  <span class="p">{}</span>                  <span class="o">|</span>
+<span class="o">|</span>         <span class="n">size</span>        <span class="o">|</span>                  <span class="mi">1</span>                   <span class="o">|</span>
+<span class="o">|</span>     <span class="n">snapshot_id</span>     <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">source_volid</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>        <span class="n">status</span>       <span class="o">|</span>               <span class="n">creating</span>               <span class="o">|</span>
+<span class="o">|</span>     <span class="n">volume_type</span>     <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">+---------------------+--------------------------------------+</span>
+</pre></div>
 
 
 <p>Here I am describing only the minimal functionality of a command. If you wish to see more info about what all you
 can do with that command, just type <code>cinder help &lt;command&gt;</code>, so to see all the optional parameters you can pass
 while creating a Cinder volume, execute <code>cinder help create</code>.</p>
+<div class="highlight"><pre><span class="nb">stack</span><span class="p">@</span><span class="nx">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="p">:</span><span class="o">/</span><span class="err">$</span> <span class="nx">cinder</span> <span class="nx">help</span> <span class="nb">create</span>
+<span class="nb">usage</span><span class="p">:</span> <span class="nx">cinder</span> <span class="nb">create</span> <span class="err">[</span><span class="o">--</span><span class="nx">snapshot</span><span class="na">-id</span> <span class="o">&lt;</span><span class="nx">snapshot</span><span class="na">-id</span><span class="o">&gt;</span><span class="cp">]</span>
+                     <span class="cp">[</span><span class="o">--</span><span class="nb">source</span><span class="na">-volid</span> <span class="o">&lt;</span><span class="nb">source</span><span class="na">-volid</span><span class="o">&gt;</span><span class="cp">]</span> <span class="cp">[</span><span class="o">--</span><span class="nb">image</span><span class="na">-id</span> <span class="o">&lt;</span><span class="nb">image</span><span class="na">-id</span><span class="o">&gt;</span><span class="cp">]</span>
+                     <span class="cp">[</span><span class="o">--</span><span class="nx">display</span><span class="na">-name</span> <span class="o">&lt;</span><span class="nx">display</span><span class="na">-name</span><span class="o">&gt;</span><span class="cp">]</span>
+                     <span class="cp">[</span><span class="o">--</span><span class="nx">display</span><span class="na">-description</span> <span class="o">&lt;</span><span class="nx">display</span><span class="na">-description</span><span class="o">&gt;</span><span class="cp">]</span>
+                     <span class="cp">[</span><span class="o">--</span><span class="nx">volume</span><span class="na">-type</span> <span class="o">&lt;</span><span class="nx">volume</span><span class="na">-type</span><span class="o">&gt;</span><span class="cp">]</span>
+                     <span class="cp">[</span><span class="o">--</span><span class="nx">availability</span><span class="na">-zone</span> <span class="o">&lt;</span><span class="nx">availability</span><span class="na">-zone</span><span class="o">&gt;</span><span class="cp">]</span>
+                     <span class="cp">[</span><span class="o">--</span><span class="nx">metadata</span> <span class="err">[</span><span class="o">&lt;</span><span class="n">key</span><span class="o">=</span><span class="nb">value</span><span class="o">&gt;</span> <span class="err">[</span><span class="o">&lt;</span><span class="n">key</span><span class="o">=</span><span class="nb">value</span><span class="o">&gt;</span> <span class="nx">...</span><span class="cp">]</span>]]
+                     <span class="nt">&lt;size&gt;</span>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder help create
-</span><span class='line'>usage: cinder create [--snapshot-id &lt;snapshot-id&gt;]
-</span><span class='line'>                     [--source-volid &lt;source-volid&gt;] [--image-id &lt;image-id&gt;]
-</span><span class='line'>                     [--display-name &lt;display-name&gt;]
-</span><span class='line'>                     [--display-description &lt;display-description&gt;]
-</span><span class='line'>                     [--volume-type &lt;volume-type&gt;]
-</span><span class='line'>                     [--availability-zone &lt;availability-zone&gt;]
-</span><span class='line'>                     [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
-</span><span class='line'>                     &lt;size&gt;
-</span><span class='line'>
-</span><span class='line'>Add a new volume.
-</span><span class='line'>
-</span><span class='line'>Positional arguments:
-</span><span class='line'>  &lt;size&gt;                Size of volume in GB
-</span><span class='line'>
-</span><span class='line'>Optional arguments:
-</span><span class='line'>  --snapshot-id &lt;snapshot-id&gt;
-</span><span class='line'>                        Create volume from snapshot id (Optional,
-</span><span class='line'>                        Default=None)
-</span><span class='line'>  --source-volid &lt;source-volid&gt;
-</span><span class='line'>                        Create volume from volume id (Optional, Default=None)
-</span><span class='line'>  --image-id &lt;image-id&gt;
-</span><span class='line'>                        Create volume from image id (Optional, Default=None)
-</span><span class='line'>  --display-name &lt;display-name&gt;
-</span><span class='line'>                        Volume name (Optional, Default=None)
-</span><span class='line'>  --display-description &lt;display-description&gt;
-</span><span class='line'>                        Volume description (Optional, Default=None)
-</span><span class='line'>  --volume-type &lt;volume-type&gt;
-</span><span class='line'>                        Volume type (Optional, Default=None)
-</span><span class='line'>  --availability-zone &lt;availability-zone&gt;
-</span><span class='line'>                        Availability zone for volume (Optional, Default=None)
-</span><span class='line'>  --metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]
-</span><span class='line'>                        Metadata key=value pairs (Optional, Default=None)</span></code></pre></td></tr></table></div></figure>
+Add a new volume.
+
+Positional arguments:
+  <span class="nt">&lt;size&gt;</span>                Size of volume in GB
+
+Optional arguments:
+  --snapshot-id <span class="nt">&lt;snapshot</span><span class="na">-id</span><span class="nt">&gt;</span>
+                        Create volume from snapshot id (Optional,
+                        Default=None)
+  --source-volid <span class="nt">&lt;source</span><span class="na">-volid</span><span class="nt">&gt;</span>
+                        Create volume from volume id (Optional, Default=None)
+  --image-id <span class="nt">&lt;image</span><span class="na">-id</span><span class="nt">&gt;</span>
+                        Create volume from image id (Optional, Default=None)
+  --display-name <span class="nt">&lt;display</span><span class="na">-name</span><span class="nt">&gt;</span>
+                        Volume name (Optional, Default=None)
+  --display-description <span class="nt">&lt;display</span><span class="na">-description</span><span class="nt">&gt;</span>
+                        Volume description (Optional, Default=None)
+  --volume-type <span class="nt">&lt;volume</span><span class="na">-type</span><span class="nt">&gt;</span>
+                        Volume type (Optional, Default=None)
+  --availability-zone <span class="nt">&lt;availability</span><span class="na">-zone</span><span class="nt">&gt;</span>
+                        Availability zone for volume (Optional, Default=None)
+  --metadata <span class="cp">[</span><span class="o">&lt;</span><span class="n">key</span><span class="o">=</span><span class="nb">value</span><span class="o">&gt;</span> <span class="err">[</span><span class="o">&lt;</span><span class="n">key</span><span class="o">=</span><span class="nb">value</span><span class="o">&gt;</span> <span class="nx">...</span><span class="cp">]</span>]
+                        Metadata key=value pairs (Optional, Default=None)
+</pre></div>
 
 
-<p>Don&#8217;t worry about the parameters, we&#8217;ll use most of them in a short time.</p>
-
-<p>Let&#8217;s create a Cinder volume of size 1GB with a name, using <code>cinder create --display-name my_second_vol 1</code>:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder create --display-name my_second_vol 1
-</span><span class='line'>+---------------------+--------------------------------------+
-</span><span class='line'>|       Property      |                Value                 |
-</span><span class='line'>+---------------------+--------------------------------------+
-</span><span class='line'>|     attachments     |                  []                  |
-</span><span class='line'>|  availability_zone  |                 nova                 |
-</span><span class='line'>|       bootable      |                false                 |
-</span><span class='line'>|      created_at     |      2013-05-28T10:40:32.801981      |
-</span><span class='line'>| display_description |                 None                 |
-</span><span class='line'>|     display_name    |            my_second_vol             |
-</span><span class='line'>|          id         | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
-</span><span class='line'>|       metadata      |                  {}                  |
-</span><span class='line'>|         size        |                  1                   |
-</span><span class='line'>|     snapshot_id     |                 None                 |
-</span><span class='line'>|     source_volid    |                 None                 |
-</span><span class='line'>|        status       |               creating               |
-</span><span class='line'>|     volume_type     |                 None                 |
-</span><span class='line'>+---------------------+--------------------------------------+</span></code></pre></td></tr></table></div></figure>
+<p>Don't worry about the parameters, we'll use most of them in a short time.</p>
+<p>Let's create a Cinder volume of size 1GB with a name, using <code>cinder create --display-name my_second_vol 1</code>:</p>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">create</span> <span class="o">--</span><span class="n">display</span><span class="o">-</span><span class="n">name</span> <span class="n">my_second_vol</span> <span class="mi">1</span>
+<span class="o">+---------------------+--------------------------------------+</span>
+<span class="o">|</span>       <span class="n">Property</span>      <span class="o">|</span>                <span class="n">Value</span>                 <span class="o">|</span>
+<span class="o">+---------------------+--------------------------------------+</span>
+<span class="o">|</span>     <span class="n">attachments</span>     <span class="o">|</span>                  <span class="p">[]</span>                  <span class="o">|</span>
+<span class="o">|</span>  <span class="n">availability_zone</span>  <span class="o">|</span>                 <span class="n">nova</span>                 <span class="o">|</span>
+<span class="o">|</span>       <span class="n">bootable</span>      <span class="o">|</span>                <span class="nb">false</span>                 <span class="o">|</span>
+<span class="o">|</span>      <span class="n">created_at</span>     <span class="o">|</span>      <span class="mi">2013</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mi">28</span><span class="n">T10</span><span class="o">:</span><span class="mi">40</span><span class="o">:</span><span class="mf">32.801981</span>      <span class="o">|</span>
+<span class="o">|</span> <span class="n">display_description</span> <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">display_name</span>    <span class="o">|</span>            <span class="n">my_second_vol</span>             <span class="o">|</span>
+<span class="o">|</span>          <span class="n">id</span>         <span class="o">|</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="n">metadata</span>      <span class="o">|</span>                  <span class="p">{}</span>                  <span class="o">|</span>
+<span class="o">|</span>         <span class="n">size</span>        <span class="o">|</span>                  <span class="mi">1</span>                   <span class="o">|</span>
+<span class="o">|</span>     <span class="n">snapshot_id</span>     <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">source_volid</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>        <span class="n">status</span>       <span class="o">|</span>               <span class="n">creating</span>               <span class="o">|</span>
+<span class="o">|</span>     <span class="n">volume_type</span>     <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">+---------------------+--------------------------------------+</span>
+</pre></div>
 
 
 <p>Now lets list out all the Cinder volumes, using <code>cinder list</code>:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder list
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</span><span class='line'>|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</span><span class='line'>| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
-</span><span class='line'>| 6754d216-4792-4a38-964a-d002686c8f92 | available |      None     |  1   |     None    |  false   |             |
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">list</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span>
+<span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span>   <span class="n">Status</span>  <span class="o">|</span>  <span class="n">Display</span> <span class="n">Name</span> <span class="o">|</span> <span class="n">Size</span> <span class="o">|</span> <span class="n">Volume</span> <span class="n">Type</span> <span class="o">|</span> <span class="n">Bootable</span> <span class="o">|</span> <span class="n">Attached</span> <span class="n">to</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span>
+<span class="o">|</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span> <span class="o">|</span> <span class="n">available</span> <span class="o">|</span> <span class="n">my_second_vol</span> <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">None</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span>             <span class="o">|</span>
+<span class="o">|</span> <span class="mi">6754</span><span class="n">d216</span><span class="o">-</span><span class="mi">4792</span><span class="o">-</span><span class="mi">4</span><span class="n">a38</span><span class="o">-</span><span class="mi">964</span><span class="n">a</span><span class="o">-</span><span class="n">d002686c8f92</span> <span class="o">|</span> <span class="n">available</span> <span class="o">|</span>      <span class="n">None</span>     <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">None</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span>             <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span>
+</pre></div>
 
 
 <p>Now lets delete the first volume (the one without a name), using <code>cinder delete &lt;volume_id&gt;</code> command. If you
-execute <code>cinder list</code> real quick, you will see the status of the volume going to &#8216;deleting&#8217;, and after some time
+execute <code>cinder list</code> real quick, you will see the status of the volume going to 'deleting', and after some time
 the volume will be deleted:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder delete 6754d216-4792-4a38-964a-d002686c8f92
-</span><span class='line'>stack@stlrx300s7-27:/$ cinder list 
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</span><span class='line'>|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</span><span class='line'>| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
-</span><span class='line'>| 6754d216-4792-4a38-964a-d002686c8f92 |  deleting |      None     |  1   |     None    |  false   |             |
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</span><span class='line'>stack@stlrx300s7-27:/$ 
-</span><span class='line'>stack@stlrx300s7-27:/$ 
-</span><span class='line'>stack@stlrx300s7-27:/$ cinder list
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</span><span class='line'>|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</span><span class='line'>| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">delete</span> <span class="mi">6754</span><span class="n">d216</span><span class="o">-</span><span class="mi">4792</span><span class="o">-</span><span class="mi">4</span><span class="n">a38</span><span class="o">-</span><span class="mi">964</span><span class="n">a</span><span class="o">-</span><span class="n">d002686c8f92</span>
+<span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">list</span> 
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span>
+<span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span>   <span class="n">Status</span>  <span class="o">|</span>  <span class="n">Display</span> <span class="n">Name</span> <span class="o">|</span> <span class="n">Size</span> <span class="o">|</span> <span class="n">Volume</span> <span class="n">Type</span> <span class="o">|</span> <span class="n">Bootable</span> <span class="o">|</span> <span class="n">Attached</span> <span class="n">to</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span>
+<span class="o">|</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span> <span class="o">|</span> <span class="n">available</span> <span class="o">|</span> <span class="n">my_second_vol</span> <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">None</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span>             <span class="o">|</span>
+<span class="o">|</span> <span class="mi">6754</span><span class="n">d216</span><span class="o">-</span><span class="mi">4792</span><span class="o">-</span><span class="mi">4</span><span class="n">a38</span><span class="o">-</span><span class="mi">964</span><span class="n">a</span><span class="o">-</span><span class="n">d002686c8f92</span> <span class="o">|</span>  <span class="n">deleting</span> <span class="o">|</span>      <span class="n">None</span>     <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">None</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span>             <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span>
+<span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> 
+<span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> 
+<span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">list</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span>
+<span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span>   <span class="n">Status</span>  <span class="o">|</span>  <span class="n">Display</span> <span class="n">Name</span> <span class="o">|</span> <span class="n">Size</span> <span class="o">|</span> <span class="n">Volume</span> <span class="n">Type</span> <span class="o">|</span> <span class="n">Bootable</span> <span class="o">|</span> <span class="n">Attached</span> <span class="n">to</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span>
+<span class="o">|</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span> <span class="o">|</span> <span class="n">available</span> <span class="o">|</span> <span class="n">my_second_vol</span> <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">None</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span>             <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span>
+</pre></div>
 
 
-<p>On a default DevStack installation, for a volume in Cinder, a &#8216;logical volume&#8217; is created on the Linux machine,
-inside the &#8216;physical volume&#8217; named <code>stack-volumes</code>. To see the logical volumes, and physical volumes on the
+<p>On a default DevStack installation, for a volume in Cinder, a 'logical volume' is created on the Linux machine,
+inside the 'physical volume' named <code>stack-volumes</code>. To see the logical volumes, and physical volumes on the
 ubuntu machine, just run <code>lvs</code> (logical volume scan) and <code>pvs</code> (physical volume scan) respectively (this is just
 for information and you can entirely skip this part):</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ sudo lvs
-</span><span class='line'>  LV                                          VG            Attr   LSize Origin Snap%  Move Log Copy%  Convert
-</span><span class='line'>  volume-25fa2028-46dc-4870-84c5-d062ae99dd7a stack-volumes -wi-ao 1.00g
-</span><span class='line'>stack@stlrx300s7-27:/$
-</span><span class='line'>stack@stlrx300s7-27:/$ sudo pvs
-</span><span class='line'>  PV         VG            Fmt  Attr PSize PFree
-</span><span class='line'>  /dev/loop0 stack-volumes lvm2 a-   5.01g 4.01g</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">lvs</span>
+  <span class="n">LV</span>                                          <span class="n">VG</span>            <span class="n">Attr</span>   <span class="n">LSize</span> <span class="n">Origin</span> <span class="n">Snap</span><span class="o">%</span>  <span class="n">Move</span> <span class="n">Log</span> <span class="n">Copy</span><span class="o">%</span>  <span class="n">Convert</span>
+  <span class="n">volume</span><span class="o">-</span><span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span> <span class="n">stack</span><span class="o">-</span><span class="n">volumes</span> <span class="o">-</span><span class="n">wi</span><span class="o">-</span><span class="n">ao</span> <span class="mf">1.00</span><span class="n">g</span>
+<span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span>
+<span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">pvs</span>
+  <span class="n">PV</span>         <span class="n">VG</span>            <span class="n">Fmt</span>  <span class="n">Attr</span> <span class="n">PSize</span> <span class="n">PFree</span>
+  <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span> <span class="n">stack</span><span class="o">-</span><span class="n">volumes</span> <span class="n">lvm2</span> <span class="n">a</span><span class="o">-</span>   <span class="mf">5.01</span><span class="n">g</span> <span class="mf">4.01</span><span class="n">g</span>
+</pre></div>
 
 
 <h3>Volume snapshots</h3>
-
 <p>Create the snapshot of volume:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder snapshot-create 25fa2028-46dc-4870-84c5-d062ae99dd7a
-</span><span class='line'>+---------------------+--------------------------------------+
-</span><span class='line'>|       Property      |                Value                 |
-</span><span class='line'>+---------------------+--------------------------------------+
-</span><span class='line'>|      created_at     |      2013-05-28T10:55:03.966690      |
-</span><span class='line'>| display_description |                 None                 |
-</span><span class='line'>|     display_name    |                 None                 |
-</span><span class='line'>|          id         | baf8764f-4c9b-496a-b2ff-bd49825c5d09 |
-</span><span class='line'>|       metadata      |                  {}                  |
-</span><span class='line'>|         size        |                  1                   |
-</span><span class='line'>|        status       |               creating               |
-</span><span class='line'>|      volume_id      | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
-</span><span class='line'>+---------------------+--------------------------------------+</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">snapshot</span><span class="o">-</span><span class="n">create</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span>
+<span class="o">+---------------------+--------------------------------------+</span>
+<span class="o">|</span>       <span class="n">Property</span>      <span class="o">|</span>                <span class="n">Value</span>                 <span class="o">|</span>
+<span class="o">+---------------------+--------------------------------------+</span>
+<span class="o">|</span>      <span class="n">created_at</span>     <span class="o">|</span>      <span class="mi">2013</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mi">28</span><span class="n">T10</span><span class="o">:</span><span class="mi">55</span><span class="o">:</span><span class="mf">03.966690</span>      <span class="o">|</span>
+<span class="o">|</span> <span class="n">display_description</span> <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">display_name</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>          <span class="n">id</span>         <span class="o">|</span> <span class="n">baf8764f</span><span class="o">-</span><span class="mi">4</span><span class="n">c9b</span><span class="o">-</span><span class="mi">496</span><span class="n">a</span><span class="o">-</span><span class="n">b2ff</span><span class="o">-</span><span class="n">bd49825c5d09</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="n">metadata</span>      <span class="o">|</span>                  <span class="p">{}</span>                  <span class="o">|</span>
+<span class="o">|</span>         <span class="n">size</span>        <span class="o">|</span>                  <span class="mi">1</span>                   <span class="o">|</span>
+<span class="o">|</span>        <span class="n">status</span>       <span class="o">|</span>               <span class="n">creating</span>               <span class="o">|</span>
+<span class="o">|</span>      <span class="n">volume_id</span>      <span class="o">|</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span> <span class="o">|</span>
+<span class="o">+---------------------+--------------------------------------+</span>
+</pre></div>
 
 
 <p>List all the snapshots:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder snapshot-list
-</span><span class='line'>+--------------------------------------+--------------------------------------+-----------+--------------+------+
-</span><span class='line'>|                  ID                  |              Volume ID               |   Status  | Display Name | Size |
-</span><span class='line'>+--------------------------------------+--------------------------------------+-----------+--------------+------+
-</span><span class='line'>| baf8764f-4c9b-496a-b2ff-bd49825c5d09 | 25fa2028-46dc-4870-84c5-d062ae99dd7a | available |     None     |  1   |
-</span><span class='line'>+--------------------------------------+--------------------------------------+-----------+--------------+------+</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">snapshot</span><span class="o">-</span><span class="n">list</span>
+<span class="o">+--------------------------------------+--------------------------------------+-----------+--------------+------+</span>
+<span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span>              <span class="n">Volume</span> <span class="n">ID</span>               <span class="o">|</span>   <span class="n">Status</span>  <span class="o">|</span> <span class="n">Display</span> <span class="n">Name</span> <span class="o">|</span> <span class="n">Size</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+--------------------------------------+-----------+--------------+------+</span>
+<span class="o">|</span> <span class="n">baf8764f</span><span class="o">-</span><span class="mi">4</span><span class="n">c9b</span><span class="o">-</span><span class="mi">496</span><span class="n">a</span><span class="o">-</span><span class="n">b2ff</span><span class="o">-</span><span class="n">bd49825c5d09</span> <span class="o">|</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span> <span class="o">|</span> <span class="n">available</span> <span class="o">|</span>     <span class="n">None</span>     <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>
+<span class="o">+--------------------------------------+--------------------------------------+-----------+--------------+------+</span>
+</pre></div>
 
 
 <p>Now lets create a new volume of 1GB from the snapshot:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder create --snapshot-id baf8764f-4c9b-496a-b2ff-bd49825c5d09 1
-</span><span class='line'>+---------------------+--------------------------------------+
-</span><span class='line'>|       Property      |                Value                 |
-</span><span class='line'>+---------------------+--------------------------------------+
-</span><span class='line'>|     attachments     |                  []                  |
-</span><span class='line'>|  availability_zone  |                 nova                 |
-</span><span class='line'>|       bootable      |                false                 |
-</span><span class='line'>|      created_at     |      2013-05-28T10:56:20.478141      |
-</span><span class='line'>| display_description |                 None                 |
-</span><span class='line'>|     display_name    |                 None                 |
-</span><span class='line'>|          id         | 99ebe1d0-678b-4a9a-8ec4-438f9804d327 |
-</span><span class='line'>|       metadata      |                  {}                  |
-</span><span class='line'>|         size        |                  1                   |
-</span><span class='line'>|     snapshot_id     | baf8764f-4c9b-496a-b2ff-bd49825c5d09 |
-</span><span class='line'>|     source_volid    |                 None                 |
-</span><span class='line'>|        status       |               creating               |
-</span><span class='line'>|     volume_type     |                 None                 |
-</span><span class='line'>+---------------------+--------------------------------------+</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">create</span> <span class="o">--</span><span class="n">snapshot</span><span class="o">-</span><span class="n">id</span> <span class="n">baf8764f</span><span class="o">-</span><span class="mi">4</span><span class="n">c9b</span><span class="o">-</span><span class="mi">496</span><span class="n">a</span><span class="o">-</span><span class="n">b2ff</span><span class="o">-</span><span class="n">bd49825c5d09</span> <span class="mi">1</span>
+<span class="o">+---------------------+--------------------------------------+</span>
+<span class="o">|</span>       <span class="n">Property</span>      <span class="o">|</span>                <span class="n">Value</span>                 <span class="o">|</span>
+<span class="o">+---------------------+--------------------------------------+</span>
+<span class="o">|</span>     <span class="n">attachments</span>     <span class="o">|</span>                  <span class="p">[]</span>                  <span class="o">|</span>
+<span class="o">|</span>  <span class="n">availability_zone</span>  <span class="o">|</span>                 <span class="n">nova</span>                 <span class="o">|</span>
+<span class="o">|</span>       <span class="n">bootable</span>      <span class="o">|</span>                <span class="nb">false</span>                 <span class="o">|</span>
+<span class="o">|</span>      <span class="n">created_at</span>     <span class="o">|</span>      <span class="mi">2013</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mi">28</span><span class="n">T10</span><span class="o">:</span><span class="mi">56</span><span class="o">:</span><span class="mf">20.478141</span>      <span class="o">|</span>
+<span class="o">|</span> <span class="n">display_description</span> <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">display_name</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>          <span class="n">id</span>         <span class="o">|</span> <span class="mi">99</span><span class="n">ebe1d0</span><span class="o">-</span><span class="mi">678</span><span class="n">b</span><span class="o">-</span><span class="mi">4</span><span class="n">a9a</span><span class="o">-</span><span class="mi">8</span><span class="n">ec4</span><span class="o">-</span><span class="mf">438f</span><span class="mi">9804</span><span class="n">d327</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="n">metadata</span>      <span class="o">|</span>                  <span class="p">{}</span>                  <span class="o">|</span>
+<span class="o">|</span>         <span class="n">size</span>        <span class="o">|</span>                  <span class="mi">1</span>                   <span class="o">|</span>
+<span class="o">|</span>     <span class="n">snapshot_id</span>     <span class="o">|</span> <span class="n">baf8764f</span><span class="o">-</span><span class="mi">4</span><span class="n">c9b</span><span class="o">-</span><span class="mi">496</span><span class="n">a</span><span class="o">-</span><span class="n">b2ff</span><span class="o">-</span><span class="n">bd49825c5d09</span> <span class="o">|</span>
+<span class="o">|</span>     <span class="n">source_volid</span>    <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">|</span>        <span class="n">status</span>       <span class="o">|</span>               <span class="n">creating</span>               <span class="o">|</span>
+<span class="o">|</span>     <span class="n">volume_type</span>     <span class="o">|</span>                 <span class="n">None</span>                 <span class="o">|</span>
+<span class="o">+---------------------+--------------------------------------+</span>
+</pre></div>
 
 
-<p>Now you will see two volumes when you&#8217;ll do a <code>cinder list</code>.</p>
-
+<p>Now you will see two volumes when you'll do a <code>cinder list</code>.</p>
 <h3>Accessing volumes from inside a virtual instance</h3>
-
 <p>You can attach a volume to a VM instance, to provide additional persistent storage to that VM. It
-works just like you attach an external HDD to your computer/laptop. But first, we&#8217;ll need to create a
+works just like you attach an external HDD to your computer/laptop. But first, we'll need to create a
 virtual machine for that.</p>
-
 <p>List out all the virtual machine images present in our DevStack setup, from which we can boot a
-brand new VM instance, using <code>glance image-list</code> or &#8216;nova image-list`:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ nova image-list
-</span><span class='line'>+--------------------------------------+---------------------------------+--------+--------+
-</span><span class='line'>| ID                                   | Name                            | Status | Server |
-</span><span class='line'>+--------------------------------------+---------------------------------+--------+--------+
-</span><span class='line'>| 291fe347-3a6f-4a21-9e85-e8809cb05d6e | cirros-0.3.1-x86_64-uec         | ACTIVE |        |
-</span><span class='line'>| 69d14d74-4185-4ba3-9666-1e7f569f38c6 | cirros-0.3.1-x86_64-uec-kernel  | ACTIVE |        |
-</span><span class='line'>| 8793532d-0c09-4b1c-aab8-d10832f13c09 | cirros-0.3.1-x86_64-uec-ramdisk | ACTIVE |        |
-</span><span class='line'>+--------------------------------------+---------------------------------+--------+--------+</span></code></pre></td></tr></table></div></figure>
+brand new VM instance, using <code>glance image-list</code> or 'nova image-list`:</p>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">nova</span> <span class="n">image</span><span class="o">-</span><span class="n">list</span>
+<span class="o">+--------------------------------------+---------------------------------+--------+--------+</span>
+<span class="o">|</span> <span class="n">ID</span>                                   <span class="o">|</span> <span class="n">Name</span>                            <span class="o">|</span> <span class="n">Status</span> <span class="o">|</span> <span class="n">Server</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+---------------------------------+--------+--------+</span>
+<span class="o">|</span> <span class="mf">291f</span><span class="n">e347</span><span class="o">-</span><span class="mi">3</span><span class="n">a6f</span><span class="o">-</span><span class="mi">4</span><span class="n">a21</span><span class="o">-</span><span class="mf">9e85</span><span class="o">-</span><span class="n">e8809cb05d6e</span> <span class="o">|</span> <span class="n">cirros</span><span class="o">-</span><span class="mf">0.3.1</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">uec</span>         <span class="o">|</span> <span class="n">ACTIVE</span> <span class="o">|</span>        <span class="o">|</span>
+<span class="o">|</span> <span class="mi">69</span><span class="n">d14d74</span><span class="o">-</span><span class="mi">4185</span><span class="o">-</span><span class="mi">4</span><span class="n">ba3</span><span class="o">-</span><span class="mi">9666</span><span class="o">-</span><span class="mf">1e7</span><span class="n">f569f38c6</span> <span class="o">|</span> <span class="n">cirros</span><span class="o">-</span><span class="mf">0.3.1</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">uec</span><span class="o">-</span><span class="n">kernel</span>  <span class="o">|</span> <span class="n">ACTIVE</span> <span class="o">|</span>        <span class="o">|</span>
+<span class="o">|</span> <span class="mi">8793532</span><span class="n">d</span><span class="o">-</span><span class="mi">0</span><span class="n">c09</span><span class="o">-</span><span class="mi">4</span><span class="n">b1c</span><span class="o">-</span><span class="n">aab8</span><span class="o">-</span><span class="n">d10832f13c09</span> <span class="o">|</span> <span class="n">cirros</span><span class="o">-</span><span class="mf">0.3.1</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">uec</span><span class="o">-</span><span class="n">ramdisk</span> <span class="o">|</span> <span class="n">ACTIVE</span> <span class="o">|</span>        <span class="o">|</span>
+<span class="o">+--------------------------------------+---------------------------------+--------+--------+</span>
+</pre></div>
 
 
-<p>We&#8217;ll use the image with the shortest name, and boot an instance, giving it a name <code>myinstance</code>.
+<p>We'll use the image with the shortest name, and boot an instance, giving it a name <code>myinstance</code>.
 You can list all the virtual machine instances registered with Nova using command <code>nova list</code>.
 If just after running the command to boot the virtual machine, you run <code>nova list</code> a few times,
-you will see the machine state going from &#8216;BUILD&#8217; to &#8216;ACTIVE&#8217; in a few seconds.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ nova boot --flavor m1.tiny --image 291fe347-3a6f-4a21-9e85-e8809cb05d6e myinstance
-</span><span class='line'>+-----------------------------+--------------------------------------+
-</span><span class='line'>| Property                    | Value                                |
-</span><span class='line'>+-----------------------------+--------------------------------------+
-</span><span class='line'>| status                      | BUILD                                |
-</span><span class='line'>| updated                     | 2013-05-28T11:03:47Z                 |
-</span><span class='line'>| OS-EXT-STS:task_state       | scheduling                           |
-</span><span class='line'>| key_name                    | None                                 |
-</span><span class='line'>| image                       | cirros-0.3.1-x86_64-uec              |
-</span><span class='line'>| hostId                      |                                      |
-</span><span class='line'>| OS-EXT-STS:vm_state         | building                             |
-</span><span class='line'>| flavor                      | m1.tiny                              |
-</span><span class='line'>| id                          | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
-</span><span class='line'>| security_groups             | [{u'name': u'default'}]              |
-</span><span class='line'>| user_id                     | 35708cb6795845fcab6362e908e6b0cf     |
-</span><span class='line'>| name                        | myinstance                           |
-</span><span class='line'>| adminPass                   | cQh34G96dCHX                         |
-</span><span class='line'>| tenant_id                   | 11f8fde7d627422d84036cabd6cbb7f8     |
-</span><span class='line'>| created                     | 2013-05-28T11:03:47Z                 |
-</span><span class='line'>| OS-DCF:diskConfig           | MANUAL                               |
-</span><span class='line'>| metadata                    | {}                                   |
-</span><span class='line'>| accessIPv4                  |                                      |
-</span><span class='line'>| accessIPv6                  |                                      |
-</span><span class='line'>| progress                    | 0                                    |
-</span><span class='line'>| OS-EXT-STS:power_state      | 0                                    |
-</span><span class='line'>| OS-EXT-AZ:availability_zone | nova                                 |
-</span><span class='line'>| config_drive                |                                      |
-</span><span class='line'>+-----------------------------+--------------------------------------+
-</span><span class='line'>stack@stlrx300s7-27:/$ nova list
-</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+----------+
-</span><span class='line'>| ID                                   | Name       | Status | Task State | Power State | Networks |
-</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+----------+
-</span><span class='line'>| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | BUILD  | networking | NOSTATE     |          |
-</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+----------+
-</span><span class='line'>stack@stlrx300s7-27:/$ nova list
-</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+----------+
-</span><span class='line'>| ID                                   | Name       | Status | Task State | Power State | Networks |
-</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+----------+
-</span><span class='line'>| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | BUILD  | spawning   | NOSTATE     |          |
-</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+----------+
-</span><span class='line'>stack@stlrx300s7-27:/$ nova list
-</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+------------------+
-</span><span class='line'>| ID                                   | Name       | Status | Task State | Power State | Networks         |
-</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+------------------+
-</span><span class='line'>| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | ACTIVE | None       | Running     | private=10.0.0.2 |
-</span><span class='line'>+--------------------------------------+------------+--------+------------+-------------+------------------+</span></code></pre></td></tr></table></div></figure>
+you will see the machine state going from 'BUILD' to 'ACTIVE' in a few seconds.</p>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">nova</span> <span class="n">boot</span> <span class="o">--</span><span class="n">flavor</span> <span class="n">m1</span><span class="p">.</span><span class="n">tiny</span> <span class="o">--</span><span class="n">image</span> <span class="mf">291f</span><span class="n">e347</span><span class="o">-</span><span class="mi">3</span><span class="n">a6f</span><span class="o">-</span><span class="mi">4</span><span class="n">a21</span><span class="o">-</span><span class="mf">9e85</span><span class="o">-</span><span class="n">e8809cb05d6e</span> <span class="n">myinstance</span>
+<span class="o">+-----------------------------+--------------------------------------+</span>
+<span class="o">|</span> <span class="n">Property</span>                    <span class="o">|</span> <span class="n">Value</span>                                <span class="o">|</span>
+<span class="o">+-----------------------------+--------------------------------------+</span>
+<span class="o">|</span> <span class="n">status</span>                      <span class="o">|</span> <span class="n">BUILD</span>                                <span class="o">|</span>
+<span class="o">|</span> <span class="n">updated</span>                     <span class="o">|</span> <span class="mi">2013</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mi">28</span><span class="n">T11</span><span class="o">:</span><span class="mo">03</span><span class="o">:</span><span class="mi">47</span><span class="n">Z</span>                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">OS</span><span class="o">-</span><span class="n">EXT</span><span class="o">-</span><span class="n">STS</span><span class="o">:</span><span class="n">task_state</span>       <span class="o">|</span> <span class="n">scheduling</span>                           <span class="o">|</span>
+<span class="o">|</span> <span class="n">key_name</span>                    <span class="o">|</span> <span class="n">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">image</span>                       <span class="o">|</span> <span class="n">cirros</span><span class="o">-</span><span class="mf">0.3.1</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">uec</span>              <span class="o">|</span>
+<span class="o">|</span> <span class="n">hostId</span>                      <span class="o">|</span>                                      <span class="o">|</span>
+<span class="o">|</span> <span class="n">OS</span><span class="o">-</span><span class="n">EXT</span><span class="o">-</span><span class="n">STS</span><span class="o">:</span><span class="n">vm_state</span>         <span class="o">|</span> <span class="n">building</span>                             <span class="o">|</span>
+<span class="o">|</span> <span class="n">flavor</span>                      <span class="o">|</span> <span class="n">m1</span><span class="p">.</span><span class="n">tiny</span>                              <span class="o">|</span>
+<span class="o">|</span> <span class="n">id</span>                          <span class="o">|</span> <span class="mi">3</span><span class="n">b6dd9f1</span><span class="o">-</span><span class="mi">3</span><span class="n">ca3</span><span class="o">-</span><span class="mi">4</span><span class="n">eed</span><span class="o">-</span><span class="n">a508</span><span class="o">-</span><span class="mi">1</span><span class="n">cd62d55629f</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">security_groups</span>             <span class="o">|</span> <span class="p">[{</span><span class="n">u</span><span class="err">&#39;</span><span class="n">name</span><span class="err">&#39;</span><span class="o">:</span> <span class="n">u</span><span class="err">&#39;</span><span class="k">default</span><span class="err">&#39;</span><span class="p">}]</span>              <span class="o">|</span>
+<span class="o">|</span> <span class="n">user_id</span>                     <span class="o">|</span> <span class="mi">35708</span><span class="n">cb6795845fcab6362e908e6b0cf</span>     <span class="o">|</span>
+<span class="o">|</span> <span class="n">name</span>                        <span class="o">|</span> <span class="n">myinstance</span>                           <span class="o">|</span>
+<span class="o">|</span> <span class="n">adminPass</span>                   <span class="o">|</span> <span class="n">cQh34G96dCHX</span>                         <span class="o">|</span>
+<span class="o">|</span> <span class="n">tenant_id</span>                   <span class="o">|</span> <span class="mf">11f8f</span><span class="n">de7d627422d84036cabd6cbb7f8</span>     <span class="o">|</span>
+<span class="o">|</span> <span class="n">created</span>                     <span class="o">|</span> <span class="mi">2013</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mi">28</span><span class="n">T11</span><span class="o">:</span><span class="mo">03</span><span class="o">:</span><span class="mi">47</span><span class="n">Z</span>                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">OS</span><span class="o">-</span><span class="n">DCF</span><span class="o">:</span><span class="n">diskConfig</span>           <span class="o">|</span> <span class="n">MANUAL</span>                               <span class="o">|</span>
+<span class="o">|</span> <span class="n">metadata</span>                    <span class="o">|</span> <span class="p">{}</span>                                   <span class="o">|</span>
+<span class="o">|</span> <span class="n">accessIPv4</span>                  <span class="o">|</span>                                      <span class="o">|</span>
+<span class="o">|</span> <span class="n">accessIPv6</span>                  <span class="o">|</span>                                      <span class="o">|</span>
+<span class="o">|</span> <span class="n">progress</span>                    <span class="o">|</span> <span class="mi">0</span>                                    <span class="o">|</span>
+<span class="o">|</span> <span class="n">OS</span><span class="o">-</span><span class="n">EXT</span><span class="o">-</span><span class="n">STS</span><span class="o">:</span><span class="n">power_state</span>      <span class="o">|</span> <span class="mi">0</span>                                    <span class="o">|</span>
+<span class="o">|</span> <span class="n">OS</span><span class="o">-</span><span class="n">EXT</span><span class="o">-</span><span class="n">AZ</span><span class="o">:</span><span class="n">availability_zone</span> <span class="o">|</span> <span class="n">nova</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">config_drive</span>                <span class="o">|</span>                                      <span class="o">|</span>
+<span class="o">+-----------------------------+--------------------------------------+</span>
+<span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">nova</span> <span class="n">list</span>
+<span class="o">+--------------------------------------+------------+--------+------------+-------------+----------+</span>
+<span class="o">|</span> <span class="n">ID</span>                                   <span class="o">|</span> <span class="n">Name</span>       <span class="o">|</span> <span class="n">Status</span> <span class="o">|</span> <span class="n">Task</span> <span class="n">State</span> <span class="o">|</span> <span class="n">Power</span> <span class="n">State</span> <span class="o">|</span> <span class="n">Networks</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+------------+--------+------------+-------------+----------+</span>
+<span class="o">|</span> <span class="mi">3</span><span class="n">b6dd9f1</span><span class="o">-</span><span class="mi">3</span><span class="n">ca3</span><span class="o">-</span><span class="mi">4</span><span class="n">eed</span><span class="o">-</span><span class="n">a508</span><span class="o">-</span><span class="mi">1</span><span class="n">cd62d55629f</span> <span class="o">|</span> <span class="n">myinstance</span> <span class="o">|</span> <span class="n">BUILD</span>  <span class="o">|</span> <span class="n">networking</span> <span class="o">|</span> <span class="n">NOSTATE</span>     <span class="o">|</span>          <span class="o">|</span>
+<span class="o">+--------------------------------------+------------+--------+------------+-------------+----------+</span>
+<span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">nova</span> <span class="n">list</span>
+<span class="o">+--------------------------------------+------------+--------+------------+-------------+----------+</span>
+<span class="o">|</span> <span class="n">ID</span>                                   <span class="o">|</span> <span class="n">Name</span>       <span class="o">|</span> <span class="n">Status</span> <span class="o">|</span> <span class="n">Task</span> <span class="n">State</span> <span class="o">|</span> <span class="n">Power</span> <span class="n">State</span> <span class="o">|</span> <span class="n">Networks</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+------------+--------+------------+-------------+----------+</span>
+<span class="o">|</span> <span class="mi">3</span><span class="n">b6dd9f1</span><span class="o">-</span><span class="mi">3</span><span class="n">ca3</span><span class="o">-</span><span class="mi">4</span><span class="n">eed</span><span class="o">-</span><span class="n">a508</span><span class="o">-</span><span class="mi">1</span><span class="n">cd62d55629f</span> <span class="o">|</span> <span class="n">myinstance</span> <span class="o">|</span> <span class="n">BUILD</span>  <span class="o">|</span> <span class="n">spawning</span>   <span class="o">|</span> <span class="n">NOSTATE</span>     <span class="o">|</span>          <span class="o">|</span>
+<span class="o">+--------------------------------------+------------+--------+------------+-------------+----------+</span>
+<span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">nova</span> <span class="n">list</span>
+<span class="o">+--------------------------------------+------------+--------+------------+-------------+------------------+</span>
+<span class="o">|</span> <span class="n">ID</span>                                   <span class="o">|</span> <span class="n">Name</span>       <span class="o">|</span> <span class="n">Status</span> <span class="o">|</span> <span class="n">Task</span> <span class="n">State</span> <span class="o">|</span> <span class="n">Power</span> <span class="n">State</span> <span class="o">|</span> <span class="n">Networks</span>         <span class="o">|</span>
+<span class="o">+--------------------------------------+------------+--------+------------+-------------+------------------+</span>
+<span class="o">|</span> <span class="mi">3</span><span class="n">b6dd9f1</span><span class="o">-</span><span class="mi">3</span><span class="n">ca3</span><span class="o">-</span><span class="mi">4</span><span class="n">eed</span><span class="o">-</span><span class="n">a508</span><span class="o">-</span><span class="mi">1</span><span class="n">cd62d55629f</span> <span class="o">|</span> <span class="n">myinstance</span> <span class="o">|</span> <span class="n">ACTIVE</span> <span class="o">|</span> <span class="n">None</span>       <span class="o">|</span> <span class="n">Running</span>     <span class="o">|</span> <span class="n">private</span><span class="o">=</span><span class="mf">10.0.0.2</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+------------+--------+------------+-------------+------------------+</span>
+</pre></div>
 
 
 <p>Now lets attach one of our volume to this instance, and then try to peek into this volume after logging into the instance.</p>
-
-<p>Attach volume using command <code>nova volume-attach &lt;instance_id&gt; &lt;volume_id&gt; &lt;attach_location&gt;</code>. We&#8217;ll attach at the first
+<p>Attach volume using command <code>nova volume-attach &lt;instance_id&gt; &lt;volume_id&gt; &lt;attach_location&gt;</code>. We'll attach at the first
 free device location: <code>/dev/vdb</code>:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ nova volume-attach 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f 25fa2028-46dc-4870-84c5-d062ae99dd7a /dev/vdb
-</span><span class='line'>+----------+--------------------------------------+
-</span><span class='line'>| Property | Value                                |
-</span><span class='line'>+----------+--------------------------------------+
-</span><span class='line'>| device   | /dev/vdb                             |
-</span><span class='line'>| serverId | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
-</span><span class='line'>| id       | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
-</span><span class='line'>| volumeId | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
-</span><span class='line'>+----------+--------------------------------------+</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">nova</span> <span class="n">volume</span><span class="o">-</span><span class="n">attach</span> <span class="mi">3</span><span class="n">b6dd9f1</span><span class="o">-</span><span class="mi">3</span><span class="n">ca3</span><span class="o">-</span><span class="mi">4</span><span class="n">eed</span><span class="o">-</span><span class="n">a508</span><span class="o">-</span><span class="mi">1</span><span class="n">cd62d55629f</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb</span>
+<span class="o">+----------+--------------------------------------+</span>
+<span class="o">|</span> <span class="n">Property</span> <span class="o">|</span> <span class="n">Value</span>                                <span class="o">|</span>
+<span class="o">+----------+--------------------------------------+</span>
+<span class="o">|</span> <span class="n">device</span>   <span class="o">|</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb</span>                             <span class="o">|</span>
+<span class="o">|</span> <span class="n">serverId</span> <span class="o">|</span> <span class="mi">3</span><span class="n">b6dd9f1</span><span class="o">-</span><span class="mi">3</span><span class="n">ca3</span><span class="o">-</span><span class="mi">4</span><span class="n">eed</span><span class="o">-</span><span class="n">a508</span><span class="o">-</span><span class="mi">1</span><span class="n">cd62d55629f</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">id</span>       <span class="o">|</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">volumeId</span> <span class="o">|</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span> <span class="o">|</span>
+<span class="o">+----------+--------------------------------------+</span>
+</pre></div>
 
 
 <p>Now listing the volume will tell you that the volume is attached to an instance (in use):</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder list
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-</span><span class='line'>|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable |             Attached to              |
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-</span><span class='line'>| 25fa2028-46dc-4870-84c5-d062ae99dd7a |   in-use  | my_second_vol |  1   |     None    |  false   | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
-</span><span class='line'>| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |                                      |
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">list</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+</span>
+<span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span>   <span class="n">Status</span>  <span class="o">|</span>  <span class="n">Display</span> <span class="n">Name</span> <span class="o">|</span> <span class="n">Size</span> <span class="o">|</span> <span class="n">Volume</span> <span class="n">Type</span> <span class="o">|</span> <span class="n">Bootable</span> <span class="o">|</span>             <span class="n">Attached</span> <span class="n">to</span>              <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+</span>
+<span class="o">|</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span> <span class="o">|</span>   <span class="n">in</span><span class="o">-</span><span class="n">use</span>  <span class="o">|</span> <span class="n">my_second_vol</span> <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">None</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span> <span class="mi">3</span><span class="n">b6dd9f1</span><span class="o">-</span><span class="mi">3</span><span class="n">ca3</span><span class="o">-</span><span class="mi">4</span><span class="n">eed</span><span class="o">-</span><span class="n">a508</span><span class="o">-</span><span class="mi">1</span><span class="n">cd62d55629f</span> <span class="o">|</span>
+<span class="o">|</span> <span class="mi">99</span><span class="n">ebe1d0</span><span class="o">-</span><span class="mi">678</span><span class="n">b</span><span class="o">-</span><span class="mi">4</span><span class="n">a9a</span><span class="o">-</span><span class="mi">8</span><span class="n">ec4</span><span class="o">-</span><span class="mf">438f</span><span class="mi">9804</span><span class="n">d327</span> <span class="o">|</span> <span class="n">available</span> <span class="o">|</span>      <span class="n">None</span>     <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">None</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span>                                      <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+</span>
+</pre></div>
 
 
-<p>Now let&#8217;s login into this virtual machine using the private IP of the instance (<code>10.0.0.2</code> in our case). Note how an
+<p>Now let's login into this virtual machine using the private IP of the instance (<code>10.0.0.2</code> in our case). Note how an
 error message pops up if you have already created an instance last time when you installed DevStack. If such an error
 appears on your screen too, follow the instructions just like the way I did. The default password for the cirros image
 we used is <code>cubswin:)</code>. Enter into the instance, and then become root:</p>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">ssh</span> <span class="n">cirros</span><span class="err">@</span><span class="mf">10.0.0.2</span>
+<span class="err">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span>
+<span class="err">@</span>    <span class="n">WARNING</span><span class="o">:</span> <span class="n">REMOTE</span> <span class="n">HOST</span> <span class="n">IDENTIFICATION</span> <span class="n">HAS</span> <span class="n">CHANGED</span><span class="o">!</span>     <span class="err">@</span>
+<span class="err">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span>
+<span class="n">IT</span> <span class="n">IS</span> <span class="n">POSSIBLE</span> <span class="n">THAT</span> <span class="n">SOMEONE</span> <span class="n">IS</span> <span class="n">DOING</span> <span class="n">SOMETHING</span> <span class="n">NASTY</span><span class="o">!</span>
+<span class="n">Someone</span> <span class="n">could</span> <span class="n">be</span> <span class="n">eavesdropping</span> <span class="n">on</span> <span class="n">you</span> <span class="n">right</span> <span class="n">now</span> <span class="p">(</span><span class="n">man</span><span class="o">-</span><span class="n">in</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">middle</span> <span class="n">attack</span><span class="p">)</span><span class="o">!</span>
+<span class="n">It</span> <span class="n">is</span> <span class="n">also</span> <span class="n">possible</span> <span class="n">that</span> <span class="n">a</span> <span class="n">host</span> <span class="n">key</span> <span class="n">has</span> <span class="n">just</span> <span class="n">been</span> <span class="n">changed</span><span class="p">.</span>
+<span class="n">The</span> <span class="n">fingerprint</span> <span class="k">for</span> <span class="n">the</span> <span class="n">RSA</span> <span class="n">key</span> <span class="n">sent</span> <span class="n">by</span> <span class="n">the</span> <span class="n">remote</span> <span class="n">host</span> <span class="n">is</span>
+<span class="nl">f5:</span><span class="n">ac</span><span class="o">:</span><span class="mi">45</span><span class="o">:</span><span class="mi">4</span><span class="n">c</span><span class="o">:</span><span class="mi">63</span><span class="o">:</span><span class="mi">8</span><span class="n">e</span><span class="o">:</span><span class="n">e4</span><span class="o">:</span><span class="mi">19</span><span class="o">:</span><span class="n">cc</span><span class="o">:</span><span class="mi">5</span><span class="n">a</span><span class="o">:</span><span class="mi">76</span><span class="o">:</span><span class="mi">7</span><span class="n">e</span><span class="o">:</span><span class="n">a1</span><span class="o">:</span><span class="mi">08</span><span class="o">:</span><span class="n">e7</span><span class="o">:</span><span class="n">c8</span><span class="p">.</span>
+<span class="n">Please</span> <span class="n">contact</span> <span class="n">your</span> <span class="n">system</span> <span class="n">administrator</span><span class="p">.</span>
+<span class="n">Add</span> <span class="n">correct</span> <span class="n">host</span> <span class="n">key</span> <span class="n">in</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">stack</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">known_hosts</span> <span class="n">to</span> <span class="n">get</span> <span class="n">rid</span> <span class="n">of</span> <span class="n">this</span> <span class="n">message</span><span class="p">.</span>
+<span class="n">Offending</span> <span class="n">RSA</span> <span class="n">key</span> <span class="n">in</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">stack</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">known_hosts</span><span class="o">:</span><span class="mi">4</span>
+  <span class="n">remove</span> <span class="n">with</span><span class="o">:</span> <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">f</span> <span class="s">&quot;/opt/stack/.ssh/known_hosts&quot;</span> <span class="o">-</span><span class="n">R</span> <span class="mf">10.0.0.2</span>
+<span class="n">RSA</span> <span class="n">host</span> <span class="n">key</span> <span class="k">for</span> <span class="mf">10.0.0.2</span> <span class="n">has</span> <span class="n">changed</span> <span class="n">and</span> <span class="n">you</span> <span class="n">have</span> <span class="n">requested</span> <span class="n">strict</span> <span class="n">checking</span><span class="p">.</span>
+<span class="n">Host</span> <span class="n">key</span> <span class="n">verification</span> <span class="n">failed</span><span class="p">.</span>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ ssh cirros@10.0.0.2
-</span><span class='line'>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-</span><span class='line'>@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
-</span><span class='line'>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-</span><span class='line'>IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
-</span><span class='line'>Someone could be eavesdropping on you right now (man-in-the-middle attack)!
-</span><span class='line'>It is also possible that a host key has just been changed.
-</span><span class='line'>The fingerprint for the RSA key sent by the remote host is
-</span><span class='line'>f5:ac:45:4c:63:8e:e4:19:cc:5a:76:7e:a1:08:e7:c8.
-</span><span class='line'>Please contact your system administrator.
-</span><span class='line'>Add correct host key in /opt/stack/.ssh/known_hosts to get rid of this message.
-</span><span class='line'>Offending RSA key in /opt/stack/.ssh/known_hosts:4
-</span><span class='line'>  remove with: ssh-keygen -f "/opt/stack/.ssh/known_hosts" -R 10.0.0.2
-</span><span class='line'>RSA host key for 10.0.0.2 has changed and you have requested strict checking.
-</span><span class='line'>Host key verification failed.
-</span><span class='line'>
-</span><span class='line'>stack@stlrx300s7-27:/$ ssh-keygen -f "/opt/stack/.ssh/known_hosts" -R 10.0.0.2
-</span><span class='line'>/opt/stack/.ssh/known_hosts updated.
-</span><span class='line'>Original contents retained as /opt/stack/.ssh/known_hosts.old</span></code></pre></td></tr></table></div></figure>
+<span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">f</span> <span class="s">&quot;/opt/stack/.ssh/known_hosts&quot;</span> <span class="o">-</span><span class="n">R</span> <span class="mf">10.0.0.2</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">stack</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">known_hosts</span> <span class="n">updated</span><span class="p">.</span>
+<span class="n">Original</span> <span class="n">contents</span> <span class="n">retained</span> <span class="n">as</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">stack</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">known_hosts</span><span class="p">.</span><span class="n">old</span>
+</pre></div>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ ssh cirros@10.0.0.2
-</span><span class='line'>The authenticity of host '10.0.0.2 (10.0.0.2)' can't be established.
-</span><span class='line'>RSA key fingerprint is f5:ac:45:4c:63:8e:e4:19:cc:5a:76:7e:a1:08:e7:c8.
-</span><span class='line'>Are you sure you want to continue connecting (yes/no)? yes
-</span><span class='line'>Warning: Permanently added '10.0.0.2' (RSA) to the list of known hosts.
-</span><span class='line'>cirros@10.0.0.2's password: 
-</span><span class='line'>$sudo -i
-</span><span class='line'>#</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">ssh</span> <span class="n">cirros</span><span class="err">@</span><span class="mf">10.0.0.2</span>
+<span class="n">The</span> <span class="n">authenticity</span> <span class="n">of</span> <span class="n">host</span> <span class="err">&#39;</span><span class="mf">10.0.0.2</span> <span class="p">(</span><span class="mf">10.0.0.2</span><span class="p">)</span><span class="err">&#39;</span> <span class="n">can</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">be</span> <span class="n">established</span><span class="p">.</span>
+<span class="n">RSA</span> <span class="n">key</span> <span class="n">fingerprint</span> <span class="n">is</span> <span class="n">f5</span><span class="o">:</span><span class="n">ac</span><span class="o">:</span><span class="mi">45</span><span class="o">:</span><span class="mi">4</span><span class="n">c</span><span class="o">:</span><span class="mi">63</span><span class="o">:</span><span class="mi">8</span><span class="n">e</span><span class="o">:</span><span class="n">e4</span><span class="o">:</span><span class="mi">19</span><span class="o">:</span><span class="n">cc</span><span class="o">:</span><span class="mi">5</span><span class="n">a</span><span class="o">:</span><span class="mi">76</span><span class="o">:</span><span class="mi">7</span><span class="n">e</span><span class="o">:</span><span class="n">a1</span><span class="o">:</span><span class="mi">08</span><span class="o">:</span><span class="n">e7</span><span class="o">:</span><span class="n">c8</span><span class="p">.</span>
+<span class="n">Are</span> <span class="n">you</span> <span class="n">sure</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">connecting</span> <span class="p">(</span><span class="n">yes</span><span class="o">/</span><span class="n">no</span><span class="p">)</span><span class="o">?</span> <span class="n">yes</span>
+<span class="nl">Warning:</span> <span class="n">Permanently</span> <span class="n">added</span> <span class="err">&#39;</span><span class="mf">10.0.0.2</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">RSA</span><span class="p">)</span> <span class="n">to</span> <span class="n">the</span> <span class="n">list</span> <span class="n">of</span> <span class="n">known</span> <span class="n">hosts</span><span class="p">.</span>
+<span class="n">cirros</span><span class="err">@</span><span class="mf">10.0.0.2</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">password</span><span class="o">:</span> 
+<span class="err">$</span><span class="n">sudo</span> <span class="o">-</span><span class="n">i</span>
+<span class="cp">#</span>
+</pre></div>
 
 
 <p>Run <code>fdisk -l</code> to see the disks present for the instance. You will see that your newly attached disk
 <code>/dev/vdb</code> of size 1GB is now present:</p>
+<div class="highlight"><pre><span class="cp"># fdisk -l</span>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># fdisk -l
-</span><span class='line'>
-</span><span class='line'>Disk /dev/vda: 1073 MB, 1073741824 bytes
-</span><span class='line'>16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors
-</span><span class='line'>Units = sectors of 1 * 512 = 512 bytes
-</span><span class='line'>Sector size (logical/physical): 512 bytes / 512 bytes
-</span><span class='line'>I/O size (minimum/optimal): 512 bytes / 512 bytes
-</span><span class='line'>Disk identifier: 0x00000000
-</span><span class='line'>
-</span><span class='line'>Disk /dev/vda doesn't contain a valid partition table
-</span><span class='line'>
-</span><span class='line'>Disk /dev/vdb: 1073 MB, 1073741824 bytes
-</span><span class='line'>16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors
-</span><span class='line'>Units = sectors of 1 * 512 = 512 bytes
-</span><span class='line'>Sector size (logical/physical): 512 bytes / 512 bytes
-</span><span class='line'>I/O size (minimum/optimal): 512 bytes / 512 bytes
-</span><span class='line'>Disk identifier: 0x00000000
-</span><span class='line'>
-</span><span class='line'>Disk /dev/vdb doesn't contain a valid partition table</span></code></pre></td></tr></table></div></figure>
+<span class="n">Disk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vda</span><span class="o">:</span> <span class="mi">1073</span> <span class="n">MB</span><span class="p">,</span> <span class="mi">1073741824</span> <span class="n">bytes</span>
+<span class="mi">16</span> <span class="n">heads</span><span class="p">,</span> <span class="mi">63</span> <span class="n">sectors</span><span class="o">/</span><span class="n">track</span><span class="p">,</span> <span class="mi">2080</span> <span class="n">cylinders</span><span class="p">,</span> <span class="n">total</span> <span class="mi">2097152</span> <span class="n">sectors</span>
+<span class="n">Units</span> <span class="o">=</span> <span class="n">sectors</span> <span class="n">of</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">512</span> <span class="o">=</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">Sector</span> <span class="n">size</span> <span class="p">(</span><span class="n">logical</span><span class="o">/</span><span class="n">physical</span><span class="p">)</span><span class="o">:</span> <span class="mi">512</span> <span class="n">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">size</span> <span class="p">(</span><span class="n">minimum</span><span class="o">/</span><span class="n">optimal</span><span class="p">)</span><span class="o">:</span> <span class="mi">512</span> <span class="n">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">Disk</span> <span class="n">identifier</span><span class="o">:</span> <span class="mh">0x00000000</span>
+
+<span class="n">Disk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vda</span> <span class="n">doesn</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">contain</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">partition</span> <span class="n">table</span>
+
+<span class="n">Disk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb</span><span class="o">:</span> <span class="mi">1073</span> <span class="n">MB</span><span class="p">,</span> <span class="mi">1073741824</span> <span class="n">bytes</span>
+<span class="mi">16</span> <span class="n">heads</span><span class="p">,</span> <span class="mi">63</span> <span class="n">sectors</span><span class="o">/</span><span class="n">track</span><span class="p">,</span> <span class="mi">2080</span> <span class="n">cylinders</span><span class="p">,</span> <span class="n">total</span> <span class="mi">2097152</span> <span class="n">sectors</span>
+<span class="n">Units</span> <span class="o">=</span> <span class="n">sectors</span> <span class="n">of</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">512</span> <span class="o">=</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">Sector</span> <span class="n">size</span> <span class="p">(</span><span class="n">logical</span><span class="o">/</span><span class="n">physical</span><span class="p">)</span><span class="o">:</span> <span class="mi">512</span> <span class="n">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">size</span> <span class="p">(</span><span class="n">minimum</span><span class="o">/</span><span class="n">optimal</span><span class="p">)</span><span class="o">:</span> <span class="mi">512</span> <span class="n">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">Disk</span> <span class="n">identifier</span><span class="o">:</span> <span class="mh">0x00000000</span>
+
+<span class="n">Disk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb</span> <span class="n">doesn</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">contain</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">partition</span> <span class="n">table</span>
+</pre></div>
 
 
 <p>Command <code>blkid /dev/vd*</code> lists out the IDs of block devices for this machine and some related info. Running
 this command you will see that info of only the virtual disk <code>/dev/vda</code> is present, meaning our disk <code>/dev/vdb</code>
 needs formatting.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># blkid /dev/vd*
-</span><span class='line'>/dev/vda: LABEL="cirros-rootfs" UUID="74251bb8-3a28-4a46-9a78-064497b26b9d" SEC_TYPE="ext2" TYPE="ext3" </span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="cp"># blkid /dev/vd*</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vda</span><span class="o">:</span> <span class="n">LABEL</span><span class="o">=</span><span class="s">&quot;cirros-rootfs&quot;</span> <span class="n">UUID</span><span class="o">=</span><span class="s">&quot;74251bb8-3a28-4a46-9a78-064497b26b9d&quot;</span> <span class="n">SEC_TYPE</span><span class="o">=</span><span class="s">&quot;ext2&quot;</span> <span class="n">TYPE</span><span class="o">=</span><span class="s">&quot;ext3&quot;</span> 
+</pre></div>
 
 
 <p>Lets format it to make an EXT3 partition with block-size 1024 bytes using command <code>mkfs.ext3 -b 1024 /dev/vdb</code>:</p>
+<div class="highlight"><pre><span class="cp"># mkfs.ext3 -b 1024 /dev/vdb</span>
+<span class="n">mke2fs</span> <span class="mf">1.42.2</span> <span class="p">(</span><span class="mi">27</span><span class="o">-</span><span class="n">Mar</span><span class="o">-</span><span class="mi">2012</span><span class="p">)</span>
+<span class="n">Filesystem</span> <span class="n">label</span><span class="o">=</span>
+<span class="n">OS</span> <span class="n">type</span><span class="o">:</span> <span class="n">Linux</span>
+<span class="n">Block</span> <span class="n">size</span><span class="o">=</span><span class="mi">1024</span> <span class="p">(</span><span class="n">log</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">Fragment</span> <span class="n">size</span><span class="o">=</span><span class="mi">1024</span> <span class="p">(</span><span class="n">log</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">Stride</span><span class="o">=</span><span class="mi">0</span> <span class="n">blocks</span><span class="p">,</span> <span class="n">Stripe</span> <span class="n">width</span><span class="o">=</span><span class="mi">0</span> <span class="n">blocks</span>
+<span class="mi">65536</span> <span class="n">inodes</span><span class="p">,</span> <span class="mi">1048576</span> <span class="n">blocks</span>
+<span class="mi">52428</span> <span class="n">blocks</span> <span class="p">(</span><span class="mf">5.00</span><span class="o">%</span><span class="p">)</span> <span class="n">reserved</span> <span class="k">for</span> <span class="n">the</span> <span class="n">super</span> <span class="n">user</span>
+<span class="n">First</span> <span class="n">data</span> <span class="n">block</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">Maximum</span> <span class="n">filesystem</span> <span class="n">blocks</span><span class="o">=</span><span class="mi">68157440</span>
+<span class="mi">128</span> <span class="n">block</span> <span class="n">groups</span>
+<span class="mi">8192</span> <span class="n">blocks</span> <span class="n">per</span> <span class="n">group</span><span class="p">,</span> <span class="mi">8192</span> <span class="n">fragments</span> <span class="n">per</span> <span class="n">group</span>
+<span class="mi">512</span> <span class="n">inodes</span> <span class="n">per</span> <span class="n">group</span>
+<span class="n">Superblock</span> <span class="n">backups</span> <span class="n">stored</span> <span class="n">on</span> <span class="n">blocks</span><span class="o">:</span> 
+        <span class="mi">8193</span><span class="p">,</span> <span class="mi">24577</span><span class="p">,</span> <span class="mi">40961</span><span class="p">,</span> <span class="mi">57345</span><span class="p">,</span> <span class="mi">73729</span><span class="p">,</span> <span class="mi">204801</span><span class="p">,</span> <span class="mi">221185</span><span class="p">,</span> <span class="mi">401409</span><span class="p">,</span> <span class="mi">663553</span><span class="p">,</span> 
+        <span class="mi">1024001</span>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># mkfs.ext3 -b 1024 /dev/vdb
-</span><span class='line'>mke2fs 1.42.2 (27-Mar-2012)
-</span><span class='line'>Filesystem label=
-</span><span class='line'>OS type: Linux
-</span><span class='line'>Block size=1024 (log=0)
-</span><span class='line'>Fragment size=1024 (log=0)
-</span><span class='line'>Stride=0 blocks, Stripe width=0 blocks
-</span><span class='line'>65536 inodes, 1048576 blocks
-</span><span class='line'>52428 blocks (5.00%) reserved for the super user
-</span><span class='line'>First data block=1
-</span><span class='line'>Maximum filesystem blocks=68157440
-</span><span class='line'>128 block groups
-</span><span class='line'>8192 blocks per group, 8192 fragments per group
-</span><span class='line'>512 inodes per group
-</span><span class='line'>Superblock backups stored on blocks: 
-</span><span class='line'>        8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409, 663553, 
-</span><span class='line'>        1024001
-</span><span class='line'>
-</span><span class='line'>Allocating group tables: done                            
-</span><span class='line'>Writing inode tables: done                            
-</span><span class='line'>Creating journal (32768 blocks): done
-</span><span class='line'>Writing superblocks and filesystem accounting information: done</span></code></pre></td></tr></table></div></figure>
+<span class="n">Allocating</span> <span class="n">group</span> <span class="n">tables</span><span class="o">:</span> <span class="n">done</span>                            
+<span class="n">Writing</span> <span class="n">inode</span> <span class="n">tables</span><span class="o">:</span> <span class="n">done</span>                            
+<span class="n">Creating</span> <span class="n">journal</span> <span class="p">(</span><span class="mi">32768</span> <span class="n">blocks</span><span class="p">)</span><span class="o">:</span> <span class="n">done</span>
+<span class="n">Writing</span> <span class="n">superblocks</span> <span class="n">and</span> <span class="n">filesystem</span> <span class="n">accounting</span> <span class="n">information</span><span class="o">:</span> <span class="n">done</span>
+</pre></div>
 
 
 <p>Run <code>blkid</code> again to see the newly partitioned disk listed:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># blkid /dev/vd*
-</span><span class='line'>/dev/vda: LABEL="cirros-rootfs" UUID="74251bb8-3a28-4a46-9a78-064497b26b9d" SEC_TYPE="ext2" TYPE="ext3" 
-</span><span class='line'>/dev/vdb: UUID="22838e81-eb97-457d-b1e0-4ff3d8e45b05" SEC_TYPE="ext2" TYPE="ext3" </span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="cp"># blkid /dev/vd*</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vda</span><span class="o">:</span> <span class="n">LABEL</span><span class="o">=</span><span class="s">&quot;cirros-rootfs&quot;</span> <span class="n">UUID</span><span class="o">=</span><span class="s">&quot;74251bb8-3a28-4a46-9a78-064497b26b9d&quot;</span> <span class="n">SEC_TYPE</span><span class="o">=</span><span class="s">&quot;ext2&quot;</span> <span class="n">TYPE</span><span class="o">=</span><span class="s">&quot;ext3&quot;</span> 
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb</span><span class="o">:</span> <span class="n">UUID</span><span class="o">=</span><span class="s">&quot;22838e81-eb97-457d-b1e0-4ff3d8e45b05&quot;</span> <span class="n">SEC_TYPE</span><span class="o">=</span><span class="s">&quot;ext2&quot;</span> <span class="n">TYPE</span><span class="o">=</span><span class="s">&quot;ext3&quot;</span> 
+</pre></div>
 
 
-<p>In order to use this disk, you need to mount it at some location. I&#8217;ll create a directory <code>/tempmount</code>
+<p>In order to use this disk, you need to mount it at some location. I'll create a directory <code>/tempmount</code>
 and mount our virtual block device there:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># mkdir /tempmount
-</span><span class='line'># mount /dev/vdb /tempmount/</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="c"># mkdir /tempmount</span>
+<span class="c"># mount /dev/vdb /tempmount/</span>
+</pre></div>
 
 
 <p>Now you can see the disk listed in the machine disks, using <code>df -h</code> command:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># df -h
-</span><span class='line'>Filesystem                Size      Used Available Use% Mounted on
-</span><span class='line'>/dev                    242.3M         0    242.3M   0% /dev
-</span><span class='line'>/dev/vda                 31.0M      9.7M     19.7M  33% /
-</span><span class='line'>tmpfs                   245.9M         0    245.9M   0% /dev/shm
-</span><span class='line'>tmpfs                   200.0K     76.0K    124.0K  38% /run
-</span><span class='line'>/dev/vdb               1007.7M     34.9M    921.6M   4% /tempmount</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><span class="cp"># df -h</span>
+<span class="n">Filesystem</span>                <span class="n">Size</span>      <span class="n">Used</span> <span class="n">Available</span> <span class="n">Use</span><span class="o">%</span> <span class="n">Mounted</span> <span class="n">on</span>
+<span class="o">/</span><span class="n">dev</span>                    <span class="mf">242.3</span><span class="n">M</span>         <span class="mi">0</span>    <span class="mf">242.3</span><span class="n">M</span>   <span class="mi">0</span><span class="o">%</span> <span class="o">/</span><span class="n">dev</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vda</span>                 <span class="mf">31.0</span><span class="n">M</span>      <span class="mf">9.7</span><span class="n">M</span>     <span class="mf">19.7</span><span class="n">M</span>  <span class="mi">33</span><span class="o">%</span> <span class="o">/</span>
+<span class="n">tmpfs</span>                   <span class="mf">245.9</span><span class="n">M</span>         <span class="mi">0</span>    <span class="mf">245.9</span><span class="n">M</span>   <span class="mi">0</span><span class="o">%</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">shm</span>
+<span class="n">tmpfs</span>                   <span class="mf">200.0</span><span class="n">K</span>     <span class="mf">76.0</span><span class="n">K</span>    <span class="mf">124.0</span><span class="n">K</span>  <span class="mi">38</span><span class="o">%</span> <span class="o">/</span><span class="n">run</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb</span>               <span class="mf">1007.7</span><span class="n">M</span>     <span class="mf">34.9</span><span class="n">M</span>    <span class="mf">921.6</span><span class="n">M</span>   <span class="mi">4</span><span class="o">%</span> <span class="o">/</span><span class="n">tempmount</span>
+</pre></div>
 
 
-<p>Now you can <code>cd</code> into <code>/tempmount</code> directory, and do whatever you want to do with the new disk &#8211; put some files there,
+<p>Now you can <code>cd</code> into <code>/tempmount</code> directory, and do whatever you want to do with the new disk -- put some files there,
 or download one!</p>
-
 <p>Lets wrap up this part. Unmount this volume by <code>umount /tempmount</code>, and log out from the machine by pressing <code>CTRL+D</code> twice, and execute <code>nova volume-detach &lt;volume_id&gt;
-&lt;server_id&gt;</code> to detach this volume. You can now see the &#8216;Attached to&#8217; column becomes empty again after detaching.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stack@stlrx300s7-27:/$ cinder list
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-</span><span class='line'>|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable |             Attached to              |
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-</span><span class='line'>| 25fa2028-46dc-4870-84c5-d062ae99dd7a |   in-use  | my_second_vol |  1   |     None    |  false   | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
-</span><span class='line'>| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |                                      |
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
-</span><span class='line'>stack@stlrx300s7-27:/$ nova volume-detach 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f 25fa2028-46dc-4870-84c5-d062ae99dd7a
-</span><span class='line'>stack@stlrx300s7-27:/$ cinder list
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</span><span class='line'>|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
-</span><span class='line'>| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
-</span><span class='line'>| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |             |
-</span><span class='line'>+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span></code></pre></td></tr></table></div></figure>
+&lt;server_id&gt;</code> to detach this volume. You can now see the 'Attached to' column becomes empty again after detaching.</p>
+<div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">list</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+</span>
+<span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span>   <span class="n">Status</span>  <span class="o">|</span>  <span class="n">Display</span> <span class="n">Name</span> <span class="o">|</span> <span class="n">Size</span> <span class="o">|</span> <span class="n">Volume</span> <span class="n">Type</span> <span class="o">|</span> <span class="n">Bootable</span> <span class="o">|</span>             <span class="n">Attached</span> <span class="n">to</span>              <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+</span>
+<span class="o">|</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span> <span class="o">|</span>   <span class="n">in</span><span class="o">-</span><span class="n">use</span>  <span class="o">|</span> <span class="n">my_second_vol</span> <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">None</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span> <span class="mi">3</span><span class="n">b6dd9f1</span><span class="o">-</span><span class="mi">3</span><span class="n">ca3</span><span class="o">-</span><span class="mi">4</span><span class="n">eed</span><span class="o">-</span><span class="n">a508</span><span class="o">-</span><span class="mi">1</span><span class="n">cd62d55629f</span> <span class="o">|</span>
+<span class="o">|</span> <span class="mi">99</span><span class="n">ebe1d0</span><span class="o">-</span><span class="mi">678</span><span class="n">b</span><span class="o">-</span><span class="mi">4</span><span class="n">a9a</span><span class="o">-</span><span class="mi">8</span><span class="n">ec4</span><span class="o">-</span><span class="mf">438f</span><span class="mi">9804</span><span class="n">d327</span> <span class="o">|</span> <span class="n">available</span> <span class="o">|</span>      <span class="n">None</span>     <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">None</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span>                                      <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+</span>
+<span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">nova</span> <span class="n">volume</span><span class="o">-</span><span class="n">detach</span> <span class="mi">3</span><span class="n">b6dd9f1</span><span class="o">-</span><span class="mi">3</span><span class="n">ca3</span><span class="o">-</span><span class="mi">4</span><span class="n">eed</span><span class="o">-</span><span class="n">a508</span><span class="o">-</span><span class="mi">1</span><span class="n">cd62d55629f</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span>
+<span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">list</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span>
+<span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span>   <span class="n">Status</span>  <span class="o">|</span>  <span class="n">Display</span> <span class="n">Name</span> <span class="o">|</span> <span class="n">Size</span> <span class="o">|</span> <span class="n">Volume</span> <span class="n">Type</span> <span class="o">|</span> <span class="n">Bootable</span> <span class="o">|</span> <span class="n">Attached</span> <span class="n">to</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span>
+<span class="o">|</span> <span class="mf">25f</span><span class="n">a2028</span><span class="o">-</span><span class="mi">46</span><span class="n">dc</span><span class="o">-</span><span class="mi">4870</span><span class="o">-</span><span class="mi">84</span><span class="n">c5</span><span class="o">-</span><span class="n">d062ae99dd7a</span> <span class="o">|</span> <span class="n">available</span> <span class="o">|</span> <span class="n">my_second_vol</span> <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">None</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span>             <span class="o">|</span>
+<span class="o">|</span> <span class="mi">99</span><span class="n">ebe1d0</span><span class="o">-</span><span class="mi">678</span><span class="n">b</span><span class="o">-</span><span class="mi">4</span><span class="n">a9a</span><span class="o">-</span><span class="mi">8</span><span class="n">ec4</span><span class="o">-</span><span class="mf">438f</span><span class="mi">9804</span><span class="n">d327</span> <span class="o">|</span> <span class="n">available</span> <span class="o">|</span>      <span class="n">None</span>     <span class="o">|</span>  <span class="mi">1</span>   <span class="o">|</span>     <span class="n">None</span>    <span class="o">|</span>  <span class="nb">false</span>   <span class="o">|</span>             <span class="o">|</span>
+<span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+-------------+</span>
+</pre></div>
 
 
 <h3>More features</h3>
-
 <p>(Will update shortly)</p>
-
-<p>Cheers!</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Rushi Agrawal</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-27T22:33:00+05:30" pubdate data-updated="true">May 27<span>th</span>, 2013</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/cloud/'>cloud</a>, <a class='category' href='/blog/categories/openstack/'>openstack</a>, <a class='category' href='/blog/categories/tech/'>tech</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
+<p>Cheers!</p></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">Rushi Agrawal</span>
+  </span>
+<time datetime="2013-05-27T00:00:00" pubdate>Mon 27 May 2013</time>  <span class="categories">
+    <a class="category" href="http://rushiagr.github.io/tag/.html"></a>
+  </span>
+</p><div class="sharing">
   <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/" >Tweet</a>
-  
-  
   <div class="g-plusone" data-size="medium"></div>
-  
-  
     <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/" title="Previous Post: OpenStack Tempest quick start with DevStack">&laquo; OpenStack Tempest quick start with DevStack</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2013/06/05/linux-screens-in-devstack/" title="Next Post: Linux Screens in DevStack">Linux Screens in DevStack &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
+</div>    </footer>
+  </article>
 
   <section>
     <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
 </div>
+<aside class="sidebar">
+  <section>
+    <h1>Recent Posts</h1>
+    <ul id="recent_posts">
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/04/12/open-source-puppet-quick-start/">Open Source Puppet - Quick Start</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack/">OpenStack in an hour with DevStack</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/">MySQL Cheat Sheet</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/01/16/playing-around-with-cinder-multi-backend/">Playing around with Cinder multi-backend</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/">Quick Start: Linux Logical Volume Manager</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+      
+    <h1>Categories</h1>
+    <ul id="recent_posts">
+        <li><a href="http://rushiagr.github.io/category/.html"></a></li>
+    </ul>
+  </section>
+ 
+
+  <section>
+  <h1>Tags</h1>
+    <a href="http://rushiagr.github.io/tag/.html"></a>  </section>
+
+
+
+  <section>
+    <h1>GitHub Repos</h1>
+    <ul id="gh_repos">
+      <li class="loading">Status updating...</li>
+    </ul>
+      <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
+    <script type="text/javascript">
+      $.domReady(function(){
+          if (!window.jXHR){
+              var jxhr = document.createElement('script');
+              jxhr.type = 'text/javascript';
+              jxhr.src = 'http://rushiagr.github.io/theme/js/jXHR.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(jxhr, s);
+          }
+
+          github.showRepos({
+              user: 'rushiagr',
+              count: 5,
+              skip_forks: true,
+              target: '#gh_repos'
+          });
+      });
+    </script>
+    <script src="http://rushiagr.github.io/theme/js/github.js" type="text/javascript"> </script>
   </section>
 
-</div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/04/12/open-source-puppet-quick-start/">Open Source Puppet - Quick Start</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/03/openstack-in-an-hour-with-devstack/">OpenStack in an Hour With DevStack</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/31/mysql-cheat-sheet/">MySQL Cheat Sheet</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/16/cinder-playing-with-multi-backend/">Playing Around With Cinder Multi-backend</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/14/quick-start-linux-logical-volume-manager/">Quick Start: Linux Logical Volume Manager</a>
-      </li>
-    
-  </ul>
-</section>
 
 <section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'rushiagr',
-            count: 5,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
+    <p>Follow <a href="http://twitter.com/reeshi_india">@reeshi_india</a></p>
 </section>
-
-
-
-
-
-  
-</aside>
-
-
-    </div>
+</aside>    </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Rushi Agrawal -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
-</footer>
-  
-
-<script type="text/javascript">
-      var disqus_shortname = 'rushiagr';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/';
-        var disqus_url = 'http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id; js.async = true;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-  <script type="text/javascript">
+    Copyright &copy;  2012-2014  -  -
+  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
+</p></footer>
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
     (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
-  </script>
 
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+	<script type="text/javascript">
+	  var disqus_shortname = 'rushiagr';
+          var disqus_identifier = '/blog/2013/05/27/cinder-on-devstack-quick-start/';
+          var disqus_url = 'http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/';
+          var disqus_title = 'Cinder on DevStack - Quick Start';
+	  (function() {
+	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	   })();
+	</script>
   <script type="text/javascript">
     (function(){
       var twitterWidgets = document.createElement('script');
@@ -1059,10 +624,20 @@ or download one!</p>
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
-
-
-
-
-
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 </body>
 </html>
