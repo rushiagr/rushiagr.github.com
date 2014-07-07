@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>A Pelican Blog</title><link href="http://rushiagr.github.io/" rel="alternate"></link><link href="http://rushiagr.github.io/feeds/.atom.xml" rel="self"></link><id>http://rushiagr.github.io/</id><updated>2014-04-12T00:00:00Z</updated><entry><title>Open Source Puppet - Quick Start</title><link href="http://rushiagr.github.io/blog/2014/04/12/open-source-puppet-quick-start/" rel="alternate"></link><updated>2014-04-12T00:00:00Z</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-04-12:blog/2014/04/12/open-source-puppet-quick-start/</id><summary type="html">&lt;p&gt;This post aims to be your quickest guide to get started with Puppet. We'll be using the open source version of Puppet. An hour of spare time and two Ubuntu machines (physical or virtual doesn't matter) is all that is needed.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Sense, and Simplicity</title><link href="http://rushiagr.github.io/" rel="alternate"></link><link href="http://rushiagr.github.io/feeds/.atom.xml" rel="self"></link><id>http://rushiagr.github.io/</id><updated>2014-04-12T00:00:00+05:30</updated><entry><title>Open Source Puppet - Quick Start</title><link href="http://rushiagr.github.io/blog/2014/04/12/open-source-puppet-quick-start/" rel="alternate"></link><updated>2014-04-12T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-04-12:blog/2014/04/12/open-source-puppet-quick-start/</id><summary type="html">&lt;p&gt;This post aims to be your quickest guide to get started with Puppet. We'll be using the open source version of Puppet. An hour of spare time and two Ubuntu machines (physical or virtual doesn't matter) is all that is needed.&lt;/p&gt;
 &lt;!-- more --&gt;
 
 &lt;h2&gt;Quick Introduction&lt;/h2&gt;
@@ -242,7 +242,7 @@ Around 80 pages long, it covers almost every aspect of basic Puppet. The only pr
 
 &lt;p&gt;On both master and slave:
     sudo rm -r /var/lib/puppet/ssl 
-    sudo service puppet restart&lt;/p&gt;</summary><category term=""></category></entry><entry><title>OpenStack in an hour with DevStack</title><link href="http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack/" rel="alternate"></link><updated>2014-04-03T00:00:00Z</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-04-03:blog/2014/04/03/openstack-in-an-hour-with-devstack/</id><summary type="html">&lt;p&gt;So you found out a cool new technology "OpenStack" and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. &lt;a href="http://devstack.org"&gt;DevStack&lt;/a&gt; is your friend-in-need. No, don't click that hyperlink just yet :)&lt;/p&gt;
+    sudo service puppet restart&lt;/p&gt;</summary><category term=""></category></entry><entry><title>OpenStack in an hour with DevStack</title><link href="http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack/" rel="alternate"></link><updated>2014-04-03T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-04-03:blog/2014/04/03/openstack-in-an-hour-with-devstack/</id><summary type="html">&lt;p&gt;So you found out a cool new technology "OpenStack" and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. &lt;a href="http://devstack.org"&gt;DevStack&lt;/a&gt; is your friend-in-need. No, don't click that hyperlink just yet :)&lt;/p&gt;
 &lt;!--more--&gt;
 
 &lt;p&gt;To put it in a sentence, DevStack is "OpenStack in a box". You just need a popular Linux based distribution with 2GB RAM and you're all set to start. DevStack is basically a set of scripts which will install all the important OpenStack services in your computer. For this, it will first download all the essential packages, pull in the OpenStack code from various OpenStack projects, and set everything up for you to try out all of it.&lt;/p&gt;
@@ -381,7 +381,7 @@ Around 80 pages long, it covers almost every aspect of basic Puppet. The only pr
 &lt;p&gt;This post is written keeping in mind that it will be consumed by a newbie to OpenStack development. If you are one of the one benefitting from this guide, I would love it if you can provide me with suggestions to improve this post, and any feedback you have about it.&lt;/p&gt;
 &lt;p&gt;Now you can go to the &lt;a href="http://devstack.org"&gt;DevStack&lt;/a&gt; website :)&lt;/p&gt;
 &lt;p&gt;Cheers!
-Rushi&lt;/p&gt;</summary><category term=""></category></entry><entry><title>MySQL Cheat Sheet</title><link href="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/" rel="alternate"></link><updated>2014-03-31T00:00:00Z</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-03-31:blog/2014/03/31/mysql-cheat-sheet/</id><summary type="html">&lt;p&gt;Databases are so important, yet almost all the time I need to work with it, I find that I have already forgotten all the syntax! So here I am writing down a quick cheat sheet to get me up and running when I'm waking up from slumber. I hope this will help atleast one other guy on this planet.&lt;/p&gt;
+Rushi&lt;/p&gt;</summary><category term=""></category></entry><entry><title>MySQL Cheat Sheet</title><link href="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/" rel="alternate"></link><updated>2014-03-31T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-03-31:blog/2014/03/31/mysql-cheat-sheet/</id><summary type="html">&lt;p&gt;Databases are so important, yet almost all the time I need to work with it, I find that I have already forgotten all the syntax! So here I am writing down a quick cheat sheet to get me up and running when I'm waking up from slumber. I hope this will help atleast one other guy on this planet.&lt;/p&gt;
 &lt;!-- more --&gt;
 
 &lt;p&gt;I use mostly Ubuntu, so some of the commands might be Ubuntu specific.&lt;/p&gt;
@@ -583,7 +583,7 @@ Count the number of rows in a table:&lt;/p&gt;
 
 &lt;p&gt;The End!&lt;/p&gt;
 &lt;p&gt;Comments/suggestions/feedback? Please feel free to comment and I'll make sure I acknowledge them to the fullest.&lt;/p&gt;
-&lt;p&gt;Cheers!&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Playing around with Cinder multi-backend</title><link href="http://rushiagr.github.io/blog/2014/01/16/playing-around-with-cinder-multi-backend/" rel="alternate"></link><updated>2014-01-16T00:00:00Z</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-01-16:blog/2014/01/16/playing-around-with-cinder-multi-backend/</id><summary type="html">&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature -- multi-backends
+&lt;p&gt;Cheers!&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Playing around with Cinder multi-backend</title><link href="http://rushiagr.github.io/blog/2014/01/16/playing-around-with-cinder-multi-backend/" rel="alternate"></link><updated>2014-01-16T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-01-16:blog/2014/01/16/playing-around-with-cinder-multi-backend/</id><summary type="html">&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature -- multi-backends
 with filter scheduler. So now you can have more than one storage boxes for block storage
 and manage them with one Cinder deployment. Here, I'm going to test it out using our 
 favourite method -- trying it out on DevStack!&lt;/p&gt;
@@ -934,7 +934,7 @@ Let's throw some discrimination at these backends. I'll create two volume types:
 
 
 &lt;p&gt;Done :)&lt;/p&gt;
-&lt;p&gt;Cheers!&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Quick Start: Linux Logical Volume Manager</title><link href="http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/" rel="alternate"></link><updated>2014-01-14T00:00:00Z</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-01-14:blog/2014/01/14/quick-start-linux-logical-volume-manager/</id><summary type="html">&lt;p&gt;While installing the latest Ubuntu OS on your computer, you will see that 
+&lt;p&gt;Cheers!&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Quick Start: Linux Logical Volume Manager</title><link href="http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/" rel="alternate"></link><updated>2014-01-14T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-01-14:blog/2014/01/14/quick-start-linux-logical-volume-manager/</id><summary type="html">&lt;p&gt;While installing the latest Ubuntu OS on your computer, you will see that 
 you can install the OS using LVM (Logical Volume Manager) utility. Ever wonder what is it?
 LVM (Logical Volume Manager) is that fantastic utility for storage administration.
 It provide the users with abilities which were not possible with raw disks.
@@ -1056,7 +1056,7 @@ remove all the physical, logical volumes/volume groups created over them, let's 
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Cheers!&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Installing OpenID plugin for MediaWiki</title><link href="http://rushiagr.github.io/blog/2014/01/12/installing-openid-plugin-for-mediawiki/" rel="alternate"></link><updated>2014-01-12T00:00:00Z</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-01-12:blog/2014/01/12/installing-openid-plugin-for-mediawiki/</id><summary type="html">&lt;p&gt;This post is about setting up your wiki such that their users access the wiki
+&lt;p&gt;Cheers!&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Installing OpenID plugin for MediaWiki</title><link href="http://rushiagr.github.io/blog/2014/01/12/installing-openid-plugin-for-mediawiki/" rel="alternate"></link><updated>2014-01-12T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-01-12:blog/2014/01/12/installing-openid-plugin-for-mediawiki/</id><summary type="html">&lt;p&gt;This post is about setting up your wiki such that their users access the wiki
 only via an OpenID provider login (e.g. Google or Facebook login). This post assumes 
 MediaWiki is already installed.&lt;/p&gt;
 &lt;!--more--&gt;
@@ -1166,7 +1166,7 @@ configuration options, see &lt;a href="http://www.mediawiki.org/wiki/Extension:O
 
 &lt;p&gt;Don't forget to comment if you find the information presented here is outdated, or is not working for you.&lt;/p&gt;
 &lt;p&gt;Cheers,
-Rushi&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Bye bye 2013. Welcome 2014</title><link href="http://rushiagr.github.io/blog/2014/01/01/bye-bye-2013-welcome-2014/" rel="alternate"></link><updated>2014-01-01T00:00:00Z</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-01-01:blog/2014/01/01/bye-bye-2013-welcome-2014/</id><summary type="html">&lt;p&gt;How year 2013 fared for me, and my plans for 2014.&lt;/p&gt;
+Rushi&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Bye bye 2013. Welcome 2014</title><link href="http://rushiagr.github.io/blog/2014/01/01/bye-bye-2013-welcome-2014/" rel="alternate"></link><updated>2014-01-01T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-01-01:blog/2014/01/01/bye-bye-2013-welcome-2014/</id><summary type="html">&lt;p&gt;How year 2013 fared for me, and my plans for 2014.&lt;/p&gt;
 &lt;!--more--&gt;
 
 &lt;p&gt;Mixed bag of a year. Some pretty hard decisions were made by me. I left the job I loved so much -- joined Amazon,
@@ -1212,7 +1212,7 @@ I made a mental note for myself that I am going to work for Amazon for 6 months 
 &lt;h4&gt;Final goal, plus some resolutions&lt;/h4&gt;
 &lt;p&gt;Become expert in OpenStack. Implement and popularize a couple side projects (i.e. get people to love it). Lose weight. Do a simple workout daily.&lt;/p&gt;
 &lt;p&gt;All in all, a decent year. Not as good as I wanted it to be, but definitely better than the last one.&lt;/p&gt;
-&lt;p&gt;Cheers!&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Linux Screens in DevStack</title><link href="http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/" rel="alternate"></link><updated>2013-06-05T00:00:00Z</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2013-06-05:blog/2013/06/05/linux-screens-in-devstack/</id><summary type="html">&lt;p&gt;This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.&lt;/p&gt;
+&lt;p&gt;Cheers!&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Linux Screens in DevStack</title><link href="http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/" rel="alternate"></link><updated>2013-06-05T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2013-06-05:blog/2013/06/05/linux-screens-in-devstack/</id><summary type="html">&lt;p&gt;This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.&lt;/p&gt;
 &lt;!--more--&gt;
 
 &lt;p&gt;In a DevStack environment, all the processes run under something special in Linux, called as a &lt;code&gt;screen&lt;/code&gt;. For now, you can think of a ‘screen’ as a terminal running inside a terminal, with the special property that when you close your current terminal, your ‘screens’ will not actually die, so that you can reconnect to them when you connect to the Linux system through another terminal again! Now that should give you a hint why people use screens :)&lt;/p&gt;
@@ -1265,7 +1265,7 @@ I made a mental note for myself that I am going to work for Amazon for 6 months 
 
 
 &lt;p&gt;Cheers!&lt;/p&gt;
-&lt;p&gt;-Rushi Agrawal&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Cinder on DevStack - Quick Start</title><link href="http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/" rel="alternate"></link><updated>2013-05-27T00:00:00Z</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2013-05-27:blog/2013/05/27/cinder-on-devstack-quick-start/</id><summary type="html">&lt;p&gt;This blog post covers all the important commands for OpenStack Cinder - The block storage project.
+&lt;p&gt;-Rushi Agrawal&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Cinder on DevStack - Quick Start</title><link href="http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/" rel="alternate"></link><updated>2013-05-27T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2013-05-27:blog/2013/05/27/cinder-on-devstack-quick-start/</id><summary type="html">&lt;p&gt;This blog post covers all the important commands for OpenStack Cinder - The block storage project.
 Although this guide is written based on DevStack, it will work with actual deployment of OpenStack
 cloud also (except the DevStack/Linux specific bits).&lt;/p&gt;
 &lt;!--more--&gt;
@@ -1707,7 +1707,7 @@ or download one!&lt;/p&gt;
 
 &lt;h3&gt;More features&lt;/h3&gt;
 &lt;p&gt;(Will update shortly)&lt;/p&gt;
-&lt;p&gt;Cheers!&lt;/p&gt;</summary><category term=""></category></entry><entry><title>OpenStack Tempest quick start with DevStack</title><link href="http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/" rel="alternate"></link><updated>2013-03-20T00:00:00Z</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2013-03-20:blog/2013/03/20/openstack-tempest-quick-start-with-devstack/</id><summary type="html">&lt;p&gt;UPDATE(April 2014): Now when you set up DevStack, Tempest is automatically set up for you.&lt;/p&gt;
+&lt;p&gt;Cheers!&lt;/p&gt;</summary><category term=""></category></entry><entry><title>OpenStack Tempest quick start with DevStack</title><link href="http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/" rel="alternate"></link><updated>2013-03-20T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2013-03-20:blog/2013/03/20/openstack-tempest-quick-start-with-devstack/</id><summary type="html">&lt;p&gt;UPDATE(April 2014): Now when you set up DevStack, Tempest is automatically set up for you.&lt;/p&gt;
 &lt;p&gt;This quick start guide explains setting up Tempest with a DevStack environment
 for Grizzly release. Most of the information here is taken from
 &lt;a href="http://www.joinfu.com/2012/03/testing-essex-rc1-with-devstack-and-tempest/"&gt;here&lt;/a&gt;, the only difference being this blog post is more recent, and is based on Grizzly.&lt;/p&gt;
@@ -1834,7 +1834,7 @@ environment)&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;And that ladies and gentlemen, is the end! :)&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Git(hub) Cheat Sheet</title><link href="http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet/" rel="alternate"></link><updated>2013-03-19T00:00:00Z</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2013-03-19:blog/2013/03/19/github-cheat-sheet/</id><summary type="html">&lt;p&gt;I am posting my github cheat sheet here. I started writing it as soon as I started
+&lt;p&gt;And that ladies and gentlemen, is the end! :)&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Git(hub) Cheat Sheet</title><link href="http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet/" rel="alternate"></link><updated>2013-03-19T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2013-03-19:blog/2013/03/19/github-cheat-sheet/</id><summary type="html">&lt;p&gt;I am posting my github cheat sheet here. I started writing it as soon as I started
 learning Github and Git. So, some of the content here can appear quite naive. 
 I will try to keep this blog post as updated as I can, and if you find any 
 suggestion, please comment!&lt;/p&gt;
@@ -2052,7 +2052,7 @@ If no output or no error, patch can be applied safely&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://makandracards.com/makandra/527-squash-several-git-commits-into-a-single-commit"&gt;Squash several commits into one single commit&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Checkout a previous commit with SHA commit id cff2580ad7bc16934b72dd9be7463eb090b31d55 from the current branch to a new branch 'neew'&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;checkout&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;neew&lt;/span&gt; &lt;span class="n"&gt;cff2580ad7bc16934b72dd9be7463eb090b31d55&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term=""></category></entry><entry><title>Bye-Bye 2012, Welcome 2013</title><link href="http://rushiagr.github.io/blog/2013/01/02/bye-bye-2012-welcome-2013/" rel="alternate"></link><updated>2013-01-02T00:00:00Z</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2013-01-02:blog/2013/01/02/bye-bye-2012-welcome-2013/</id><summary type="html">&lt;p&gt;Listing down the things which went well for me in 2012, and which didn't, and the plans for upcoming year 2013. Beware: More technical stuff than emotional.&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term=""></category></entry><entry><title>Bye-Bye 2012, Welcome 2013</title><link href="http://rushiagr.github.io/blog/2013/01/02/bye-bye-2012-welcome-2013/" rel="alternate"></link><updated>2013-01-02T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2013-01-02:blog/2013/01/02/bye-bye-2012-welcome-2013/</id><summary type="html">&lt;p&gt;Listing down the things which went well for me in 2012, and which didn't, and the plans for upcoming year 2013. Beware: More technical stuff than emotional.&lt;/p&gt;
 &lt;!--more--&gt;
 
 &lt;h2&gt;Things which went well in 2012&lt;/h2&gt;
@@ -2088,7 +2088,7 @@ If no output or no error, patch can be applied safely&lt;/p&gt;
 &lt;p&gt;Period.&lt;/p&gt;
 &lt;h4&gt;Need to plan breaks too&lt;/h4&gt;
 &lt;p&gt;Realised only the last month that opening facebook, checking out news, and reading articles on Hacker News does not count in a break. A break is not in front of a computer screen. A break is something which gives your strained eyes a rest, especially when you end up spending half of your year staring at a computer screen!&lt;/p&gt;
-&lt;p&gt;PS. The article is for the writer himself. It is okay if you are finding it a bad piece of English text.&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Testing the new blog</title><link href="http://rushiagr.github.io/blog/2012/12/15/testing-the-new-blog/" rel="alternate"></link><updated>2012-12-15T00:00:00Z</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2012-12-15:blog/2012/12/15/testing-the-new-blog/</id><summary type="html">&lt;p&gt;This is a test blog, just to check out some of the basic functionalities of
+&lt;p&gt;PS. The article is for the writer himself. It is okay if you are finding it a bad piece of English text.&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Testing the new blog</title><link href="http://rushiagr.github.io/blog/2012/12/15/testing-the-new-blog/" rel="alternate"></link><updated>2012-12-15T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2012-12-15:blog/2012/12/15/testing-the-new-blog/</id><summary type="html">&lt;p&gt;This is a test blog, just to check out some of the basic functionalities of
 MarkDown. Visit the MarkDown source of this blog post &lt;a href="https://raw.github.com/rushiagr/rushiagr.github.com/source/source/_posts/2012-12-15-testing-the-new-blog.markdown"&gt;here&lt;/a&gt;
 to understand the simplicity with which a post can be written using MarkDown!&lt;/p&gt;
 &lt;!-- more --&gt;
