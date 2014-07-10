@@ -470,8 +470,7 @@ and mount our virtual block device there:</p>
 
 <p>Now you can <code>cd</code> into <code>/tempmount</code> directory, and do whatever you want to do with the new disk -- put some files there,
 or download one!</p>
-<p>Lets wrap up this part. Unmount this volume by <code>umount /tempmount</code>, and log out from the machine by pressing <code>CTRL+D</code> twice, and execute <code>nova volume-detach &lt;volume_id&gt;
-&lt;server_id&gt;</code> to detach this volume. You can now see the 'Attached to' column becomes empty again after detaching.</p>
+<p>Lets wrap up this part. Unmount this volume by <code>umount /tempmount</code>, and log out from the machine by pressing <code>CTRL+D</code> twice, and execute <code>nova volume-detach &lt;server_id&gt; &lt;volume_id&gt;</code> to detach this volume. You can now see the 'Attached to' column becomes empty again after detaching.</p>
 <div class="highlight"><pre><span class="n">stack</span><span class="err">@</span><span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">27</span><span class="o">:/</span><span class="err">$</span> <span class="n">cinder</span> <span class="n">list</span>
 <span class="o">+--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+</span>
 <span class="o">|</span>                  <span class="n">ID</span>                  <span class="o">|</span>   <span class="n">Status</span>  <span class="o">|</span>  <span class="n">Display</span> <span class="n">Name</span> <span class="o">|</span> <span class="n">Size</span> <span class="o">|</span> <span class="n">Volume</span> <span class="n">Type</span> <span class="o">|</span> <span class="n">Bootable</span> <span class="o">|</span>             <span class="n">Attached</span> <span class="n">to</span>              <span class="o">|</span>
