@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Sense, and Simplicity</title><link href="http://rushiagr.github.io/" rel="alternate"></link><link href="http://rushiagr.github.io/feeds/all.atom.xml" rel="self"></link><id>http://rushiagr.github.io/</id><updated>2014-04-12T00:00:00+05:30</updated><entry><title>Open Source Puppet - Quick Start</title><link href="http://rushiagr.github.io/blog/2014/04/12/open-source-puppet-quick-start/" rel="alternate"></link><updated>2014-04-12T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-04-12:blog/2014/04/12/open-source-puppet-quick-start/</id><summary type="html">&lt;p&gt;This post aims to be your quickest guide to get started with Puppet. We'll be using the open source version of Puppet. An hour of spare time and two Ubuntu machines (physical or virtual doesn't matter) is all that is needed.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Sense, and Simplicity</title><link href="http://rushiagr.github.io/" rel="alternate"></link><link href="http://rushiagr.github.io/feeds/all.atom.xml" rel="self"></link><id>http://rushiagr.github.io/</id><updated>2014-08-02T00:00:00+05:30</updated><entry><title>Mounting QCOW2 images</title><link href="http://rushiagr.github.io/blog/2014/08/02/qcow2-mount/" rel="alternate"></link><updated>2014-08-02T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-08-02:blog/2014/08/02/qcow2-mount/</id><summary type="html">&lt;p&gt;Isn't it fun that even before you start a VM out of an image, you can add files to that image, see and edit the directory and file structure of that VM? &lt;/p&gt;
+&lt;p&gt;I wanted to boot a VM out of a disk-image, but how will I know out of the 256 available IPs for that VM, which one actually got assigned? I tried vnc console, but the connection was terribly flaky. Even so, it was felt quite ugly to use an interface when I was trying to move to a keyboard-only (command line) world.  So I just inserted a static IP into the &lt;code&gt;/etc/network/interfaces&lt;/code&gt; file of that image! (I wasn't aware of &lt;code&gt;arp-scan&lt;/code&gt; before I discovered the trick described in this post) &lt;/p&gt;
+&lt;p&gt;We'll mount the image, tweak the filesystem of that image, and then boot the image.&lt;/p&gt;
+&lt;p&gt;Install &lt;code&gt;qemu-utils&lt;/code&gt; and enable &lt;code&gt;ndb&lt;/code&gt; module
+    sudo apt-get install qemu-utils
+    sudo modprobe nbd&lt;/p&gt;
+&lt;p&gt;Use any qcow2 image, and if you don't have any, download a small CirrOS cloud image (around 13MB).
+    wget http://download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img&lt;/p&gt;
+&lt;p&gt;Connect the image to the first nbd device
+    sudo qemu-nbd -c /dev/nbd0 cirros-0.3.2-x86_64-disk.img&lt;/p&gt;
+&lt;p&gt;Mount the image. For nbd0, see all the devices available (&lt;code&gt;/dev/nbd0&amp;lt;some-number-or-string&amp;gt;&lt;/code&gt;) and try attaching to starting from the first one
+    sudo mount /dev/nbd0p1 /mnt&lt;/p&gt;
+&lt;p&gt;Now at /mnt, you can see the complete filesystem of that image, and make necessary changes. You can do all sorts of things -- change &lt;code&gt;sources.list&lt;/code&gt;, &lt;code&gt;/etc/network/interfaces&lt;/code&gt;, put additional files inside the VM for particular users, etc.&lt;/p&gt;
+&lt;p&gt;After you're done, unmount it.
+    sudo umount /mnt&lt;/p&gt;
+&lt;p&gt;And disconnect the loopback device too
+    sudo qemu-nbd -d /dev/nbd0&lt;/p&gt;
+&lt;p&gt;Done!&lt;/p&gt;
+&lt;p&gt;PS: I actually created two functions for mounting and unmounting, so that I don't remember all these commands. Find them &lt;a href="https://github.com/rushiagr/myutils/blob/master/aliases/qcow2-mount.sh"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Credits: Vigneshvar introduced me to &lt;code&gt;qemu-nbd&lt;/code&gt; tool.&lt;/p&gt;</summary><category term="virtualization"></category><category term="tutorial"></category></entry><entry><title>Open Source Puppet - Quick Start</title><link href="http://rushiagr.github.io/blog/2014/04/12/open-source-puppet-quick-start/" rel="alternate"></link><updated>2014-04-12T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-04-12:blog/2014/04/12/open-source-puppet-quick-start/</id><summary type="html">&lt;p&gt;This post aims to be your quickest guide to get started with Puppet. We'll be using the open source version of Puppet. An hour of spare time and two Ubuntu machines (physical or virtual doesn't matter) is all that is needed.&lt;/p&gt;
 &lt;!-- more --&gt;
 
 &lt;h2&gt;Quick Introduction&lt;/h2&gt;

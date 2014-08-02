@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Linux Screens in DevStack</title>
+  <title>Mounting QCOW2 images</title>
   <meta name="author" content="Rushi Agrawal">
 
 
@@ -37,10 +37,10 @@
 
 
 <ul class="main-navigation">
-    <li class="active">
+    <li >
     <a href="http://rushiagr.github.io/category/.html"></a>
     </li>
-    <li >
+    <li class="active">
     <a href="http://rushiagr.github.io/category/tech.html">Tech</a>
     </li>
 </ul></nav>
@@ -49,74 +49,41 @@
 <div>
   <article class="hentry" role="article">
 <header>
-      <h1 class="entry-title">Linux Screens in DevStack</h1>
-      <p class="meta"><time datetime="2013-06-05T00:00:00" pubdate>Wed 05 June 2013</time></p>
+      <h1 class="entry-title">Mounting QCOW2 images</h1>
+      <p class="meta"><time datetime="2014-08-02T00:00:00" pubdate>Sat 02 August 2014</time></p>
 </header>
 
-  <div class="entry-content"><p>This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.</p>
-<!--more-->
-
-<p>In a DevStack environment, all the processes run under something special in Linux, called as a <code>screen</code>. For now, you can think of a ‘screen’ as a terminal running inside a terminal, with the special property that when you close your current terminal, your ‘screens’ will not actually die, so that you can reconnect to them when you connect to the Linux system through another terminal again! Now that should give you a hint why people use screens :)</p>
-<p>Each screen runs a special ‘service’ of OpenStack. So the logs of each service will go to the respective screen. If you created the DevStack environment as a root user, the process of going to a screen is slightly complicated: You first need to become the <code>stack</code> user if you are currently <code>root</code>, and even before that, you need to run this command in most of the cases:</p>
-<div class="highlight"><pre><span class="n">chown</span> <span class="n">stack</span><span class="o">:</span><span class="n">stack</span> <span class="err">`</span><span class="n">readlink</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">self</span><span class="o">/</span><span class="n">fd</span><span class="o">/</span><span class="mi">0</span><span class="err">`</span>
-</pre></div>
-
-
-<p>Else it will produce this error <code>Cannot open your terminal '/dev/pts/2' - please check.</code> , and then you can proceed to run this command to get to the screens:</p>
-<div class="highlight"><pre><span class="n">screen</span> <span class="o">-</span><span class="n">x</span>
-</pre></div>
-
-
-<p>And if you ran the DevStack <code>stack.sh</code> script as a non-root user, you just need to run that last little thingy to see the screens. One more reason why you should run DevStack as a non-root.</p>
-<p>The way to detach from a screen is <code>CTRL+A</code> <code>D</code>, that is, first press <code>CTRL+A</code>, and then press <code>D</code>.</p>
-<h2>Navigating across screens</h2>
-<p>You will see names of all the screens at the bottom of the terminal. The screen on which you currently are bears an asterisk (<code>*</code>) near its name. To move to the right screen, do a <code>CTRL+A</code> <code>N</code>. Keep in mind that you are going to use <code>CTRL+A</code> a lot of times during your adventures with screen. Similar to the command <code>CTRL+A</code> <code>N</code> to move to the right (“next”) screen, to move to the left screen the command is <code>CTRL+A</code> <code>P</code>.</p>
-<p>There is one more way to jump directly to a screen. Lets say you want to directly jump to the fourth screen. You just need to do a <code>CTRL+A</code> <code>4</code>, to go to fourth screen! Wasn’t that easy? But hey! How do I get to the seventeenth screen? Frankly, I don’t know a ‘direct’ way. I do a <code>CTRL+A</code> <code>9</code> once, and <code>CTRL+A</code> <code>N</code> eight more times. :( If you have a better way, please do tell me.</p>
-<p>Navigating inside a screen</p>
-<p>The first and biggest difficulty I faced while tracking an error in the screen logs is the periodic updates in Cinder dumps some lines to the Cinder screens every now and then. So if you have a stack trace of an error on the screen, it will go up and up and up till you can no more see it! Nope, scrolling your mouse up, or pulling the scrollbar up won’t help either (why not try it once :) ).</p>
-<p>Within a few days, I thought “Hey, I’ll just reduce the font of the terminal and I’ll be able to see more lines of screen logs on my screen!”. I knew the command to reduce the font size of the terminal font: <code>CTRL</code>+<code>-</code> (just for the sake of completeness, the command to increase font is <code>CTRL</code>+<code>SHIFT</code>+<code>+</code>). That worked pretty okay upto a point. It actually helps to have logs in small font, as the logs will fit in one line on the screen and will look prettier. But what if I come after say a ten-minute break, and see all my logs are too far up to be able to see even by reducing font size?</p>
-<p>Then I got to know the command which saved a ton of time in my life: The command to actually scroll up and down the screen.</p>
-<p>To scroll up, first press <code>CTRL</code>+<code>[</code>. After that, you can use arrow keys to scroll up and down. You can also use <code>page-up</code> and <code>page-down</code> buttons to scroll one complete page up or down. This isn’t all of it. If you are vim user, you will find that the <code>H</code> <code>J</code> <code>K</code> <code>L</code> will work for for <code>left</code>, <code>down</code>, <code>up</code>, and <code>right</code> respectively. And the last and most convenient thing: once you press <code>CTRL</code> <code>[</code>, that is, once you are in ‘copy mode’, you can then use your mouse scroll wheel too to scroll up and down!! Now that is a perfect delight :)</p>
-<p>To come out of this copy mode (so that you can switch to another screen, and do other such stuff), press <code>]</code> and you are back to normal once again.</p>
-<h2>Some more ‘generic’ screen commands</h2>
-<p>So that you can start playing around with screens outside OpenStack too</p>
-<p>Create a new screen</p>
-<div class="highlight"><pre><span class="n">screen</span>
-</pre></div>
-
-
-<p>To detach from current screen</p>
-<div class="highlight"><pre><span class="n">ctrl</span><span class="o">+</span><span class="n">A</span><span class="p">,</span><span class="n">D</span>
-</pre></div>
-
-
-<p>To reattach to an existing screen</p>
-<div class="highlight"><pre><span class="n">screen</span> <span class="o">-</span><span class="n">rd</span>
-</pre></div>
-
-
-<p>To view all the screens, their states and IDs</p>
-<div class="highlight"><pre><span class="n">screen</span> <span class="o">-</span><span class="n">list</span>
-</pre></div>
-
-
-<p>To kill a screen with id SCREENID</p>
-<div class="highlight"><pre><span class="n">screen</span> <span class="o">-</span><span class="n">X</span> <span class="o">-</span><span class="n">S</span> <span class="n">SCREENID</span> <span class="n">kill</span>
-</pre></div>
-
-
-<p>Cheers!</p>
-<p>-Rushi Agrawal</p></div>
+  <div class="entry-content"><p>Isn't it fun that even before you start a VM out of an image, you can add files to that image, see and edit the directory and file structure of that VM? </p>
+<p>I wanted to boot a VM out of a disk-image, but how will I know out of the 256 available IPs for that VM, which one actually got assigned? I tried vnc console, but the connection was terribly flaky. Even so, it was felt quite ugly to use an interface when I was trying to move to a keyboard-only (command line) world.  So I just inserted a static IP into the <code>/etc/network/interfaces</code> file of that image! (I wasn't aware of <code>arp-scan</code> before I discovered the trick described in this post) </p>
+<p>We'll mount the image, tweak the filesystem of that image, and then boot the image.</p>
+<p>Install <code>qemu-utils</code> and enable <code>ndb</code> module
+    sudo apt-get install qemu-utils
+    sudo modprobe nbd</p>
+<p>Use any qcow2 image, and if you don't have any, download a small CirrOS cloud image (around 13MB).
+    wget http://download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img</p>
+<p>Connect the image to the first nbd device
+    sudo qemu-nbd -c /dev/nbd0 cirros-0.3.2-x86_64-disk.img</p>
+<p>Mount the image. For nbd0, see all the devices available (<code>/dev/nbd0&lt;some-number-or-string&gt;</code>) and try attaching to starting from the first one
+    sudo mount /dev/nbd0p1 /mnt</p>
+<p>Now at /mnt, you can see the complete filesystem of that image, and make necessary changes. You can do all sorts of things -- change <code>sources.list</code>, <code>/etc/network/interfaces</code>, put additional files inside the VM for particular users, etc.</p>
+<p>After you're done, unmount it.
+    sudo umount /mnt</p>
+<p>And disconnect the loopback device too
+    sudo qemu-nbd -d /dev/nbd0</p>
+<p>Done!</p>
+<p>PS: I actually created two functions for mounting and unmounting, so that I don't remember all these commands. Find them <a href="https://github.com/rushiagr/myutils/blob/master/aliases/qcow2-mount.sh">here</a>.</p>
+<p>Credits: Vigneshvar introduced me to <code>qemu-nbd</code> tool.</p></div>
     <footer>
 <p class="meta">
   <span class="byline author vcard">
     Posted by <span class="fn">Rushi Agrawal</span>
   </span>
-<time datetime="2013-06-05T00:00:00" pubdate>Wed 05 June 2013</time>  <span class="categories">
-    <a class="category" href="http://rushiagr.github.io/tag/.html"></a>
+<time datetime="2014-08-02T00:00:00" pubdate>Sat 02 August 2014</time>  <span class="categories">
+    <a class="category" href="http://rushiagr.github.io/tag/virtualization.html">virtualization</a>
+    <a class="category" href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a>
   </span>
 </p><div class="sharing">
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2014/08/02/qcow2-mount/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2014/08/02/qcow2-mount/" >Tweet</a>
   <div class="g-plusone" data-size="medium"></div>
     <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
 </div>    </footer>
@@ -228,9 +195,9 @@
 </script>
 	<script type="text/javascript">
 	  var disqus_shortname = 'rushiagr';
-          var disqus_identifier = '/blog/2013/06/05/linux-screens-in-devstack/';
-          var disqus_url = 'http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/';
-          var disqus_title = 'Linux Screens in DevStack';
+          var disqus_identifier = '/blog/2014/08/02/qcow2-mount/';
+          var disqus_url = 'http://rushiagr.github.io/blog/2014/08/02/qcow2-mount/';
+          var disqus_title = 'Mounting QCOW2 images';
 	  (function() {
 	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
