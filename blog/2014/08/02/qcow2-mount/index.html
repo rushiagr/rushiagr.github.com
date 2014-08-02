@@ -56,20 +56,38 @@
   <div class="entry-content"><p>Isn't it fun that even before you start a VM out of an image, you can add files to that image, see and edit the directory and file structure of that VM? </p>
 <p>I wanted to boot a VM out of a disk-image, but how will I know out of the 256 available IPs for that VM, which one actually got assigned? I tried vnc console, but the connection was terribly flaky. Even so, it was felt quite ugly to use an interface when I was trying to move to a keyboard-only (command line) world.  So I just inserted a static IP into the <code>/etc/network/interfaces</code> file of that image! (I wasn't aware of <code>arp-scan</code> before I discovered the trick described in this post) </p>
 <p>We'll mount the image, tweak the filesystem of that image, and then boot the image.</p>
-<p>Install <code>qemu-utils</code> and enable <code>ndb</code> module
-    sudo apt-get install qemu-utils
-    sudo modprobe nbd</p>
-<p>Use any qcow2 image, and if you don't have any, download a small CirrOS cloud image (around 13MB).
-    wget http://download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img</p>
-<p>Connect the image to the first nbd device
-    sudo qemu-nbd -c /dev/nbd0 cirros-0.3.2-x86_64-disk.img</p>
-<p>Mount the image. For nbd0, see all the devices available (<code>/dev/nbd0&lt;some-number-or-string&gt;</code>) and try attaching to starting from the first one
-    sudo mount /dev/nbd0p1 /mnt</p>
+<p>Install <code>qemu-utils</code> and enable <code>ndb</code> module</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">qemu</span><span class="o">-</span><span class="n">utils</span>
+<span class="n">sudo</span> <span class="n">modprobe</span> <span class="n">nbd</span>
+</pre></div>
+
+
+<p>Use any qcow2 image, and if you don't have any, download a small CirrOS cloud image (around 13MB).</p>
+<div class="highlight"><pre><span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img</span>
+</pre></div>
+
+
+<p>Connect the image to the first nbd device</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">qemu</span><span class="o">-</span><span class="n">nbd</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">nbd0</span> <span class="n">cirros</span><span class="o">-</span><span class="mf">0.3.2</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">disk</span><span class="p">.</span><span class="n">img</span>
+</pre></div>
+
+
+<p>Mount the image. For nbd0, see all the devices available (<code>/dev/nbd0&lt;some-number-or-string&gt;</code>) and try attaching to starting from the first one</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">nbd0p1</span> <span class="o">/</span><span class="n">mnt</span>
+</pre></div>
+
+
 <p>Now at /mnt, you can see the complete filesystem of that image, and make necessary changes. You can do all sorts of things -- change <code>sources.list</code>, <code>/etc/network/interfaces</code>, put additional files inside the VM for particular users, etc.</p>
-<p>After you're done, unmount it.
-    sudo umount /mnt</p>
-<p>And disconnect the loopback device too
-    sudo qemu-nbd -d /dev/nbd0</p>
+<p>After you're done, unmount it.</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">umount</span> <span class="o">/</span><span class="n">mnt</span>
+</pre></div>
+
+
+<p>And disconnect the loopback device too</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">qemu</span><span class="o">-</span><span class="n">nbd</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">nbd0</span>
+</pre></div>
+
+
 <p>Done!</p>
 <p>PS: I actually created two functions for mounting and unmounting, so that I don't remember all these commands. Find them <a href="https://github.com/rushiagr/myutils/blob/master/aliases/qcow2-mount.sh">here</a>.</p>
 <p>Credits: Vigneshvar introduced me to <code>qemu-nbd</code> tool.</p></div>
