@@ -62,9 +62,12 @@
 </pre></div>
 
 
-<p>Export http and https proxy variables
-    export http_proxy=<your-http-proxy>
-    export https_proxy=<your-https-proxy></p>
+<p>Export http and https proxy variables</p>
+<div class="highlight"><pre><span class="n">export</span> <span class="n">http_proxy</span><span class="o">=&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">http</span><span class="o">-</span><span class="n">proxy</span><span class="o">&gt;</span>
+<span class="n">export</span> <span class="n">https_proxy</span><span class="o">=&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">https</span><span class="o">-</span><span class="n">proxy</span><span class="o">&gt;</span>
+</pre></div>
+
+
 <p>Now, you will need to export <code>no_proxy</code> environment variable. This environment variable should contain localhost, as well as the IP your current machine has got. Say your current machine has IP <code>12.34.56.78</code>:</p>
 <div class="highlight"><pre><span class="n">export</span> <span class="n">no_proxy</span><span class="o">=</span><span class="mf">127.0.0.1</span><span class="p">,</span><span class="mf">12.34.56.78</span>
 </pre></div>
