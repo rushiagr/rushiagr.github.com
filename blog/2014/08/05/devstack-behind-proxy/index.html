@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Bye-Bye 2012, Welcome 2013</title>
+  <title>DevStack behind proxy</title>
   <meta name="author" content="Rushi Agrawal">
 
 
@@ -37,10 +37,10 @@
 
 
 <ul class="main-navigation">
-    <li class="active">
+    <li >
     <a href="http://rushiagr.github.io/category/.html"></a>
     </li>
-    <li >
+    <li class="active">
     <a href="http://rushiagr.github.io/category/tech.html">Tech</a>
     </li>
 </ul></nav>
@@ -49,57 +49,38 @@
 <div>
   <article class="hentry" role="article">
 <header>
-      <h1 class="entry-title">Bye-Bye 2012, Welcome 2013</h1>
-      <p class="meta"><time datetime="2013-01-02T00:00:00" pubdate>Wed 02 January 2013</time></p>
+      <h1 class="entry-title">DevStack behind proxy</h1>
+      <p class="meta"><time datetime="2014-08-05T00:00:00" pubdate>Tue 05 August 2014</time></p>
 </header>
 
-  <div class="entry-content"><p>Listing down the things which went well for me in 2012, and which didn't, and the plans for upcoming year 2013. Beware: More technical stuff than emotional.</p>
-<!--more-->
+  <div class="entry-content"><p>I have now seen some people struggling to get DevStack working behind proxy. Some, thinking it is a bug in DevStack, have actually posted patches for it too! Here, I'll tell you the simple way to get <code>stack.sh</code> complete succesfully from behind a proxy.</p>
+<p>By default, <code>devstack</code> will clone from the 'actual' OpenStack git repositories, residing at <code>git://git.openstack.org</code>. Some people might face a problem with it, as DevStack uses <code>git</code> protocol to clone the repo. We'll instead use HTTP which is provided by GitHub mirror  (yes, you heard it right. GitHub is just a 'mirror' for OpenStack code, not the primary repository). For this we'll need to set <code>GIT_BASE</code> in <code>localrc</code> as:</p>
+<div class="highlight"><pre><span class="n">GIT_BASE</span><span class="o">=</span><span class="n">http</span><span class="o">:</span><span class="c1">//github.com</span>
+</pre></div>
 
-<h2>Things which went well in 2012</h2>
-<h4>Python</h4>
-<p>Started learning Python at the start of year 2012, early January, and this same language landed me in the job which I absolutely love: working in one of the biggest 'OpenSource' project in the world, written in Python! Getting paid for working on an opensource project is as awesome as it can become for me.</p>
-<h4>The hunger to become different from the rest</h4>
-<p>Gathered a lot of info on how things work in computer industry. Kept myself in contact with various hot topics, opensource projects.</p>
-<h4>The job</h4>
-<p>Not faring too well on this front - the full time job. But still, I would consider I did good enough with regards to the work assigned to me. I, after six months into the job, still goes to office every morning with a thirst to make a difference.</p>
-<h4>Cleanliness</h4>
-<p>Scored much better in the second half. Spent dedicated amount of time each week to keep my room and flat clean and in order.</p>
-<h4>Maintaining a TODO list</h4>
-<p>Started late in the year, but seems a good progress on that front.</p>
-<h2>Things which didn't go that well in 2012</h2>
-<h4>Concentration</h4>
-<p>Still not able to concentrate on one thing for long. Get distracted too easily. Only rarely I sat at one place, focussed on one thing, for more than 50 minutes. Also, the last year's resolution of opening FaceBook only once a day was put in trashcan on in the very first week of January!</p>
-<h4>Not focussed enough on the future direction</h4>
-<p>Poor goal setting. Peeked into a lot of opensource projects, dedicated proper time into none. Opensourced my projects too, but did not work on it much either. Made myself a perfect example of 'naam bade aur darshan chhote' (appearing like an eminent personality, acting like a jerk).</p>
-<h4>Programming contest</h4>
-<p>Only kept in touch. Not solved much problems. This year, need to focus a lot on this front.</p>
-<h4>Time management</h4>
-<p>Never was able to manage time. Was not working on the same thing for even a week. Somewhere in the middle of working on a project, I find out 'hey, this looks cool! Time to try hands on it!'. What about the thingy you were currently working on? Into the TODO list! Such an idiot.</p>
-<h4>Work life balance</h4>
-<p>Went for a toss. Not able to regularise job timings. Started and stopped gym. Started and stopped working on many projects. Completed none. Wasted a heck of a lot of time.</p>
-<h2>Plans for upcoming year</h2>
-<h4>Better planning</h4>
-<p>I need to plan things before acting on it. I would take everything into consideration before jumping into hacking something, and then set a deadline for it. And till that deadline, I would promise I would not digress getting enticed by something which makes my mouth watery.</p>
-<h4>Don't just outright neglect daytime job</h4>
-<p>I agree my daytime job is awesome. But I end up considering the work I do at office as secondary. Need to value it much higher. I concentrate on other projects and aim to complete and polish them. What I did not thought was the work I am doing in my job itself is a project! If I am not faring well in the project on which I work 8 hours a day, how can I expect myself to do good in something I am spending only a fraction of time I spend on the daytime project! And expectedly, none of my projects are in good enough shape to talk about it confidently in public. I need to value OpenStack more. Really.</p>
-<h4>START coding for programming contests</h4>
-<p>Enough of promises, enough of 'From next month I'm gonna do it'. I SHOULD spend a specific time every week for coding for programming contests. Looks like I need to start with solving old problems from CodeChef.com alongwith the editorials provided with them.</p>
-<h4>Facebook once in a day</h4>
-<p>Period.</p>
-<h4>Need to plan breaks too</h4>
-<p>Realised only the last month that opening facebook, checking out news, and reading articles on Hacker News does not count in a break. A break is not in front of a computer screen. A break is something which gives your strained eyes a rest, especially when you end up spending half of your year staring at a computer screen!</p>
-<p>PS. The article is for the writer himself. It is okay if you are finding it a bad piece of English text.</p></div>
+
+<p>Export http and https proxy variables
+    export http_proxy=<your-http-proxy>
+    export https_proxy=<your-https-proxy></p>
+<p>Now, you will need to export <code>no_proxy</code> environment variable. This environment variable should contain localhost, as well as the IP your current machine has got. Say your current machine has IP <code>12.34.56.78</code>:</p>
+<div class="highlight"><pre><span class="n">export</span> <span class="n">no_proxy</span><span class="o">=</span><span class="mf">127.0.0.1</span><span class="p">,</span><span class="mf">12.34.56.78</span>
+</pre></div>
+
+
+<p>After you have exported these three variables, you're free to run <code>./stack.sh</code>, and it should finish successfully.</p>
+<p>Cheers!</p></div>
     <footer>
 <p class="meta">
   <span class="byline author vcard">
     Posted by <span class="fn">Rushi Agrawal</span>
   </span>
-<time datetime="2013-01-02T00:00:00" pubdate>Wed 02 January 2013</time>  <span class="categories">
-    <a class="category" href="http://rushiagr.github.io/tag/.html"></a>
+<time datetime="2014-08-05T00:00:00" pubdate>Tue 05 August 2014</time>  <span class="categories">
+    <a class="category" href="http://rushiagr.github.io/tag/tech.html">tech</a>
+    <a class="category" href="http://rushiagr.github.io/tag/cloud.html">cloud</a>
+    <a class="category" href="http://rushiagr.github.io/tag/openstack.html">openstack</a>
   </span>
 </p><div class="sharing">
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2013/01/02/bye-bye-2012-welcome-2013/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2013/01/02/bye-bye-2012-welcome-2013/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2014/08/05/devstack-behind-proxy/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2014/08/05/devstack-behind-proxy/" >Tweet</a>
   <div class="g-plusone" data-size="medium"></div>
     <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
 </div>    </footer>
@@ -211,9 +192,9 @@
 </script>
 	<script type="text/javascript">
 	  var disqus_shortname = 'rushiagr';
-          var disqus_identifier = '/blog/2013/01/02/bye-bye-2012-welcome-2013/';
-          var disqus_url = 'http://rushiagr.github.io/blog/2013/01/02/bye-bye-2012-welcome-2013/';
-          var disqus_title = 'Bye-Bye 2012, Welcome 2013';
+          var disqus_identifier = '/blog/2014/08/05/devstack-behind-proxy/';
+          var disqus_url = 'http://rushiagr.github.io/blog/2014/08/05/devstack-behind-proxy/';
+          var disqus_title = 'DevStack behind proxy';
 	  (function() {
 	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
