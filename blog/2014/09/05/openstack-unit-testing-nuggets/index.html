@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Sense, and Simplicity</title>
+  <title>OpenStack Unit Testing Nuggets</title>
   <meta name="author" content="Rushi Agrawal">
 
   <link href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
@@ -52,193 +52,115 @@
 </ul></nav>
   <div id="main">
     <div id="content">
-<div class="blog-index">
-  		<article>
+<div>
+  <article class="hentry" role="article">
 <header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2014/09/05/openstack-unit-testing-nuggets/">OpenStack Unit Testing Nuggets</a>
-      </h1>
+      <h1 class="entry-title">OpenStack Unit Testing Nuggets</h1>
       <p class="meta"><time datetime="2014-09-05T00:00:00" pubdate>Fri 05 September 2014</time></p>
 </header>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2014/09/05/openstack-unit-testing-nuggets/">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/">Amazon EC2 API with OpenStack - Developer Quick Start</a>
-      </h1>
-      <p class="meta"><time datetime="2014-08-09T00:00:00" pubdate>Sat 09 August 2014</time></p>
-</header>
+  <div class="entry-content"><p>A small post about little things I found out while running unit tests in
+OpenStack.</p>
+<h2>Unit-testing setup</h2>
+<p>Everybody knows <code>./run_tests.sh</code> is used to run the unit tests of an OpenStack
+project. But, you require to install dependencies before doing it. And
+installing dependencies might not always succeed. So make sure you install
+these packages before running <code>pip install -r requirements.txt</code>:</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span> <span class="n">libssl</span><span class="o">-</span><span class="n">dev</span> <span class="n">libffi</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">python</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxslt1</span><span class="o">-</span><span class="n">dev</span> <span class="n">libpq</span><span class="o">-</span><span class="n">dev</span> <span class="n">python</span><span class="o">-</span><span class="n">mysqldb</span> \
+    <span class="n">libmysqlclient</span><span class="o">-</span><span class="n">dev</span> <span class="n">libvirt</span><span class="o">-</span><span class="n">dev</span>
+</pre></div>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2014/08/05/devstack-behind-proxy/">DevStack behind proxy</a>
-      </h1>
-      <p class="meta"><time datetime="2014-08-05T00:00:00" pubdate>Tue 05 August 2014</time></p>
-</header>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2014/08/05/devstack-behind-proxy/">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2014/08/02/qcow2-mount/">Mounting QCOW2 images</a>
-      </h1>
-      <p class="meta"><time datetime="2014-08-02T00:00:00" pubdate>Sat 02 August 2014</time></p>
-</header>
+<p>Atleast <code>cinder</code> and <code>nova</code> dependencies will get installed properly after
+this.</p>
+<h2>run_tests frequently used commands</h2>
+<p>To force the tests to NOT run in a virtual environment, even if it is present:</p>
+<div class="highlight"><pre><span class="p">.</span><span class="o">/</span><span class="n">run_tests</span><span class="p">.</span><span class="n">sh</span> <span class="o">-</span><span class="n">N</span>
+</pre></div>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2014/08/02/qcow2-mount/">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2014/04/12/open-source-puppet-quick-start/">Open Source Puppet - Quick Start</a>
-      </h1>
-      <p class="meta"><time datetime="2014-04-12T00:00:00" pubdate>Sat 12 April 2014</time></p>
-</header>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2014/04/12/open-source-puppet-quick-start/">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack/">OpenStack in an hour with DevStack</a>
-      </h1>
-      <p class="meta"><time datetime="2014-04-03T00:00:00" pubdate>Thu 03 April 2014</time></p>
-</header>
+<p>Force a clean rebuild of virtual environment</p>
+<div class="highlight"><pre><span class="p">.</span><span class="o">/</span><span class="n">run_tests</span><span class="p">.</span><span class="n">sh</span> <span class="o">-</span><span class="n">f</span>
+</pre></div>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2014/04/03/openstack-in-an-hour-with-devstack/">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/">MySQL Cheat Sheet</a>
-      </h1>
-      <p class="meta"><time datetime="2014-03-31T00:00:00" pubdate>Mon 31 March 2014</time></p>
-</header>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2014/01/16/playing-around-with-cinder-multi-backend/">Playing around with Cinder multi-backend</a>
-      </h1>
-      <p class="meta"><time datetime="2014-01-16T00:00:00" pubdate>Thu 16 January 2014</time></p>
-</header>
+<p>Run only PEP8 checks</p>
+<div class="highlight"><pre><span class="p">.</span><span class="o">/</span><span class="n">run_tests</span><span class="p">.</span><span class="n">sh</span> <span class="o">-</span><span class="n">p</span>
+</pre></div>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2014/01/16/playing-around-with-cinder-multi-backend/">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/">Quick Start: Linux Logical Volume Manager</a>
-      </h1>
-      <p class="meta"><time datetime="2014-01-14T00:00:00" pubdate>Tue 14 January 2014</time></p>
-</header>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2014/01/12/installing-openid-plugin-for-mediawiki/">Installing OpenID plugin for MediaWiki</a>
-      </h1>
-      <p class="meta"><time datetime="2014-01-12T00:00:00" pubdate>Sun 12 January 2014</time></p>
-</header>
+<p>Run PEP8 checks only on the files which have been changed since last commit</p>
+<div class="highlight"><pre><span class="p">.</span><span class="o">/</span><span class="n">run_tests</span><span class="p">.</span><span class="n">sh</span> <span class="o">-</span><span class="mi">8</span>
+</pre></div>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2014/01/12/installing-openid-plugin-for-mediawiki/">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/">Linux Screens in DevStack</a>
-      </h1>
-      <p class="meta"><time datetime="2013-06-05T00:00:00" pubdate>Wed 05 June 2013</time></p>
-</header>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2013/06/05/linux-screens-in-devstack/">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/">Cinder on DevStack - Quick Start</a>
-      </h1>
-      <p class="meta"><time datetime="2013-05-27T00:00:00" pubdate>Mon 27 May 2013</time></p>
-</header>
+<p>Run all tests from a specific file only, e.g. nova/tests/test_utils.py</p>
+<div class="highlight"><pre><span class="p">.</span><span class="o">/</span><span class="n">run_tests</span><span class="p">.</span><span class="n">sh</span> <span class="n">nova</span><span class="p">.</span><span class="n">tests</span><span class="p">.</span><span class="n">test_utils</span>
+</pre></div>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2013/05/27/cinder-on-devstack-quick-start/">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/">OpenStack Tempest quick start with DevStack</a>
-      </h1>
-      <p class="meta"><time datetime="2013-03-20T00:00:00" pubdate>Wed 20 March 2013</time></p>
-</header>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet/">Git(hub) Cheat Sheet</a>
-      </h1>
-      <p class="meta"><time datetime="2013-03-19T00:00:00" pubdate>Tue 19 March 2013</time></p>
-</header>
+<p>Run all tests of only a specific class inside a test file</p>
+<div class="highlight"><pre><span class="p">.</span><span class="o">/</span><span class="n">run_tests</span><span class="p">.</span><span class="n">sh</span> <span class="n">nova</span><span class="p">.</span><span class="n">tests</span><span class="p">.</span><span class="n">test_utils</span><span class="p">.</span><span class="n">ResourceFilterTestCase</span>
+</pre></div>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2013/03/19/github-cheat-sheet/">Read On &crarr;</a>
-  </footer>
-  		</article>
-<div class="pagination">
 
-  <br />
-</div></div>
+<p>Run only a specific test</p>
+<div class="highlight"><pre><span class="p">.</span><span class="o">/</span><span class="n">run_tests</span><span class="p">.</span><span class="n">sh</span> <span class="n">nova</span><span class="p">.</span><span class="n">tests</span><span class="p">.</span><span class="n">test_utils</span><span class="p">.</span><span class="n">ResourceFilterTestCase</span><span class="p">.</span><span class="n">test_resource_filtering</span>
+</pre></div>
+
+
+<h2>Wildcards while running the tests</h2>
+<p>Frequently you'll find yourself testing only a couple of tests. In such cases,
+a wildcard will save you from typing the whole path of the test. The below
+command will also run <code>test_resource_filtering</code> test:</p>
+<div class="highlight"><pre><span class="p">.</span><span class="o">/</span><span class="n">run_tests</span><span class="p">.</span><span class="n">sh</span> <span class="n">nova</span><span class="p">.</span><span class="n">tests</span><span class="p">.</span><span class="o">*</span><span class="n">resource_filt</span><span class="o">*</span>
+</pre></div>
+
+
+<p>I currently don't know how to make a test work without adding <code>nova.tests</code>
+before it</p>
+<h2>run_tests is not happy</h2>
+<p>Sometimes you'll see running <code>./run_tests.sh</code> can throw a lot of lines of
+ununderstandable gibberish on your screen. In the end it will say <code>testr
+failed</code>, but it won't give an indication of where it failed and why. I have
+seen that this happens due to only one of the following two reasons:</p>
+<ol>
+<li>
+<p><em>Syntax error</em>: There is a syntax error in your code.</p>
+</li>
+<li>
+<p><em>Dependencies outdated</em>: Dependencies in your virtual environment is
+outdated. In such cases, you will need to recreate a virtual environment with
+latest packages.</p>
+</li>
+</ol>
+<p>That's it for now.</p></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">Rushi Agrawal</span>
+  </span>
+<time datetime="2014-09-05T00:00:00" pubdate>Fri 05 September 2014</time>  <span class="categories">
+    <a class="category" href="http://rushiagr.github.io/tag/cloud.html">cloud</a>
+    <a class="category" href="http://rushiagr.github.io/tag/openstack.html">openstack</a>
+    <a class="category" href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a>
+    <a class="category" href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a>
+    <a class="category" href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>
+    <a class="category" href="http://rushiagr.github.io/tag/testing.html">testing</a>
+  </span>
+</p><div class="sharing">
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2014/09/05/openstack-unit-testing-nuggets/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2014/09/05/openstack-unit-testing-nuggets/" >Tweet</a>
+  <div class="g-plusone" data-size="medium"></div>
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
+</div>
 <aside class="sidebar">
   <section>
     <h1>Recent Posts</h1>
@@ -319,7 +241,7 @@
 </aside>    </div>
   </div>
   <footer role="contentinfo"><p>
-    Copyright &copy;  2013-2014  - Rushi Agrawal -
+    Copyright &copy;  2012-2014  - Rushi Agrawal -
   <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
 </p></footer>
     <script type="text/javascript">
@@ -342,6 +264,9 @@
 </script>
 	<script type="text/javascript">
 	  var disqus_shortname = 'rushiagr';
+          var disqus_identifier = '/blog/2014/09/05/openstack-unit-testing-nuggets/';
+          var disqus_url = 'http://rushiagr.github.io/blog/2014/09/05/openstack-unit-testing-nuggets/';
+          var disqus_title = 'OpenStack Unit Testing Nuggets';
 	  (function() {
 	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
