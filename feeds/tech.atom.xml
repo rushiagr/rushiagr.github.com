@@ -2,11 +2,12 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Sense, and Simplicity</title><link href="http://rushiagr.github.io/" rel="alternate"></link><link href="http://rushiagr.github.io/feeds/tech.atom.xml" rel="self"></link><id>http://rushiagr.github.io/</id><updated>2014-09-05T00:00:00+05:30</updated><entry><title>iSCSI administration on Ubuntu - Quick Start</title><link href="http://rushiagr.github.io/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/" rel="alternate"></link><updated>2014-09-05T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-09-05:blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/</id><summary type="html">&lt;p&gt;This post get's you started with iSCSI administration on an Ubuntu machine.
 Although I have used Ubuntu Trusty (14.04) version, it should work with Precise
 (12.04) too, with the latest packages.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Prerequisites&lt;/em&gt;: Make sure you have atleast a little idea of what these terms
+&lt;h4&gt;Prerequisites&lt;/h4&gt;
+&lt;p&gt;Make sure you have atleast a little idea of what these terms
 mean: iSCSI, LUN, IQN, initiator, target and portal. Google and wikipedia are
 your friends.&lt;/p&gt;
-&lt;p&gt;A quick summary:
-There are two parts of iSCSI communication - initiator and target. So let's take an example. There is a storage server in your
+&lt;h4&gt;A quick summary:&lt;/h4&gt;
+&lt;p&gt;There are two parts of iSCSI communication - initiator and target. So let's take an example. There is a storage server in your
 company, where you have a 'drive' for your team. The storage server is the
 'target', and your laptop, where you'll mount the drive to access it's contents
 is the 'initiator'. In other words, target is like a 'server' which stores
@@ -26,6 +27,7 @@ user.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;h4&gt;Initialize logical volume&lt;/h4&gt;
 &lt;p&gt;Create a file of 1GB, create a volume group over it, and then over it, create a
 400MB logical volume, and see if it got created or not&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;ra&lt;/span&gt;&lt;span class="o"&gt;:~&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;truncate&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="n"&gt;G&lt;/span&gt; &lt;span class="n"&gt;backingfile&lt;/span&gt;
@@ -43,6 +45,7 @@ user.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;h4&gt;Target administration&lt;/h4&gt;
 &lt;p&gt;Now let's create a target, with target ID 1, and give it an IQN (iSCSI
 Qualified Name) &lt;code&gt;iqn.2001-04.example.com:your.first.iscsi.target&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;tgtadm&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;lld&lt;/span&gt; &lt;span class="n"&gt;iscsi&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;op&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;mode&lt;/span&gt; &lt;span class="n"&gt;target&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;tid&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt; &lt;span class="n"&gt;iqn&lt;/span&gt;&lt;span class="mf"&gt;.2001&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;04.&lt;/span&gt;&lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;first&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iscsi&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;
@@ -139,6 +142,7 @@ directly to the target like this:&lt;/p&gt;
 &lt;p&gt;We're done with the 'target' side now. You can check, using &lt;code&gt;netstat&lt;/code&gt; that port
 3260, the default port, is now open. Note that all our commands so far started with
 &lt;code&gt;tgtadm&lt;/code&gt;, i.e., the target administration utility.&lt;/p&gt;
+&lt;h4&gt;Initiator administration&lt;/h4&gt;
 &lt;p&gt;Now let's start from the 'initiator' end. We'll behave as if we're a client
 trying to connect to the server -- the target.&lt;/p&gt;
 &lt;p&gt;Discover all the targets on our local machine (&lt;code&gt;127.0.0.1&lt;/code&gt;).&lt;/p&gt;
@@ -227,7 +231,10 @@ mount it at some location to start using it!&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Aaand done!&lt;/p&gt;
+&lt;h4&gt;Destruction&lt;/h4&gt;
+&lt;p&gt;The simplest way to get rid of all the things you've created is to unmount the
+device, and restart the system.&lt;/p&gt;
+&lt;p&gt;Aaand done! &lt;/p&gt;
 &lt;p&gt;Cheers!&lt;/p&gt;</summary><category term="cloud"></category><category term="openstack"></category><category term="tutorial"></category><category term="quickstart"></category><category term="cheatsheet"></category><category term="lvm"></category><category term="iscsi"></category><category term="ubuntu"></category></entry><entry><title>OpenStack Unit Testing Nuggets</title><link href="http://rushiagr.github.io/blog/2014/09/05/openstack-unit-testing-nuggets/" rel="alternate"></link><updated>2014-09-05T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2014-09-05:blog/2014/09/05/openstack-unit-testing-nuggets/</id><summary type="html">&lt;p&gt;A small post about little things I found out while running unit tests in
 OpenStack.&lt;/p&gt;
 &lt;h2&gt;Unit-testing setup&lt;/h2&gt;

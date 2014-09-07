@@ -62,11 +62,12 @@
   <div class="entry-content"><p>This post get's you started with iSCSI administration on an Ubuntu machine.
 Although I have used Ubuntu Trusty (14.04) version, it should work with Precise
 (12.04) too, with the latest packages.</p>
-<p><em>Prerequisites</em>: Make sure you have atleast a little idea of what these terms
+<h4>Prerequisites</h4>
+<p>Make sure you have atleast a little idea of what these terms
 mean: iSCSI, LUN, IQN, initiator, target and portal. Google and wikipedia are
 your friends.</p>
-<p>A quick summary:
-There are two parts of iSCSI communication - initiator and target. So let's take an example. There is a storage server in your
+<h4>A quick summary:</h4>
+<p>There are two parts of iSCSI communication - initiator and target. So let's take an example. There is a storage server in your
 company, where you have a 'drive' for your team. The storage server is the
 'target', and your laptop, where you'll mount the drive to access it's contents
 is the 'initiator'. In other words, target is like a 'server' which stores
@@ -86,6 +87,7 @@ user.</p>
 </pre></div>
 
 
+<h4>Initialize logical volume</h4>
 <p>Create a file of 1GB, create a volume group over it, and then over it, create a
 400MB logical volume, and see if it got created or not</p>
 <div class="highlight"><pre><span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">truncate</span> <span class="o">--</span><span class="n">size</span> <span class="mi">1</span><span class="n">G</span> <span class="n">backingfile</span>
@@ -103,6 +105,7 @@ user.</p>
 </pre></div>
 
 
+<h4>Target administration</h4>
 <p>Now let's create a target, with target ID 1, and give it an IQN (iSCSI
 Qualified Name) <code>iqn.2001-04.example.com:your.first.iscsi.target</code>:</p>
 <div class="highlight"><pre><span class="n">tgtadm</span> <span class="o">--</span><span class="n">lld</span> <span class="n">iscsi</span> <span class="o">--</span><span class="n">op</span> <span class="n">new</span> <span class="o">--</span><span class="n">mode</span> <span class="n">target</span> <span class="o">--</span><span class="n">tid</span> <span class="mi">1</span> <span class="o">-</span><span class="n">T</span> <span class="n">iqn</span><span class="mf">.2001</span><span class="o">-</span><span class="mf">04.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">your</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">iscsi</span><span class="p">.</span><span class="n">target</span>
@@ -199,6 +202,7 @@ directly to the target like this:</p>
 <p>We're done with the 'target' side now. You can check, using <code>netstat</code> that port
 3260, the default port, is now open. Note that all our commands so far started with
 <code>tgtadm</code>, i.e., the target administration utility.</p>
+<h4>Initiator administration</h4>
 <p>Now let's start from the 'initiator' end. We'll behave as if we're a client
 trying to connect to the server -- the target.</p>
 <p>Discover all the targets on our local machine (<code>127.0.0.1</code>).</p>
@@ -287,7 +291,10 @@ mount it at some location to start using it!</p>
 </pre></div>
 
 
-<p>Aaand done!</p>
+<h4>Destruction</h4>
+<p>The simplest way to get rid of all the things you've created is to unmount the
+device, and restart the system.</p>
+<p>Aaand done! </p>
 <p>Cheers!</p></div>
     <footer>
 <p class="meta">
