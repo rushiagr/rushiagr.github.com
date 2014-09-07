@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>iSCSI administration on Ubuntu - Quick Start</title>
+  <meta name="author" content="Rushi Agrawal">
+
+  <link href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
+        title="Sense, and Simplicity RSS Feed" />
+
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="http://rushiagr.github.io/favicon.png" rel="icon">
+  <link href="http://rushiagr.github.io/theme/css/main.css" media="screen, projection"
+        rel="stylesheet" type="text/css">
+  <script src="http://rushiagr.github.io/theme/js/modernizr-2.0.js"></script>
+  <script src="http://rushiagr.github.io/theme/js/ender.js"></script>
+  <script src="http://rushiagr.github.io/theme/js/octopress.js" type="text/javascript"></script>
+
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <header role="banner"><hgroup>
+  <h1><a href="http://rushiagr.github.io/">Sense, and Simplicity</a></h1>
+</hgroup></header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://rushiagr.github.io/feeds/all.rss.xml" rel="subscribe-rss">RSS</a></li>
+</ul>
+
+
+
+<ul class="main-navigation">
+    <li >
+    <a href="http://rushiagr.github.io/category/others.html">Others</a>
+    </li>
+    <li class="active">
+    <a href="http://rushiagr.github.io/category/tech.html">Tech</a>
+    </li>
+    <li >
+    <a href="http://rushiagr.github.io/category/thoughts.html">Thoughts</a>
+    </li>
+</ul></nav>
+  <div id="main">
+    <div id="content">
+<div>
+  <article class="hentry" role="article">
+<header>
+      <h1 class="entry-title">iSCSI administration on Ubuntu - Quick Start</h1>
+      <p class="meta"><time datetime="2014-09-05T00:00:00" pubdate>Fri 05 September 2014</time></p>
+</header>
+
+  <div class="entry-content"><p>This post get's you started with iSCSI administration on an Ubuntu machine.
+Although I have used Ubuntu Trusty (14.04) version, it should work with Precise
+(12.04) too, with the latest packages.</p>
+<p><em>Prerequisites</em>: Make sure you have atleast a little idea of what these terms
+mean: iSCSI, LUN, IQN, initiator, target and portal. Google and wikipedia are
+your friends.</p>
+<p>A quick summary:
+There are two parts of iSCSI communication - initiator and target. So let's take an example. There is a storage server in your
+company, where you have a 'drive' for your team. The storage server is the
+'target', and your laptop, where you'll mount the drive to access it's contents
+is the 'initiator'. In other words, target is like a 'server' which stores
+data, and allows initiators (think 'clients') to connect to it.</p>
+<p>In this short hands-on introduction, we'll use the same Ubuntu machine as
+target as well as initiator. We can use a file as the storage behind the
+target, but this post also shows how to use LVM logical volume as the backing
+store for the iSCSI target. </p>
+<p>Actually, we'll back the logical volume (LV) with a file, as shown in
+<a href="http://www.rushiagr.com/blog/2014/01/14/quick-start-linux-logical-volume-manager/">this</a>,
+so essentially we're just using 'file as a backing store for targets' but in a
+roundabout way :)</p>
+<p>OK, let's get started. Make sure you execute all the following commands as root
+user.</p>
+<p>First install the required dependencies</p>
+<div class="highlight"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">lvm2</span> <span class="n">tgt</span> <span class="n">open</span><span class="o">-</span><span class="n">iscsi</span>
+</pre></div>
+
+
+<p>Create a file of 1GB, create a volume group over it, and then over it, create a
+400MB logical volume, and see if it got created or not</p>
+<div class="highlight"><pre><span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">truncate</span> <span class="o">--</span><span class="n">size</span> <span class="mi">1</span><span class="n">G</span> <span class="n">backingfile</span>
+<span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">sudo</span> <span class="n">losetup</span> <span class="o">--</span><span class="n">find</span> <span class="o">--</span><span class="n">show</span> <span class="n">backingfile</span> 
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span>
+<span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">sudo</span> <span class="n">vgcreate</span> <span class="n">myvg</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span>
+  <span class="n">No</span> <span class="n">physical</span> <span class="n">volume</span> <span class="n">label</span> <span class="n">read</span> <span class="n">from</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span>
+  <span class="n">Physical</span> <span class="n">volume</span> <span class="s">&quot;/dev/loop0&quot;</span> <span class="n">successfully</span> <span class="n">created</span>
+  <span class="n">Volume</span> <span class="n">group</span> <span class="s">&quot;myvg&quot;</span> <span class="n">successfully</span> <span class="n">created</span>
+<span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">sudo</span> <span class="n">lvcreate</span> <span class="o">--</span><span class="n">size</span> <span class="mi">400</span><span class="n">M</span> <span class="o">--</span><span class="n">name</span> <span class="n">mylv</span> <span class="n">myvg</span>
+  <span class="n">Logical</span> <span class="n">volume</span> <span class="s">&quot;mylv&quot;</span> <span class="n">created</span>
+<span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">lvs</span>
+  <span class="n">LV</span>   <span class="n">VG</span>   <span class="n">Attr</span>      <span class="n">LSize</span>   <span class="n">Pool</span> <span class="n">Origin</span> <span class="n">Data</span><span class="o">%</span>  <span class="n">Move</span> <span class="n">Log</span> <span class="n">Copy</span><span class="o">%</span> <span class="n">Convert</span>
+  <span class="n">mylv</span> <span class="n">myvg</span> <span class="o">-</span><span class="n">wi</span><span class="o">-</span><span class="n">a</span><span class="o">----</span> <span class="mf">400.00</span><span class="n">m</span>
+</pre></div>
+
+
+<p>Now let's create a target, with target ID 1, and give it an IQN (iSCSI
+Qualified Name) <code>iqn.2001-04.example.com:your.first.iscsi.target</code>:</p>
+<div class="highlight"><pre><span class="n">tgtadm</span> <span class="o">--</span><span class="n">lld</span> <span class="n">iscsi</span> <span class="o">--</span><span class="n">op</span> <span class="n">new</span> <span class="o">--</span><span class="n">mode</span> <span class="n">target</span> <span class="o">--</span><span class="n">tid</span> <span class="mi">1</span> <span class="o">-</span><span class="n">T</span> <span class="n">iqn</span><span class="mf">.2001</span><span class="o">-</span><span class="mf">04.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">your</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">iscsi</span><span class="p">.</span><span class="n">target</span>
+</pre></div>
+
+
+<p>List the target, see it's properties:</p>
+<div class="highlight"><pre><span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">tgtadm</span> <span class="o">--</span><span class="n">lld</span> <span class="n">iscsi</span> <span class="o">--</span><span class="n">op</span> <span class="n">show</span> <span class="o">--</span><span class="n">mode</span> <span class="n">target</span>
+<span class="n">Target</span> <span class="mi">1</span><span class="o">:</span> <span class="n">iqn</span><span class="mf">.2001</span><span class="o">-</span><span class="mf">04.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">your</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">iscsi</span><span class="p">.</span><span class="n">target</span>
+    <span class="n">System</span> <span class="n">information</span><span class="o">:</span>
+        <span class="nl">Driver:</span> <span class="n">iscsi</span>
+        <span class="nl">State:</span> <span class="n">ready</span>
+    <span class="n">I_T</span> <span class="n">nexus</span> <span class="n">information</span><span class="o">:</span>
+    <span class="n">LUN</span> <span class="n">information</span><span class="o">:</span>
+        <span class="nl">LUN:</span> <span class="mi">0</span>
+            <span class="nl">Type:</span> <span class="n">controller</span>
+            <span class="n">SCSI</span> <span class="n">ID</span><span class="o">:</span> <span class="n">IET</span>     <span class="mo">00010000</span>
+            <span class="n">SCSI</span> <span class="n">SN</span><span class="o">:</span> <span class="n">beaf10</span>
+            <span class="nl">Size:</span> <span class="mi">0</span> <span class="n">MB</span><span class="p">,</span> <span class="n">Block</span> <span class="n">size</span><span class="o">:</span> <span class="mi">1</span>
+            <span class="nl">Online:</span> <span class="n">Yes</span>
+            <span class="n">Removable</span> <span class="n">media</span><span class="o">:</span> <span class="n">No</span>
+            <span class="n">Prevent</span> <span class="n">removal</span><span class="o">:</span> <span class="n">No</span>
+            <span class="nl">Readonly:</span> <span class="n">No</span>
+            <span class="nl">SWP:</span> <span class="n">No</span>
+            <span class="n">Thin</span><span class="o">-</span><span class="n">provisioning</span><span class="o">:</span> <span class="n">No</span>
+            <span class="n">Backing</span> <span class="n">store</span> <span class="n">type</span><span class="o">:</span> <span class="n">null</span>
+            <span class="n">Backing</span> <span class="n">store</span> <span class="n">path</span><span class="o">:</span> <span class="n">None</span>
+            <span class="n">Backing</span> <span class="n">store</span> <span class="n">flags</span><span class="o">:</span> 
+    <span class="n">Account</span> <span class="n">information</span><span class="o">:</span>
+    <span class="n">ACL</span> <span class="n">information</span><span class="o">:</span>
+</pre></div>
+
+
+<p>You can see there is a LUN, LUN 0 attached to the target. Let's attach our
+logical volume <code>mylv</code> as LUN 1 to the target.</p>
+<div class="highlight"><pre><span class="n">tgtadm</span> <span class="o">--</span><span class="n">lld</span> <span class="n">iscsi</span> <span class="o">--</span><span class="n">op</span> <span class="n">new</span> <span class="o">--</span><span class="n">mode</span> <span class="n">logicalunit</span> <span class="o">--</span><span class="n">tid</span> <span class="mi">1</span> <span class="o">--</span><span class="n">lun</span> <span class="mi">1</span> <span class="o">-</span><span class="n">b</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">myvg</span><span class="o">/</span><span class="n">mylv</span>
+</pre></div>
+
+
+<p>Here, actually you could've attached a flat file as a LUN to the target. So you
+could've skipped all the intermediate steps and attached the <code>backingfile</code>
+directly to the target like this:</p>
+<div class="highlight"><pre><span class="n">tgtadm</span> <span class="o">--</span><span class="n">lld</span> <span class="n">iscsi</span> <span class="o">--</span><span class="n">op</span> <span class="n">new</span> <span class="o">--</span><span class="n">mode</span> <span class="n">logicalunit</span> <span class="o">--</span><span class="n">tid</span> <span class="mi">1</span> <span class="o">--</span><span class="n">lun</span> <span class="mi">1</span> <span class="o">-</span><span class="n">b</span> <span class="n">backingfile</span>
+</pre></div>
+
+
+<p>A backing file would've been good enough for this demo, but you know the benefits of logical volume isn't it? :)</p>
+<p>Okay, let's see if the LUN got created:</p>
+<div class="highlight"><pre><span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">tgtadm</span> <span class="o">--</span><span class="n">lld</span> <span class="n">iscsi</span> <span class="o">--</span><span class="n">op</span> <span class="n">show</span> <span class="o">--</span><span class="n">mode</span> <span class="n">target</span>
+<span class="n">Target</span> <span class="mi">1</span><span class="o">:</span> <span class="n">iqn</span><span class="mf">.2001</span><span class="o">-</span><span class="mf">04.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">your</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">iscsi</span><span class="p">.</span><span class="n">target</span>
+    <span class="n">System</span> <span class="n">information</span><span class="o">:</span>
+        <span class="nl">Driver:</span> <span class="n">iscsi</span>
+        <span class="nl">State:</span> <span class="n">ready</span>
+    <span class="n">I_T</span> <span class="n">nexus</span> <span class="n">information</span><span class="o">:</span>
+    <span class="n">LUN</span> <span class="n">information</span><span class="o">:</span>
+        <span class="nl">LUN:</span> <span class="mi">0</span>
+            <span class="nl">Type:</span> <span class="n">controller</span>
+            <span class="n">SCSI</span> <span class="n">ID</span><span class="o">:</span> <span class="n">IET</span>     <span class="mo">00010000</span>
+            <span class="n">SCSI</span> <span class="n">SN</span><span class="o">:</span> <span class="n">beaf10</span>
+            <span class="nl">Size:</span> <span class="mi">0</span> <span class="n">MB</span><span class="p">,</span> <span class="n">Block</span> <span class="n">size</span><span class="o">:</span> <span class="mi">1</span>
+            <span class="nl">Online:</span> <span class="n">Yes</span>
+            <span class="n">Removable</span> <span class="n">media</span><span class="o">:</span> <span class="n">No</span>
+            <span class="n">Prevent</span> <span class="n">removal</span><span class="o">:</span> <span class="n">No</span>
+            <span class="nl">Readonly:</span> <span class="n">No</span>
+            <span class="nl">SWP:</span> <span class="n">No</span>
+            <span class="n">Thin</span><span class="o">-</span><span class="n">provisioning</span><span class="o">:</span> <span class="n">No</span>
+            <span class="n">Backing</span> <span class="n">store</span> <span class="n">type</span><span class="o">:</span> <span class="n">null</span>
+            <span class="n">Backing</span> <span class="n">store</span> <span class="n">path</span><span class="o">:</span> <span class="n">None</span>
+            <span class="n">Backing</span> <span class="n">store</span> <span class="n">flags</span><span class="o">:</span> 
+        <span class="n">LUN</span><span class="o">:</span> <span class="mi">1</span>
+            <span class="nl">Type:</span> <span class="n">disk</span>
+            <span class="n">SCSI</span> <span class="n">ID</span><span class="o">:</span> <span class="n">IET</span>     <span class="mo">00010001</span>
+            <span class="n">SCSI</span> <span class="n">SN</span><span class="o">:</span> <span class="n">beaf11</span>
+            <span class="nl">Size:</span> <span class="mi">419</span> <span class="n">MB</span><span class="p">,</span> <span class="n">Block</span> <span class="n">size</span><span class="o">:</span> <span class="mi">512</span>
+            <span class="nl">Online:</span> <span class="n">Yes</span>
+            <span class="n">Removable</span> <span class="n">media</span><span class="o">:</span> <span class="n">No</span>
+            <span class="n">Prevent</span> <span class="n">removal</span><span class="o">:</span> <span class="n">No</span>
+            <span class="nl">Readonly:</span> <span class="n">No</span>
+            <span class="nl">SWP:</span> <span class="n">No</span>
+            <span class="n">Thin</span><span class="o">-</span><span class="n">provisioning</span><span class="o">:</span> <span class="n">No</span>
+            <span class="n">Backing</span> <span class="n">store</span> <span class="n">type</span><span class="o">:</span> <span class="n">rdwr</span>
+            <span class="n">Backing</span> <span class="n">store</span> <span class="n">path</span><span class="o">:</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">myvg</span><span class="o">/</span><span class="n">mylv</span>
+            <span class="n">Backing</span> <span class="n">store</span> <span class="n">flags</span><span class="o">:</span> 
+    <span class="n">Account</span> <span class="n">information</span><span class="o">:</span>
+    <span class="n">ACL</span> <span class="n">information</span><span class="o">:</span>
+</pre></div>
+
+
+<p>Now let's allow all initiators to bind to this target:</p>
+<div class="highlight"><pre><span class="n">tgtadm</span> <span class="o">--</span><span class="n">lld</span> <span class="n">iscsi</span> <span class="o">--</span><span class="n">op</span> <span class="n">bind</span> <span class="o">--</span><span class="n">mode</span> <span class="n">target</span> <span class="o">--</span><span class="n">tid</span> <span class="mi">1</span> <span class="o">-</span><span class="n">I</span> <span class="n">ALL</span>
+</pre></div>
+
+
+<p>We're done with the 'target' side now. You can check, using <code>netstat</code> that port
+3260, the default port, is now open. Note that all our commands so far started with
+<code>tgtadm</code>, i.e., the target administration utility.</p>
+<p>Now let's start from the 'initiator' end. We'll behave as if we're a client
+trying to connect to the server -- the target.</p>
+<p>Discover all the targets on our local machine (<code>127.0.0.1</code>).</p>
+<div class="highlight"><pre><span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">sudo</span> <span class="n">iscsiadm</span> <span class="o">--</span><span class="n">mode</span> <span class="n">discovery</span> <span class="o">--</span><span class="n">type</span> <span class="n">sendtargets</span> <span class="o">--</span><span class="n">portal</span> <span class="mf">127.0.0.1</span>
+<span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">3260</span><span class="p">,</span><span class="mi">1</span> <span class="n">iqn</span><span class="mf">.2001</span><span class="o">-</span><span class="mf">04.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">your</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">iscsi</span><span class="p">.</span><span class="n">target</span>
+</pre></div>
+
+
+<p>From the client perspective, we're now able to see a target. Let's login into
+that target</p>
+<div class="highlight"><pre><span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">sudo</span> <span class="n">iscsiadm</span> <span class="o">--</span><span class="n">mode</span> <span class="n">node</span> <span class="o">--</span><span class="n">targetname</span> <span class="n">iqn</span><span class="mf">.2001</span><span class="o">-</span><span class="mf">04.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">your</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">iscsi</span><span class="p">.</span><span class="n">target</span> <span class="o">--</span><span class="n">portal</span> <span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">3260</span> <span class="o">--</span><span class="n">login</span>
+<span class="n">Logging</span> <span class="n">in</span> <span class="n">to</span> <span class="p">[</span><span class="n">iface</span><span class="o">:</span> <span class="k">default</span><span class="p">,</span> <span class="n">target</span><span class="o">:</span> <span class="n">iqn</span><span class="mf">.2001</span><span class="o">-</span><span class="mf">04.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">your</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">iscsi</span><span class="p">.</span><span class="n">target</span><span class="p">,</span> <span class="n">portal</span><span class="o">:</span> <span class="mf">127.0.0.1</span><span class="p">,</span><span class="mi">3260</span><span class="p">]</span> <span class="p">(</span><span class="n">multiple</span><span class="p">)</span>
+<span class="n">Login</span> <span class="n">to</span> <span class="p">[</span><span class="n">iface</span><span class="o">:</span> <span class="k">default</span><span class="p">,</span> <span class="n">target</span><span class="o">:</span> <span class="n">iqn</span><span class="mf">.2001</span><span class="o">-</span><span class="mf">04.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">your</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">iscsi</span><span class="p">.</span><span class="n">target</span><span class="p">,</span> <span class="n">portal</span><span class="o">:</span> <span class="mf">127.0.0.1</span><span class="p">,</span><span class="mi">3260</span><span class="p">]</span> <span class="n">successful</span><span class="p">.</span>
+</pre></div>
+
+
+<p>After logging in, the target will be visible in the client's system as a new
+device. Running a <code>fdisk -l</code> shows that there is a new device <code>/dev/sda</code> is now
+present.</p>
+<div class="highlight"><pre><span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">fdisk</span> <span class="o">-</span><span class="n">l</span>
+
+<span class="n">Disk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vda</span><span class="o">:</span> <span class="mf">57.1</span> <span class="n">GB</span><span class="p">,</span> <span class="mi">57076908032</span> <span class="n">bytes</span>
+<span class="mi">255</span> <span class="n">heads</span><span class="p">,</span> <span class="mi">63</span> <span class="n">sectors</span><span class="o">/</span><span class="n">track</span><span class="p">,</span> <span class="mi">6939</span> <span class="n">cylinders</span><span class="p">,</span> <span class="n">total</span> <span class="mi">111478336</span> <span class="n">sectors</span>
+<span class="n">Units</span> <span class="o">=</span> <span class="n">sectors</span> <span class="n">of</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">512</span> <span class="o">=</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">Sector</span> <span class="n">size</span> <span class="p">(</span><span class="n">logical</span><span class="o">/</span><span class="n">physical</span><span class="p">)</span><span class="o">:</span> <span class="mi">512</span> <span class="n">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">size</span> <span class="p">(</span><span class="n">minimum</span><span class="o">/</span><span class="n">optimal</span><span class="p">)</span><span class="o">:</span> <span class="mi">512</span> <span class="n">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">Disk</span> <span class="n">identifier</span><span class="o">:</span> <span class="mh">0x0001cd46</span>
+
+   <span class="n">Device</span> <span class="n">Boot</span>      <span class="n">Start</span>         <span class="n">End</span>      <span class="n">Blocks</span>   <span class="n">Id</span>  <span class="n">System</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vda1</span>   <span class="o">*</span>        <span class="mi">2048</span>   <span class="mi">106520575</span>    <span class="mi">53259264</span>   <span class="mi">83</span>  <span class="n">Linux</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vda2</span>       <span class="mi">106522622</span>   <span class="mi">111476735</span>     <span class="mi">2477057</span>    <span class="mi">5</span>  <span class="n">Extended</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vda5</span>       <span class="mi">106522624</span>   <span class="mi">111476735</span>     <span class="mi">2477056</span>   <span class="mi">82</span>  <span class="n">Linux</span> <span class="n">swap</span> <span class="o">/</span> <span class="n">Solaris</span>
+
+<span class="n">Disk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">myvg</span><span class="o">-</span><span class="n">mylv</span><span class="o">:</span> <span class="mi">419</span> <span class="n">MB</span><span class="p">,</span> <span class="mi">419430400</span> <span class="n">bytes</span>
+<span class="mi">255</span> <span class="n">heads</span><span class="p">,</span> <span class="mi">63</span> <span class="n">sectors</span><span class="o">/</span><span class="n">track</span><span class="p">,</span> <span class="mi">50</span> <span class="n">cylinders</span><span class="p">,</span> <span class="n">total</span> <span class="mi">819200</span> <span class="n">sectors</span>
+<span class="n">Units</span> <span class="o">=</span> <span class="n">sectors</span> <span class="n">of</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">512</span> <span class="o">=</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">Sector</span> <span class="n">size</span> <span class="p">(</span><span class="n">logical</span><span class="o">/</span><span class="n">physical</span><span class="p">)</span><span class="o">:</span> <span class="mi">512</span> <span class="n">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">size</span> <span class="p">(</span><span class="n">minimum</span><span class="o">/</span><span class="n">optimal</span><span class="p">)</span><span class="o">:</span> <span class="mi">512</span> <span class="n">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">Disk</span> <span class="n">identifier</span><span class="o">:</span> <span class="mh">0x00000000</span>
+
+<span class="n">Disk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">myvg</span><span class="o">-</span><span class="n">mylv</span> <span class="n">doesn</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">contain</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">partition</span> <span class="n">table</span>
+
+<span class="n">Disk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda</span><span class="o">:</span> <span class="mi">419</span> <span class="n">MB</span><span class="p">,</span> <span class="mi">419430400</span> <span class="n">bytes</span>
+<span class="mi">13</span> <span class="n">heads</span><span class="p">,</span> <span class="mi">62</span> <span class="n">sectors</span><span class="o">/</span><span class="n">track</span><span class="p">,</span> <span class="mi">1016</span> <span class="n">cylinders</span><span class="p">,</span> <span class="n">total</span> <span class="mi">819200</span> <span class="n">sectors</span>
+<span class="n">Units</span> <span class="o">=</span> <span class="n">sectors</span> <span class="n">of</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">512</span> <span class="o">=</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">Sector</span> <span class="n">size</span> <span class="p">(</span><span class="n">logical</span><span class="o">/</span><span class="n">physical</span><span class="p">)</span><span class="o">:</span> <span class="mi">512</span> <span class="n">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">size</span> <span class="p">(</span><span class="n">minimum</span><span class="o">/</span><span class="n">optimal</span><span class="p">)</span><span class="o">:</span> <span class="mi">512</span> <span class="n">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">Disk</span> <span class="n">identifier</span><span class="o">:</span> <span class="mh">0x00000000</span>
+
+<span class="n">Disk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda</span> <span class="n">doesn</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">contain</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">partition</span> <span class="n">table</span>
+</pre></div>
+
+
+<p>Now we just need to format this device with a filesystem, say EXT4, and then
+mount it at some location to start using it!</p>
+<div class="highlight"><pre><span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">sudo</span> <span class="n">mkfs</span><span class="p">.</span><span class="n">ext4</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda</span>
+<span class="n">mke2fs</span> <span class="mf">1.42.9</span> <span class="p">(</span><span class="mi">4</span><span class="o">-</span><span class="n">Feb</span><span class="o">-</span><span class="mi">2014</span><span class="p">)</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda</span> <span class="n">is</span> <span class="n">entire</span> <span class="n">device</span><span class="p">,</span> <span class="n">not</span> <span class="n">just</span> <span class="n">one</span> <span class="n">partition</span><span class="o">!</span>
+<span class="n">Proceed</span> <span class="n">anyway</span><span class="o">?</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="n">y</span>
+<span class="n">Filesystem</span> <span class="n">label</span><span class="o">=</span>
+<span class="n">OS</span> <span class="n">type</span><span class="o">:</span> <span class="n">Linux</span>
+<span class="n">Block</span> <span class="n">size</span><span class="o">=</span><span class="mi">1024</span> <span class="p">(</span><span class="n">log</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">Fragment</span> <span class="n">size</span><span class="o">=</span><span class="mi">1024</span> <span class="p">(</span><span class="n">log</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">Stride</span><span class="o">=</span><span class="mi">0</span> <span class="n">blocks</span><span class="p">,</span> <span class="n">Stripe</span> <span class="n">width</span><span class="o">=</span><span class="mi">0</span> <span class="n">blocks</span>
+<span class="mi">102400</span> <span class="n">inodes</span><span class="p">,</span> <span class="mi">409600</span> <span class="n">blocks</span>
+<span class="mi">20480</span> <span class="n">blocks</span> <span class="p">(</span><span class="mf">5.00</span><span class="o">%</span><span class="p">)</span> <span class="n">reserved</span> <span class="k">for</span> <span class="n">the</span> <span class="n">super</span> <span class="n">user</span>
+<span class="n">First</span> <span class="n">data</span> <span class="n">block</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">Maximum</span> <span class="n">filesystem</span> <span class="n">blocks</span><span class="o">=</span><span class="mi">67633152</span>
+<span class="mi">50</span> <span class="n">block</span> <span class="n">groups</span>
+<span class="mi">8192</span> <span class="n">blocks</span> <span class="n">per</span> <span class="n">group</span><span class="p">,</span> <span class="mi">8192</span> <span class="n">fragments</span> <span class="n">per</span> <span class="n">group</span>
+<span class="mi">2048</span> <span class="n">inodes</span> <span class="n">per</span> <span class="n">group</span>
+<span class="n">Superblock</span> <span class="n">backups</span> <span class="n">stored</span> <span class="n">on</span> <span class="n">blocks</span><span class="o">:</span> 
+    <span class="mi">8193</span><span class="p">,</span> <span class="mi">24577</span><span class="p">,</span> <span class="mi">40961</span><span class="p">,</span> <span class="mi">57345</span><span class="p">,</span> <span class="mi">73729</span><span class="p">,</span> <span class="mi">204801</span><span class="p">,</span> <span class="mi">221185</span><span class="p">,</span> <span class="mi">401409</span>
+
+<span class="n">Allocating</span> <span class="n">group</span> <span class="n">tables</span><span class="o">:</span> <span class="n">done</span>                            
+<span class="n">Writing</span> <span class="n">inode</span> <span class="n">tables</span><span class="o">:</span> <span class="n">done</span>                            
+<span class="n">Creating</span> <span class="n">journal</span> <span class="p">(</span><span class="mi">8192</span> <span class="n">blocks</span><span class="p">)</span><span class="o">:</span> <span class="n">done</span>
+<span class="n">Writing</span> <span class="n">superblocks</span> <span class="n">and</span> <span class="n">filesystem</span> <span class="n">accounting</span> <span class="n">information</span><span class="o">:</span> <span class="n">done</span>
+
+<span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">mkdir</span> <span class="n">tempmount</span>
+<span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda</span> <span class="n">tempmount</span><span class="o">/</span>
+<span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~</span><span class="err">#</span> <span class="n">cd</span> <span class="n">tempmount</span><span class="o">/</span>
+<span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~/</span><span class="n">tempmount</span><span class="err">#</span> <span class="n">ls</span>
+<span class="n">lost</span><span class="o">+</span><span class="n">found</span>
+<span class="n">root</span><span class="err">@</span><span class="n">ra</span><span class="o">:~/</span><span class="n">tempmount</span><span class="err">#</span>
+</pre></div>
+
+
+<p>Aaand done!</p>
+<p>Cheers!</p></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">Rushi Agrawal</span>
+  </span>
+<time datetime="2014-09-05T00:00:00" pubdate>Fri 05 September 2014</time>  <span class="categories">
+    <a class="category" href="http://rushiagr.github.io/tag/cloud.html">cloud</a>
+    <a class="category" href="http://rushiagr.github.io/tag/openstack.html">openstack</a>
+    <a class="category" href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a>
+    <a class="category" href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a>
+    <a class="category" href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>
+    <a class="category" href="http://rushiagr.github.io/tag/lvm.html">lvm</a>
+    <a class="category" href="http://rushiagr.github.io/tag/iscsi.html">iscsi</a>
+    <a class="category" href="http://rushiagr.github.io/tag/ubuntu.html">ubuntu</a>
+  </span>
+</p><div class="sharing">
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/" >Tweet</a>
+  <div class="g-plusone" data-size="medium"></div>
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
+</div>
+<aside class="sidebar">
+  <section>
+    <h1>Recent Posts</h1>
+    <ul id="recent_posts">
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/">iSCSI administration on Ubuntu - Quick Start</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/09/05/openstack-unit-testing-nuggets/">OpenStack Unit Testing Nuggets</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/">Amazon EC2 API with OpenStack - Developer Quick Start</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/08/05/devstack-behind-proxy/">DevStack behind proxy</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/08/02/qcow2-mount/">Mounting QCOW2 images</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+      
+    <h1>Categories</h1>
+    <ul id="recent_posts">
+        <li><a href="http://rushiagr.github.io/category/others.html">others</a></li>
+        <li><a href="http://rushiagr.github.io/category/tech.html">tech</a></li>
+        <li><a href="http://rushiagr.github.io/category/thoughts.html">thoughts</a></li>
+    </ul>
+  </section>
+ 
+
+  <section>
+  <h1>Tags</h1>
+    <a href="http://rushiagr.github.io/tag/.html"></a>,    <a href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a>,    <a href="http://rushiagr.github.io/tag/milestone.html">milestone</a>,    <a href="http://rushiagr.github.io/tag/puppet.html">puppet</a>,    <a href="http://rushiagr.github.io/tag/ec2.html">ec2</a>,    <a href="http://rushiagr.github.io/tag/linux.html">linux</a>,    <a href="http://rushiagr.github.io/tag/openstack.html">openstack</a>,    <a href="http://rushiagr.github.io/tag/quicstart.html">quicstart</a>,    <a href="http://rushiagr.github.io/tag/tempest.html">tempest</a>,    <a href="http://rushiagr.github.io/tag/cloud.html">cloud</a>,    <a href="http://rushiagr.github.io/tag/block-storage.html">block-storage</a>,    <a href="http://rushiagr.github.io/tag/git.html">git</a>,    <a href="http://rushiagr.github.io/tag/iscsi.html">iscsi</a>,    <a href="http://rushiagr.github.io/tag/storage.html">storage</a>,    <a href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>,    <a href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a>,    <a href="http://rushiagr.github.io/tag/openid.html">openid</a>,    <a href="http://rushiagr.github.io/tag/testing.html">testing</a>,    <a href="http://rushiagr.github.io/tag/nontech.html">nontech</a>,    <a href="http://rushiagr.github.io/tag/screen.html">screen</a>,    <a href="http://rushiagr.github.io/tag/aws.html">aws</a>,    <a href="http://rushiagr.github.io/tag/amazon.html">amazon</a>,    <a href="http://rushiagr.github.io/tag/ubuntu.html">ubuntu</a>,    <a href="http://rushiagr.github.io/tag/devstack.html">devstack</a>,    <a href="http://rushiagr.github.io/tag/github.html">github</a>,    <a href="http://rushiagr.github.io/tag/boto.html">boto</a>,    <a href="http://rushiagr.github.io/tag/mysql.html">mysql</a>,    <a href="http://rushiagr.github.io/tag/tech.html">tech</a>,    <a href="http://rushiagr.github.io/tag/lvm.html">lvm</a>,    <a href="http://rushiagr.github.io/tag/cinder.html">cinder</a>,    <a href="http://rushiagr.github.io/tag/virtualization.html">virtualization</a>  </section>
+
+
+
+  <section>
+    <h1>GitHub Repos</h1>
+    <ul id="gh_repos">
+      <li class="loading">Status updating...</li>
+    </ul>
+      <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
+    <script type="text/javascript">
+      $.domReady(function(){
+          if (!window.jXHR){
+              var jxhr = document.createElement('script');
+              jxhr.type = 'text/javascript';
+              jxhr.src = 'http://rushiagr.github.io/theme/js/jXHR.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(jxhr, s);
+          }
+
+          github.showRepos({
+              user: 'rushiagr',
+              count: 5,
+              skip_forks: true,
+              target: '#gh_repos'
+          });
+      });
+    </script>
+    <script src="http://rushiagr.github.io/theme/js/github.js" type="text/javascript"> </script>
+  </section>
+
+    <section>
+        <h1>Social</h1>
+        <ul>
+            <li><a href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS</a></li>
+            <li><a href="http://twitter.com/reeshi_india" target="_blank">twitter</a></li>
+            <li><a href="http://github.com/rushiagr" target="_blank">github</a></li>
+        </ul>
+    </section>
+
+<section>
+    <p>Follow <a href="http://twitter.com/reeshi_india">@reeshi_india</a></p>
+</section>
+</aside>    </div>
+  </div>
+  <footer role="contentinfo"><p>
+    Copyright &copy;  2012-2014  - Rushi Agrawal -
+  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
+</p></footer>
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+	<script type="text/javascript">
+	  var disqus_shortname = 'rushiagr';
+          var disqus_identifier = '/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/';
+          var disqus_url = 'http://rushiagr.github.io/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/';
+          var disqus_title = 'iSCSI administration on Ubuntu - Quick Start';
+	  (function() {
+	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	   })();
+	</script>
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</body>
+</html>
