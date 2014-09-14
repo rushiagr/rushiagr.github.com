@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Sense, and Simplicity - ec2</title>
+  <title>Puppet installation from modules</title>
   <meta name="author" content="Rushi Agrawal">
 
   <link href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
@@ -43,7 +43,7 @@
     <li >
     <a href="http://rushiagr.github.io/category/others.html">Others</a>
     </li>
-    <li >
+    <li class="active">
     <a href="http://rushiagr.github.io/category/tech.html">Tech</a>
     </li>
     <li >
@@ -52,30 +52,103 @@
 </ul></nav>
   <div id="main">
     <div id="content">
-<div class="blog-index">
-  		<article>
+<div>
+  <article class="hentry" role="article">
 <header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/">Amazon EC2 API with OpenStack - Developer Quick Start</a>
-      </h1>
-      <p class="meta"><time datetime="2014-08-09T00:00:00" pubdate>Sat 09 August 2014</time></p>
+      <h1 class="entry-title">Puppet installation from modules</h1>
+      <p class="meta"><time datetime="2014-09-14T00:00:00" pubdate>Sun 14 September 2014</time></p>
 </header>
 
-  <div class="entry-content"></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/">Read On &crarr;</a>
-  </footer>
-  		</article>
-<div class="pagination">
+  <div class="entry-content"><p>A quick example of how to use Puppet to install and manage MySQL. We'll
+download required Puppet modules from their git repositories.</p>
+<p>Again, everything is tried on Ubuntu (14.04).</p>
+<p>Install puppet</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">puppet</span>
+</pre></div>
 
-  <br />
-</div></div>
+
+<p>We'll use <code>git submodules</code> to manage different git repositories. But first,
+create our own repository</p>
+<div class="highlight"><pre><span class="n">mkdir</span> <span class="n">puppet</span><span class="o">-</span><span class="n">mysql</span>
+<span class="n">cd</span> <span class="n">puppet</span><span class="o">-</span><span class="n">mysql</span>
+<span class="n">git</span> <span class="n">init</span>
+</pre></div>
+
+
+<p>Install Puppet modules <code>stdlib</code> and <code>mysql</code> into directory <code>modules</code> as git
+submodules.</p>
+<div class="highlight"><pre><span class="n">git</span> <span class="n">submodule</span> <span class="n">add</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/puppetlabs/puppetlabs-stdlib.git modules/stdlib</span>
+<span class="n">git</span> <span class="n">submodule</span> <span class="n">add</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/puppetlabs/puppetlabs-mysql.git modules/mysql</span>
+</pre></div>
+
+
+<p>Now create a site.pp file in the root directory of this repository, with the following contents</p>
+<div class="highlight"><pre><span class="n">node</span> <span class="k">default</span> <span class="p">{</span>
+    <span class="n">class</span> <span class="p">{</span> <span class="err">&#39;</span><span class="n">mysql</span><span class="o">::</span><span class="n">server</span><span class="err">&#39;</span><span class="o">:</span>
+        <span class="n">root_password</span> <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="n">nova</span><span class="err">&#39;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Now we'll apply this <code>site.pp</code> file to the system. As our modules directory is
+different from Puppet's default, we'll need to specify that while running
+Puppet.</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">puppet</span> <span class="n">apply</span> <span class="n">site</span><span class="p">.</span><span class="n">pp</span> <span class="o">--</span><span class="n">modulepath</span> <span class="n">modules</span><span class="o">/</span>
+</pre></div>
+
+
+<p>And you're all set.</p>
+<p>Now from your commandline, you can try to access mysql and it will work!</p>
+<div class="highlight"><pre><span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">pnova</span>
+</pre></div>
+
+
+<p>Done! Cheers!</p></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">Rushi Agrawal</span>
+  </span>
+<time datetime="2014-09-14T00:00:00" pubdate>Sun 14 September 2014</time>  <span class="categories">
+    <a class="category" href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a>
+    <a class="category" href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a>
+    <a class="category" href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>
+    <a class="category" href="http://rushiagr.github.io/tag/ubuntu.html">ubuntu</a>
+    <a class="category" href="http://rushiagr.github.io/tag/puppet.html">puppet</a>
+    <a class="category" href="http://rushiagr.github.io/tag/automation.html">automation</a>
+    <a class="category" href="http://rushiagr.github.io/tag/mysql.html">mysql</a>
+  </span>
+</p><div class="sharing">
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2014/09/14/puppet-installation-from-modules/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2014/09/14/puppet-installation-from-modules/" >Tweet</a>
+  <div class="g-plusone" data-size="medium"></div>
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
+</div>
 <aside class="sidebar">
   <section>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/09/14/puppet-installation-from-modules/">Puppet installation from modules</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/">iSCSI administration on Ubuntu - Quick Start</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/09/05/openstack-unit-testing-nuggets/">OpenStack Unit Testing Nuggets</a>
+      </li>
+      <li class="post">
           <a href="http://rushiagr.github.io/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/">Amazon EC2 API with OpenStack - Developer Quick Start</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/08/05/devstack-behind-proxy/">DevStack behind proxy</a>
       </li>
     </ul>
   </section>
@@ -138,7 +211,7 @@
 </aside>    </div>
   </div>
   <footer role="contentinfo"><p>
-    Copyright &copy;  2014  - Rushi Agrawal -
+    Copyright &copy;  2012-2014  - Rushi Agrawal -
   <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
 </p></footer>
     <script type="text/javascript">
@@ -161,6 +234,9 @@
 </script>
 	<script type="text/javascript">
 	  var disqus_shortname = 'rushiagr';
+          var disqus_identifier = '/blog/2014/09/14/puppet-installation-from-modules/';
+          var disqus_url = 'http://rushiagr.github.io/blog/2014/09/14/puppet-installation-from-modules/';
+          var disqus_title = 'Puppet installation from modules';
 	  (function() {
 	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';

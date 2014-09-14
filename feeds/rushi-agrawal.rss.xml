@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Sense, and Simplicity</title><link>http://rushiagr.github.io/</link><description></description><atom:link href="http://rushiagr.github.io/feeds/rushi-agrawal.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 05 Sep 2014 00:00:00 +0530</lastBuildDate><item><title>iSCSI administration on Ubuntu - Quick Start</title><link>http://rushiagr.github.io/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/</link><description>&lt;p&gt;This post get's you started with iSCSI administration on an Ubuntu machine.
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Sense, and Simplicity</title><link>http://rushiagr.github.io/</link><description></description><atom:link href="http://rushiagr.github.io/feeds/rushi-agrawal.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 14 Sep 2014 00:00:00 +0530</lastBuildDate><item><title>Puppet installation from modules</title><link>http://rushiagr.github.io/blog/2014/09/14/puppet-installation-from-modules/</link><description>&lt;p&gt;A quick example of how to use Puppet to install and manage MySQL. We'll
+download required Puppet modules from their git repositories.&lt;/p&gt;
+&lt;p&gt;Again, everything is tried on Ubuntu (14.04).&lt;/p&gt;
+&lt;p&gt;Install puppet&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;puppet&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We'll use &lt;code&gt;git submodules&lt;/code&gt; to manage different git repositories. But first,
+create our own repository&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="n"&gt;puppet&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;
+&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;puppet&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Install Puppet modules &lt;code&gt;stdlib&lt;/code&gt; and &lt;code&gt;mysql&lt;/code&gt; into directory &lt;code&gt;modules&lt;/code&gt; as git
+submodules.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;submodule&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/puppetlabs/puppetlabs-stdlib.git modules/stdlib&lt;/span&gt;
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;submodule&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/puppetlabs/puppetlabs-mysql.git modules/mysql&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now create a site.pp file in the root directory of this repository, with the following contents&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;node&lt;/span&gt; &lt;span class="k"&gt;default&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;class&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;root_password&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;nova&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now we'll apply this &lt;code&gt;site.pp&lt;/code&gt; file to the system. As our modules directory is
+different from Puppet's default, we'll need to specify that while running
+Puppet.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;puppet&lt;/span&gt; &lt;span class="n"&gt;apply&lt;/span&gt; &lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pp&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;modulepath&lt;/span&gt; &lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And you're all set.&lt;/p&gt;
+&lt;p&gt;Now from your commandline, you can try to access mysql and it will work!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mysql&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;uroot&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pnova&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Done! Cheers!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Rushi Agrawal</dc:creator><pubDate>Sun, 14 Sep 2014 00:00:00 +0530</pubDate><guid>tag:rushiagr.github.io,2014-09-14:blog/2014/09/14/puppet-installation-from-modules/</guid><category>tutorial</category><category>quickstart</category><category>cheatsheet</category><category>ubuntu</category><category>puppet</category><category>automation</category><category>mysql</category></item><item><title>iSCSI administration on Ubuntu - Quick Start</title><link>http://rushiagr.github.io/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/</link><description>&lt;p&gt;This post get's you started with iSCSI administration on an Ubuntu machine.
 Although I have used Ubuntu Trusty (14.04) version, it should work with Precise
 (12.04) too, with the latest packages.&lt;/p&gt;
 &lt;h4&gt;Prerequisites&lt;/h4&gt;
