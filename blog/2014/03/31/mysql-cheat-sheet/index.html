@@ -70,7 +70,8 @@
 
 <p>A prompt will ask for the root password.</p>
 <p>To change the root password:</p>
-<div class="highlight"><pre><span class="n">UPDATE</span> <span class="n">mysql</span><span class="p">.</span><span class="n">user</span> <span class="n">SET</span> <span class="n">password</span><span class="o">=</span><span class="n">PASSWORD</span><span class="p">(</span><span class="err">&#39;</span><span class="n">nova</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">WHERE</span> <span class="n">user</span><span class="o">=</span><span class="err">&#39;</span><span class="n">root</span><span class="err">&#39;</span><span class="p">;</span>
+<div class="highlight"><pre><span class="n">FLUSH</span> <span class="n">PRIVILEGES</span><span class="p">;</span>
+    <span class="n">UPDATE</span> <span class="n">mysql</span><span class="p">.</span><span class="n">user</span> <span class="n">SET</span> <span class="n">password</span><span class="o">=</span><span class="n">PASSWORD</span><span class="p">(</span><span class="err">&#39;</span><span class="n">nova</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">WHERE</span> <span class="n">user</span><span class="o">=</span><span class="err">&#39;</span><span class="n">root</span><span class="err">&#39;</span><span class="p">;</span>
 </pre></div>
 
 
