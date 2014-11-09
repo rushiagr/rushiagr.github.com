@@ -38,6 +38,8 @@ Puppet.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;To see the action in more detail, also pass the &lt;code&gt;--debug&lt;/code&gt; option to the above
+execution&lt;/p&gt;
 &lt;p&gt;And you're all set.&lt;/p&gt;
 &lt;p&gt;Now from your commandline, you can try to access mysql and it will work!&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mysql&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;uroot&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pnova&lt;/span&gt;
@@ -358,6 +360,10 @@ packages using this command:&lt;/p&gt;
 &lt;p&gt;./run_tests.sh -u&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;UPDATE: I've seen that nowadays it doesn't throw a lot of gibberish, but just
+says 'testr failed', without any error log or stacktrace. This is the same
+situation -- can only happen when there is a syntax error, or if the
+dependencies are outdated.&lt;/p&gt;
 &lt;p&gt;That's it for now.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Rushi Agrawal</dc:creator><pubDate>Fri, 05 Sep 2014 00:00:00 +0530</pubDate><guid>tag:rushiagr.github.io,2014-09-05:blog/2014/09/05/openstack-unit-testing-nuggets/</guid><category>cloud</category><category>openstack</category><category>tutorial</category><category>quickstart</category><category>cheatsheet</category><category>testing</category></item><item><title>Amazon EC2 API with OpenStack - Developer Quick Start</title><link>http://rushiagr.github.io/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/</link><description>&lt;p&gt;OpenStack has support for EC2 API, that is, you can fire Amazon's API against an OpenStack cloud and it will still work. This article gets you started with using them locally against DevStack. It is more of a starter guide to a novice.&lt;/p&gt;
 &lt;p&gt;Fire a DevStack with it's default settings. See &lt;a href="http://www.rushiagr.com/blog/2014/04/03/openstack-in-an-hour-with-devstack"&gt;this post&lt;/a&gt; for more information on it.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/openstack-dev/devstack&lt;/span&gt;
@@ -2521,4 +2527,29 @@ If no output or no error, patch can be applied safely&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://makandracards.com/makandra/527-squash-several-git-commits-into-a-single-commit"&gt;Squash several commits into one single commit&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Checkout a previous commit with SHA commit id cff2580ad7bc16934b72dd9be7463eb090b31d55 from the current branch to a new branch 'neew'&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;checkout&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;neew&lt;/span&gt; &lt;span class="n"&gt;cff2580ad7bc16934b72dd9be7463eb090b31d55&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Rushi Agrawal</dc:creator><pubDate>Tue, 19 Mar 2013 00:00:00 +0530</pubDate><guid>tag:rushiagr.github.io,2013-03-19:blog/2013/03/19/github-cheat-sheet/</guid><category>tech</category><category>git</category><category>github</category><category>cheatsheet</category><category>tutorial</category></item></channel></rss>
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Rushi Agrawal</dc:creator><pubDate>Tue, 19 Mar 2013 00:00:00 +0530</pubDate><guid>tag:rushiagr.github.io,2013-03-19:blog/2013/03/19/github-cheat-sheet/</guid><category>tech</category><category>git</category><category>github</category><category>cheatsheet</category><category>tutorial</category></item><item><title>Testing the new blog</title><link>http://rushiagr.github.io/blog/2012/12/15/testing-the-new-blog/</link><description>&lt;p&gt;This is a test blog, just to check out some of the basic functionalities of
+MarkDown. Visit the MarkDown source of this blog post &lt;a href="https://raw.github.com/rushiagr/rushiagr.github.com/source/source/_posts/2012-12-15-testing-the-new-blog.markdown"&gt;here&lt;/a&gt;
+to understand the simplicity with which a post can be written using MarkDown!&lt;/p&gt;
+&lt;!-- more --&gt;
+
+&lt;h2&gt;This is a subheading&lt;/h2&gt;
+&lt;p&gt;And below is an example of H1 heading in the main text&lt;/p&gt;
+&lt;h1&gt;THE heading&lt;/h1&gt;
+&lt;p&gt;And below is sub-subheading&lt;/p&gt;
+&lt;h3&gt;The H3 heading&lt;/h3&gt;
+&lt;p&gt;Trying a smaller heading:&lt;/p&gt;
+&lt;h4&gt;The sub sub subheading&lt;/h4&gt;
+&lt;p&gt;Following is a block of syntax-highlighted python code.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;factorial&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;number&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;answer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;counter&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;number&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;answer&lt;/span&gt; &lt;span class="o"&gt;*=&lt;/span&gt; &lt;span class="n"&gt;counter&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;answer&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To write a monospace block, enclose it in backticks. An example would be a directory location: &lt;code&gt;/home/rushi/Desktop/&lt;/code&gt; is where the files on my desktop 
+reside.&lt;/p&gt;
+&lt;p&gt;Here is an embedded image:&lt;/p&gt;
+&lt;p&gt;{% img http://rushiagr.github.com/images/bird_32_gray.png %}&lt;/p&gt;
+&lt;p&gt;Thank you!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Rushi Agrawal</dc:creator><pubDate>Sat, 15 Dec 2012 00:00:00 +0530</pubDate><guid>tag:rushiagr.github.io,2012-12-15:blog/2012/12/15/testing-the-new-blog/</guid><category></category></item></channel></rss>
