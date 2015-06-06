@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Cache APT packages with Squid proxy</title>
+  <meta name="author" content="Rushi Agrawal">
+
+  <link href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
+        title="Sense, and Simplicity RSS Feed" />
+
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="http://rushiagr.github.io/favicon.png" rel="icon">
+  <link href="http://rushiagr.github.io/theme/css/main.css" media="screen, projection"
+        rel="stylesheet" type="text/css">
+  <script src="http://rushiagr.github.io/theme/js/modernizr-2.0.js"></script>
+  <script src="http://rushiagr.github.io/theme/js/ender.js"></script>
+  <script src="http://rushiagr.github.io/theme/js/octopress.js" type="text/javascript"></script>
+
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <header role="banner"><hgroup>
+  <h1><a href="http://rushiagr.github.io/">Sense, and Simplicity</a></h1>
+</hgroup></header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://rushiagr.github.io/feeds/all.rss.xml" rel="subscribe-rss">RSS</a></li>
+</ul>
+
+
+
+<ul class="main-navigation">
+    <li class="active">
+    <a href="http://rushiagr.github.io/category/tech.html">Tech</a>
+    </li>
+    <li >
+    <a href="http://rushiagr.github.io/category/thoughts.html">Thoughts</a>
+    </li>
+</ul></nav>
+  <div id="main">
+    <div id="content">
+<div>
+  <article class="hentry" role="article">
+<header>
+      <h1 class="entry-title">Cache APT packages with Squid proxy</h1>
+      <p class="meta"><time datetime="2015-06-05T00:00:00" pubdate>Fri 05 June 2015</time></p>
+</header>
+
+  <div class="entry-content"><p>TL;DR: Know how to install and set up Squid proxy, so that you can cache packages,
+and hence save bandwidth if you want to install those packages again and again.
+Also works if you are already behind a squid proxy.</p>
+<h2>Problem: Repetitive download. Slow.</h2>
+<p>If you deal with virtual machines a lot, you might know the pain of
+managing packages on each one of them. Every time I had to create a new VM,
+I would run <code>apt-get update</code> (to get information about all the latest packages
+available for my Ubuntu system), <code>apt-get dist-upgrade</code> (to install latest
+versions of all packages already installed), and also install some packages
+not present in stock Ubuntu image, like <code>git</code> (yes, it's 2015
+and Ubuntu still doesn't come pre-installed with <code>git</code>), <code>ipython</code>, <code>bwm-ng</code>
+and some others. This would mean I'm downloading the same file over the network
+over and over again. Now there are two ways to deal with this situation</p>
+<h2>Solution 1: Local Ubuntu mirror - Super fast but unweildy</h2>
+<p>The first solution is to download a complete Ubuntu mirror to your computer.
+That is, download ALL Ubuntu packages to your system, and then it is super fast.
+The first download will be close to 80GBs though. It would have been fine for
+me to download 80GBs, but you'll realize the problem when you want to update
+this mirror. If you are trying to update the local mirror every week or so,
+each time it will ask you to download around 5GB of data. And that unfortunately
+is too much for me to download every few days.</p>
+<h2>Solution 2: Cache with Squid proxy - Just about perfect</h2>
+<p>The other alternative is use a local cache, using Squid proxy. It works like
+just another cache: if you want a package of a specific version, Squid will connect
+over the internet to find more details about that file. Once it gets these details,
+it checks if a file (package) matching those details is already present in the local
+cache. If it is locally present, it just sends this local copy to the requester.
+So the total Internet bandwidth utilised is only to get the file details, which
+is miniscule (Bytes) compared to downloading the whole package (MBs)j. If the
+details doesn't match any locally cached packages, the proxy fetches that package
+from internet and responds to the requester.</p>
+<h2>Practical!</h2>
+<p>Enough of theory, let's put theory to some practice :)</p>
+<p>All of the commands below are run on Ubuntu 14.04 (Trusty).</p>
+<p>Install Squid proxy package.</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">squid</span>
+</pre></div>
+
+
+<p>Configure: replace <code>/etc/squid3/squid.conf</code> and make it contain these lines.
+You will need root permissions to edit this file</p>
+<div class="highlight"><pre><span class="n">acl</span> <span class="n">localhost</span> <span class="n">src</span> <span class="mf">127.0.0.1</span><span class="o">/</span><span class="mi">32</span> <span class="o">::</span><span class="mi">1</span>
+<span class="n">acl</span> <span class="n">to_localhost</span> <span class="n">dst</span> <span class="mf">127.0.0.0</span><span class="o">/</span><span class="mi">8</span> <span class="mf">0.0.0.0</span><span class="o">/</span><span class="mi">32</span> <span class="o">::</span><span class="mi">1</span>
+<span class="n">acl</span> <span class="n">localnet</span> <span class="n">src</span> <span class="mf">10.0.0.0</span><span class="o">/</span><span class="mi">8</span> <span class="err">#</span> <span class="n">RFC1918</span> <span class="n">possible</span> <span class="n">internal</span> <span class="n">network</span>
+<span class="n">acl</span> <span class="n">localnet</span> <span class="n">src</span> <span class="mf">172.16.0.0</span><span class="o">/</span><span class="mi">12</span>  <span class="err">#</span> <span class="n">RFC1918</span> <span class="n">possible</span> <span class="n">internal</span> <span class="n">network</span>
+<span class="n">acl</span> <span class="n">localnet</span> <span class="n">src</span> <span class="mf">192.168.0.0</span><span class="o">/</span><span class="mi">16</span> <span class="err">#</span> <span class="n">RFC1918</span> <span class="n">possible</span> <span class="n">internal</span> <span class="n">network</span>
+<span class="n">acl</span> <span class="n">SSL_ports</span> <span class="n">port</span> <span class="mi">443</span>
+<span class="n">acl</span> <span class="n">Safe_ports</span> <span class="n">port</span> <span class="mi">80</span>      <span class="err">#</span> <span class="n">http</span>
+<span class="n">acl</span> <span class="n">Safe_ports</span> <span class="n">port</span> <span class="mi">21</span>      <span class="err">#</span> <span class="n">ftp</span>
+<span class="n">acl</span> <span class="n">Safe_ports</span> <span class="n">port</span> <span class="mi">443</span>     <span class="err">#</span> <span class="n">https</span>
+<span class="n">acl</span> <span class="n">Safe_ports</span> <span class="n">port</span> <span class="mi">70</span>      <span class="err">#</span> <span class="n">gopher</span>
+<span class="n">acl</span> <span class="n">Safe_ports</span> <span class="n">port</span> <span class="mi">210</span>     <span class="err">#</span> <span class="n">wais</span>
+<span class="n">acl</span> <span class="n">Safe_ports</span> <span class="n">port</span> <span class="mi">1025</span><span class="o">-</span><span class="mi">65535</span>  <span class="err">#</span> <span class="n">unregistered</span> <span class="n">ports</span>
+<span class="n">acl</span> <span class="n">Safe_ports</span> <span class="n">port</span> <span class="mi">280</span>     <span class="err">#</span> <span class="n">http</span><span class="o">-</span><span class="n">mgmt</span>
+<span class="n">acl</span> <span class="n">Safe_ports</span> <span class="n">port</span> <span class="mi">488</span>     <span class="err">#</span> <span class="n">gss</span><span class="o">-</span><span class="n">http</span>
+<span class="n">acl</span> <span class="n">Safe_ports</span> <span class="n">port</span> <span class="mi">591</span>     <span class="err">#</span> <span class="n">filemaker</span>
+<span class="n">acl</span> <span class="n">Safe_ports</span> <span class="n">port</span> <span class="mi">777</span>     <span class="err">#</span> <span class="n">multiling</span> <span class="n">http</span>
+<span class="n">acl</span> <span class="n">CONNECT</span> <span class="n">method</span> <span class="n">CONNECT</span>
+<span class="n">http_access</span> <span class="n">allow</span> <span class="n">manager</span> <span class="n">localhost</span>
+<span class="n">http_access</span> <span class="n">deny</span> <span class="n">manager</span>
+<span class="n">http_access</span> <span class="n">deny</span> <span class="o">!</span><span class="n">Safe_ports</span>
+<span class="n">http_access</span> <span class="n">deny</span> <span class="n">CONNECT</span> <span class="o">!</span><span class="n">SSL_ports</span>
+<span class="n">http_access</span> <span class="n">allow</span> <span class="n">localnet</span>
+<span class="n">http_access</span> <span class="n">allow</span> <span class="n">localhost</span>
+<span class="n">http_access</span> <span class="n">deny</span> <span class="n">all</span>
+<span class="n">http_port</span> <span class="mi">3128</span>
+<span class="n">maximum_object_size</span> <span class="mi">1024</span> <span class="n">MB</span>
+<span class="n">cache_dir</span> <span class="n">aufs</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">squid3</span> <span class="mi">5000</span> <span class="mi">24</span> <span class="mi">256</span>
+<span class="n">coredump_dir</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">squid3</span>
+<span class="n">refresh_pattern</span> <span class="o">^</span><span class="n">ftp</span><span class="o">:</span>       <span class="mi">1440</span>    <span class="mi">20</span><span class="o">%</span> <span class="mi">10080</span>
+<span class="n">refresh_pattern</span> <span class="o">^</span><span class="n">gopher</span><span class="o">:</span>    <span class="mi">1440</span>    <span class="mi">0</span><span class="o">%</span>  <span class="mi">1440</span>
+<span class="n">refresh_pattern</span> <span class="o">-</span><span class="n">i</span> <span class="p">(</span><span class="o">/</span><span class="n">cgi</span><span class="o">-</span><span class="n">bin</span><span class="o">/|</span><span class="err">\</span><span class="o">?</span><span class="p">)</span> <span class="mi">0</span> <span class="mi">0</span><span class="o">%</span>  <span class="mi">0</span>
+<span class="n">refresh_pattern</span> <span class="p">(</span><span class="n">Release</span><span class="o">|</span><span class="n">Packages</span><span class="p">(.</span><span class="n">gz</span><span class="p">)</span><span class="o">*</span><span class="p">)</span><span class="err">$</span>      <span class="mi">0</span>       <span class="mi">20</span><span class="o">%</span>     <span class="mi">2880</span>
+<span class="n">refresh_pattern</span> <span class="p">.</span>       <span class="mi">0</span>   <span class="mi">20</span><span class="o">%</span> <span class="mi">4320</span>
+<span class="n">refresh_all_ims</span> <span class="n">on</span>
+</pre></div>
+
+
+<p>You don't need to know or remember what is happening here right now. Just copy
+and paste :)</p>
+<p>Restart the service:</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">service</span> <span class="n">squid3</span> <span class="n">restart</span>
+</pre></div>
+
+
+<p>Now squid service is running, and listening on port 3128. You can use any IP
+of your base system which is accessible from your VMs to get packages
+via this cache. I give my base system an IP of <code>192.168.100.1</code>, so I just
+need to do:</p>
+<div class="highlight"><pre><span class="n">export</span> <span class="n">http_proxy</span><span class="o">=</span><span class="n">http</span><span class="o">:</span><span class="c1">//192.168.100.1:3128/</span>
+</pre></div>
+
+
+<p>to source the proxy environment variable, which we'll use to point the APT system
+to, to fetch packages from. To test if you proxy is working fine locally,
+you can provide <code>127.0.0.1</code>, your localhost IP instead.</p>
+<p>And after that can start using the cache to download packages by just passing <code>-E</code>
+option to the <code>sudo</code> command</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="o">-</span><span class="n">E</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">your</span> <span class="n">package</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>Sure there are alternative ways of using the proxy, but this is my favourite!</p>
+<h2>I'm already behind a proxy!</h2>
+<p>Worry not, add these lines to <code>squid.conf</code>, restart squid and you're all set for using the
+brand new proxy instead of the old one :)</p>
+<div class="highlight"><pre><span class="n">cache_peer</span> <span class="mf">10.135.121.138</span> <span class="n">parent</span> <span class="mi">3128</span> <span class="mi">0</span> <span class="n">no</span><span class="o">-</span><span class="n">query</span> <span class="n">no</span><span class="o">-</span><span class="n">digest</span>
+<span class="n">never_direct</span> <span class="n">allow</span> <span class="n">all</span>
+</pre></div>
+
+
+<h2>Ending thoughts</h2>
+<p>You can go to <code>/var/spool/squid3</code> and run a <code>du -sch</code> to see the total size
+of cached files. I find it easy sometimes to calculate the total size of
+files this directory holds, to make sure the proxy is working correctly --
+if you can 'new' packages being downloaded, but the size of this directory
+is not increasing, they're not coming via this proxy, and you need to figure
+out why :)</p>
+<p>One more important thing I should tell is that the configuration file
+we've used not only caches APT packages, but also any static files
+hosted anywhere on the internet. So if let's say you want to download an
+Ubuntu ISO or some other ISO multiple times in your setup (say, inside VMs),
+you can cache the ISO file as well with our current setup.</p>
+<p>Tell me what is the size your <code>/var/spool/squid3/</code> directory has
+reached. Mine is at 1GB right now after a year of it's usage.</p>
+<p>Cheers!</p>
+<p>-Rushi</p></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">Rushi Agrawal</span>
+  </span>
+<time datetime="2015-06-05T00:00:00" pubdate>Fri 05 June 2015</time>  <span class="categories">
+    <a class="category" href="http://rushiagr.github.io/tag/squid.html">squid</a>
+    <a class="category" href="http://rushiagr.github.io/tag/apt.html">apt</a>
+    <a class="category" href="http://rushiagr.github.io/tag/cache.html">cache</a>
+    <a class="category" href="http://rushiagr.github.io/tag/packaging.html">packaging</a>
+    <a class="category" href="http://rushiagr.github.io/tag/openstack.html">openstack</a>
+  </span>
+</p><div class="sharing">
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2015/06/05/cache-apt-packages-with-squid-proxy/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2015/06/05/cache-apt-packages-with-squid-proxy/" >Tweet</a>
+  <div class="g-plusone" data-size="medium"></div>
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
+</div>
+<aside class="sidebar">
+  <section>
+    <h1>Recent Posts</h1>
+    <ul id="recent_posts">
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2015/06/05/cache-apt-packages-with-squid-proxy/">Cache APT packages with Squid proxy</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/11/09/plight-of-online-banking-in-india/">Plight of Online Banking in India</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/09/14/puppet-installation-from-modules/">Puppet installation from modules</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/">iSCSI administration on Ubuntu - Quick Start</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2014/09/05/openstack-unit-testing-nuggets/">OpenStack Unit Testing Nuggets</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+      
+    <h1>Categories</h1>
+    <ul id="recent_posts">
+        <li><a href="http://rushiagr.github.io/category/tech.html">tech</a></li>
+        <li><a href="http://rushiagr.github.io/category/thoughts.html">thoughts</a></li>
+    </ul>
+  </section>
+ 
+
+  <section>
+  <h1>Tags</h1>
+    <a href="http://rushiagr.github.io/tag/.html"></a>,    <a href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a>,    <a href="http://rushiagr.github.io/tag/squid.html">squid</a>,    <a href="http://rushiagr.github.io/tag/apt.html">apt</a>,    <a href="http://rushiagr.github.io/tag/packaging.html">packaging</a>,    <a href="http://rushiagr.github.io/tag/puppet.html">puppet</a>,    <a href="http://rushiagr.github.io/tag/ec2.html">ec2</a>,    <a href="http://rushiagr.github.io/tag/linux.html">linux</a>,    <a href="http://rushiagr.github.io/tag/openstack.html">openstack</a>,    <a href="http://rushiagr.github.io/tag/quicstart.html">quicstart</a>,    <a href="http://rushiagr.github.io/tag/tempest.html">tempest</a>,    <a href="http://rushiagr.github.io/tag/cloud.html">cloud</a>,    <a href="http://rushiagr.github.io/tag/block-storage.html">block-storage</a>,    <a href="http://rushiagr.github.io/tag/git.html">git</a>,    <a href="http://rushiagr.github.io/tag/iscsi.html">iscsi</a>,    <a href="http://rushiagr.github.io/tag/cache.html">cache</a>,    <a href="http://rushiagr.github.io/tag/storage.html">storage</a>,    <a href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>,    <a href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a>,    <a href="http://rushiagr.github.io/tag/screen.html">screen</a>,    <a href="http://rushiagr.github.io/tag/openid.html">openid</a>,    <a href="http://rushiagr.github.io/tag/testing.html">testing</a>,    <a href="http://rushiagr.github.io/tag/nontech.html">nontech</a>,    <a href="http://rushiagr.github.io/tag/milestone.html">milestone</a>,    <a href="http://rushiagr.github.io/tag/aws.html">aws</a>,    <a href="http://rushiagr.github.io/tag/automation.html">automation</a>,    <a href="http://rushiagr.github.io/tag/amazon.html">amazon</a>,    <a href="http://rushiagr.github.io/tag/ubuntu.html">ubuntu</a>,    <a href="http://rushiagr.github.io/tag/devstack.html">devstack</a>,    <a href="http://rushiagr.github.io/tag/github.html">github</a>,    <a href="http://rushiagr.github.io/tag/boto.html">boto</a>,    <a href="http://rushiagr.github.io/tag/mysql.html">mysql</a>,    <a href="http://rushiagr.github.io/tag/tech.html">tech</a>,    <a href="http://rushiagr.github.io/tag/lvm.html">lvm</a>,    <a href="http://rushiagr.github.io/tag/cinder.html">cinder</a>,    <a href="http://rushiagr.github.io/tag/virtualization.html">virtualization</a>  </section>
+
+
+
+  <section>
+    <h1>GitHub Repos</h1>
+    <ul id="gh_repos">
+      <li class="loading">Status updating...</li>
+    </ul>
+      <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
+    <script type="text/javascript">
+      $.domReady(function(){
+          if (!window.jXHR){
+              var jxhr = document.createElement('script');
+              jxhr.type = 'text/javascript';
+              jxhr.src = 'http://rushiagr.github.io/theme/js/jXHR.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(jxhr, s);
+          }
+
+          github.showRepos({
+              user: 'rushiagr',
+              count: 5,
+              skip_forks: true,
+              target: '#gh_repos'
+          });
+      });
+    </script>
+    <script src="http://rushiagr.github.io/theme/js/github.js" type="text/javascript"> </script>
+  </section>
+
+    <section>
+        <h1>Social</h1>
+        <ul>
+            <li><a href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS</a></li>
+            <li><a href="http://twitter.com/reeshi_india" target="_blank">twitter</a></li>
+            <li><a href="http://github.com/rushiagr" target="_blank">github</a></li>
+        </ul>
+    </section>
+
+<section>
+    <p>Follow <a href="http://twitter.com/reeshi_india">@reeshi_india</a></p>
+</section>
+</aside>    </div>
+  </div>
+  <footer role="contentinfo"><p>
+    Copyright &copy;  2012-2015  - Rushi Agrawal -
+  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
+</p></footer>
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+	<script type="text/javascript">
+	  var disqus_shortname = 'rushiagr';
+          var disqus_identifier = '/blog/2015/06/05/cache-apt-packages-with-squid-proxy/';
+          var disqus_url = 'http://rushiagr.github.io/blog/2015/06/05/cache-apt-packages-with-squid-proxy/';
+          var disqus_title = 'Cache APT packages with Squid proxy';
+	  (function() {
+	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	   })();
+	</script>
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</body>
+</html>
