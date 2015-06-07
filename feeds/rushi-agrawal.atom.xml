@@ -1,5 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Sense, and Simplicity</title><link href="http://rushiagr.github.io/" rel="alternate"></link><link href="http://rushiagr.github.io/feeds/rushi-agrawal.atom.xml" rel="self"></link><id>http://rushiagr.github.io/</id><updated>2015-06-05T00:00:00+05:30</updated><entry><title>Cache APT packages with Squid proxy</title><link href="http://rushiagr.github.io/blog/2015/06/05/cache-apt-packages-with-squid-proxy/" rel="alternate"></link><updated>2015-06-05T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2015-06-05:blog/2015/06/05/cache-apt-packages-with-squid-proxy/</id><summary type="html">&lt;p&gt;TL;DR: Know how to install and set up Squid proxy, so that you can cache packages,
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Sense, and Simplicity</title><link href="http://rushiagr.github.io/" rel="alternate"></link><link href="http://rushiagr.github.io/feeds/rushi-agrawal.atom.xml" rel="self"></link><id>http://rushiagr.github.io/</id><updated>2015-06-07T00:00:00+05:30</updated><entry><title>Docker quick start notes</title><link href="http://rushiagr.github.io/blog/2015/06/07/docker-quick-start-notes/" rel="alternate"></link><updated>2015-06-07T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2015-06-07:blog/2015/06/07/docker-quick-start-notes/</id><summary type="html">&lt;p&gt;After reading about docker and containers, I thought let's try them out.
+Here are my notes. Obviously all of them are taken from Internet. Maybe this
+collection here will help someone start with docker faster than spending time
+searching all over the internet.&lt;/p&gt;
+&lt;p&gt;It assumes your base OS is Ubuntu 14.04 Trusty Tahr (when was the last time
+you saw the codename spelled 'Trusty Tahr' and not 'Trusty'? :) ).&lt;/p&gt;
+&lt;p&gt;Install docker&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;io&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;See docker version&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Pull an Ubuntu Trusty docker image&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;pull&lt;/span&gt; &lt;span class="n"&gt;ubuntu&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;14.04&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Alternatively, you can search for a docker image 'tutorial' in docker's repository&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;search&lt;/span&gt; &lt;span class="n"&gt;tutorial&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And them pull a docker image 'tutorial' by user 'learn'&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;pull&lt;/span&gt; &lt;span class="n"&gt;learn&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tutorial&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;List all docker images present in the system&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;images&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Run a docker image, and execute command 'echo "hello world"' in the docker
+container created out of that image&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt; &lt;span class="n"&gt;ubuntu&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;14.04&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hello world&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Container information is stored in /var/lib/docker&lt;/p&gt;
+&lt;p&gt;If you run the above command multiple times, it will create a new container
+each time.&lt;/p&gt;
+&lt;p&gt;To know the ID of the last container, run&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;ps&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To list all the running containers&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;ps&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Note that the above command will not show the container we last run, because
+the container which we ran last time terminated just after it finished
+executing echo command.&lt;/p&gt;
+&lt;p&gt;Create a new docker image by name &lt;code&gt;&amp;lt;yourname&amp;gt;/echo&lt;/code&gt; by 'committing' the last
+container which you ran&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;sudo&lt;/span&gt; &lt;span class="nx"&gt;docker&lt;/span&gt; &lt;span class="nx"&gt;commit&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;container&lt;/span&gt; &lt;span class="nb"&gt;ID&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;yourname&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;/&lt;/span&gt;&lt;span class="nx"&gt;echo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now running &lt;code&gt;sudo docker images&lt;/code&gt; will list you two containers instead of one&lt;/p&gt;
+&lt;p&gt;Now you can run this new docker container like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;sudo&lt;/span&gt; &lt;span class="nx"&gt;docker&lt;/span&gt; &lt;span class="nb"&gt;run&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;yourname&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;/&lt;/span&gt;&lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="nx"&gt;ls&lt;/span&gt; &lt;span class="na"&gt;-alrth&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If we installed something, or created a file in the old container, it will
+be visible now in this container too.&lt;/p&gt;
+&lt;p&gt;Get more information about a docker image or a running container:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;sudo&lt;/span&gt; &lt;span class="nx"&gt;docker&lt;/span&gt; &lt;span class="nx"&gt;inspect&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;yourname&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;/&lt;/span&gt;&lt;span class="nx"&gt;echo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To push docker image to docker repository&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;sudo&lt;/span&gt; &lt;span class="nx"&gt;docker&lt;/span&gt; &lt;span class="nb"&gt;push&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;yourname&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;/&lt;/span&gt;&lt;span class="nx"&gt;echo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To download ubuntu Trusty base image if not present locally, and open a shell session into it&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="n"&gt;ubuntu&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;14.04&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;-i i.e. --interactive=false, keeps STDIN open even if not attached&lt;/p&gt;
+&lt;p&gt;-t i.e. --tty=false allocates a pseudo tty&lt;/p&gt;
+&lt;p&gt;Don't worry what these mean. If you add these options, you'll see that
+you already get logged in into the container shell, and the container
+only dies off once you exit from that session (usually by writing &lt;code&gt;exit&lt;/code&gt;
+or pressing CTRL + D.&lt;/p&gt;
+&lt;p&gt;To remove an image:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;rmi&lt;/span&gt; &lt;span class="n"&gt;learn&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tutorial&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;Things not covered in this tutorial:&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;Create your own custom docker images and share with other people:
+    &lt;a href="https://docs.docker.com/userguide/dockerimages/"&gt;https://docs.docker.com/userguide/dockerimages/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Cheers!&lt;/p&gt;</summary><category term="containers"></category><category term="docker"></category><category term="technology"></category><category term="lxc"></category><category term="virtualization"></category><category term="cloud"></category><category term="cheatsheet"></category><category term="quickstart"></category></entry><entry><title>Cache APT packages with Squid proxy</title><link href="http://rushiagr.github.io/blog/2015/06/05/cache-apt-packages-with-squid-proxy/" rel="alternate"></link><updated>2015-06-05T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2015-06-05:blog/2015/06/05/cache-apt-packages-with-squid-proxy/</id><summary type="html">&lt;p&gt;TL;DR: Know how to install and set up Squid proxy, so that you can cache packages,
 and hence save bandwidth if you want to install those packages again and again.
 Also works if you are already behind a squid proxy.&lt;/p&gt;
 &lt;h2&gt;Problem: Repetitive download. Slow.&lt;/h2&gt;

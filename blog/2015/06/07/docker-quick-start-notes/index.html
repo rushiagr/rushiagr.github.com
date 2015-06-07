@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Sense, and Simplicity - Tags</title>
+  <title>Docker quick start notes</title>
   <meta name="author" content="Rushi Agrawal">
 
   <link href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
@@ -40,7 +40,7 @@
 
 
 <ul class="main-navigation">
-    <li >
+    <li class="active">
     <a href="http://rushiagr.github.io/category/tech.html">Tech</a>
     </li>
     <li >
@@ -49,46 +49,144 @@
 </ul></nav>
   <div id="main">
     <div id="content">
-    <h1>Tags for Sense, and Simplicity</h1>        <li><a href="http://rushiagr.github.io/tag/.html"></a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/amazon.html">amazon</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/apt.html">apt</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/automation.html">automation</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/aws.html">aws</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/block-storage.html">block-storage</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/boto.html">boto</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/cache.html">cache</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a> (11)</li>
-        <li><a href="http://rushiagr.github.io/tag/cinder.html">cinder</a> (2)</li>
-        <li><a href="http://rushiagr.github.io/tag/cloud.html">cloud</a> (10)</li>
-        <li><a href="http://rushiagr.github.io/tag/containers.html">containers</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/devstack.html">devstack</a> (3)</li>
-        <li><a href="http://rushiagr.github.io/tag/docker.html">docker</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/ec2.html">ec2</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/git.html">git</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/github.html">github</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/iscsi.html">iscsi</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/linux.html">linux</a> (2)</li>
-        <li><a href="http://rushiagr.github.io/tag/lvm.html">lvm</a> (2)</li>
-        <li><a href="http://rushiagr.github.io/tag/lxc.html">lxc</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/milestone.html">milestone</a> (2)</li>
-        <li><a href="http://rushiagr.github.io/tag/mysql.html">mysql</a> (2)</li>
-        <li><a href="http://rushiagr.github.io/tag/nontech.html">nontech</a> (3)</li>
-        <li><a href="http://rushiagr.github.io/tag/openid.html">openid</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/openstack.html">openstack</a> (10)</li>
-        <li><a href="http://rushiagr.github.io/tag/packaging.html">packaging</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/puppet.html">puppet</a> (2)</li>
-        <li><a href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a> (11)</li>
-        <li><a href="http://rushiagr.github.io/tag/quicstart.html">quicstart</a> (2)</li>
-        <li><a href="http://rushiagr.github.io/tag/screen.html">screen</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/squid.html">squid</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/storage.html">storage</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/tech.html">tech</a> (11)</li>
-        <li><a href="http://rushiagr.github.io/tag/technology.html">technology</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/tempest.html">tempest</a> (1)</li>
-        <li><a href="http://rushiagr.github.io/tag/testing.html">testing</a> (2)</li>
-        <li><a href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a> (13)</li>
-        <li><a href="http://rushiagr.github.io/tag/ubuntu.html">ubuntu</a> (8)</li>
-        <li><a href="http://rushiagr.github.io/tag/virtualization.html">virtualization</a> (2)</li>
+<div>
+  <article class="hentry" role="article">
+<header>
+      <h1 class="entry-title">Docker quick start notes</h1>
+      <p class="meta"><time datetime="2015-06-07T00:00:00" pubdate>Sun 07 June 2015</time></p>
+</header>
+
+  <div class="entry-content"><p>After reading about docker and containers, I thought let's try them out.
+Here are my notes. Obviously all of them are taken from Internet. Maybe this
+collection here will help someone start with docker faster than spending time
+searching all over the internet.</p>
+<p>It assumes your base OS is Ubuntu 14.04 Trusty Tahr (when was the last time
+you saw the codename spelled 'Trusty Tahr' and not 'Trusty'? :) ).</p>
+<p>Install docker</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">docker</span><span class="p">.</span><span class="n">io</span>
+</pre></div>
+
+
+<p>See docker version</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">version</span>
+</pre></div>
+
+
+<p>Pull an Ubuntu Trusty docker image</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">ubuntu</span><span class="o">:</span><span class="mf">14.04</span>
+</pre></div>
+
+
+<p>Alternatively, you can search for a docker image 'tutorial' in docker's repository</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">search</span> <span class="n">tutorial</span>
+</pre></div>
+
+
+<p>And them pull a docker image 'tutorial' by user 'learn'</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">learn</span><span class="o">/</span><span class="n">tutorial</span>
+</pre></div>
+
+
+<p>List all docker images present in the system</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">images</span>
+</pre></div>
+
+
+<p>Run a docker image, and execute command 'echo "hello world"' in the docker
+container created out of that image</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="n">ubuntu</span><span class="o">:</span><span class="mf">14.04</span> <span class="n">echo</span> <span class="s">&quot;hello world&quot;</span>
+</pre></div>
+
+
+<p>Container information is stored in /var/lib/docker</p>
+<p>If you run the above command multiple times, it will create a new container
+each time.</p>
+<p>To know the ID of the last container, run</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">ps</span> <span class="o">-</span><span class="n">l</span>
+</pre></div>
+
+
+<p>To list all the running containers</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">ps</span>
+</pre></div>
+
+
+<p>Note that the above command will not show the container we last run, because
+the container which we ran last time terminated just after it finished
+executing echo command.</p>
+<p>Create a new docker image by name <code>&lt;yourname&gt;/echo</code> by 'committing' the last
+container which you ran</p>
+<div class="highlight"><pre><span class="nx">sudo</span> <span class="nx">docker</span> <span class="nx">commit</span> <span class="o">&lt;</span><span class="nx">container</span> <span class="nb">ID</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nx">yourname</span><span class="o">&gt;/</span><span class="nx">echo</span>
+</pre></div>
+
+
+<p>Now running <code>sudo docker images</code> will list you two containers instead of one</p>
+<p>Now you can run this new docker container like this:</p>
+<div class="highlight"><pre><span class="nx">sudo</span> <span class="nx">docker</span> <span class="nb">run</span> <span class="o">&lt;</span><span class="nx">yourname</span><span class="o">&gt;/</span><span class="nx">echo</span> <span class="nx">ls</span> <span class="na">-alrth</span>
+</pre></div>
+
+
+<p>If we installed something, or created a file in the old container, it will
+be visible now in this container too.</p>
+<p>Get more information about a docker image or a running container:</p>
+<div class="highlight"><pre><span class="nx">sudo</span> <span class="nx">docker</span> <span class="nx">inspect</span> <span class="o">&lt;</span><span class="nx">yourname</span><span class="o">&gt;/</span><span class="nx">echo</span>
+</pre></div>
+
+
+<p>To push docker image to docker repository</p>
+<div class="highlight"><pre><span class="nx">sudo</span> <span class="nx">docker</span> <span class="nb">push</span> <span class="o">&lt;</span><span class="nx">yourname</span><span class="o">&gt;/</span><span class="nx">echo</span>
+</pre></div>
+
+
+<p>To download ubuntu Trusty base image if not present locally, and open a shell session into it</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">i</span> <span class="n">ubuntu</span><span class="o">:</span><span class="mf">14.04</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+
+
+<p>-i i.e. --interactive=false, keeps STDIN open even if not attached</p>
+<p>-t i.e. --tty=false allocates a pseudo tty</p>
+<p>Don't worry what these mean. If you add these options, you'll see that
+you already get logged in into the container shell, and the container
+only dies off once you exit from that session (usually by writing <code>exit</code>
+or pressing CTRL + D.</p>
+<p>To remove an image:</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">rmi</span> <span class="n">learn</span><span class="o">/</span><span class="n">tutorial</span>
+</pre></div>
+
+
+<h4>Things not covered in this tutorial:</h4>
+<ol>
+<li>Create your own custom docker images and share with other people:
+    <a href="https://docs.docker.com/userguide/dockerimages/">https://docs.docker.com/userguide/dockerimages/</a></li>
+</ol>
+<p>Cheers!</p></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">Rushi Agrawal</span>
+  </span>
+<time datetime="2015-06-07T00:00:00" pubdate>Sun 07 June 2015</time>  <span class="categories">
+    <a class="category" href="http://rushiagr.github.io/tag/containers.html">containers</a>
+    <a class="category" href="http://rushiagr.github.io/tag/docker.html">docker</a>
+    <a class="category" href="http://rushiagr.github.io/tag/technology.html">technology</a>
+    <a class="category" href="http://rushiagr.github.io/tag/lxc.html">lxc</a>
+    <a class="category" href="http://rushiagr.github.io/tag/virtualization.html">virtualization</a>
+    <a class="category" href="http://rushiagr.github.io/tag/cloud.html">cloud</a>
+    <a class="category" href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>
+    <a class="category" href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a>
+  </span>
+</p><div class="sharing">
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2015/06/07/docker-quick-start-notes/" data-via="reeshi_india" data-counturl="http://rushiagr.github.io/blog/2015/06/07/docker-quick-start-notes/" >Tweet</a>
+  <div class="g-plusone" data-size="medium"></div>
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
+</div>
 <aside class="sidebar">
   <section>
     <h1>Recent Posts</h1>
@@ -191,6 +289,9 @@
 </script>
 	<script type="text/javascript">
 	  var disqus_shortname = 'rushiagr';
+          var disqus_identifier = '/blog/2015/06/07/docker-quick-start-notes/';
+          var disqus_url = 'http://rushiagr.github.io/blog/2015/06/07/docker-quick-start-notes/';
+          var disqus_title = 'Docker quick start notes';
 	  (function() {
 	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
