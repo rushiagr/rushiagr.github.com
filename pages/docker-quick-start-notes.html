@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="/pages/docker-quick-start-notes.html" />
+
+    <title>  Sense, and Simplicity &mdash; Docker quick start notes
+</title>
+
+
+
+      <link type="application/rss+xml" rel="alternate" href="/feeds/all.rss.xml" title="Sense, and Simplicity RSS Feed">
+
+    <link rel="stylesheet" href="/theme/css/style.css">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <meta name="author" content="Rushi Agrawal">
+    <meta name="description" content="After reading about docker and containers, I thought let's try them out. Here are my notes. Obviously all of them are taken from Internet. Maybe this collection here will help someone start with docker faster than spending time searching all over the internet. It assumes your base OS is ...">
+  <meta name="tags" contents="">
+</head>
+
+<body>
+<header class="header">
+  <div class="container">
+    <div class="header-inner">
+      <h1 class="header-name">
+        <a class="nodec" href="">Sense, and Simplicity</a>
+      </h1>
+      <h3 class="header-text"></h3>
+      <ul class="header-menu list-inline">
+              <li class="muted">|</li>
+            <li><a class="nodec" href="/pages/docker-quick-start-notes.html">Docker quick start notes</a></li>
+              <li class="muted">|</li>
+          <li><a class="nodec icon-rss" href="/feeds/all.rss.xml"></a></li>
+      </ul>
+    </div>
+  </div>
+</header> <!-- /.header -->  <div class="container">
+  <div class="page">
+    <h1 class="title">Docker quick start notes</h1>
+    <div class="content">
+      <p>After reading about docker and containers, I thought let's try them out.
+Here are my notes. Obviously all of them are taken from Internet. Maybe this
+collection here will help someone start with docker faster than spending time
+searching all over the internet.</p>
+<p>It assumes your base OS is Ubuntu 14.04 Trusty Tahr (when was the last time
+you saw the codename spelled 'Trusty Tahr' and not 'Trusty'? :) ).</p>
+<p>Install docker</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">docker</span><span class="p">.</span><span class="n">io</span>
+</pre></div>
+
+
+<p>See docker version</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">version</span>
+</pre></div>
+
+
+<p>Pull an Ubuntu Trusty docker image</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">ubuntu</span><span class="o">:</span><span class="mf">14.04</span>
+</pre></div>
+
+
+<p>Alternatively, you can search for a docker image 'tutorial' in docker's repository</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">search</span> <span class="n">tutorial</span>
+</pre></div>
+
+
+<p>And them pull a docker image 'tutorial' by user 'learn'</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">learn</span><span class="o">/</span><span class="n">tutorial</span>
+</pre></div>
+
+
+<p>List all docker images present in the system</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">images</span>
+</pre></div>
+
+
+<p>Run a docker image, and execute command 'echo "hello world"' in the docker
+container created out of that image</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="n">ubuntu</span><span class="o">:</span><span class="mf">14.04</span> <span class="n">echo</span> <span class="s">&quot;hello world&quot;</span>
+</pre></div>
+
+
+<p>Container information is stored in /var/lib/docker</p>
+<p>If you run the above command multiple times, it will create a new container
+each time.</p>
+<p>To know the ID of the last container, run</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">ps</span> <span class="o">-</span><span class="n">l</span>
+</pre></div>
+
+
+<p>To list all the running containers</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">ps</span>
+</pre></div>
+
+
+<p>Note that the above command will not show the container we last run, because
+the container which we ran last time terminated just after it finished
+executing echo command.</p>
+<p>Create a new docker image by name <code>&lt;yourname&gt;/echo</code> by 'committing' the last
+container which you ran</p>
+<div class="highlight"><pre><span class="nx">sudo</span> <span class="nx">docker</span> <span class="nx">commit</span> <span class="o">&lt;</span><span class="nx">container</span> <span class="nb">ID</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nx">yourname</span><span class="o">&gt;/</span><span class="nx">echo</span>
+</pre></div>
+
+
+<p>Now running <code>sudo docker images</code> will list you two containers instead of one</p>
+<p>Now you can run this new docker container like this:</p>
+<div class="highlight"><pre><span class="nx">sudo</span> <span class="nx">docker</span> <span class="nb">run</span> <span class="o">&lt;</span><span class="nx">yourname</span><span class="o">&gt;/</span><span class="nx">echo</span> <span class="nx">ls</span> <span class="na">-alrth</span>
+</pre></div>
+
+
+<p>If we installed something, or created a file in the old container, it will
+be visible now in this container too.</p>
+<p>Get more information about a docker image or a running container:</p>
+<div class="highlight"><pre><span class="nx">sudo</span> <span class="nx">docker</span> <span class="nx">inspect</span> <span class="o">&lt;</span><span class="nx">yourname</span><span class="o">&gt;/</span><span class="nx">echo</span>
+</pre></div>
+
+
+<p>To push docker image to docker repository</p>
+<div class="highlight"><pre><span class="nx">sudo</span> <span class="nx">docker</span> <span class="nb">push</span> <span class="o">&lt;</span><span class="nx">yourname</span><span class="o">&gt;/</span><span class="nx">echo</span>
+</pre></div>
+
+
+<p>To download ubuntu Trusty base image if not present locally, and open a shell session into it</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">i</span> <span class="n">ubuntu</span><span class="o">:</span><span class="mf">14.04</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+
+
+<p>-i i.e. --interactive=false, keeps STDIN open even if not attached</p>
+<p>-t i.e. --tty=false allocates a pseudo tty</p>
+<p>Don't worry what these mean. If you add these options, you'll see that
+you already get logged in into the container shell, and the container
+only dies off once you exit from that session (usually by writing <code>exit</code>
+or pressing CTRL + D.</p>
+<p>To remove an image:</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">docker</span> <span class="n">rmi</span> <span class="n">learn</span><span class="o">/</span><span class="n">tutorial</span>
+</pre></div>
+
+
+<h4>Things not covered in this tutorial:</h4>
+<ol>
+<li>Create your own custom docker images and share with other people:
+    <a href="https://docs.docker.com/userguide/dockerimages/">https://docs.docker.com/userguide/dockerimages/</a></li>
+</ol>
+<p>Cheers!</p>
+    </div>
+  </div>
+  </div>
+<footer class="footer">
+  <div class="container">
+    <p class="text-center">
+      Rushi Agrawal, <a href="" target="_blank"></a> unless otherwise noted.
+    </p>
+    <div class="text-center">
+      Generated by <a href="http://getpelican.com" target="_blank">Pelican</a> with the <a href="http://github.com/nairobilug/pelican-alchemy">alchemy</a> theme.
+    </div>
+  </div>
+</footer> <!-- /.footer -->
+  <script src="/theme/js/jquery.min.js"></script>
+  <script src="/theme/js/bootstrap.min.js"></script>
+</body> <!-- 42 -->
+
+</html>
