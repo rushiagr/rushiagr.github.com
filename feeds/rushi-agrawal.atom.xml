@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Sense, and Simplicity</title><link href="http://rushiagr.github.io/" rel="alternate"></link><link href="http://rushiagr.github.io/feeds/rushi-agrawal.atom.xml" rel="self"></link><id>http://rushiagr.github.io/</id><updated>2015-07-24T00:00:00+05:30</updated><entry><title>mod_wsgi parallelization notes</title><link href="http://rushiagr.github.io/blog/2015/07/24/mod_wsgi-parallelization-notes/" rel="alternate"></link><updated>2015-07-24T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2015-07-24:blog/2015/07/24/mod_wsgi-parallelization-notes/</id><summary type="html">&lt;p&gt;This is my notes on
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Sense, and Simplicity</title><link href="http://rushiagr.github.io/" rel="alternate"></link><link href="http://rushiagr.github.io/feeds/rushi-agrawal.atom.xml" rel="self"></link><id>http://rushiagr.github.io/</id><updated>2015-07-24T00:00:00+05:30</updated><entry><title>Apache mod_wsgi parallelization notes</title><link href="http://rushiagr.github.io/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/" rel="alternate"></link><updated>2015-07-24T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2015-07-24:blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</id><summary type="html">&lt;p&gt;This is my notes on
 &lt;a href="https://code.google.com/p/modwsgi/wiki/ProcessesAndThreading"&gt;'Processes and Threading'&lt;/a&gt;
-doc by the author of mod_wsgi. This blog post just serves as a 'quick refresher', and
+doc by the author of mod_wsgi module of Apache. This blog post just serves as a 'quick refresher', and
 is only useful if you have read the original document but it's been too long since you
 read it :)&lt;/p&gt;
 &lt;h2&gt;Apache with mod_wsgi&lt;/h2&gt;

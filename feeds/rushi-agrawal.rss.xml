@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Sense, and Simplicity</title><link>http://rushiagr.github.io/</link><description></description><atom:link href="http://rushiagr.github.io/feeds/rushi-agrawal.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 24 Jul 2015 00:00:00 +0530</lastBuildDate><item><title>mod_wsgi parallelization notes</title><link>http://rushiagr.github.io/blog/2015/07/24/mod_wsgi-parallelization-notes/</link><description>&lt;p&gt;This is my notes on
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Sense, and Simplicity</title><link>http://rushiagr.github.io/</link><description></description><atom:link href="http://rushiagr.github.io/feeds/rushi-agrawal.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 24 Jul 2015 00:00:00 +0530</lastBuildDate><item><title>Apache mod_wsgi parallelization notes</title><link>http://rushiagr.github.io/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</link><description>&lt;p&gt;This is my notes on
 &lt;a href="https://code.google.com/p/modwsgi/wiki/ProcessesAndThreading"&gt;'Processes and Threading'&lt;/a&gt;
-doc by the author of mod_wsgi. This blog post just serves as a 'quick refresher', and
+doc by the author of mod_wsgi module of Apache. This blog post just serves as a 'quick refresher', and
 is only useful if you have read the original document but it's been too long since you
 read it :)&lt;/p&gt;
 &lt;h2&gt;Apache with mod_wsgi&lt;/h2&gt;
@@ -27,7 +27,7 @@ and the code which maps static file URLs to actual static files to serve is
 written in C, and is free from GIL.&lt;/p&gt;
 &lt;p&gt;In the wsgi python code, two environment variables: 'wsgi.multithread' and
 'wsgi.multiprocess' will define which of the above two modules are going to be
-used.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Rushi Agrawal</dc:creator><pubDate>Fri, 24 Jul 2015 00:00:00 +0530</pubDate><guid>tag:rushiagr.github.io,2015-07-24:blog/2015/07/24/mod_wsgi-parallelization-notes/</guid><category>cloud</category><category>cheatsheet</category><category>notes</category><category>apache</category><category>server</category><category>devops</category><category>operations</category><category>systems</category></item><item><title>Docker quick start notes</title><link>http://rushiagr.github.io/blog/2015/06/07/docker-quick-start-notes/</link><description>&lt;p&gt;After reading about docker and containers, I thought let's try them out.
+used.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Rushi Agrawal</dc:creator><pubDate>Fri, 24 Jul 2015 00:00:00 +0530</pubDate><guid>tag:rushiagr.github.io,2015-07-24:blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</guid><category>cloud</category><category>cheatsheet</category><category>notes</category><category>apache</category><category>server</category><category>devops</category><category>operations</category><category>systems</category></item><item><title>Docker quick start notes</title><link>http://rushiagr.github.io/blog/2015/06/07/docker-quick-start-notes/</link><description>&lt;p&gt;After reading about docker and containers, I thought let's try them out.
 Here are my notes. Obviously all of them are taken from Internet. Maybe this
 collection here will help someone start with docker faster than spending time
 searching all over the internet.&lt;/p&gt;
