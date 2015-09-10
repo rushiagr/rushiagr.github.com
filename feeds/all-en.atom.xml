@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Sense, and Simplicity</title><link href="http://rushiagr.github.io/" rel="alternate"></link><link href="http://rushiagr.github.io/feeds/all-en.atom.xml" rel="self"></link><id>http://rushiagr.github.io/</id><updated>2015-07-24T00:00:00+05:30</updated><entry><title>Apache mod_wsgi parallelization notes</title><link href="http://rushiagr.github.io/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/" rel="alternate"></link><updated>2015-07-24T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2015-07-24:blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</id><summary type="html">&lt;p&gt;This is my notes on
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Sense, and Simplicity</title><link href="http://rushiagr.github.io/" rel="alternate"></link><link href="http://rushiagr.github.io/feeds/all-en.atom.xml" rel="self"></link><id>http://rushiagr.github.io/</id><updated>2015-09-10T00:00:00+05:30</updated><entry><title>OpenStack Keystone with Cassandra Database in DevStack</title><link href="http://rushiagr.github.io/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/" rel="alternate"></link><updated>2015-09-10T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2015-09-10:blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</id><summary type="html">&lt;p&gt;Using Cassandra as backing database for OpenStack Keystone was our solution
+to multi-region deployment problem of OpenStack cloud. This blog post is not
+to discuss the problem. We are talking about how to have a development
+environment to play around with Keystone working with a dev Cassandra deployment.&lt;/p&gt;
+&lt;h4&gt;"Just run this script and you're all set!"&lt;/h4&gt;
+&lt;p&gt;I've put together all commands into a script which can be found here:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nl"&gt;https:&lt;/span&gt;&lt;span class="c1"&gt;//raw.githubusercontent.com/rushiagr/keystone-cassandra/master/keystone-cassandra.sh&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you have a fresh Ubuntu VM, just copy this script into that machine and
+execute it. Give it 15-20 mins at least (depending upon your internet connection), and it will set up:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;DevStack with Keystone installed and running with all the data stored in/fetched from local Cassandra installation&lt;/li&gt;
+&lt;li&gt;A Cassandra development cluster (CCM) with 5 nodes and replication factor of 3&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Of course, you will need Internet access inside the VM. Also, give the VM around
+3GB of RAM, else things might not work properly. Actually, if you change the
+Cassandra configuration to one node instead of 5, probably 2 GB will suffice. But I've
+not tried it. (Let me know if you tried it and it works!)&lt;/p&gt;
+&lt;p&gt;Notes:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Remember, this is a dev cluster. It's not supposed to be used in production. Hell, it's not even ready for it.&lt;/li&gt;
+&lt;li&gt;Keystone is running on 127.0.0.1. I've done this so that it will work on any person's VM&lt;/li&gt;
+&lt;li&gt;I've tested only on a Ubuntu Trusty VM, on Amazon EC2 m4.large instance which has 8 GB RAM. OpenStack on AWS -- ironic, isn't it? :)&lt;/li&gt;
+&lt;li&gt;I'm using Java which comes with Ubuntu's APT packages. In production one is supposed to use Oracle Java as per Cassandra folks.&lt;/li&gt;
+&lt;li&gt;The code for this script is located at &lt;code&gt;https://github.com/rushiagr/keystone/tree/liberty-cassandra&lt;/code&gt;, i.e. on &lt;code&gt;liberty-cassandra&lt;/code&gt; branch. Note that this work is currently based upon Keystone's Liberty code as on first week of June. It might not work directly with latest code as it might require fixing imports which might have become outdated. However, I don't think it's going to take more than an hour to make it work with latest code; just that I don't have enough motivation right now to keep the code updated with 'latest' all the time.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;Credits&lt;/h4&gt;
+&lt;p&gt;This work was done by the 'distributed database' team of 4 people: Ajaya Agrawal, Rushi Agrawal (me), Vivek Dhayaal and Yogeshwar Shenoy, listed in alphabetical order. And obviously Reliance, for providing us an opportunity to work on this thing.&lt;/p&gt;</summary><category term="cloud"></category><category term="cheatsheet"></category><category term="notes"></category><category term="openstack"></category><category term="keystone"></category><category term="cassandra"></category><category term="nosql"></category><category term="databases"></category><category term="distributed"></category><category term="scalability"></category><category term="devstack"></category></entry><entry><title>Apache mod_wsgi parallelization notes</title><link href="http://rushiagr.github.io/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/" rel="alternate"></link><updated>2015-07-24T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2015-07-24:blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</id><summary type="html">&lt;p&gt;This is my notes on
 &lt;a href="https://code.google.com/p/modwsgi/wiki/ProcessesAndThreading"&gt;'Processes and Threading'&lt;/a&gt;
 doc by the author of mod_wsgi module of Apache. This blog post just serves as a 'quick refresher', and
 is only useful if you have read the original document but it's been too long since you
