@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Sense, and Simplicity - operations</title>
+  <title>Better way to view MySQL tables</title>
   <meta name="author" content="Rushi Agrawal">
 
   <link href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
@@ -41,7 +41,7 @@
 
 <ul class="main-navigation">
       <li><a href="/pages/about-me.html">About me</a></li>
-    <li >
+    <li class="active">
     <a href="/category/tech.html">Tech</a>
     </li>
     <li >
@@ -50,30 +50,99 @@
 </ul></nav>
   <div id="main">
     <div id="content">
-<div class="blog-index">
-  		<article>
+<div>
+  <article class="hentry" role="article">
 <header>
-      <h1 class="entry-title">
-        <a href="/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/">Apache mod_wsgi parallelization notes</a>
-      </h1>
-      <p class="meta"><time datetime="2015-07-24T00:00:00" pubdate>Fri 24 July 2015</time></p>
+      <h1 class="entry-title">Better way to view MySQL tables</h1>
+      <p class="meta"><time datetime="2015-12-12T00:00:00" pubdate>Sat 12 December 2015</time></p>
 </header>
 
-  <div class="entry-content"><p>Short notes about parallelizing WSGI apps under Apache</p></div>
-  <footer>
-    <a rel="full-article" href="/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/">Read On &crarr;</a>
-  </footer>
-  		</article>
-<div class="pagination">
+  <div class="entry-content"><h3>The problem</h3>
+<p>You are trying to print a MySQL table with a large number of columns, with 
+<code>SELECT *</code> command. You type <code>SELECT * FROM mysql.user LIMIT 1</code>, and your terminal
+becomes <a href="https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-table-with-many-rows-messy.png">this</a>.
+If you wanted to view more than one row, you're in a trouble :)</p>
+<h3>The solution</h3>
+<p>Run MySQL with this option:</p>
+<div class="highlight"><pre><span class="n">mysql</span> <span class="o">--</span><span class="n">pager</span><span class="o">=</span><span class="s">&quot;less --chop-long-lines --quit-if-one-screen --no-init&#39;</span>
+</pre></div>
 
-  <br />
-</div></div>
+
+<p>This will make your table display only the rows it can in the current screen, something like <a href="https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-with-less-pager-neat.png">this</a>. You can
+use the arrow keys to move sideways to view the hidden column. Pressing the 'right' arrow key will move half page towards right. Neat, isn't it?</p>
+<p>You can create an alias for mysql:</p>
+<div class="highlight"><pre><span class="cp"># Using shorter version of &#39;less&#39; flags mentioned above</span>
+<span class="n">alias</span> <span class="n">mysql</span><span class="o">=</span><span class="err">&#39;</span><span class="n">mysql</span> <span class="o">-</span><span class="n">SFX</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<p>You can put the above line in your <code>~/.bashrc</code> file to load this alias
+in every new terminal session.</p>
+<h3>Bonus point for Vim users</h3>
+<p><code>less</code> allows using keys <code>j</code> and <code>k</code> for scrolling down and scrolling up. Unfortunately, you cannot directly use keys <code>h</code> and <code>l</code> to move sideways using <code>less</code>. Fortunately, you can map <code>h</code> and <code>l</code> to move left or right, respectively. Here's how to do that:</p>
+<p>Create a file <code>.lesskey</code> in your home directory, with the following contents</p>
+<div class="highlight"><pre><span class="n">l</span> <span class="n">noaction</span> <span class="mi">10</span><span class="err">\</span><span class="n">e</span><span class="p">)</span>
+<span class="n">h</span> <span class="n">noaction</span> <span class="mi">10</span><span class="err">\</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Now run this command, to generate <code>~/.less</code> file.</p>
+<div class="highlight"><pre><span class="n">lesskey</span>
+</pre></div>
+
+
+<p>This will generate a binary file which <code>less</code> understands. If you now start a new MySQL terminal session (of course with the above said <code>--pages</code> flag), you can use Vim's <code>HJKL</code> movements. Here I have specified to move 10 characters to the right if you make one 'right' Vim movement.</p>
+<h3>Quick setup script</h3>
+<p>Don't want to do the above stuff manually? Just run this command and your computer will be set up in a second!</p>
+<div class="highlight"><pre><span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="s">&quot;$(wget -q https://raw.githubusercontent.com/rushiagr/public/master/scripts/mysql-pretty-table.sh -O -)&quot;</span>
+</pre></div>
+
+
+<p>Note that changes will take effect from a new shell session (or you can run <code>source ~/.bashrc</code> if you want things to work in the current session too.</p>
+<h3>More information</h3>
+<p>Find more information at below links:</p>
+<p><a href="http://unix.stackexchange.com/a/169969/91602">About mapping 'h' and 'k' to Vim movements in 'less'</a></p>
+<p><a href="http://stackoverflow.com/a/6422698/1143173">About using 'less' as MySQL pager</a></p>
+<p>Cheers!</p></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">Rushi Agrawal</span>
+  </span>
+<time datetime="2015-12-12T00:00:00" pubdate>Sat 12 December 2015</time>  <span class="categories">
+    <a class="category" href="/tag/cheatsheet.html">cheatsheet</a>
+    <a class="category" href="/tag/mysql.html">mysql</a>
+    <a class="category" href="/tag/vim.html">vim</a>
+    <a class="category" href="/tag/terminal.html">terminal</a>
+    <a class="category" href="/tag/commandline.html">commandline</a>
+    <a class="category" href="/tag/cli.html">cli</a>
+  </span>
+</p><div class="sharing">
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="/blog/2015/12/12/better-way-to-view-mysql-tables/" data-via="rushiagr" data-counturl="/blog/2015/12/12/better-way-to-view-mysql-tables/" >Tweet</a>
+  <div class="g-plusone" data-size="medium"></div>
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+</div>    </footer>
+  </article>
+
+</div>
 <aside class="sidebar">
   <section>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="/blog/2015/12/12/better-way-to-view-mysql-tables/">Better way to view MySQL tables</a>
+      </li>
+      <li class="post">
+          <a href="/blog/2015/09/14/quick-justdial-scraper/">Quick JustDial scraper</a>
+      </li>
+      <li class="post">
+          <a href="/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/">OpenStack Keystone with Cassandra Database in DevStack</a>
+      </li>
+      <li class="post">
           <a href="/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/">Apache mod_wsgi parallelization notes</a>
+      </li>
+      <li class="post">
+          <a href="/blog/2015/06/07/docker-quick-start-notes/">Docker quick start notes</a>
       </li>
     </ul>
   </section>
@@ -135,7 +204,7 @@
 </aside>    </div>
   </div>
   <footer role="contentinfo"><p>
-    Copyright &copy;  2015  - Rushi Agrawal -
+    Copyright &copy;  2012-2015  - Rushi Agrawal -
   <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
 </p></footer>
     <script type="text/javascript">
@@ -158,6 +227,9 @@
 </script>
 	<script type="text/javascript">
 	  var disqus_shortname = 'rushiagr';
+          var disqus_identifier = '/blog/2015/12/12/better-way-to-view-mysql-tables/';
+          var disqus_url = '/blog/2015/12/12/better-way-to-view-mysql-tables/';
+          var disqus_title = 'Better way to view MySQL tables';
 	  (function() {
 	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
