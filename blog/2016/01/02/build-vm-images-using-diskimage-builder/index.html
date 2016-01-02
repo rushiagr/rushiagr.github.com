@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Sense, and Simplicity - operations</title>
+  <title>Build VM Images using Diskimage-builder</title>
   <meta name="author" content="Rushi Agrawal">
 
   <link href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
@@ -41,7 +41,7 @@
 
 <ul class="main-navigation">
       <li><a href="http://rushiagr.github.io/pages/about-me.html">About me</a></li>
-    <li >
+    <li class="active">
     <a href="http://rushiagr.github.io/category/tech.html">Tech</a>
     </li>
     <li >
@@ -50,30 +50,109 @@
 </ul></nav>
   <div id="main">
     <div id="content">
-<div class="blog-index">
-  		<article>
+<div>
+  <article class="hentry" role="article">
 <header>
-      <h1 class="entry-title">
-        <a href="http://rushiagr.github.io/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/">Apache mod_wsgi parallelization notes</a>
-      </h1>
-      <p class="meta"><time datetime="2015-07-24T00:00:00" pubdate>Fri 24 July 2015</time></p>
+      <h1 class="entry-title">Build VM Images using Diskimage-builder</h1>
+      <p class="meta"><time datetime="2016-01-02T00:00:00" pubdate>Sat 02 January 2016</time></p>
 </header>
 
-  <div class="entry-content"><p>Short notes about parallelizing WSGI apps under Apache</p></div>
-  <footer>
-    <a rel="full-article" href="http://rushiagr.github.io/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/">Read On &crarr;</a>
-  </footer>
-  		</article>
-<div class="pagination">
+  <div class="entry-content"><p>OpenStack has this nice tool <a href="https://github.com/openstack/diskimage-builder">diskimage-builder</a>to create virtual machine images without the need
+of a cloud. These vm images can then be uploaded to cloud (e.g. in Glance for
+OpenStack cloud), and they become immediately usable. You can also create VMs in
+virtualbox from these images (though I don't remember exact steps to make the
+image work with VirtualBox. Do let me know if you get the VM working with
+VirtualBox/Vagrant)</p>
+<p>Here I'll describe ways to create a bare cloud-uploadable Ubuntu image. I will
+also provide information as to how to build an image which will have some
+packages pre-installed in them. Note that the commands here will create only
+one image file as opposed to three -- one each for ramdisk, kernel and machine image.</p>
+<p>Prerequisites</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">qemu</span><span class="o">-</span><span class="n">utils</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">http</span><span class="o">:</span><span class="c1">//github.com/openstack/diskimage-builder</span>
+<span class="n">cd</span> <span class="n">diskimage</span><span class="o">-</span><span class="n">builder</span>
+<span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+</pre></div>
 
-  <br />
-</div></div>
+
+<p>All the binaries are in bin filder. You can go in the <code>bin\</code> directory to
+execute diskimage-builder commands, or add that directory to your <code>$PATH</code></p>
+<p>Create bare Ubuntu image, which you can directly upload to a cloud e.g.
+OpenStack. </p>
+<div class="highlight"><pre><span class="n">disk</span><span class="o">-</span><span class="n">image</span><span class="o">-</span><span class="n">create</span> <span class="o">-</span><span class="n">a</span> <span class="n">amd64</span> <span class="o">-</span><span class="n">o</span> <span class="n">ubuntu</span><span class="o">-</span><span class="n">amd64</span> <span class="n">vm</span> <span class="n">ubuntu</span>
+</pre></div>
+
+
+<p>Image generated will be of name <code>ubuntu-amd64.qcow2</code>. Such an image will be for
+same OS version as your host Ubuntu version. If you want
+to build an image against a different OS version, specify
+<code>DIB_RELEASE=&lt;releasename&gt;</code> as a prefix to the command.</p>
+<div class="highlight"><pre><span class="n">DIB_RELEASE</span><span class="o">=</span><span class="n">trusty</span> <span class="n">disk</span><span class="o">-</span><span class="n">image</span><span class="o">-</span><span class="n">create</span> <span class="o">-</span><span class="n">a</span> <span class="n">amd64</span> <span class="o">-</span><span class="n">o</span> <span class="n">ubuntu</span><span class="o">-</span><span class="n">amd64</span> <span class="n">vm</span> <span class="n">ubuntu</span>
+</pre></div>
+
+
+<p>Create an Ubuntu VM image which you can boot via KVM or VirtualBox/Vagrant.
+You will need to manually
+add public keys to authorized_keys for a user inside that VM.</p>
+<div class="highlight"><pre><span class="n">disk</span><span class="o">-</span><span class="n">image</span><span class="o">-</span><span class="n">create</span> <span class="o">-</span><span class="n">o</span> <span class="n">base</span> <span class="o">-</span><span class="n">a</span> <span class="n">amd64</span> <span class="n">vm</span> <span class="n">base</span> <span class="n">ubuntu</span> <span class="n">cloud</span><span class="o">-</span><span class="n">init</span><span class="o">-</span><span class="n">nocloud</span>
+</pre></div>
+
+
+<p>Create an image with <code>mysql-server</code> and <code>tmux</code> package (and their dependencies) installed inside the image:</p>
+<div class="highlight"><pre><span class="n">disk</span><span class="o">-</span><span class="n">image</span><span class="o">-</span><span class="n">create</span> <span class="o">-</span><span class="n">a</span> <span class="n">amd64</span> <span class="o">-</span><span class="n">o</span> <span class="n">ubuntu</span><span class="o">-</span><span class="n">amd64</span> <span class="o">-</span><span class="n">p</span> <span class="n">mysql</span><span class="o">-</span><span class="n">server</span><span class="p">,</span><span class="n">tmux</span> <span class="n">vm</span> <span class="n">ubuntu</span>
+</pre></div>
+
+
+<p>How to upload image to glance:</p>
+<div class="highlight"><pre><span class="n">glance</span> <span class="n">image</span><span class="o">-</span><span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">dib</span><span class="o">-</span><span class="n">ubuntu</span> <span class="o">--</span><span class="n">disk</span><span class="o">-</span><span class="n">format</span><span class="o">=</span><span class="n">qcow2</span> <span class="o">--</span><span class="n">container</span><span class="o">-</span><span class="n">format</span><span class="o">=</span><span class="n">bare</span> <span class="o">&lt;</span> <span class="n">img</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">-</span><span class="n">amd64</span><span class="p">.</span><span class="n">qcow2</span>
+</pre></div>
+
+
+<p>Where <code>ubuntu-amd64.qcow2</code> is the image to upload.</p>
+<p>Thanks!</p></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">Rushi Agrawal</span>
+  </span>
+<time datetime="2016-01-02T00:00:00" pubdate>Sat 02 January 2016</time>  <span class="categories">
+    <a class="category" href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>
+    <a class="category" href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a>
+    <a class="category" href="http://rushiagr.github.io/tag/notes.html">notes</a>
+    <a class="category" href="http://rushiagr.github.io/tag/cloud.html">cloud</a>
+    <a class="category" href="http://rushiagr.github.io/tag/openstack.html">openstack</a>
+    <a class="category" href="http://rushiagr.github.io/tag/vm.html">vm</a>
+  </span>
+</p><div class="sharing">
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2016/01/02/build-vm-images-using-diskimage-builder/" data-via="rushiagr" data-counturl="http://rushiagr.github.io/blog/2016/01/02/build-vm-images-using-diskimage-builder/" >Tweet</a>
+  <div class="g-plusone" data-size="medium"></div>
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
+</div>
 <aside class="sidebar">
   <section>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
-          <a href="http://rushiagr.github.io/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/">Apache mod_wsgi parallelization notes</a>
+          <a href="http://rushiagr.github.io/blog/2016/01/02/better-aws-command-line-interface/">Better AWS Command Line Interface</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2016/01/02/build-vm-images-using-diskimage-builder/">Build VM Images using Diskimage-builder</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2015/12/12/better-way-to-view-mysql-tables/">Better way to view MySQL tables</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2015/09/14/quick-justdial-scraper/">Quick JustDial scraper</a>
+      </li>
+      <li class="post">
+          <a href="http://rushiagr.github.io/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/">OpenStack Keystone with Cassandra Database in DevStack</a>
       </li>
     </ul>
   </section>
@@ -135,7 +214,7 @@
 </aside>    </div>
   </div>
   <footer role="contentinfo"><p>
-    Copyright &copy;  2015  - Rushi Agrawal -
+    Copyright &copy;  2012-2016  - Rushi Agrawal -
   <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
 </p></footer>
     <script type="text/javascript">
@@ -158,6 +237,9 @@
 </script>
 	<script type="text/javascript">
 	  var disqus_shortname = 'rushiagr';
+          var disqus_identifier = '/blog/2016/01/02/build-vm-images-using-diskimage-builder/';
+          var disqus_url = 'http://rushiagr.github.io/blog/2016/01/02/build-vm-images-using-diskimage-builder/';
+          var disqus_title = 'Build VM Images using Diskimage-builder';
 	  (function() {
 	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
