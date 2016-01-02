@@ -208,7 +208,53 @@ the idea! I've created a repository at
 &lt;a href="http://github.com/rushiagr/aclih"&gt;http://github.com/rushiagr/aclih&lt;/a&gt; where
 please feel free to submit pull requests or issues. Interested in writing
 'rmvm' to delete VM anyone? :)&lt;/p&gt;
-&lt;p&gt;Thank you :)&lt;/p&gt;</summary><category term="commandline"></category><category term="cli"></category><category term="terminal"></category><category term="ux"></category><category term="aws"></category><category term="python"></category><category term="boto"></category></entry><entry><title>Quick JustDial scraper</title><link href="http://rushiagr.github.io/blog/2015/09/14/quick-justdial-scraper/" rel="alternate"></link><updated>2015-09-14T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2015-09-14:blog/2015/09/14/quick-justdial-scraper/</id><summary type="html">&lt;p&gt;So my friend asked me to scrape data from JustDial and give it to him in an excel sheet.
+&lt;p&gt;Thank you :)&lt;/p&gt;</summary><category term="commandline"></category><category term="cli"></category><category term="terminal"></category><category term="ux"></category><category term="aws"></category><category term="python"></category><category term="boto"></category></entry><entry><title>Better way to view MySQL tables</title><link href="http://rushiagr.github.io/blog/2015/12/12/better-way-to-view-mysql-tables/" rel="alternate"></link><updated>2015-12-12T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2015-12-12:blog/2015/12/12/better-way-to-view-mysql-tables/</id><summary type="html">&lt;h3&gt;The problem&lt;/h3&gt;
+&lt;p&gt;You are trying to print a MySQL table with a large number of columns, with 
+&lt;code&gt;SELECT *&lt;/code&gt; command. You type &lt;code&gt;SELECT * FROM mysql.user LIMIT 1&lt;/code&gt;, and your terminal
+becomes &lt;a href="https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-table-with-many-rows-messy.png"&gt;this&lt;/a&gt;.
+If you wanted to view more than one row, you're in a trouble :)&lt;/p&gt;
+&lt;h3&gt;The solution&lt;/h3&gt;
+&lt;p&gt;Run MySQL with this option:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mysql&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;pager&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;less --chop-long-lines --quit-if-one-screen --no-init&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will make your table display only the rows it can in the current screen, something like &lt;a href="https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-with-less-pager-neat.png"&gt;this&lt;/a&gt;. You can
+use the arrow keys to move sideways to view the hidden column. Pressing the 'right' arrow key will move half page towards right. Neat, isn't it?&lt;/p&gt;
+&lt;p&gt;You can create an alias for mysql:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;# Using shorter version of &amp;#39;less&amp;#39; flags mentioned above&lt;/span&gt;
+&lt;span class="n"&gt;alias&lt;/span&gt; &lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;SFX&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can put the above line in your &lt;code&gt;~/.bashrc&lt;/code&gt; file to load this alias
+in every new terminal session.&lt;/p&gt;
+&lt;h3&gt;Bonus point for Vim users&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;less&lt;/code&gt; allows using keys &lt;code&gt;j&lt;/code&gt; and &lt;code&gt;k&lt;/code&gt; for scrolling down and scrolling up. Unfortunately, you cannot directly use keys &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move sideways using &lt;code&gt;less&lt;/code&gt;. Fortunately, you can map &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move left or right, respectively. Here's how to do that:&lt;/p&gt;
+&lt;p&gt;Create a file &lt;code&gt;.lesskey&lt;/code&gt; in your home directory, with the following contents&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="n"&gt;noaction&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="n"&gt;noaction&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now run this command, to generate &lt;code&gt;~/.less&lt;/code&gt; file.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;lesskey&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will generate a binary file which &lt;code&gt;less&lt;/code&gt; understands. If you now start a new MySQL terminal session (of course with the above said &lt;code&gt;--pages&lt;/code&gt; flag), you can use Vim's &lt;code&gt;HJKL&lt;/code&gt; movements. Here I have specified to move 10 characters to the right if you make one 'right' Vim movement.&lt;/p&gt;
+&lt;h3&gt;Quick setup script&lt;/h3&gt;
+&lt;p&gt;Don't want to do the above stuff manually? Just run this command and your computer will be set up in a second!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;$(wget -q https://raw.githubusercontent.com/rushiagr/public/master/scripts/mysql-pretty-table.sh -O -)&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Note that changes will take effect from a new shell session (or you can run &lt;code&gt;source ~/.bashrc&lt;/code&gt; if you want things to work in the current session too.&lt;/p&gt;
+&lt;h3&gt;More information&lt;/h3&gt;
+&lt;p&gt;Find more information at below links:&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://unix.stackexchange.com/a/169969/91602"&gt;About mapping 'h' and 'k' to Vim movements in 'less'&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://stackoverflow.com/a/6422698/1143173"&gt;About using 'less' as MySQL pager&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Cheers!&lt;/p&gt;</summary><category term="cheatsheet"></category><category term="mysql"></category><category term="vim"></category><category term="terminal"></category><category term="commandline"></category><category term="cli"></category></entry><entry><title>Quick JustDial scraper</title><link href="http://rushiagr.github.io/blog/2015/09/14/quick-justdial-scraper/" rel="alternate"></link><updated>2015-09-14T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2015-09-14:blog/2015/09/14/quick-justdial-scraper/</id><summary type="html">&lt;p&gt;So my friend asked me to scrape data from JustDial and give it to him in an excel sheet.
 I thought let's give it a try. He needed
 name of firm, address and phone number of any JustDial URL he wants to scrape. After effectively
 around 4 hours of work, the below script was created.&lt;/p&gt;
