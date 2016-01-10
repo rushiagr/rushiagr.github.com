@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Apache mod_wsgi parallelization notes</title>
+  <title>Sense, and Simplicity - productivity</title>
   <meta name="author" content="Rushi Agrawal">
 
   <link href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
@@ -41,7 +41,7 @@
 
 <ul class="main-navigation">
       <li><a href="http://rushiagr.github.io/pages/about-me.html">About me</a></li>
-    <li class="active">
+    <li >
     <a href="http://rushiagr.github.io/category/tech.html">Tech</a>
     </li>
     <li >
@@ -50,87 +50,30 @@
 </ul></nav>
   <div id="main">
     <div id="content">
-<div>
-  <article class="hentry" role="article">
+<div class="blog-index">
+  		<article>
 <header>
-      <h1 class="entry-title">Apache mod_wsgi parallelization notes</h1>
-      <p class="meta"><time datetime="2015-07-24T00:00:00" pubdate>Fri 24 July 2015</time></p>
+      <h1 class="entry-title">
+        <a href="http://rushiagr.github.io/blog/2016/01/10/tmux-session-shortcuts/">Tmux session shortcuts</a>
+      </h1>
+      <p class="meta"><time datetime="2016-01-10T00:00:00" pubdate>Sun 10 January 2016</time></p>
 </header>
 
-  <div class="entry-content"><p>This is my notes on
-<a href="https://code.google.com/p/modwsgi/wiki/ProcessesAndThreading">'Processes and Threading'</a>
-doc by the author of mod_wsgi module of Apache. This blog post just serves as a 'quick refresher', and
-is only useful if you have read the original document but it's been too long since you
-read it :)</p>
-<h2>Apache with mod_wsgi</h2>
-<p>A Python application can run with multiple processes as well as multiple threads
-with mod_wsgi.</p>
-<h3>Prefork multiprocessing module</h3>
-<p>Apache creates multiple processes, and each request is handled by one process.
-A process only handles one request at a time.
-This means, if you have set number of processes to 1, there will be only one
-request handeled at a time overall.</p>
-<h3>Worker multiprocessing module</h3>
-<p>Multiple processes, and multiple threads in each processa.
-Even if a process is handling a request, another thread in the same process
-can handle one more request.
-You might need some synchronization primitive to make sure multiple threads
-of same process don't corrupt shared memory (only occurs when shared memory
-is mutated)</p>
-<h3>But GIL?</h3>
-<p>Python GIL problem is largely alleviated with mod_wsgi since multiple processes
-can handle requests, and GIL has impact ranging to only one process. One more
-point to note is that the apache code which maps a URL/request to a wsgi application,
-and the code which maps static file URLs to actual static files to serve is
-written in C, and is free from GIL.</p>
-<p>In the wsgi python code, two environment variables: 'wsgi.multithread' and
-'wsgi.multiprocess' will define which of the above two modules are going to be
-used.</p></div>
-    <footer>
-<p class="meta">
-  <span class="byline author vcard">
-    Posted by <span class="fn">Rushi Agrawal</span>
-  </span>
-<time datetime="2015-07-24T00:00:00" pubdate>Fri 24 July 2015</time>  <span class="categories">
-    <a class="category" href="http://rushiagr.github.io/tag/cloud.html">cloud</a>
-    <a class="category" href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>
-    <a class="category" href="http://rushiagr.github.io/tag/notes.html">notes</a>
-    <a class="category" href="http://rushiagr.github.io/tag/apache.html">apache</a>
-    <a class="category" href="http://rushiagr.github.io/tag/server.html">server</a>
-    <a class="category" href="http://rushiagr.github.io/tag/devops.html">devops</a>
-    <a class="category" href="http://rushiagr.github.io/tag/operations.html">operations</a>
-    <a class="category" href="http://rushiagr.github.io/tag/systems.html">systems</a>
-  </span>
-</p><div class="sharing">
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/" data-via="rushiagr" data-counturl="http://rushiagr.github.io/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/" >Tweet</a>
-  <div class="g-plusone" data-size="medium"></div>
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-</div>    </footer>
-  </article>
+  <div class="entry-content"><p>Tmux session management commands are too verbose. I created shortcuts for them.</p></div>
+  <footer>
+    <a rel="full-article" href="http://rushiagr.github.io/blog/2016/01/10/tmux-session-shortcuts/">Read On &crarr;</a>
+  </footer>
+  		</article>
+<div class="pagination">
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
-  </section>
-</div>
+  <br />
+</div></div>
 <aside class="sidebar">
   <section>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
           <a href="http://rushiagr.github.io/blog/2016/01/10/tmux-session-shortcuts/">Tmux session shortcuts</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/02/better-aws-command-line-interface/">Better AWS Command Line Interface</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/02/build-vm-images-using-diskimage-builder/">Build VM Images using Diskimage-builder</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2015/12/12/better-way-to-view-mysql-tables/">Better way to view MySQL tables</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2015/09/14/quick-justdial-scraper/">Quick JustDial scraper</a>
       </li>
     </ul>
   </section>
@@ -192,7 +135,7 @@ used.</p></div>
 </aside>    </div>
   </div>
   <footer role="contentinfo"><p>
-    Copyright &copy;  2012-2016  - Rushi Agrawal -
+    Copyright &copy;  2016  - Rushi Agrawal -
   <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
 </p></footer>
     <script type="text/javascript">
@@ -215,9 +158,6 @@ used.</p></div>
 </script>
 	<script type="text/javascript">
 	  var disqus_shortname = 'rushiagr';
-          var disqus_identifier = '/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/';
-          var disqus_url = 'http://rushiagr.github.io/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/';
-          var disqus_title = 'Apache mod_wsgi parallelization notes';
 	  (function() {
 	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';

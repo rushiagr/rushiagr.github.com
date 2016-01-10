@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Sense, and Simplicity</title><link href="http://rushiagr.github.io/" rel="alternate"></link><link href="http://rushiagr.github.io/feeds/tech.atom.xml" rel="self"></link><id>http://rushiagr.github.io/</id><updated>2016-01-02T00:00:00+05:30</updated><entry><title>Better AWS Command Line Interface</title><link href="http://rushiagr.github.io/blog/2016/01/02/better-aws-command-line-interface/" rel="alternate"></link><updated>2016-01-02T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2016-01-02:blog/2016/01/02/better-aws-command-line-interface/</id><summary type="html">&lt;p&gt;When I first tried to use the AWS CLIs provided by Amazon, I found them not so
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Sense, and Simplicity</title><link href="http://rushiagr.github.io/" rel="alternate"></link><link href="http://rushiagr.github.io/feeds/tech.atom.xml" rel="self"></link><id>http://rushiagr.github.io/</id><updated>2016-01-10T00:00:00+05:30</updated><entry><title>Tmux session shortcuts</title><link href="http://rushiagr.github.io/blog/2016/01/10/tmux-session-shortcuts/" rel="alternate"></link><updated>2016-01-10T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2016-01-10:blog/2016/01/10/tmux-session-shortcuts/</id><summary type="html">&lt;p&gt;Tmux is awesome. But the session management commands are way too long for my
+liking. Listing all sessions is &lt;code&gt;tmux list-sessions&lt;/code&gt;, attaching to a session
+&lt;code&gt;mysession&lt;/code&gt; is &lt;code&gt;tmux attach -t mysession&lt;/code&gt;, etc.&lt;/p&gt;
+&lt;p&gt;So I created a few functions and aliases, which can be found
+&lt;a href="https://github.com/rushiagr/myutils/blob/master/aliases/tmux.sh"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The general idea is, all commands start with &lt;code&gt;mx&lt;/code&gt;, which is basically a
+shortcut for 'tMuX'. So &lt;code&gt;mxl&lt;/code&gt; is to 'l'ist tmux sessions, &lt;code&gt;mxa&lt;/code&gt; is to 'a'ttach
+to a tmux session, etc.&lt;/p&gt;
+&lt;p&gt;List all running tmux sessions&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;rushi&lt;/span&gt;&lt;span class="o"&gt;:~&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;mxl&lt;/span&gt;
+&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="n"&gt;windows&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;created&lt;/span&gt; &lt;span class="n"&gt;Sun&lt;/span&gt; &lt;span class="n"&gt;Jan&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="mi"&gt;17&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;14&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt; &lt;span class="mi"&gt;2016&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;89&lt;/span&gt;&lt;span class="n"&gt;x23&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;attached&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can see one tmux session. Let's create another tmux session with name
+&lt;code&gt;dev&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mx&lt;/span&gt; &lt;span class="n"&gt;dev&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;List all sessions now&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;rushi&lt;/span&gt;&lt;span class="o"&gt;:~&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;mxl&lt;/span&gt;
+&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="n"&gt;windows&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;created&lt;/span&gt; &lt;span class="n"&gt;Sun&lt;/span&gt; &lt;span class="n"&gt;Jan&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="mi"&gt;17&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;14&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt; &lt;span class="mi"&gt;2016&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;89&lt;/span&gt;&lt;span class="n"&gt;x23&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;attached&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nl"&gt;dev:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;windows&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;created&lt;/span&gt; &lt;span class="n"&gt;Sun&lt;/span&gt; &lt;span class="n"&gt;Jan&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="mi"&gt;17&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;59&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt; &lt;span class="mi"&gt;2016&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;89&lt;/span&gt;&lt;span class="n"&gt;x23&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;attached&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To attach to session with name &lt;code&gt;dev&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mxa&lt;/span&gt; &lt;span class="n"&gt;dev&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can also omit session name, and it will attach to the last session you
+attached to.&lt;/p&gt;
+&lt;p&gt;If there was no session with name &lt;code&gt;dev2&lt;/code&gt;, and you type this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mxa&lt;/span&gt; &lt;span class="n"&gt;dev2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;It will automatically create a session for you and attach you to it.&lt;/p&gt;
+&lt;p&gt;To detach:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mxd&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I find this &lt;code&gt;mxd&lt;/code&gt; to be easier to type than both &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;d&lt;/code&gt; and &lt;code&gt;tmux
+detach&lt;/code&gt;.&lt;/p&gt;
+&lt;h3&gt;Installation&lt;/h3&gt;
+&lt;p&gt;You just need to copy the content in the above referenced link to &lt;code&gt;~/.bashrc&lt;/code&gt;
+file and from a new terminal session things will be ready for you to use :)&lt;/p&gt;</summary><category term="cheatsheet"></category><category term="quickstart"></category><category term="notes"></category><category term="tmux"></category><category term="productivity"></category></entry><entry><title>Better AWS Command Line Interface</title><link href="http://rushiagr.github.io/blog/2016/01/02/better-aws-command-line-interface/" rel="alternate"></link><updated>2016-01-02T00:00:00+05:30</updated><author><name>Rushi Agrawal</name></author><id>tag:rushiagr.github.io,2016-01-02:blog/2016/01/02/better-aws-command-line-interface/</id><summary type="html">&lt;p&gt;When I first tried to use the AWS CLIs provided by Amazon, I found them not so
 human-friendly. Sure, maybe they're good for automating stuff, but if you just
 want to view the public IP of a virtual machine, and the CLI throws this on
 your screen for just one VM instance, you're likely not going to be impressed:&lt;/p&gt;
