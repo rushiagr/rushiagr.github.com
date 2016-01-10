@@ -1144,6 +1144,13 @@ dependencies are outdated.&lt;/p&gt;
 
 
 &lt;p&gt;After you have exported these three variables, you're free to run &lt;code&gt;./stack.sh&lt;/code&gt;, and it should finish successfully.&lt;/p&gt;
+&lt;p&gt;If you are doing a single-node devstack setup, you don't need to do anything
+else and can stop here. If you are doing a multi-node setup, the services
+running on one node might not communicate properly with services on a different node. In order to
+fix this, do this: go to individual services running inside screens, stop the
+service (by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;C&lt;/code&gt;), unset the proxy environment variables (&lt;code&gt;unset
+http_proxy https_proxy no_proxy&lt;/code&gt;), and restart the service again (by pressing
+up arrow and then pressing &lt;code&gt;Enter&lt;/code&gt;).&lt;/p&gt;
 &lt;p&gt;Cheers!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Rushi Agrawal</dc:creator><pubDate>Tue, 05 Aug 2014 00:00:00 +0530</pubDate><guid>tag:rushiagr.github.io,2014-08-05:blog/2014/08/05/devstack-behind-proxy/</guid><category>tech</category><category>cloud</category><category>openstack</category><category>devstack</category></item><item><title>Mounting QCOW2 images</title><link>http://rushiagr.github.io/blog/2014/08/02/qcow2-mount/</link><description>&lt;p&gt;Isn't it fun that even before you start a VM out of an image, you can add files to that image, see and edit the directory and file structure of that VM? &lt;/p&gt;
 &lt;p&gt;I wanted to boot a VM out of a disk-image, but how will I know out of the 256 available IPs for that VM, which one actually got assigned? I tried vnc console, but the connection was terribly flaky. Even so, it was felt quite ugly to use an interface when I was trying to move to a keyboard-only (command line) world.  So I just inserted a static IP into the &lt;code&gt;/etc/network/interfaces&lt;/code&gt; file of that image! (I wasn't aware of &lt;code&gt;arp-scan&lt;/code&gt; before I discovered the trick described in this post) &lt;/p&gt;
 &lt;p&gt;We'll mount the image, tweak the filesystem of that image, and then boot the image.&lt;/p&gt;
