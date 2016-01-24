@@ -1,345 +1,248 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
-  <meta charset="utf-8">
-  <title>Quick Start: Linux Logical Volume Manager</title>
-  <meta name="author" content="Rushi Agrawal">
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-  <link href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
-        title="Sense, and Simplicity RSS Feed" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
+  
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Quick Start: Linux Logical Volume Manager  &middot; rushiagr </title>
 
-  <link href="http://rushiagr.github.io/favicon.png" rel="icon">
-  <link href="http://rushiagr.github.io/theme/css/main.css" media="screen, projection"
-        rel="stylesheet" type="text/css">
-  <script src="http://rushiagr.github.io/theme/js/modernizr-2.0.js"></script>
-  <script src="http://rushiagr.github.io/theme/js/ender.js"></script>
-  <script src="http://rushiagr.github.io/theme/js/octopress.js" type="text/javascript"></script>
+  
+  <link rel="stylesheet" href="http://rushiagr.com/css/poole.css">
+  <link rel="stylesheet" href="http://rushiagr.com/css/syntax.css">
+  <link rel="stylesheet" href="http://rushiagr.com/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
-  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
-        rel="stylesheet" type="text/css">
-  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
-        rel="stylesheet" type="text/css">
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
 </head>
 
 <body>
-  <header role="banner"><hgroup>
-  <h1><a href="http://rushiagr.github.io/">Sense, and Simplicity</a></h1>
-</hgroup></header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="http://rushiagr.github.io/feeds/all.rss.xml" rel="subscribe-rss">RSS</a></li>
-</ul>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://rushiagr.com">rushiagr</a></h1>
+      <p class="lead">
+       code by Rushi Agrawal 
+      </p>
+    </div>
 
 
 
-<ul class="main-navigation">
-      <li><a href="http://rushiagr.github.io/pages/about-me.html">About me</a></li>
-    <li class="active">
-    <a href="http://rushiagr.github.io/category/tech.html">Tech</a>
-    </li>
-    <li >
-    <a href="http://rushiagr.github.io/category/thoughts.html">Thoughts</a>
-    </li>
-</ul></nav>
-  <div id="main">
-    <div id="content">
-<div>
-  <article class="hentry" role="article">
-<header>
-      <h1 class="entry-title">Quick Start: Linux Logical Volume Manager</h1>
-      <p class="meta"><time datetime="2014-01-14T00:00:00" pubdate>Tue 14 January 2014</time></p>
-</header>
+    <ul class="sidebar-nav">
+      <li><a href="http://rushiagr.com/blog">Posts</a></li>
+      
+        <li><a href="/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
 
-  <div class="entry-content"><p>While installing the latest Ubuntu OS on your computer, you will see that 
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">Quick Start: Linux Logical Volume Manager</h1>
+    <span class="post-date">Jan 14, 2014</span>
+    
+    
+
+<p>While installing the latest Ubuntu OS on your computer, you will see that
 you can install the OS using LVM (Logical Volume Manager) utility. Ever wonder what is it?
 LVM (Logical Volume Manager) is that fantastic utility for storage administration.
 It provide the users with abilities which were not possible with raw disks.
-The storage is now 'virtualized'. You can now easily create, move and extend volumes (for now, think of it as disk partitions)
+The storage is now &lsquo;virtualized&rsquo;. You can now easily create, move and extend volumes (for now, think of it as disk partitions)
 without bothering about data corruption. You can carve partitions out of multiple disks,
-and can add and remove disks from a 'volume group' containing such volumes without the user noticing anything!
-List of all the features of LVM can be found at it's <a href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)"
+and can add and remove disks from a &lsquo;volume group&rsquo; containing such volumes without the user noticing anything!
+List of all the features of LVM can be found at it&rsquo;s <a href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)"
 target="_blank">wiki page</a>.</p>
+
 <p>This blog scratches the surface of LVM, and gives some basic insights into some storage concepts.</p>
+
 <!-- more -->
 
-<p>I'll give you a simple example to better explain what a 'physical volume', a 'volume group' and a 
-'logical volume' is. Say I have two 1 TB hard disks - disk A and disk B. I have two equal-sized partitions on
-disk B, one of which I want to keep it to myself for my personal data. The 'partition' term used here is 
+<p>I&rsquo;ll give you a simple example to better explain what a &lsquo;physical volume&rsquo;, a &lsquo;volume group&rsquo; and a
+&lsquo;logical volume&rsquo; is. Say I have two 1 TB hard disks - disk A and disk B. I have two equal-sized partitions on
+disk B, one of which I want to keep it to myself for my personal data. The &lsquo;partition&rsquo; term used here is
 same as what you see in a file explorer. For the unpartitioned disk, the complete disk is one single partition.</p>
-<p>The partitions I described above are 'physical volumes'. That is, on the disk, these are physically separate bytes (think of that
+
+<p>The partitions I described above are &lsquo;physical volumes&rsquo;. That is, on the disk, these are physically separate bytes (think of that
 partitioned disk as a spiral on disk divided in its length at the midpoint).
-Out of the first disk and one partition of the second disk, we create a 'volume group' -- a logical pool of storage, out of which we can 
-create lots of 'logical volumes'. Even after you've created logical volumes over this volume group, you can add and remove physical volumes (partitions) from the volume group. You can do many more operations such as resize, move and extend.</p>
-<p>I hope the basic idea written above is sufficiently clear. Else, head over to this Ubuntu <a href="https://wiki.ubuntu.com/Lvm" target="_blank">wiki</a> for a slightly more detailed, but still an overview, of LVM. Anyway, I'm concentrating more on the demo, so lets move on.</p>
-<h4>Hands-on</h4>
-<p>I'm demo'ing everything on an Ubuntu machine, but it should work on any Linux distro (after you install the LVM2 package)</p>
+Out of the first disk and one partition of the second disk, we create a &lsquo;volume group&rsquo; &ndash; a logical pool of storage, out of which we can
+create lots of &lsquo;logical volumes&rsquo;. Even after you&rsquo;ve created logical volumes over this volume group, you can add and remove physical volumes (partitions) from the volume group. You can do many more operations such as resize, move and extend.</p>
+
+<p>I hope the basic idea written above is sufficiently clear. Else, head over to this Ubuntu <a href="https://wiki.ubuntu.com/Lvm" target="_blank">wiki</a> for a slightly more detailed, but still an overview, of LVM. Anyway, I&rsquo;m concentrating more on the demo, so lets move on.</p>
+
+<h4 id="hands-on:2d2bf322b35613aefa5a64a06c866c26">Hands-on</h4>
+
+<p>I&rsquo;m demo&rsquo;ing everything on an Ubuntu machine, but it should work on any Linux distro (after you install the LVM2 package)</p>
+
 <p>Install LVM2 package</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">lvm2</span>
-</pre></div>
 
+<pre><code>sudo apt-get install lvm2
+</code></pre>
 
-<p>One nice thing is you don't need to create actual partitions on disks. We'll use files as <a href="http://en.wikipedia.org/wiki/Loop_device" target="_blank">loopback devices</a>, which will appear to the operating system as partitions. Neat.</p>
+<p>One nice thing is you don&rsquo;t need to create actual partitions on disks. We&rsquo;ll use files as <a href="http://en.wikipedia.org/wiki/Loop_device" target="_blank">loopback devices</a>, which will appear to the operating system as partitions. Neat.</p>
+
 <p>Create a file of size 1G to be later used as a physical volume.</p>
-<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">truncate</span> <span class="o">--</span><span class="n">size</span> <span class="mi">1</span><span class="n">G</span> <span class="n">backing_file_1</span>
-</pre></div>
 
+<pre><code>rushi@jio:~$ truncate --size 1G backing_file_1
+</code></pre>
 
 <p>Create a loopback device over this file. Find the first free loopback device available and show its name.</p>
-<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">losetup</span> <span class="o">--</span><span class="n">find</span> <span class="o">--</span><span class="n">show</span> <span class="n">backing_file_1</span> 
-<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span>
-</pre></div>
 
+<pre><code>rushi@jio:~$ sudo losetup --find --show backing_file_1 
+/dev/loop0
+</code></pre>
 
 <p>List all the loopback devices.</p>
-<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">losetup</span> <span class="o">--</span><span class="n">all</span>
-<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span><span class="o">:</span> <span class="p">[</span><span class="n">fc00</span><span class="p">]</span><span class="o">:</span><span class="mi">22811987</span> <span class="p">(</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">rushi</span><span class="o">/</span><span class="n">backing_file_1</span><span class="p">)</span>
-</pre></div>
 
+<pre><code>rushi@jio:~$ sudo losetup --all
+/dev/loop0: [fc00]:22811987 (/home/rushi/backing_file_1)
+</code></pre>
 
-<p>Create a physical volume over this loopback device. Note that </p>
-<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">pvcreate</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span> 
-  <span class="n">Physical</span> <span class="n">volume</span> <span class="s">&quot;/dev/loop0&quot;</span> <span class="n">successfully</span> <span class="n">created</span>
-</pre></div>
+<p>Create a physical volume over this loopback device. Note that</p>
 
+<pre><code>rushi@jio:~$ sudo pvcreate /dev/loop0 
+  Physical volume &quot;/dev/loop0&quot; successfully created
+</code></pre>
 
-<p>List physical volumes. Apart from <code>pvs</code> (Physical Volume Scan), there are two more 
+<p>List physical volumes. Apart from <code>pvs</code> (Physical Volume Scan), there are two more
 commands which do the same thing, but with different level of verbosity and formatting: <code>pvscan</code> and <code>pvdisplay</code>. (Try them out too!)</p>
-<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">pvs</span>
-  <span class="n">PV</span>         <span class="n">VG</span>        <span class="n">Fmt</span>  <span class="n">Attr</span> <span class="n">PSize</span>   <span class="n">PFree</span> 
-  <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span>           <span class="n">lvm2</span> <span class="n">a</span><span class="o">--</span>    <span class="mf">1.00</span><span class="n">g</span>  <span class="mf">1.00</span><span class="n">g</span>
-  <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda5</span>  <span class="n">ubuntu</span><span class="o">-</span><span class="n">vg</span> <span class="n">lvm2</span> <span class="n">a</span><span class="o">--</span>  <span class="mf">931.27</span><span class="n">g</span> <span class="mf">44.00</span><span class="n">m</span>
-</pre></div>
 
+<pre><code>rushi@jio:~$ sudo pvs
+  PV         VG        Fmt  Attr PSize   PFree 
+  /dev/loop0           lvm2 a--    1.00g  1.00g
+  /dev/sda5  ubuntu-vg lvm2 a--  931.27g 44.00m
+</code></pre>
 
 <p>Let us repeat the steps to create another physical volume:</p>
-<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">truncate</span> <span class="o">--</span><span class="n">size</span> <span class="mi">1</span><span class="n">G</span> <span class="n">backing_file_2</span>
-<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">losetup</span> <span class="o">--</span><span class="n">find</span> <span class="o">--</span><span class="n">show</span> <span class="n">backing_file_2</span> 
-<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop1</span>
-<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">losetup</span> <span class="o">--</span><span class="n">all</span>
-<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span><span class="o">:</span> <span class="p">[</span><span class="n">fc00</span><span class="p">]</span><span class="o">:</span><span class="mi">22811987</span> <span class="p">(</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">rushi</span><span class="o">/</span><span class="n">backing_file_1</span><span class="p">)</span>
-<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop1</span><span class="o">:</span> <span class="p">[</span><span class="n">fc00</span><span class="p">]</span><span class="o">:</span><span class="mi">22812001</span> <span class="p">(</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">rushi</span><span class="o">/</span><span class="n">backing_file_2</span><span class="p">)</span>
-<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">pvcreate</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop1</span>
-  <span class="n">Physical</span> <span class="n">volume</span> <span class="s">&quot;/dev/loop1&quot;</span> <span class="n">successfully</span> <span class="n">created</span>
-<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">pvs</span>
-  <span class="n">PV</span>         <span class="n">VG</span>        <span class="n">Fmt</span>  <span class="n">Attr</span> <span class="n">PSize</span>   <span class="n">PFree</span> 
-  <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span>           <span class="n">lvm2</span> <span class="n">a</span><span class="o">--</span>    <span class="mf">1.00</span><span class="n">g</span>  <span class="mf">1.00</span><span class="n">g</span>
-  <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop1</span>           <span class="n">lvm2</span> <span class="n">a</span><span class="o">--</span>    <span class="mf">1.00</span><span class="n">g</span>  <span class="mf">1.00</span><span class="n">g</span>
-  <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda5</span>  <span class="n">ubuntu</span><span class="o">-</span><span class="n">vg</span> <span class="n">lvm2</span> <span class="n">a</span><span class="o">--</span>  <span class="mf">931.27</span><span class="n">g</span> <span class="mf">44.00</span><span class="n">m</span>
-</pre></div>
 
+<pre><code>rushi@jio:~$ truncate --size 1G backing_file_2
+rushi@jio:~$ sudo losetup --find --show backing_file_2 
+/dev/loop1
+rushi@jio:~$ sudo losetup --all
+/dev/loop0: [fc00]:22811987 (/home/rushi/backing_file_1)
+/dev/loop1: [fc00]:22812001 (/home/rushi/backing_file_2)
+rushi@jio:~$ sudo pvcreate /dev/loop1
+  Physical volume &quot;/dev/loop1&quot; successfully created
+rushi@jio:~$ sudo pvs
+  PV         VG        Fmt  Attr PSize   PFree 
+  /dev/loop0           lvm2 a--    1.00g  1.00g
+  /dev/loop1           lvm2 a--    1.00g  1.00g
+  /dev/sda5  ubuntu-vg lvm2 a--  931.27g 44.00m
+</code></pre>
 
-<p>Create a volume group <code>test-volgroup</code> over these two physical volumes. (Actually, even if you don't create physical volumes over loopback devices, while creating volume groups it will automatically create physical volumes over them).</p>
-<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">vgcreate</span> <span class="n">test</span><span class="o">-</span><span class="n">volgroup</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop1</span>
-  <span class="n">Volume</span> <span class="n">group</span> <span class="s">&quot;test-volgroup&quot;</span> <span class="n">successfully</span> <span class="n">created</span>
-</pre></div>
+<p>Create a volume group <code>test-volgroup</code> over these two physical volumes. (Actually, even if you don&rsquo;t create physical volumes over loopback devices, while creating volume groups it will automatically create physical volumes over them).</p>
 
+<pre><code>rushi@jio:~$ sudo vgcreate test-volgroup /dev/loop0 /dev/loop1
+  Volume group &quot;test-volgroup&quot; successfully created
+</code></pre>
 
 <p>List the volume groups. (<code>vgs</code>, <code>vgscan</code> or <code>vgdisplay</code> can be used)</p>
-<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">vgs</span>
-  <span class="n">VG</span>            <span class="err">#</span><span class="n">PV</span> <span class="err">#</span><span class="n">LV</span> <span class="err">#</span><span class="n">SN</span> <span class="n">Attr</span>   <span class="n">VSize</span>   <span class="n">VFree</span> 
-  <span class="n">test</span><span class="o">-</span><span class="n">volgroup</span>   <span class="mi">2</span>   <span class="mi">0</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span>   <span class="mf">1.99</span><span class="n">g</span>  <span class="mf">1.99</span><span class="n">g</span>
-  <span class="n">ubuntu</span><span class="o">-</span><span class="n">vg</span>       <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">0</span> <span class="n">wz</span><span class="o">--</span><span class="n">n</span><span class="o">-</span> <span class="mf">931.27</span><span class="n">g</span> <span class="mf">44.00</span><span class="n">m</span>
-</pre></div>
 
+<pre><code>rushi@jio:~$ sudo vgs
+  VG            #PV #LV #SN Attr   VSize   VFree 
+  test-volgroup   2   0   0 wz--n-   1.99g  1.99g
+  ubuntu-vg       1   2   0 wz--n- 931.27g 44.00m
+</code></pre>
 
 <p>Create a logical volume <code>test-logicalvol</code> over the <code>test-volgroup</code> volume group.</p>
-<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">lvcreate</span> <span class="o">--</span><span class="n">size</span> <span class="mi">400</span><span class="n">M</span> <span class="o">--</span><span class="n">name</span> <span class="n">test</span><span class="o">-</span><span class="n">logicalvol</span> <span class="n">test</span><span class="o">-</span><span class="n">volgroup</span>
-  <span class="n">Logical</span> <span class="n">volume</span> <span class="s">&quot;test-logicalvol&quot;</span> <span class="n">created</span>
-</pre></div>
 
+<pre><code>rushi@jio:~$ sudo lvcreate --size 400M --name test-logicalvol test-volgroup
+  Logical volume &quot;test-logicalvol&quot; created
+</code></pre>
 
 <p>List logical volumes. (<code>lvs</code>, <code>lvscan</code>, <code>lvdisplay</code> can be used)</p>
-<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">lvs</span>
-  <span class="n">LV</span>              <span class="n">VG</span>            <span class="n">Attr</span>      <span class="n">LSize</span>   <span class="n">Pool</span> <span class="n">Origin</span> <span class="n">Data</span><span class="o">%</span>  <span class="n">Move</span> <span class="n">Log</span> <span class="n">Copy</span><span class="o">%</span>  <span class="n">Convert</span>
-  <span class="n">test</span><span class="o">-</span><span class="n">logicalvol</span> <span class="n">test</span><span class="o">-</span><span class="n">volgroup</span> <span class="o">-</span><span class="n">wi</span><span class="o">-</span><span class="n">a</span><span class="o">----</span> <span class="mf">400.00</span><span class="n">m</span>                                           
-  <span class="n">root</span>            <span class="n">ubuntu</span><span class="o">-</span><span class="n">vg</span>     <span class="o">-</span><span class="n">wi</span><span class="o">-</span><span class="n">ao</span><span class="o">---</span> <span class="mf">923.35</span><span class="n">g</span>                                           
-  <span class="n">swap_1</span>          <span class="n">ubuntu</span><span class="o">-</span><span class="n">vg</span>     <span class="o">-</span><span class="n">wi</span><span class="o">-</span><span class="n">ao</span><span class="o">---</span>   <span class="mf">7.88</span><span class="n">g</span>
-</pre></div>
 
+<pre><code>rushi@jio:~$ sudo lvs
+  LV              VG            Attr      LSize   Pool Origin Data%  Move Log Copy%  Convert
+  test-logicalvol test-volgroup -wi-a---- 400.00m                                           
+  root            ubuntu-vg     -wi-ao--- 923.35g                                           
+  swap_1          ubuntu-vg     -wi-ao---   7.88g                                           
+</code></pre>
 
-<p>Easy, isn't it? Let's tear down everything. Though a simpler way would be to just remove the loopback device, which will automatically 
-remove all the physical, logical volumes/volume groups created over them, let's do it step-by-step. Note that you need to specify volume group while deleting logical volumes.</p>
-<div class="highlight"><pre><span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">lvremove</span> <span class="n">test</span><span class="o">-</span><span class="n">volgroup</span>
-<span class="n">Do</span> <span class="n">you</span> <span class="n">really</span> <span class="n">want</span> <span class="n">to</span> <span class="n">remove</span> <span class="n">active</span> <span class="n">logical</span> <span class="n">volume</span> <span class="n">test</span><span class="o">-</span><span class="n">logicalvol</span><span class="o">?</span> <span class="p">[</span><span class="n">y</span><span class="o">/</span><span class="n">n</span><span class="p">]</span><span class="o">:</span> <span class="n">y</span>
-  <span class="n">Logical</span> <span class="n">volume</span> <span class="s">&quot;test-logicalvol&quot;</span> <span class="n">successfully</span> <span class="n">removed</span>
-<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">vgremove</span> <span class="n">test</span><span class="o">-</span><span class="n">volgroup</span>
-  <span class="n">Volume</span> <span class="n">group</span> <span class="s">&quot;test-volgroup&quot;</span> <span class="n">successfully</span> <span class="n">removed</span>
-<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">pvremove</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop1</span>
-  <span class="n">Labels</span> <span class="n">on</span> <span class="n">physical</span> <span class="n">volume</span> <span class="s">&quot;/dev/loop0&quot;</span> <span class="n">successfully</span> <span class="n">wiped</span>
-  <span class="n">Labels</span> <span class="n">on</span> <span class="n">physical</span> <span class="n">volume</span> <span class="s">&quot;/dev/loop1&quot;</span> <span class="n">successfully</span> <span class="n">wiped</span>
-<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">losetup</span> <span class="o">--</span><span class="n">detach</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop1</span>
-<span class="n">rushi</span><span class="err">@</span><span class="n">jio</span><span class="o">:~</span><span class="err">$</span> <span class="n">rm</span> <span class="n">backing_file_1</span> <span class="n">backing_file_2</span>
-</pre></div>
+<p>Easy, isn&rsquo;t it? Let&rsquo;s tear down everything. Though a simpler way would be to just remove the loopback device, which will automatically
+remove all the physical, logical volumes/volume groups created over them, let&rsquo;s do it step-by-step. Note that you need to specify volume group while deleting logical volumes.</p>
 
+<pre><code>rushi@jio:~$ sudo lvremove test-volgroup
+Do you really want to remove active logical volume test-logicalvol? [y/n]: y
+  Logical volume &quot;test-logicalvol&quot; successfully removed
+rushi@jio:~$ sudo vgremove test-volgroup
+  Volume group &quot;test-volgroup&quot; successfully removed
+rushi@jio:~$ sudo pvremove /dev/loop0 /dev/loop1
+  Labels on physical volume &quot;/dev/loop0&quot; successfully wiped
+  Labels on physical volume &quot;/dev/loop1&quot; successfully wiped
+rushi@jio:~$ sudo losetup --detach /dev/loop0 /dev/loop1
+rushi@jio:~$ rm backing_file_1 backing_file_2
+</code></pre>
 
-<p>Cheers!</p></div>
-    <footer>
-<p class="meta">
-  <span class="byline author vcard">
-    Posted by <span class="fn">Rushi Agrawal</span>
-  </span>
-<time datetime="2014-01-14T00:00:00" pubdate>Tue 14 January 2014</time>  <span class="categories">
-    <a class="category" href="http://rushiagr.github.io/tag/tech.html">tech</a>
-    <a class="category" href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a>
-    <a class="category" href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a>
-    <a class="category" href="http://rushiagr.github.io/tag/ubuntu.html">ubuntu</a>
-    <a class="category" href="http://rushiagr.github.io/tag/lvm.html">lvm</a>
-    <a class="category" href="http://rushiagr.github.io/tag/linux.html">linux</a>
-    <a class="category" href="http://rushiagr.github.io/tag/storage.html">storage</a>
-  </span>
-</p><div class="sharing">
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/" data-via="rushiagr" data-counturl="http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/" >Tweet</a>
-  <div class="g-plusone" data-size="medium"></div>
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-</div>    </footer>
-  </article>
+<p>Cheers!</p>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
-  </section>
-</div>
-<aside class="sidebar">
-  <section>
-    <h1>Recent Posts</h1>
-    <ul id="recent_posts">
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/10/tmux-session-shortcuts/">Tmux session shortcuts</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/02/better-aws-command-line-interface/">Better AWS Command Line Interface</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/02/build-vm-images-using-diskimage-builder/">Build VM Images using Diskimage-builder</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2015/12/12/better-way-to-view-mysql-tables/">Better way to view MySQL tables</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2015/09/14/quick-justdial-scraper/">Quick JustDial scraper</a>
-      </li>
-    </ul>
-  </section>
-  <section>
-      
-    <h1>Categories</h1>
-    <ul id="recent_posts">
-        <li><a href="http://rushiagr.github.io/category/tech.html">tech</a></li>
-        <li><a href="http://rushiagr.github.io/category/thoughts.html">thoughts</a></li>
-    </ul>
-  </section>
- 
+    
 
-  <section>
-  <h1>Tags</h1>
-    <a href="http://rushiagr.github.io/tag/operations.html">operations</a>,    <a href="http://rushiagr.github.io/tag/.html"></a>,    <a href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a>,    <a href="http://rushiagr.github.io/tag/nosql.html">nosql</a>,    <a href="http://rushiagr.github.io/tag/storage.html">storage</a>,    <a href="http://rushiagr.github.io/tag/squid.html">squid</a>,    <a href="http://rushiagr.github.io/tag/vm.html">vm</a>,    <a href="http://rushiagr.github.io/tag/apt.html">apt</a>,    <a href="http://rushiagr.github.io/tag/vim.html">vim</a>,    <a href="http://rushiagr.github.io/tag/packaging.html">packaging</a>,    <a href="http://rushiagr.github.io/tag/puppet.html">puppet</a>,    <a href="http://rushiagr.github.io/tag/ec2.html">ec2</a>,    <a href="http://rushiagr.github.io/tag/mysql.html">mysql</a>,    <a href="http://rushiagr.github.io/tag/openstack.html">openstack</a>,    <a href="http://rushiagr.github.io/tag/quicstart.html">quicstart</a>,    <a href="http://rushiagr.github.io/tag/technology.html">technology</a>,    <a href="http://rushiagr.github.io/tag/tempest.html">tempest</a>,    <a href="http://rushiagr.github.io/tag/cloud.html">cloud</a>,    <a href="http://rushiagr.github.io/tag/cassandra.html">cassandra</a>,    <a href="http://rushiagr.github.io/tag/block-storage.html">block-storage</a>,    <a href="http://rushiagr.github.io/tag/git.html">git</a>,    <a href="http://rushiagr.github.io/tag/productivity.html">productivity</a>,    <a href="http://rushiagr.github.io/tag/cli.html">cli</a>,    <a href="http://rushiagr.github.io/tag/iscsi.html">iscsi</a>,    <a href="http://rushiagr.github.io/tag/cache.html">cache</a>,    <a href="http://rushiagr.github.io/tag/distributed.html">distributed</a>,    <a href="http://rushiagr.github.io/tag/devops.html">devops</a>,    <a href="http://rushiagr.github.io/tag/terminal.html">terminal</a>,    <a href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>,    <a href="http://rushiagr.github.io/tag/systems.html">systems</a>,    <a href="http://rushiagr.github.io/tag/keystone.html">keystone</a>,    <a href="http://rushiagr.github.io/tag/screen.html">screen</a>,    <a href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a>,    <a href="http://rushiagr.github.io/tag/openid.html">openid</a>,    <a href="http://rushiagr.github.io/tag/testing.html">testing</a>,    <a href="http://rushiagr.github.io/tag/nontech.html">nontech</a>,    <a href="http://rushiagr.github.io/tag/python.html">python</a>,    <a href="http://rushiagr.github.io/tag/commandline.html">commandline</a>,    <a href="http://rushiagr.github.io/tag/aws.html">aws</a>,    <a href="http://rushiagr.github.io/tag/scalability.html">scalability</a>,    <a href="http://rushiagr.github.io/tag/automation.html">automation</a>,    <a href="http://rushiagr.github.io/tag/scraper.html">scraper</a>,    <a href="http://rushiagr.github.io/tag/amazon.html">amazon</a>,    <a href="http://rushiagr.github.io/tag/lxc.html">lxc</a>,    <a href="http://rushiagr.github.io/tag/tmux.html">tmux</a>,    <a href="http://rushiagr.github.io/tag/milestone.html">milestone</a>,    <a href="http://rushiagr.github.io/tag/apache.html">apache</a>,    <a href="http://rushiagr.github.io/tag/devstack.html">devstack</a>,    <a href="http://rushiagr.github.io/tag/data.html">data</a>,    <a href="http://rushiagr.github.io/tag/linux.html">linux</a>,    <a href="http://rushiagr.github.io/tag/github.html">github</a>,    <a href="http://rushiagr.github.io/tag/ux.html">ux</a>,    <a href="http://rushiagr.github.io/tag/boto.html">boto</a>,    <a href="http://rushiagr.github.io/tag/notes.html">notes</a>,    <a href="http://rushiagr.github.io/tag/server.html">server</a>,    <a href="http://rushiagr.github.io/tag/tech.html">tech</a>,    <a href="http://rushiagr.github.io/tag/containers.html">containers</a>,    <a href="http://rushiagr.github.io/tag/databases.html">databases</a>,    <a href="http://rushiagr.github.io/tag/lvm.html">lvm</a>,    <a href="http://rushiagr.github.io/tag/cinder.html">cinder</a>,    <a href="http://rushiagr.github.io/tag/docker.html">docker</a>,    <a href="http://rushiagr.github.io/tag/ubuntu.html">ubuntu</a>,    <a href="http://rushiagr.github.io/tag/virtualization.html">virtualization</a>  </section>
+     
+	
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
 
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
 
-
-  <section>
-    <h1>GitHub Repos</h1>
-    <ul id="gh_repos">
-      <li class="loading">Status updating...</li>
-    </ul>
-      <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
-    <script type="text/javascript">
-      $.domReady(function(){
-          if (!window.jXHR){
-              var jxhr = document.createElement('script');
-              jxhr.type = 'text/javascript';
-              jxhr.src = 'http://rushiagr.github.io/theme/js/jXHR.js';
-              var s = document.getElementsByTagName('script')[0];
-              s.parentNode.insertBefore(jxhr, s);
-          }
-
-          github.showRepos({
-              user: 'rushiagr',
-              count: 5,
-              skip_forks: true,
-              target: '#gh_repos'
-          });
-      });
-    </script>
-    <script src="http://rushiagr.github.io/theme/js/github.js" type="text/javascript"> </script>
-  </section>
-
-    <section>
-        <h1>Social</h1>
-        <ul>
-            <li><a href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS</a></li>
-            <li><a href="http://twitter.com/rushiagr" target="_blank">twitter</a></li>
-            <li><a href="http://github.com/rushiagr" target="_blank">github</a></li>
-        </ul>
-    </section>
-
-<section>
-    <p>Follow <a href="http://twitter.com/rushiagr">@rushiagr</a></p>
-</section>
-</aside>    </div>
-  </div>
-  <footer role="contentinfo"><p>
-    Copyright &copy;  2012-2016  - Rushi Agrawal -
-  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
-</p></footer>
-    <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37074962-1']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-37074962-1');
-    ga('send', 'pageview');
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
 </script>
-	<script type="text/javascript">
-	  var disqus_shortname = 'rushiagr';
-          var disqus_identifier = '/blog/2014/01/14/quick-start-linux-logical-volume-manager/';
-          var disqus_url = 'http://rushiagr.github.io/blog/2014/01/14/quick-start-linux-logical-volume-manager/';
-          var disqus_title = 'Quick Start: Linux Logical Volume Manager';
-	  (function() {
-	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	   })();
-	</script>
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-</body>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+</div>
+</div> 
+
+</body>w
 </html>

@@ -1,465 +1,389 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
-  <meta charset="utf-8">
-  <title>Open Source Puppet - Quick Start</title>
-  <meta name="author" content="Rushi Agrawal">
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-  <link href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
-        title="Sense, and Simplicity RSS Feed" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
+  
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Open Source Puppet - Quick Start  &middot; rushiagr </title>
 
-  <link href="http://rushiagr.github.io/favicon.png" rel="icon">
-  <link href="http://rushiagr.github.io/theme/css/main.css" media="screen, projection"
-        rel="stylesheet" type="text/css">
-  <script src="http://rushiagr.github.io/theme/js/modernizr-2.0.js"></script>
-  <script src="http://rushiagr.github.io/theme/js/ender.js"></script>
-  <script src="http://rushiagr.github.io/theme/js/octopress.js" type="text/javascript"></script>
+  
+  <link rel="stylesheet" href="http://rushiagr.com/css/poole.css">
+  <link rel="stylesheet" href="http://rushiagr.com/css/syntax.css">
+  <link rel="stylesheet" href="http://rushiagr.com/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
-  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
-        rel="stylesheet" type="text/css">
-  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
-        rel="stylesheet" type="text/css">
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
 </head>
 
 <body>
-  <header role="banner"><hgroup>
-  <h1><a href="http://rushiagr.github.io/">Sense, and Simplicity</a></h1>
-</hgroup></header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="http://rushiagr.github.io/feeds/all.rss.xml" rel="subscribe-rss">RSS</a></li>
-</ul>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://rushiagr.com">rushiagr</a></h1>
+      <p class="lead">
+       code by Rushi Agrawal 
+      </p>
+    </div>
 
 
 
-<ul class="main-navigation">
-      <li><a href="http://rushiagr.github.io/pages/about-me.html">About me</a></li>
-    <li class="active">
-    <a href="http://rushiagr.github.io/category/tech.html">Tech</a>
-    </li>
-    <li >
-    <a href="http://rushiagr.github.io/category/thoughts.html">Thoughts</a>
-    </li>
-</ul></nav>
-  <div id="main">
-    <div id="content">
-<div>
-  <article class="hentry" role="article">
-<header>
-      <h1 class="entry-title">Open Source Puppet - Quick Start</h1>
-      <p class="meta"><time datetime="2014-04-12T00:00:00" pubdate>Sat 12 April 2014</time></p>
-</header>
+    <ul class="sidebar-nav">
+      <li><a href="http://rushiagr.com/blog">Posts</a></li>
+      
+        <li><a href="/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
 
-  <div class="entry-content"><p>This post aims to be your quickest guide to get started with Puppet. We'll be using the open source version of Puppet. An hour of spare time and two Ubuntu machines (physical or virtual doesn't matter) is all that is needed.</p>
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">Open Source Puppet - Quick Start</h1>
+    <span class="post-date">Apr 12, 2014</span>
+    
+    
+
+<p>This post aims to be your quickest guide to get started with Puppet. We&rsquo;ll be using the open source version of Puppet. An hour of spare time and two Ubuntu machines (physical or virtual doesn&rsquo;t matter) is all that is needed.</p>
+
 <!-- more -->
 
-<h2>Quick Introduction</h2>
-<p>Lets say you want to install and run apache server on one of the machines in your lab. On another, you want to create a new user. On a third machine, you want to install MySQL, and allow access to this machine only from the first server. Seems like a lot of manual work isn't it? The power of Puppet is, you can specify all these tasks in a file, called 'Puppet manifest', and then execute it. Everything will be set up for you just as you wanted! Now what makes this 'I care about the end result, not the process' approach really powerful is you can 'apply' this manifest over and over again to get the same end result. You can easily modify this manifest file, extend it, and manage it under version control, just like you would with a piece of software. Welcome to the world of IT automation :)</p>
-<p>Although the syntax of a Puppet manifest is Ruby-ish, no knowledge of Ruby is required at all (I don't know Ruby).</p>
-<p>There is a whole lot of things you can do with Puppet. Here, we'll just get us started with it. Once you are through this post, you can head over to Puppet Labs' documents and tutorials, for more on "how"s and "why"s of Puppet.</p>
-<h2>Setup</h2>
-<p>You just require two Ubuntu machines connected to each other. One will be the Puppet 'master' node (the machine which will take care of managing the configuration and state of all the machines in our deployment), the other one 'slave' (which unfortunately is the only actual machine in demo deployment :) ). </p>
+<h2 id="quick-introduction:3eb4397264d4b1e9ded54ff4b133eea0">Quick Introduction</h2>
+
+<p>Lets say you want to install and run apache server on one of the machines in your lab. On another, you want to create a new user. On a third machine, you want to install MySQL, and allow access to this machine only from the first server. Seems like a lot of manual work isn&rsquo;t it? The power of Puppet is, you can specify all these tasks in a file, called &lsquo;Puppet manifest&rsquo;, and then execute it. Everything will be set up for you just as you wanted! Now what makes this &lsquo;I care about the end result, not the process&rsquo; approach really powerful is you can &lsquo;apply&rsquo; this manifest over and over again to get the same end result. You can easily modify this manifest file, extend it, and manage it under version control, just like you would with a piece of software. Welcome to the world of IT automation :)</p>
+
+<p>Although the syntax of a Puppet manifest is Ruby-ish, no knowledge of Ruby is required at all (I don&rsquo;t know Ruby).</p>
+
+<p>There is a whole lot of things you can do with Puppet. Here, we&rsquo;ll just get us started with it. Once you are through this post, you can head over to Puppet Labs&rsquo; documents and tutorials, for more on &ldquo;how&rdquo;s and &ldquo;why&rdquo;s of Puppet.</p>
+
+<h2 id="setup:3eb4397264d4b1e9ded54ff4b133eea0">Setup</h2>
+
+<p>You just require two Ubuntu machines connected to each other. One will be the Puppet &lsquo;master&rsquo; node (the machine which will take care of managing the configuration and state of all the machines in our deployment), the other one &lsquo;slave&rsquo; (which unfortunately is the only actual machine in demo deployment :) ).</p>
+
 <p>Here I am using two  virtual machines, but you can create one virtual machine and use your host machine as the other one. The hostnames of the master and slave in my setup are <code>puppet-master</code> and <code>puppet-agent</code>.</p>
-<p>Make sure both the machines are ping-able from each other -- by their IP as well as hostnames (e.g. <code>ping 123.123.123.123</code> and <code>ping puppet-master</code>). Make sure your /etc/hosts file looks something like this to achieve that: </p>
+
+<p>Make sure both the machines are ping-able from each other &ndash; by their IP as well as hostnames (e.g. <code>ping 123.123.123.123</code> and <code>ping puppet-master</code>). Make sure your /etc/hosts file looks something like this to achieve that:</p>
+
 <p>(<code>192.168.56.130</code> and <code>192.168.56.131</code> are the IP addresses of externally-visible interfaces of hosts <code>puppet-master</code> and <code>puppet-agent</code> respectively)</p>
-<p>Master: </p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">master</span><span class="o">:~</span><span class="err">$</span> <span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span>
-<span class="mf">127.0.0.1</span>   <span class="n">localhost</span>
-<span class="mf">127.0.1.1</span>   <span class="n">puppet</span><span class="o">-</span><span class="n">master</span>
 
-<span class="mf">192.168.56.131</span>  <span class="n">puppet</span><span class="o">-</span><span class="n">agent</span>
-</pre></div>
+<p>Master:</p>
 
+<pre><code>r@puppet-master:~$ cat /etc/hosts
+127.0.0.1   localhost
+127.0.1.1   puppet-master
 
-<p>Slave: </p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">agent</span><span class="o">:~</span><span class="err">$</span> <span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span>
-<span class="mf">127.0.0.1</span>   <span class="n">localhost</span>
-<span class="mf">127.0.1.1</span>   <span class="n">puppet</span><span class="o">-</span><span class="n">agent</span>
+192.168.56.131  puppet-agent
+</code></pre>
 
-<span class="mf">192.168.56.130</span>  <span class="n">puppet</span><span class="o">-</span><span class="n">master</span>
-</pre></div>
+<p>Slave:</p>
 
+<pre><code>r@puppet-agent:~$ cat /etc/hosts
+127.0.0.1   localhost
+127.0.1.1   puppet-agent
 
-<h2>Getting the hands dirty -- Puppet CLI</h2>
+192.168.56.130  puppet-master
+</code></pre>
+
+<h2 id="getting-the-hands-dirty-puppet-cli:3eb4397264d4b1e9ded54ff4b133eea0">Getting the hands dirty &ndash; Puppet CLI</h2>
+
 <p>Install <code>puppetmaster</code> package on the master node</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">puppetmaster</span>
-</pre></div>
 
+<pre><code>sudo apt-get install puppetmaster
+</code></pre>
 
 <p>List all the users on the current system:</p>
-<div class="highlight"><pre><span class="n">puppet</span> <span class="n">resource</span> <span class="n">user</span> <span class="o">--</span><span class="n">list</span>
-</pre></div>
 
+<pre><code>puppet resource user --list
+</code></pre>
 
-<p>So basically a 'user' is a 'resource' in Puppet terminology. Now only list a specific resource. <code>r</code> is the current user in my case.</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">master</span><span class="o">:~</span><span class="err">$</span> <span class="n">puppet</span> <span class="n">resource</span> <span class="n">user</span> <span class="n">r</span>
-<span class="n">user</span> <span class="p">{</span> <span class="sc">&#39;r&#39;</span><span class="o">:</span>
-  <span class="n">ensure</span>  <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="n">present</span><span class="err">&#39;</span><span class="p">,</span>
-  <span class="n">comment</span> <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="n">r</span><span class="p">,,,</span><span class="err">&#39;</span><span class="p">,</span>
-  <span class="n">gid</span>     <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="mi">1000</span><span class="err">&#39;</span><span class="p">,</span>
-  <span class="n">groups</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="err">&#39;</span><span class="n">adm</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">cdrom</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">sudo</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">dip</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">plugdev</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">lpadmin</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">sambashare</span><span class="err">&#39;</span><span class="p">],</span>
-  <span class="n">home</span>    <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">r</span><span class="err">&#39;</span><span class="p">,</span>
-  <span class="n">shell</span>   <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span><span class="err">&#39;</span><span class="p">,</span>
-  <span class="n">uid</span>     <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="mi">1000</span><span class="err">&#39;</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
+<p>So basically a &lsquo;user&rsquo; is a &lsquo;resource&rsquo; in Puppet terminology. Now only list a specific resource. <code>r</code> is the current user in my case.</p>
 
+<pre><code>r@puppet-master:~$ puppet resource user r
+user { 'r':
+  ensure  =&gt; 'present',
+  comment =&gt; 'r,,,',
+  gid     =&gt; '1000',
+  groups  =&gt; ['adm', 'cdrom', 'sudo', 'dip', 'plugdev', 'lpadmin', 'sambashare'],
+  home    =&gt; '/home/r',
+  shell   =&gt; '/bin/bash',
+  uid     =&gt; '1000',
+}
+</code></pre>
 
-<p>Notice the syntax. Resource 'r' is of type 'user', with 'ensure', 'comment', etc as keys/attributes, and 'present', 'r,,,' as values for those attributes.</p>
+<p>Notice the syntax. Resource &lsquo;r&rsquo; is of type &lsquo;user&rsquo;, with &lsquo;ensure&rsquo;, &lsquo;comment&rsquo;, etc as keys/attributes, and &lsquo;present&rsquo;, &lsquo;r,,,&rsquo; as values for those attributes.</p>
+
 <p>You can change the value using the Puppet CLI</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">master</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">puppet</span> <span class="n">resource</span> <span class="n">user</span> <span class="n">r</span> <span class="n">comment</span><span class="o">=</span><span class="err">&#39;</span><span class="n">some</span> <span class="n">text</span> <span class="n">missing</span><span class="err">&#39;</span>
-<span class="nl">notice:</span> <span class="o">/</span><span class="n">User</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="o">/</span><span class="n">comment</span><span class="o">:</span> <span class="n">comment</span> <span class="n">changed</span> <span class="err">&#39;</span><span class="n">r</span><span class="p">,,,</span><span class="err">&#39;</span> <span class="n">to</span> <span class="err">&#39;</span><span class="n">some</span> <span class="n">text</span> <span class="n">missing</span><span class="err">&#39;</span>
-<span class="n">user</span> <span class="p">{</span> <span class="sc">&#39;r&#39;</span><span class="o">:</span>
-  <span class="n">ensure</span>  <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="n">present</span><span class="err">&#39;</span><span class="p">,</span>
-  <span class="n">comment</span> <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="n">some</span> <span class="n">text</span> <span class="n">missing</span><span class="err">&#39;</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
 
+<pre><code>r@puppet-master:~$ sudo puppet resource user r comment='some text missing'
+notice: /User[r]/comment: comment changed 'r,,,' to 'some text missing'
+user { 'r':
+  ensure  =&gt; 'present',
+  comment =&gt; 'some text missing',
+}
+</code></pre>
 
 <p>Create a new user with specified key-value pairs</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">master</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">puppet</span> <span class="n">resource</span> <span class="n">user</span> <span class="n">katie</span> <span class="n">ensure</span><span class="o">=</span><span class="n">present</span> <span class="n">shell</span><span class="o">=/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
-<span class="nl">notice:</span> <span class="o">/</span><span class="n">User</span><span class="p">[</span><span class="n">katie</span><span class="p">]</span><span class="o">/</span><span class="n">ensure</span><span class="o">:</span> <span class="n">created</span>
-<span class="n">user</span> <span class="p">{</span> <span class="err">&#39;</span><span class="n">katie</span><span class="err">&#39;</span><span class="o">:</span>
-  <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="n">present</span><span class="err">&#39;</span><span class="p">,</span>
-  <span class="n">shell</span>  <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span><span class="err">&#39;</span><span class="p">,</span>
-<span class="p">}</span>
-<span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">master</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">puppet</span> <span class="n">resource</span> <span class="n">user</span> <span class="n">katie</span> 
-<span class="n">user</span> <span class="p">{</span> <span class="err">&#39;</span><span class="n">katie</span><span class="err">&#39;</span><span class="o">:</span>
-  <span class="n">ensure</span>           <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="n">present</span><span class="err">&#39;</span><span class="p">,</span>
-  <span class="n">gid</span>              <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="mi">1001</span><span class="err">&#39;</span><span class="p">,</span>
-  <span class="n">home</span>             <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">katie</span><span class="err">&#39;</span><span class="p">,</span>
-  <span class="n">password</span>         <span class="o">=&gt;</span> <span class="sc">&#39;!&#39;</span><span class="p">,</span>
-  <span class="n">password_max_age</span> <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="mi">99999</span><span class="err">&#39;</span><span class="p">,</span>
-  <span class="n">password_min_age</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span>
-  <span class="n">shell</span>            <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span><span class="err">&#39;</span><span class="p">,</span>
-  <span class="n">uid</span>              <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="mi">1001</span><span class="err">&#39;</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
 
+<pre><code>r@puppet-master:~$ sudo puppet resource user katie ensure=present shell=/bin/bash
+notice: /User[katie]/ensure: created
+user { 'katie':
+  ensure =&gt; 'present',
+  shell  =&gt; '/bin/bash',
+}
+r@puppet-master:~$ sudo puppet resource user katie 
+user { 'katie':
+  ensure           =&gt; 'present',
+  gid              =&gt; '1001',
+  home             =&gt; '/home/katie',
+  password         =&gt; '!',
+  password_max_age =&gt; '99999',
+  password_min_age =&gt; '0',
+  shell            =&gt; '/bin/bash',
+  uid              =&gt; '1001',
+}
+</code></pre>
 
-<p>Remove the newly created user, but this time, let's put this information into a file <code>katie_remove.pp</code> and ask Puppet to 'apply' this file and thus removing the user 'katie'.</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">master</span><span class="o">:~</span><span class="err">$</span> <span class="n">cat</span> <span class="n">katie_remove</span><span class="p">.</span><span class="n">pp</span> 
-<span class="n">user</span> <span class="p">{</span><span class="err">&#39;</span><span class="n">katie</span><span class="err">&#39;</span><span class="o">:</span>
-    <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">absent</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
+<p>Remove the newly created user, but this time, let&rsquo;s put this information into a file <code>katie_remove.pp</code> and ask Puppet to &lsquo;apply&rsquo; this file and thus removing the user &lsquo;katie&rsquo;.</p>
 
+<pre><code>r@puppet-master:~$ cat katie_remove.pp 
+user {'katie':
+    ensure =&gt; absent,
+}
+</code></pre>
 
 <p>Apply this Puppet manifest</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">master</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">puppet</span> <span class="n">apply</span> <span class="n">katie_absent</span><span class="p">.</span><span class="n">pp</span> 
-<span class="nl">warning:</span> <span class="n">Could</span> <span class="n">not</span> <span class="n">retrieve</span> <span class="n">fact</span> <span class="n">fqdn</span>
-<span class="nl">notice:</span> <span class="o">/</span><span class="n">Stage</span><span class="p">[</span><span class="n">main</span><span class="p">]</span><span class="c1">//User[katie]/ensure: removed</span>
-<span class="nl">notice:</span> <span class="n">Finished</span> <span class="n">catalog</span> <span class="n">run</span> <span class="n">in</span> <span class="mf">0.47</span> <span class="n">seconds</span>
-</pre></div>
 
+<pre><code>r@puppet-master:~$ sudo puppet apply katie_absent.pp 
+warning: Could not retrieve fact fqdn
+notice: /Stage[main]//User[katie]/ensure: removed
+notice: Finished catalog run in 0.47 seconds
+</code></pre>
 
-<p>Puppet's description of user 'katie':</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">master</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">puppet</span> <span class="n">resource</span> <span class="n">user</span> <span class="n">katie</span>
-  <span class="n">user</span> <span class="p">{</span> <span class="err">&#39;</span><span class="n">katie</span><span class="err">&#39;</span><span class="o">:</span>
-  <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="n">absent</span><span class="err">&#39;</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
+<p>Puppet&rsquo;s description of user &lsquo;katie&rsquo;:</p>
 
+<pre><code>r@puppet-master:~$ sudo puppet resource user katie
+  user { 'katie':
+  ensure =&gt; 'absent',
+}
+</code></pre>
 
-<p>is now same as that of a non-existent user. </p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">master</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">puppet</span> <span class="n">resource</span> <span class="n">user</span> <span class="n">absent</span><span class="o">-</span><span class="n">user</span>
-  <span class="n">user</span> <span class="p">{</span> <span class="err">&#39;</span><span class="n">absent</span><span class="o">-</span><span class="n">user</span><span class="err">&#39;</span><span class="o">:</span>
-  <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="n">absent</span><span class="err">&#39;</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
+<p>is now same as that of a non-existent user.</p>
 
+<pre><code>r@puppet-master:~$ sudo puppet resource user absent-user
+  user { 'absent-user':
+  ensure =&gt; 'absent',
+}
+</code></pre>
 
-<p>That is, the user 'katie' is now deleted. You can see that the 'ensure' attribute can be used to make sure a user (or in general, any 'resource', is present, or absent).</p>
+<p>That is, the user &lsquo;katie&rsquo; is now deleted. You can see that the &lsquo;ensure&rsquo; attribute can be used to make sure a user (or in general, any &lsquo;resource&rsquo;, is present, or absent).</p>
+
 <p><strong>Note</strong>: Ignore the warning which is printed while applying a manifest from a file. Or if you are bothered by it popping up all the time, in the <code>/etc/hosts</code> file, change</p>
-<div class="highlight"><pre><span class="mf">127.0.1.1</span>   <span class="n">puppet</span><span class="o">-</span><span class="n">master</span>
-</pre></div>
 
+<pre><code>127.0.1.1   puppet-master
+</code></pre>
 
 <p>to</p>
-<div class="highlight"><pre><span class="mf">127.0.1.1</span>   <span class="n">puppet</span><span class="o">-</span><span class="n">master</span><span class="p">.</span><span class="n">rushiagr</span><span class="p">.</span><span class="n">com</span> <span class="n">puppet</span><span class="o">-</span><span class="n">master</span>
-</pre></div>
 
+<pre><code>127.0.1.1   puppet-master.rushiagr.com puppet-master
+</code></pre>
 
 <p>where you can choose a domain name of your own choice in place of <code>.rushiagr.com</code>.</p>
-<h2>Puppet modules</h2>
-<p><strong>Note:</strong> <code>puppet module</code> doesn't work on Precise (Ubuntu 12.04). You need to install ruby, and gems, etc. Too much of a hassle. So I'll just post commands here which work for a higher version of Ubuntu.</p>
-<p>Install standard library:</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">puppet</span> <span class="n">module</span> <span class="n">install</span> <span class="n">puppetlabs</span><span class="o">/</span><span class="n">stdlib</span>
-</pre></div>
 
+<h2 id="puppet-modules:3eb4397264d4b1e9ded54ff4b133eea0">Puppet modules</h2>
+
+<p><strong>Note:</strong> <code>puppet module</code> doesn&rsquo;t work on Precise (Ubuntu 12.04). You need to install ruby, and gems, etc. Too much of a hassle. So I&rsquo;ll just post commands here which work for a higher version of Ubuntu.</p>
+
+<p>Install standard library:</p>
+
+<pre><code>sudo puppet module install puppetlabs/stdlib
+</code></pre>
 
 <p>View all the installed modules</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">master</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">puppet</span> <span class="n">module</span> <span class="n">list</span>
-<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">modules</span>
-<span class="err">├──</span> <span class="n">puppetlabs</span><span class="o">-</span><span class="n">mysql</span> <span class="p">(</span><span class="n">v2</span><span class="mf">.2.1</span><span class="p">)</span>
-<span class="err">├──</span> <span class="n">puppetlabs</span><span class="o">-</span><span class="n">ntp</span> <span class="p">(</span><span class="n">v3</span><span class="mf">.0.2</span><span class="p">)</span>
-<span class="err">└──</span> <span class="n">puppetlabs</span><span class="o">-</span><span class="n">stdlib</span> <span class="p">(</span><span class="n">v4</span><span class="mf">.1.0</span><span class="p">)</span>
-<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">modules</span> <span class="p">(</span><span class="n">no</span> <span class="n">modules</span> <span class="n">installed</span><span class="p">)</span>
-</pre></div>
 
+<pre><code>r@puppet-master:~$ sudo puppet module list
+/etc/puppet/modules
+├── puppetlabs-mysql (v2.2.1)
+├── puppetlabs-ntp (v3.0.2)
+└── puppetlabs-stdlib (v4.1.0)
+/usr/share/puppet/modules (no modules installed)
+</code></pre>
 
 <p>All the modules, and all other information in the system goes in <code>/etc/puppet</code> directory.</p>
-<p><strong>Note</strong>: Modules installed via <code>sudo</code> will be visible when you perform <code>puppet module list</code> with <code>sudo</code> only. Same for non-<code>sudo</code> use.</p>
-<h2>Puppet in master-client configuration</h2>
-<p>Everything we did so far concerned with a single machine. Let's now introduce another machine -- Puppet agent.</p>
-<p>Note that you need to set FQDNs for both the machines. See the step above, where we suppressed a warning.</p>
-<p>First, we'll need to install <code>puppet</code> package (the agent) on the agent node.</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">puppet</span>
-</pre></div>
 
+<p><strong>Note</strong>: Modules installed via <code>sudo</code> will be visible when you perform <code>puppet module list</code> with <code>sudo</code> only. Same for non-<code>sudo</code> use.</p>
+
+<h2 id="puppet-in-master-client-configuration:3eb4397264d4b1e9ded54ff4b133eea0">Puppet in master-client configuration</h2>
+
+<p>Everything we did so far concerned with a single machine. Let&rsquo;s now introduce another machine &ndash; Puppet agent.</p>
+
+<p>Note that you need to set FQDNs for both the machines. See the step above, where we suppressed a warning.</p>
+
+<p>First, we&rsquo;ll need to install <code>puppet</code> package (the agent) on the agent node.</p>
+
+<pre><code>sudo apt-get install puppet
+</code></pre>
 
 <p>By default, the Puppet agent service will not be running.</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">agent</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">service</span> <span class="n">puppet</span> <span class="n">status</span>
- <span class="o">*</span> <span class="n">agent</span> <span class="n">is</span> <span class="n">not</span> <span class="n">running</span>
-</pre></div>
 
+<pre><code>r@puppet-agent:~$ sudo service puppet status
+ * agent is not running
+</code></pre>
 
 <p>Before starting it, change <code>START=no</code> to <code>START=yes</code> in <code>/etc/default/puppet</code> file, to start the agent service by default when the system starts/reboots.</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="n">s</span><span class="o">/</span><span class="n">START</span><span class="o">=</span><span class="n">no</span><span class="o">/</span><span class="n">START</span><span class="o">=</span><span class="n">yes</span><span class="o">/</span><span class="n">g</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="k">default</span><span class="o">/</span><span class="n">puppet</span>
-</pre></div>
 
+<pre><code>sudo sed -i s/START=no/START=yes/g /etc/default/puppet 
+</code></pre>
 
 <p>And add these two lines at the end of <code>/etc/puppet/puppet.conf</code> to allow the agent to discover the master by its FQDN.</p>
-<div class="highlight"><pre><span class="k">[agent]</span>
-<span class="na">server</span> <span class="o">=</span> <span class="s">puppet-master</span>
-</pre></div>
 
+<pre><code>[agent]
+server = puppet-master
+</code></pre>
 
 <p>Now start the Puppet agent service</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">agent</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">service</span> <span class="n">puppet</span> <span class="n">start</span>
- <span class="o">*</span> <span class="n">Starting</span> <span class="n">puppet</span> <span class="n">agent</span>                                   <span class="p">[</span> <span class="n">OK</span> <span class="p">]</span>
-</pre></div>
 
+<pre><code>r@puppet-agent:~$ sudo service puppet start
+ * Starting puppet agent                                   [ OK ] 
+</code></pre>
 
-<p>I also make sure that clocks of both the machines are synchronized by running <code>ntpdate</code> on both master and slave. I am not sure if this is required, but doesn't do any harm.
+<p>I also make sure that clocks of both the machines are synchronized by running <code>ntpdate</code> on both master and slave. I am not sure if this is required, but doesn&rsquo;t do any harm.
     sudo ntpdate pool.ntp.org</p>
-<p>Now the master needs to sign the certs by agent.</p>
-<p>Execute this command on agent node.</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">puppet</span> <span class="n">agent</span> <span class="o">--</span><span class="n">test</span> <span class="o">--</span><span class="n">waitforcert</span> <span class="mi">60</span>
-</pre></div>
 
+<p>Now the master needs to sign the certs by agent.</p>
+
+<p>Execute this command on agent node.</p>
+
+<pre><code>sudo puppet agent --test --waitforcert 60
+</code></pre>
 
 <p>Now hop over to the master node, and retrieve the list of certs waiting to be signed</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">master</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">puppet</span> <span class="n">cert</span> <span class="o">--</span><span class="n">list</span>
-  <span class="s">&quot;puppet-agent.rushiagr.com&quot;</span> <span class="p">(</span><span class="n">EB</span><span class="o">:</span><span class="mf">0F</span><span class="o">:</span><span class="n">E4</span><span class="o">:</span><span class="mi">14</span><span class="o">:</span><span class="mf">6F</span><span class="o">:</span><span class="n">B2</span><span class="o">:</span><span class="mi">7</span><span class="n">E</span><span class="o">:</span><span class="mi">85</span><span class="o">:</span><span class="mi">7</span><span class="n">E</span><span class="o">:</span><span class="mi">21</span><span class="o">:</span><span class="mi">26</span><span class="o">:</span><span class="n">C4</span><span class="o">:</span><span class="mi">78</span><span class="o">:</span><span class="mi">80</span><span class="o">:</span><span class="mi">58</span><span class="o">:</span><span class="n">E1</span><span class="p">)</span>
-</pre></div>
 
+<pre><code>r@puppet-master:~$ sudo puppet cert --list
+  &quot;puppet-agent.rushiagr.com&quot; (EB:0F:E4:14:6F:B2:7E:85:7E:21:26:C4:78:80:58:E1)
+</code></pre>
 
 <p>Sign the cert</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">master</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">puppet</span> <span class="n">cert</span> <span class="n">sign</span> <span class="n">puppet</span><span class="o">-</span><span class="n">agent</span><span class="p">.</span><span class="n">rushiagr</span><span class="p">.</span><span class="n">com</span>
-<span class="nl">notice:</span> <span class="n">Signed</span> <span class="n">certificate</span> <span class="n">request</span> <span class="k">for</span> <span class="n">puppet</span><span class="o">-</span><span class="n">agent</span><span class="p">.</span><span class="n">rushiagr</span><span class="p">.</span><span class="n">com</span>
-<span class="nl">notice:</span> <span class="n">Removing</span> <span class="n">file</span> <span class="n">Puppet</span><span class="o">::</span><span class="n">SSL</span><span class="o">::</span><span class="n">CertificateRequest</span> <span class="n">puppet</span><span class="o">-</span><span class="n">agent</span><span class="p">.</span><span class="n">rushiagr</span><span class="p">.</span><span class="n">com</span> <span class="n">at</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">ca</span><span class="o">/</span><span class="n">requests</span><span class="o">/</span><span class="n">puppet</span><span class="o">-</span><span class="n">agent</span><span class="p">.</span><span class="n">rushiagr</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">pem</span><span class="err">&#39;</span>
-</pre></div>
 
+<pre><code>r@puppet-master:~$ sudo puppet cert sign puppet-agent.rushiagr.com
+notice: Signed certificate request for puppet-agent.rushiagr.com
+notice: Removing file Puppet::SSL::CertificateRequest puppet-agent.rushiagr.com at '/var/lib/puppet/ssl/ca/requests/puppet-agent.rushiagr.com.pem'
+</code></pre>
 
-<p>Now we are ready to go. Let's create a file ('Puppet manifest') on master where we write that: 1. We want apache package to be installed. 2. Once we ensure that the package is installed, we want to start the apache service. We'll name the file <code>site.pp</code>, which is the 'main' configuration file for Puppet. We'll put it into <code>/etc/puppet/manifests</code> directory. Note how we can specify a dependency between resources.</p>
-<div class="highlight"><pre><span class="n">package</span> <span class="p">{</span> <span class="err">&#39;</span><span class="n">apache2</span><span class="err">&#39;</span><span class="o">:</span>
-    <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">installed</span>
-<span class="p">}</span>
+<p>Now we are ready to go. Let&rsquo;s create a file (&lsquo;Puppet manifest&rsquo;) on master where we write that: 1. We want apache package to be installed. 2. Once we ensure that the package is installed, we want to start the apache service. We&rsquo;ll name the file <code>site.pp</code>, which is the &lsquo;main&rsquo; configuration file for Puppet. We&rsquo;ll put it into <code>/etc/puppet/manifests</code> directory. Note how we can specify a dependency between resources.</p>
 
-<span class="n">service</span> <span class="p">{</span> <span class="err">&#39;</span><span class="n">apache2</span><span class="err">&#39;</span><span class="o">:</span>
-    <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="nb">true</span><span class="p">,</span>
-    <span class="n">enable</span> <span class="o">=&gt;</span> <span class="nb">true</span><span class="p">,</span>
-    <span class="n">require</span> <span class="o">=&gt;</span> <span class="n">Package</span><span class="p">[</span><span class="err">&#39;</span><span class="n">apache2</span><span class="err">&#39;</span><span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
+<pre><code>package { 'apache2':
+    ensure =&gt; installed
+}
 
+service { 'apache2':
+    ensure =&gt; true,
+    enable =&gt; true,
+    require =&gt; Package['apache2']
+}       
+</code></pre>
 
-<p>Puppet works on 'push' model, meaning configurations are pulled by agents at periodic intervals. I think the default periodic interval is 30 minutes. Alternatively, you can pull from agent at your own will, any time. Let's do that now. Execute this command on the agent:</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">agent</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">puppet</span> <span class="n">agent</span> <span class="o">--</span><span class="n">test</span>
-<span class="nl">info:</span> <span class="n">Caching</span> <span class="n">catalog</span> <span class="k">for</span> <span class="n">puppet</span><span class="o">-</span><span class="n">agent</span><span class="p">.</span><span class="n">rushiagr</span><span class="p">.</span><span class="n">com</span>
-<span class="nl">info:</span> <span class="n">Applying</span> <span class="n">configuration</span> <span class="n">version</span> <span class="err">&#39;</span><span class="mi">1397343482</span><span class="err">&#39;</span>
-<span class="nl">notice:</span> <span class="o">/</span><span class="n">Stage</span><span class="p">[</span><span class="n">main</span><span class="p">]</span><span class="c1">//Package[apache2]/ensure: ensure changed &#39;purged&#39; to &#39;present&#39;</span>
-<span class="nl">notice:</span> <span class="n">Finished</span> <span class="n">catalog</span> <span class="n">run</span> <span class="n">in</span> <span class="mf">6.30</span> <span class="n">seconds</span>
-</pre></div>
+<p>Puppet works on &lsquo;push&rsquo; model, meaning configurations are pulled by agents at periodic intervals. I think the default periodic interval is 30 minutes. Alternatively, you can pull from agent at your own will, any time. Let&rsquo;s do that now. Execute this command on the agent:</p>
 
+<pre><code>r@puppet-agent:~$ sudo puppet agent --test
+info: Caching catalog for puppet-agent.rushiagr.com
+info: Applying configuration version '1397343482'
+notice: /Stage[main]//Package[apache2]/ensure: ensure changed 'purged' to 'present'
+notice: Finished catalog run in 6.30 seconds
+</code></pre>
 
 <p>And you can see the apache server running!</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">puppet</span><span class="o">-</span><span class="n">agent</span><span class="o">:~</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">service</span> <span class="n">apache2</span> <span class="n">status</span>
-<span class="n">Apache2</span> <span class="n">is</span> <span class="n">running</span> <span class="p">(</span><span class="n">pid</span> <span class="mi">5874</span><span class="p">).</span>
-</pre></div>
 
+<pre><code>r@puppet-agent:~$ sudo service apache2 status
+Apache2 is running (pid 5874).
+</code></pre>
 
 <p>Ta! Da!</p>
-<p>Please comment if you have any ideas to make this post easier for the newbies to understand.</p>
-<p>Cheers!</p>
-<p><strong>Notes:</strong></p>
-<p>This is just a quick start guide. There are excellent resources and docs at <a href="http://puppetlabs.com">puppetlabs.com</a>. I have their beginner's <a href="https://dl.dropboxusercontent.com/u/42084476/OpenStack/learningpuppet.pdf">PDF</a> saved in my DropBox. 
-Around 80 pages long, it covers almost every aspect of basic Puppet. The only problem with this guide is it is (I think deliberately) made to work only with the Enterprise Puppet version, but you can always refer back to this post to know how to set the open source version :)</p>
-<p>If you mess up the cert signing process, here is a quick and dirty way to get it resolved. On master:</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">puppet</span> <span class="n">cert</span> <span class="n">clean</span> <span class="n">puppet</span><span class="o">-</span><span class="n">agent</span><span class="p">.</span><span class="n">rushiagr</span><span class="p">.</span><span class="n">com</span>
-</pre></div>
 
+<p>Please comment if you have any ideas to make this post easier for the newbies to understand.</p>
+
+<p>Cheers!</p>
+
+<p><strong>Notes:</strong></p>
+
+<p>This is just a quick start guide. There are excellent resources and docs at <a href="http://puppetlabs.com">puppetlabs.com</a>. I have their beginner&rsquo;s <a href="https://dl.dropboxusercontent.com/u/42084476/OpenStack/learningpuppet.pdf">PDF</a> saved in my DropBox.
+Around 80 pages long, it covers almost every aspect of basic Puppet. The only problem with this guide is it is (I think deliberately) made to work only with the Enterprise Puppet version, but you can always refer back to this post to know how to set the open source version :)</p>
+
+<p>If you mess up the cert signing process, here is a quick and dirty way to get it resolved. On master:</p>
+
+<pre><code>sudo puppet cert clean puppet-agent.rushiagr.com
+</code></pre>
 
 <p>On both master and slave:
-    sudo rm -r /var/lib/puppet/ssl 
-    sudo service puppet restart</p></div>
-    <footer>
-<p class="meta">
-  <span class="byline author vcard">
-    Posted by <span class="fn">Rushi Agrawal</span>
-  </span>
-<time datetime="2014-04-12T00:00:00" pubdate>Sat 12 April 2014</time>  <span class="categories">
-    <a class="category" href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a>
-    <a class="category" href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>
-    <a class="category" href="http://rushiagr.github.io/tag/puppet.html">puppet</a>
-    <a class="category" href="http://rushiagr.github.io/tag/tech.html">tech</a>
-    <a class="category" href="http://rushiagr.github.io/tag/ubuntu.html">ubuntu</a>
-    <a class="category" href="http://rushiagr.github.io/tag/quicstart.html">quicstart</a>
-  </span>
-</p><div class="sharing">
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2014/04/12/open-source-puppet-quick-start/" data-via="rushiagr" data-counturl="http://rushiagr.github.io/blog/2014/04/12/open-source-puppet-quick-start/" >Tweet</a>
-  <div class="g-plusone" data-size="medium"></div>
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-</div>    </footer>
-  </article>
+    sudo rm -r /var/lib/puppet/ssl
+    sudo service puppet restart</p>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
-  </section>
-</div>
-<aside class="sidebar">
-  <section>
-    <h1>Recent Posts</h1>
-    <ul id="recent_posts">
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/10/tmux-session-shortcuts/">Tmux session shortcuts</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/02/better-aws-command-line-interface/">Better AWS Command Line Interface</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/02/build-vm-images-using-diskimage-builder/">Build VM Images using Diskimage-builder</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2015/12/12/better-way-to-view-mysql-tables/">Better way to view MySQL tables</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2015/09/14/quick-justdial-scraper/">Quick JustDial scraper</a>
-      </li>
-    </ul>
-  </section>
-  <section>
-      
-    <h1>Categories</h1>
-    <ul id="recent_posts">
-        <li><a href="http://rushiagr.github.io/category/tech.html">tech</a></li>
-        <li><a href="http://rushiagr.github.io/category/thoughts.html">thoughts</a></li>
-    </ul>
-  </section>
- 
+    
 
-  <section>
-  <h1>Tags</h1>
-    <a href="http://rushiagr.github.io/tag/operations.html">operations</a>,    <a href="http://rushiagr.github.io/tag/.html"></a>,    <a href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a>,    <a href="http://rushiagr.github.io/tag/nosql.html">nosql</a>,    <a href="http://rushiagr.github.io/tag/storage.html">storage</a>,    <a href="http://rushiagr.github.io/tag/squid.html">squid</a>,    <a href="http://rushiagr.github.io/tag/vm.html">vm</a>,    <a href="http://rushiagr.github.io/tag/apt.html">apt</a>,    <a href="http://rushiagr.github.io/tag/vim.html">vim</a>,    <a href="http://rushiagr.github.io/tag/packaging.html">packaging</a>,    <a href="http://rushiagr.github.io/tag/puppet.html">puppet</a>,    <a href="http://rushiagr.github.io/tag/ec2.html">ec2</a>,    <a href="http://rushiagr.github.io/tag/mysql.html">mysql</a>,    <a href="http://rushiagr.github.io/tag/openstack.html">openstack</a>,    <a href="http://rushiagr.github.io/tag/quicstart.html">quicstart</a>,    <a href="http://rushiagr.github.io/tag/technology.html">technology</a>,    <a href="http://rushiagr.github.io/tag/tempest.html">tempest</a>,    <a href="http://rushiagr.github.io/tag/cloud.html">cloud</a>,    <a href="http://rushiagr.github.io/tag/cassandra.html">cassandra</a>,    <a href="http://rushiagr.github.io/tag/block-storage.html">block-storage</a>,    <a href="http://rushiagr.github.io/tag/git.html">git</a>,    <a href="http://rushiagr.github.io/tag/productivity.html">productivity</a>,    <a href="http://rushiagr.github.io/tag/cli.html">cli</a>,    <a href="http://rushiagr.github.io/tag/iscsi.html">iscsi</a>,    <a href="http://rushiagr.github.io/tag/cache.html">cache</a>,    <a href="http://rushiagr.github.io/tag/distributed.html">distributed</a>,    <a href="http://rushiagr.github.io/tag/devops.html">devops</a>,    <a href="http://rushiagr.github.io/tag/terminal.html">terminal</a>,    <a href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>,    <a href="http://rushiagr.github.io/tag/systems.html">systems</a>,    <a href="http://rushiagr.github.io/tag/keystone.html">keystone</a>,    <a href="http://rushiagr.github.io/tag/screen.html">screen</a>,    <a href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a>,    <a href="http://rushiagr.github.io/tag/openid.html">openid</a>,    <a href="http://rushiagr.github.io/tag/testing.html">testing</a>,    <a href="http://rushiagr.github.io/tag/nontech.html">nontech</a>,    <a href="http://rushiagr.github.io/tag/python.html">python</a>,    <a href="http://rushiagr.github.io/tag/commandline.html">commandline</a>,    <a href="http://rushiagr.github.io/tag/aws.html">aws</a>,    <a href="http://rushiagr.github.io/tag/scalability.html">scalability</a>,    <a href="http://rushiagr.github.io/tag/automation.html">automation</a>,    <a href="http://rushiagr.github.io/tag/scraper.html">scraper</a>,    <a href="http://rushiagr.github.io/tag/amazon.html">amazon</a>,    <a href="http://rushiagr.github.io/tag/lxc.html">lxc</a>,    <a href="http://rushiagr.github.io/tag/tmux.html">tmux</a>,    <a href="http://rushiagr.github.io/tag/milestone.html">milestone</a>,    <a href="http://rushiagr.github.io/tag/apache.html">apache</a>,    <a href="http://rushiagr.github.io/tag/devstack.html">devstack</a>,    <a href="http://rushiagr.github.io/tag/data.html">data</a>,    <a href="http://rushiagr.github.io/tag/linux.html">linux</a>,    <a href="http://rushiagr.github.io/tag/github.html">github</a>,    <a href="http://rushiagr.github.io/tag/ux.html">ux</a>,    <a href="http://rushiagr.github.io/tag/boto.html">boto</a>,    <a href="http://rushiagr.github.io/tag/notes.html">notes</a>,    <a href="http://rushiagr.github.io/tag/server.html">server</a>,    <a href="http://rushiagr.github.io/tag/tech.html">tech</a>,    <a href="http://rushiagr.github.io/tag/containers.html">containers</a>,    <a href="http://rushiagr.github.io/tag/databases.html">databases</a>,    <a href="http://rushiagr.github.io/tag/lvm.html">lvm</a>,    <a href="http://rushiagr.github.io/tag/cinder.html">cinder</a>,    <a href="http://rushiagr.github.io/tag/docker.html">docker</a>,    <a href="http://rushiagr.github.io/tag/ubuntu.html">ubuntu</a>,    <a href="http://rushiagr.github.io/tag/virtualization.html">virtualization</a>  </section>
+     
+	
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
 
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
 
-
-  <section>
-    <h1>GitHub Repos</h1>
-    <ul id="gh_repos">
-      <li class="loading">Status updating...</li>
-    </ul>
-      <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
-    <script type="text/javascript">
-      $.domReady(function(){
-          if (!window.jXHR){
-              var jxhr = document.createElement('script');
-              jxhr.type = 'text/javascript';
-              jxhr.src = 'http://rushiagr.github.io/theme/js/jXHR.js';
-              var s = document.getElementsByTagName('script')[0];
-              s.parentNode.insertBefore(jxhr, s);
-          }
-
-          github.showRepos({
-              user: 'rushiagr',
-              count: 5,
-              skip_forks: true,
-              target: '#gh_repos'
-          });
-      });
-    </script>
-    <script src="http://rushiagr.github.io/theme/js/github.js" type="text/javascript"> </script>
-  </section>
-
-    <section>
-        <h1>Social</h1>
-        <ul>
-            <li><a href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS</a></li>
-            <li><a href="http://twitter.com/rushiagr" target="_blank">twitter</a></li>
-            <li><a href="http://github.com/rushiagr" target="_blank">github</a></li>
-        </ul>
-    </section>
-
-<section>
-    <p>Follow <a href="http://twitter.com/rushiagr">@rushiagr</a></p>
-</section>
-</aside>    </div>
-  </div>
-  <footer role="contentinfo"><p>
-    Copyright &copy;  2012-2016  - Rushi Agrawal -
-  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
-</p></footer>
-    <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37074962-1']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-37074962-1');
-    ga('send', 'pageview');
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
 </script>
-	<script type="text/javascript">
-	  var disqus_shortname = 'rushiagr';
-          var disqus_identifier = '/blog/2014/04/12/open-source-puppet-quick-start/';
-          var disqus_url = 'http://rushiagr.github.io/blog/2014/04/12/open-source-puppet-quick-start/';
-          var disqus_title = 'Open Source Puppet - Quick Start';
-	  (function() {
-	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	   })();
-	</script>
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-</body>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+</div>
+</div> 
+
+</body>w
 </html>

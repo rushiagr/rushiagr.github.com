@@ -1,432 +1,335 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
-  <meta charset="utf-8">
-  <title>Better AWS Command Line Interface</title>
-  <meta name="author" content="Rushi Agrawal">
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-  <link href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
-        title="Sense, and Simplicity RSS Feed" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
+  
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Better AWS Command Line Interface  &middot; rushiagr </title>
 
-  <link href="http://rushiagr.github.io/favicon.png" rel="icon">
-  <link href="http://rushiagr.github.io/theme/css/main.css" media="screen, projection"
-        rel="stylesheet" type="text/css">
-  <script src="http://rushiagr.github.io/theme/js/modernizr-2.0.js"></script>
-  <script src="http://rushiagr.github.io/theme/js/ender.js"></script>
-  <script src="http://rushiagr.github.io/theme/js/octopress.js" type="text/javascript"></script>
+  
+  <link rel="stylesheet" href="http://rushiagr.com/css/poole.css">
+  <link rel="stylesheet" href="http://rushiagr.com/css/syntax.css">
+  <link rel="stylesheet" href="http://rushiagr.com/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
-  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
-        rel="stylesheet" type="text/css">
-  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
-        rel="stylesheet" type="text/css">
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
 </head>
 
 <body>
-  <header role="banner"><hgroup>
-  <h1><a href="http://rushiagr.github.io/">Sense, and Simplicity</a></h1>
-</hgroup></header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="http://rushiagr.github.io/feeds/all.rss.xml" rel="subscribe-rss">RSS</a></li>
-</ul>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://rushiagr.com">rushiagr</a></h1>
+      <p class="lead">
+       code by Rushi Agrawal 
+      </p>
+    </div>
 
 
 
-<ul class="main-navigation">
-      <li><a href="http://rushiagr.github.io/pages/about-me.html">About me</a></li>
-    <li class="active">
-    <a href="http://rushiagr.github.io/category/tech.html">Tech</a>
-    </li>
-    <li >
-    <a href="http://rushiagr.github.io/category/thoughts.html">Thoughts</a>
-    </li>
-</ul></nav>
-  <div id="main">
-    <div id="content">
-<div>
-  <article class="hentry" role="article">
-<header>
-      <h1 class="entry-title">Better AWS Command Line Interface</h1>
-      <p class="meta"><time datetime="2016-01-02T00:00:00" pubdate>Sat 02 January 2016</time></p>
-</header>
+    <ul class="sidebar-nav">
+      <li><a href="http://rushiagr.com/blog">Posts</a></li>
+      
+        <li><a href="/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
 
-  <div class="entry-content"><p>When I first tried to use the AWS CLIs provided by Amazon, I found them not so
-human-friendly. Sure, maybe they're good for automating stuff, but if you just
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">Better AWS Command Line Interface</h1>
+    <span class="post-date">Jan 2, 2016</span>
+    
+    
+
+<p>When I first tried to use the AWS CLIs provided by Amazon, I found them not so
+human-friendly. Sure, maybe they&rsquo;re good for automating stuff, but if you just
 want to view the public IP of a virtual machine, and the CLI throws this on
-your screen for just one VM instance, you're likely not going to be impressed:</p>
-<div class="highlight"><pre><span class="nt">r</span><span class="k">@rushi</span><span class="o">:~</span><span class="err">$</span> <span class="nt">aws</span> <span class="nt">ec2</span> <span class="nt">describe-instances</span>
-<span class="p">{</span>
-    <span class="s2">&quot;Reservations&quot;</span><span class="o">:</span> <span class="cp">[</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;OwnerId&quot;</span><span class="p">:</span> <span class="s2">&quot;123456789012&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;ReservationId&quot;</span><span class="p">:</span> <span class="s2">&quot;r-abcd1234&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Groups&quot;</span><span class="p">:</span> <span class="err">[</span><span class="cp">]</span><span class="o">,</span>
-            <span class="s2">&quot;Instances&quot;</span><span class="o">:</span> <span class="cp">[</span>
-                <span class="p">{</span>
-                    <span class="s2">&quot;Monitoring&quot;</span><span class="p">:</span> <span class="p">{</span>
-                        <span class="s2">&quot;State&quot;</span><span class="p">:</span> <span class="s2">&quot;disabled&quot;</span>
-                    <span class="p">},</span>
-                    <span class="s2">&quot;PublicDnsName&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2-52-52-52-52.ap-southeast-1.compute.amazonaws.com&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;State&quot;</span><span class="p">:</span> <span class="p">{</span>
-                        <span class="s2">&quot;Code&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
-                        <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;running&quot;</span>
-                    <span class="p">},</span>
-                    <span class="s2">&quot;EbsOptimized&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-                    <span class="s2">&quot;LaunchTime&quot;</span><span class="p">:</span> <span class="s2">&quot;2015-12-31T12:59:59.000Z&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;PublicIpAddress&quot;</span><span class="p">:</span> <span class="s2">&quot;52.52.52.52&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;PrivateIpAddress&quot;</span><span class="p">:</span> <span class="s2">&quot;172.31.31.31&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;ProductCodes&quot;</span><span class="p">:</span> <span class="err">[</span><span class="cp">]</span><span class="o">,</span>
-                    <span class="s2">&quot;VpcId&quot;</span><span class="o">:</span> <span class="s2">&quot;vpc-1234abcd&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;StateTransitionReason&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;InstanceId&quot;</span><span class="o">:</span> <span class="s2">&quot;i-1234abcd&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;ImageId&quot;</span><span class="o">:</span> <span class="s2">&quot;ami-1234abcd&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;PrivateDnsName&quot;</span><span class="o">:</span> <span class="s2">&quot;ip-172-31-31-31.ap-southeast-1.compute.internal&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;KeyName&quot;</span><span class="o">:</span> <span class="s2">&quot;mykey&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;SecurityGroups&quot;</span><span class="o">:</span> <span class="cp">[</span>
-                        <span class="p">{</span>
-                            <span class="s2">&quot;GroupName&quot;</span><span class="p">:</span> <span class="s2">&quot;rushi-sg&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;GroupId&quot;</span><span class="p">:</span> <span class="s2">&quot;sg-abcd1234&quot;</span>
-                        <span class="p">}</span>
-                    <span class="cp">]</span><span class="o">,</span>
-                    <span class="s2">&quot;ClientToken&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;SubnetId&quot;</span><span class="o">:</span> <span class="s2">&quot;subnet-abcd1234&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;InstanceType&quot;</span><span class="o">:</span> <span class="s2">&quot;t2.micro&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;NetworkInterfaces&quot;</span><span class="o">:</span> <span class="cp">[</span>
-                        <span class="p">{</span>
-                            <span class="s2">&quot;Status&quot;</span><span class="p">:</span> <span class="s2">&quot;in-use&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;MacAddress&quot;</span><span class="p">:</span> <span class="s2">&quot;06:f3:82:a1:fb:c5&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;SourceDestCheck&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-                            <span class="s2">&quot;VpcId&quot;</span><span class="p">:</span> <span class="s2">&quot;vpc-abcd1234&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;Description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;Association&quot;</span><span class="p">:</span> <span class="p">{</span>
-                                <span class="s2">&quot;PublicIp&quot;</span><span class="p">:</span> <span class="s2">&quot;52.52.52.52&quot;</span><span class="p">,</span>
-                                <span class="s2">&quot;PublicDnsName&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2-52-52-52-52.ap-southeast-1.compute.amazonaws.com&quot;</span><span class="p">,</span>
-                                <span class="s2">&quot;IpOwnerId&quot;</span><span class="p">:</span> <span class="s2">&quot;amazon&quot;</span>
-                            <span class="p">},</span>
-                            <span class="s2">&quot;NetworkInterfaceId&quot;</span><span class="p">:</span> <span class="s2">&quot;eni-abcd1234&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;PrivateIpAddresses&quot;</span><span class="p">:</span> <span class="err">[</span>
-                                <span class="p">{</span>
-                                    <span class="s2">&quot;PrivateDnsName&quot;</span><span class="p">:</span> <span class="s2">&quot;ip-172-31-31-32.ap-southeast-1.compute.internal&quot;</span><span class="p">,</span>
-                                    <span class="s2">&quot;Association&quot;</span><span class="p">:</span> <span class="p">{</span>
-                                        <span class="s2">&quot;PublicIp&quot;</span><span class="p">:</span> <span class="s2">&quot;52.52.52.52&quot;</span><span class="p">,</span>
-                                        <span class="s2">&quot;PublicDnsName&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2-52-52-52-52.ap-southeast-1.compute.amazonaws.com&quot;</span><span class="p">,</span>
-                                        <span class="s2">&quot;IpOwnerId&quot;</span><span class="p">:</span> <span class="s2">&quot;amazon&quot;</span>
-                                    <span class="p">},</span>
-                                    <span class="s2">&quot;Primary&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-                                    <span class="s2">&quot;PrivateIpAddress&quot;</span><span class="p">:</span> <span class="s2">&quot;172.31.31.31&quot;</span>
-                                <span class="p">}</span>
-                            <span class="cp">]</span><span class="o">,</span>
-                            <span class="s2">&quot;PrivateDnsName&quot;</span><span class="o">:</span> <span class="s2">&quot;ip-172-31-31-31.ap-southeast-1.compute.internal&quot;</span><span class="o">,</span>
-                            <span class="s2">&quot;Attachment&quot;</span><span class="o">:</span> <span class="p">{</span>
-                                <span class="s2">&quot;Status&quot;</span><span class="o">:</span> <span class="s2">&quot;attached&quot;</span><span class="o">,</span>
-                                <span class="s2">&quot;DeviceIndex&quot;</span><span class="o">:</span> <span class="m">0</span><span class="o">,</span>
-                                <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="o">:</span> <span class="n">true</span><span class="o">,</span>
-                                <span class="s2">&quot;AttachmentId&quot;</span><span class="o">:</span> <span class="s2">&quot;eni-attach-abcd1234&quot;</span><span class="o">,</span>
-                                <span class="s2">&quot;AttachTime&quot;</span><span class="o">:</span> <span class="s2">&quot;2015-12-31T12:59:59.000Z&quot;</span>
-                            <span class="p">}</span><span class="o">,</span>
-                            <span class="s2">&quot;Groups&quot;</span><span class="o">:</span> <span class="cp">[</span>
-                                <span class="p">{</span>
-                                    <span class="s2">&quot;GroupName&quot;</span><span class="p">:</span> <span class="s2">&quot;mygroup&quot;</span><span class="p">,</span>
-                                    <span class="s2">&quot;GroupId&quot;</span><span class="p">:</span> <span class="s2">&quot;sg-abcd1234&quot;</span>
-                                <span class="p">}</span>
-                            <span class="cp">]</span><span class="o">,</span>
-                            <span class="s2">&quot;SubnetId&quot;</span><span class="o">:</span> <span class="s2">&quot;subnet-abcd1234&quot;</span><span class="o">,</span>
-                            <span class="s2">&quot;OwnerId&quot;</span><span class="o">:</span> <span class="s2">&quot;123456789012&quot;</span><span class="o">,</span>
-                            <span class="s2">&quot;PrivateIpAddress&quot;</span><span class="o">:</span> <span class="s2">&quot;172.31.31.31&quot;</span>
-                        <span class="p">}</span>
-                    <span class="o">],</span>
-                    <span class="s2">&quot;SourceDestCheck&quot;</span><span class="o">:</span> <span class="nt">true</span><span class="o">,</span>
-                    <span class="s2">&quot;Placement&quot;</span><span class="o">:</span> <span class="p">{</span>
-                        <span class="s2">&quot;Tenancy&quot;</span><span class="o">:</span> <span class="s2">&quot;default&quot;</span><span class="o">,</span>
-                        <span class="s2">&quot;GroupName&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="o">,</span>
-                        <span class="s2">&quot;AvailabilityZone&quot;</span><span class="o">:</span> <span class="s2">&quot;ap-southeast-1a&quot;</span>
-                    <span class="p">}</span><span class="o">,</span>
-                    <span class="s2">&quot;Hypervisor&quot;</span><span class="o">:</span> <span class="s2">&quot;xen&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;BlockDeviceMappings&quot;</span><span class="o">:</span> <span class="cp">[</span>
-                        <span class="p">{</span>
-                            <span class="s2">&quot;DeviceName&quot;</span><span class="p">:</span> <span class="s2">&quot;/dev/sda1&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;Ebs&quot;</span><span class="p">:</span> <span class="p">{</span>
-                                <span class="s2">&quot;Status&quot;</span><span class="p">:</span> <span class="s2">&quot;attached&quot;</span><span class="p">,</span>
-                                <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-                                <span class="s2">&quot;VolumeId&quot;</span><span class="p">:</span> <span class="s2">&quot;vol-abcd1234&quot;</span><span class="p">,</span>
-                                <span class="s2">&quot;AttachTime&quot;</span><span class="p">:</span> <span class="s2">&quot;2015-12-31T12:59:59.000Z&quot;</span>
-                            <span class="p">}</span>
-                        <span class="p">}</span>
-                    <span class="cp">]</span><span class="o">,</span>
-                    <span class="s2">&quot;Architecture&quot;</span><span class="o">:</span> <span class="s2">&quot;x86_64&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;RootDeviceType&quot;</span><span class="o">:</span> <span class="s2">&quot;ebs&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;RootDeviceName&quot;</span><span class="o">:</span> <span class="s2">&quot;/dev/sda1&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;VirtualizationType&quot;</span><span class="o">:</span> <span class="s2">&quot;hvm&quot;</span><span class="o">,</span>
-                    <span class="s2">&quot;Tags&quot;</span><span class="o">:</span> <span class="cp">[</span>
-                        <span class="p">{</span>
-                            <span class="s2">&quot;Value&quot;</span><span class="p">:</span> <span class="s2">&quot;rushi some VM&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;Key&quot;</span><span class="p">:</span> <span class="s2">&quot;Name&quot;</span>
-                        <span class="p">}</span>
-                    <span class="cp">]</span><span class="o">,</span>
-                    <span class="s2">&quot;AmiLaunchIndex&quot;</span><span class="o">:</span> <span class="nt">0</span>
-                <span class="err">}</span>
-            <span class="o">]</span>
-        <span class="err">}</span><span class="o">,</span>
-    <span class="o">]</span>
-<span class="err">}</span>
-</pre></div>
+your screen for just one VM instance, you&rsquo;re likely not going to be impressed:</p>
 
+<pre><code>r@rushi:~$ aws ec2 describe-instances
+{
+    &quot;Reservations&quot;: [
+        {
+            &quot;OwnerId&quot;: &quot;123456789012&quot;,
+            &quot;ReservationId&quot;: &quot;r-abcd1234&quot;,
+            &quot;Groups&quot;: [],
+            &quot;Instances&quot;: [
+                {
+                    &quot;Monitoring&quot;: {
+                        &quot;State&quot;: &quot;disabled&quot;
+                    },
+                    &quot;PublicDnsName&quot;: &quot;ec2-52-52-52-52.ap-southeast-1.compute.amazonaws.com&quot;,
+                    &quot;State&quot;: {
+                        &quot;Code&quot;: 16,
+                        &quot;Name&quot;: &quot;running&quot;
+                    },
+                    &quot;EbsOptimized&quot;: false,
+                    &quot;LaunchTime&quot;: &quot;2015-12-31T12:59:59.000Z&quot;,
+                    &quot;PublicIpAddress&quot;: &quot;52.52.52.52&quot;,
+                    &quot;PrivateIpAddress&quot;: &quot;172.31.31.31&quot;,
+                    &quot;ProductCodes&quot;: [],
+                    &quot;VpcId&quot;: &quot;vpc-1234abcd&quot;,
+                    &quot;StateTransitionReason&quot;: &quot;&quot;,
+                    &quot;InstanceId&quot;: &quot;i-1234abcd&quot;,
+                    &quot;ImageId&quot;: &quot;ami-1234abcd&quot;,
+                    &quot;PrivateDnsName&quot;: &quot;ip-172-31-31-31.ap-southeast-1.compute.internal&quot;,
+                    &quot;KeyName&quot;: &quot;mykey&quot;,
+                    &quot;SecurityGroups&quot;: [
+                        {
+                            &quot;GroupName&quot;: &quot;rushi-sg&quot;,
+                            &quot;GroupId&quot;: &quot;sg-abcd1234&quot;
+                        }
+                    ],
+                    &quot;ClientToken&quot;: &quot;&quot;,
+                    &quot;SubnetId&quot;: &quot;subnet-abcd1234&quot;,
+                    &quot;InstanceType&quot;: &quot;t2.micro&quot;,
+                    &quot;NetworkInterfaces&quot;: [
+                        {
+                            &quot;Status&quot;: &quot;in-use&quot;,
+                            &quot;MacAddress&quot;: &quot;06:f3:82:a1:fb:c5&quot;,
+                            &quot;SourceDestCheck&quot;: true,
+                            &quot;VpcId&quot;: &quot;vpc-abcd1234&quot;,
+                            &quot;Description&quot;: &quot;&quot;,
+                            &quot;Association&quot;: {
+                                &quot;PublicIp&quot;: &quot;52.52.52.52&quot;,
+                                &quot;PublicDnsName&quot;: &quot;ec2-52-52-52-52.ap-southeast-1.compute.amazonaws.com&quot;,
+                                &quot;IpOwnerId&quot;: &quot;amazon&quot;
+                            },
+                            &quot;NetworkInterfaceId&quot;: &quot;eni-abcd1234&quot;,
+                            &quot;PrivateIpAddresses&quot;: [
+                                {
+                                    &quot;PrivateDnsName&quot;: &quot;ip-172-31-31-32.ap-southeast-1.compute.internal&quot;,
+                                    &quot;Association&quot;: {
+                                        &quot;PublicIp&quot;: &quot;52.52.52.52&quot;,
+                                        &quot;PublicDnsName&quot;: &quot;ec2-52-52-52-52.ap-southeast-1.compute.amazonaws.com&quot;,
+                                        &quot;IpOwnerId&quot;: &quot;amazon&quot;
+                                    },
+                                    &quot;Primary&quot;: true,
+                                    &quot;PrivateIpAddress&quot;: &quot;172.31.31.31&quot;
+                                }
+                            ],
+                            &quot;PrivateDnsName&quot;: &quot;ip-172-31-31-31.ap-southeast-1.compute.internal&quot;,
+                            &quot;Attachment&quot;: {
+                                &quot;Status&quot;: &quot;attached&quot;,
+                                &quot;DeviceIndex&quot;: 0,
+                                &quot;DeleteOnTermination&quot;: true,
+                                &quot;AttachmentId&quot;: &quot;eni-attach-abcd1234&quot;,
+                                &quot;AttachTime&quot;: &quot;2015-12-31T12:59:59.000Z&quot;
+                            },
+                            &quot;Groups&quot;: [
+                                {
+                                    &quot;GroupName&quot;: &quot;mygroup&quot;,
+                                    &quot;GroupId&quot;: &quot;sg-abcd1234&quot;
+                                }
+                            ],
+                            &quot;SubnetId&quot;: &quot;subnet-abcd1234&quot;,
+                            &quot;OwnerId&quot;: &quot;123456789012&quot;,
+                            &quot;PrivateIpAddress&quot;: &quot;172.31.31.31&quot;
+                        }
+                    ],
+                    &quot;SourceDestCheck&quot;: true,
+                    &quot;Placement&quot;: {
+                        &quot;Tenancy&quot;: &quot;default&quot;,
+                        &quot;GroupName&quot;: &quot;&quot;,
+                        &quot;AvailabilityZone&quot;: &quot;ap-southeast-1a&quot;
+                    },
+                    &quot;Hypervisor&quot;: &quot;xen&quot;,
+                    &quot;BlockDeviceMappings&quot;: [
+                        {
+                            &quot;DeviceName&quot;: &quot;/dev/sda1&quot;,
+                            &quot;Ebs&quot;: {
+                                &quot;Status&quot;: &quot;attached&quot;,
+                                &quot;DeleteOnTermination&quot;: true,
+                                &quot;VolumeId&quot;: &quot;vol-abcd1234&quot;,
+                                &quot;AttachTime&quot;: &quot;2015-12-31T12:59:59.000Z&quot;
+                            }
+                        }
+                    ],
+                    &quot;Architecture&quot;: &quot;x86_64&quot;,
+                    &quot;RootDeviceType&quot;: &quot;ebs&quot;,
+                    &quot;RootDeviceName&quot;: &quot;/dev/sda1&quot;,
+                    &quot;VirtualizationType&quot;: &quot;hvm&quot;,
+                    &quot;Tags&quot;: [
+                        {
+                            &quot;Value&quot;: &quot;rushi some VM&quot;,
+                            &quot;Key&quot;: &quot;Name&quot;
+                        }
+                    ],
+                    &quot;AmiLaunchIndex&quot;: 0
+                }
+            ]
+        },
+    ]
+}
+</code></pre>
 
-<p>The only things I'm interested in, after creating a VM is to see it's public
-IP, it's flavor, volume size, and instance name. The JSON output which it
+<p>The only things I&rsquo;m interested in, after creating a VM is to see it&rsquo;s public
+IP, it&rsquo;s flavor, volume size, and instance name. The JSON output which it
 throws on my face makes viewing that basic information much harder.</p>
+
 <p>Fortunately, I am a programmer. So I wrote a simple CLI: <code>lsvm</code>:</p>
-<div class="highlight"><pre><span class="nb">r</span><span class="p">@</span><span class="nx">rushi</span><span class="p">:</span><span class="err">~$</span> <span class="nx">lsvm</span> <span class="na">-h</span>
-<span class="nx">lsvm</span> <span class="err">[</span><span class="na">-h</span><span class="cp">]</span> <span class="cp">[</span><span class="na">-s</span><span class="cp">]</span> <span class="cp">[</span><span class="o">&lt;</span><span class="nb">name</span><span class="o">&gt;</span><span class="cp">]</span>
+
+<pre><code>r@rushi:~$ lsvm -h
+lsvm [-h] [-s] [&lt;name&gt;]
     -h      Prints helptext and exits
     -s      Prints sizes of VM disks in GB, starting with root disk
-    <span class="nt">&lt;name&gt;</span>  Only prints VM whose name contains &#39;<span class="nt">&lt;name&gt;</span>&#39;
-</pre></div>
-
+    &lt;name&gt;  Only prints VM whose name contains '&lt;name&gt;'
+</code></pre>
 
 <p>Installing the CLI is simple. Just run this command:</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="s">&quot;$(wget -q https://raw.githubusercontent.com/rushiagr/public/master/scripts/simplest-aws-cli.sh -O -)&quot;</span>
-</pre></div>
 
+<pre><code>sudo sh -c &quot;$(wget -q https://raw.githubusercontent.com/rushiagr/public/master/scripts/simplest-aws-cli.sh -O -)&quot;
+</code></pre>
 
 <p>Ensure that you have internet connection before running this command, and also
 make sure that your computer can run <code>pip</code> commands. Keep your access and
 secret key handy.</p>
-<h3>List all the VM instances</h3>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">rushi</span><span class="o">:~</span><span class="err">$</span> <span class="n">lsvm</span>
-    <span class="n">ID</span>              <span class="n">Name</span>           <span class="n">Status</span>   <span class="n">Flavor</span>        <span class="n">IP</span>      <span class="n">Vols</span>
-<span class="n">i</span><span class="o">-</span><span class="n">abcd1234</span>     <span class="n">rushi</span> <span class="n">dev</span> <span class="n">m</span><span class="o">/</span><span class="n">c</span>      <span class="n">running</span>  <span class="n">t2</span><span class="p">.</span><span class="n">micro</span> <span class="mf">52.12.123.123</span>  <span class="mi">1</span>
-<span class="n">i</span><span class="o">-</span><span class="n">abcd1233</span>   <span class="n">rushi</span> <span class="n">pkg</span> <span class="n">builder</span>    <span class="n">running</span>  <span class="n">t2</span><span class="p">.</span><span class="n">micro</span> <span class="mf">52.12.123.122</span>  <span class="mi">1</span>
-<span class="n">i</span><span class="o">-</span><span class="n">abcd1232</span> <span class="n">rushi</span> <span class="n">vanilla</span> <span class="n">devstack</span> <span class="n">running</span>  <span class="n">t2</span><span class="p">.</span><span class="n">large</span> <span class="mf">54.12.123.121</span>  <span class="mi">1</span>
-<span class="n">i</span><span class="o">-</span><span class="n">abcd1231</span>  <span class="n">rushi</span> <span class="n">dbaas</span> <span class="n">devstack</span>  <span class="n">running</span> <span class="n">m4</span><span class="p">.</span><span class="n">xlarge</span> <span class="mf">52.12.123.120</span>  <span class="mi">1</span>
-</pre></div>
 
+<h3 id="list-all-the-vm-instances:a9c5ded79a164e4b6c02d02a570b1d97">List all the VM instances</h3>
 
-<p>List all VMs whose name contains word 'devstack'</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">rushi</span><span class="o">:~</span><span class="err">$</span> <span class="n">lsvm</span>
-    <span class="n">ID</span>              <span class="n">Name</span>           <span class="n">Status</span>   <span class="n">Flavor</span>        <span class="n">IP</span>      <span class="n">Vols</span>
-<span class="n">i</span><span class="o">-</span><span class="n">abcd1232</span> <span class="n">rushi</span> <span class="n">vanilla</span> <span class="n">devstack</span> <span class="n">running</span>  <span class="n">t2</span><span class="p">.</span><span class="n">large</span> <span class="mf">54.12.123.121</span>  <span class="mi">1</span>
-<span class="n">i</span><span class="o">-</span><span class="n">abcd1231</span>  <span class="n">rushi</span> <span class="n">dbaas</span> <span class="n">devstack</span>  <span class="n">running</span> <span class="n">m4</span><span class="p">.</span><span class="n">xlarge</span> <span class="mf">52.12.123.120</span>  <span class="mi">1</span>
-</pre></div>
+<pre><code>r@rushi:~$ lsvm
+    ID              Name           Status   Flavor        IP      Vols
+i-abcd1234     rushi dev m/c      running  t2.micro 52.12.123.123  1
+i-abcd1233   rushi pkg builder    running  t2.micro 52.12.123.122  1
+i-abcd1232 rushi vanilla devstack running  t2.large 54.12.123.121  1
+i-abcd1231  rushi dbaas devstack  running m4.xlarge 52.12.123.120  1
+</code></pre>
 
+<p>List all VMs whose name contains word &lsquo;devstack&rsquo;</p>
+
+<pre><code>r@rushi:~$ lsvm
+    ID              Name           Status   Flavor        IP      Vols
+i-abcd1232 rushi vanilla devstack running  t2.large 54.12.123.121  1
+i-abcd1231  rushi dbaas devstack  running m4.xlarge 52.12.123.120  1
+</code></pre>
 
 <p>Show sizes of volumes of instances:</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">rushi</span><span class="o">:~</span><span class="err">$</span> <span class="n">lsvm</span>  <span class="o">-</span><span class="n">s</span>
-    <span class="n">ID</span>                   <span class="n">Name</span>               <span class="n">Status</span>   <span class="n">Flavor</span>        <span class="n">IP</span>       <span class="n">Vols</span><span class="p">(</span><span class="n">GB</span><span class="p">)</span>
-<span class="n">i</span><span class="o">-</span><span class="n">abcd1234</span>          <span class="n">rushi</span> <span class="n">dev</span> <span class="n">m</span><span class="o">/</span><span class="n">c</span>          <span class="n">running</span>  <span class="n">t2</span><span class="p">.</span><span class="n">micro</span> <span class="mf">52.12.123.123</span>    <span class="p">[</span><span class="mi">8</span><span class="p">]</span>
-<span class="n">i</span><span class="o">-</span><span class="n">abcd1233</span>        <span class="n">rushi</span> <span class="n">pkg</span> <span class="n">builder</span>        <span class="n">running</span>  <span class="n">t2</span><span class="p">.</span><span class="n">micro</span> <span class="mf">52.12.123.122</span>    <span class="p">[</span><span class="mi">8</span><span class="p">]</span>
-<span class="n">i</span><span class="o">-</span><span class="n">abcd1232</span>      <span class="n">rushi</span> <span class="n">vanilla</span> <span class="n">devstack</span>     <span class="n">running</span>  <span class="n">t2</span><span class="p">.</span><span class="n">large</span> <span class="mf">54.12.123.121</span>    <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
-<span class="n">i</span><span class="o">-</span><span class="n">abcd1231</span>       <span class="n">rushi</span> <span class="n">dbaas</span> <span class="n">devstack</span>      <span class="n">running</span> <span class="n">m4</span><span class="p">.</span><span class="n">xlarge</span> <span class="mf">52.12.123.120</span>    <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
-</pre></div>
 
+<pre><code>r@rushi:~$ lsvm  -s
+    ID                   Name               Status   Flavor        IP       Vols(GB)
+i-abcd1234          rushi dev m/c          running  t2.micro 52.12.123.123    [8]
+i-abcd1233        rushi pkg builder        running  t2.micro 52.12.123.122    [8]
+i-abcd1232      rushi vanilla devstack     running  t2.large 54.12.123.121    [50]
+i-abcd1231       rushi dbaas devstack      running m4.xlarge 52.12.123.120    [50]
+</code></pre>
 
-<h3>Creating VM instance</h3>
+<h3 id="creating-vm-instance:a9c5ded79a164e4b6c02d02a570b1d97">Creating VM instance</h3>
+
 <p>Creating a VM instance is tough too, with AWS CLI, so I made another command
 <code>mkvm</code> (installed already with the previous script) which is very intuitive for human use. It asks for information in a
 step-by-step manner - exactly the way a human sitting in front of a computer should be
 treated with:</p>
-<div class="highlight"><pre><span class="n">r</span><span class="err">@</span><span class="n">rushi</span><span class="o">:~</span><span class="err">$</span> <span class="n">mkvm</span>
-<span class="n">Only</span> <span class="n">Ubuntu</span> <span class="n">image</span> <span class="n">supported</span> <span class="n">as</span> <span class="n">of</span> <span class="n">now</span>
-<span class="n">Available</span> <span class="n">flavors</span><span class="o">:</span> <span class="p">[</span><span class="err">&#39;</span><span class="n">t1</span><span class="p">.</span><span class="n">micro</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m1</span><span class="p">.</span><span class="n">small</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m1</span><span class="p">.</span><span class="n">medium</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m1</span><span class="p">.</span><span class="n">large</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m1</span><span class="p">.</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m3</span><span class="p">.</span><span class="n">medium</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m3</span><span class="p">.</span><span class="n">large</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m3</span><span class="p">.</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m3</span><span class="mf">.2</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m4</span><span class="p">.</span><span class="n">large</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m4</span><span class="p">.</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m4</span><span class="mf">.2</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m4</span><span class="mf">.4</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m4</span><span class="mf">.10</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">t2</span><span class="p">.</span><span class="n">micro</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">t2</span><span class="p">.</span><span class="n">small</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">t2</span><span class="p">.</span><span class="n">medium</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">t2</span><span class="p">.</span><span class="n">large</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m2</span><span class="p">.</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m2</span><span class="mf">.2</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">m2</span><span class="mf">.4</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">cr1</span><span class="mf">.8</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">i2</span><span class="p">.</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">i2</span><span class="mf">.2</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">i2</span><span class="mf">.4</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">i2</span><span class="mf">.8</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">hi1</span><span class="mf">.4</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">hs1</span><span class="mf">.8</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">c1</span><span class="p">.</span><span class="n">medium</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">c1</span><span class="p">.</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">c3</span><span class="p">.</span><span class="n">large</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">c3</span><span class="p">.</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">c3</span><span class="mf">.2</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">c3</span><span class="mf">.4</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">c3</span><span class="mf">.8</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">c4</span><span class="p">.</span><span class="n">large</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">c4</span><span class="p">.</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">c4</span><span class="mf">.2</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">c4</span><span class="mf">.4</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">c4</span><span class="mf">.8</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">cc1</span><span class="mf">.4</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">cc2</span><span class="mf">.8</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">g2</span><span class="mf">.2</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">cg1</span><span class="mf">.4</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">r3</span><span class="p">.</span><span class="n">large</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">r3</span><span class="p">.</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">r3</span><span class="mf">.2</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">r3</span><span class="mf">.4</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">r3</span><span class="mf">.8</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">d2</span><span class="p">.</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">d2</span><span class="mf">.2</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">d2</span><span class="mf">.4</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">d2</span><span class="mf">.8</span><span class="n">xlarge</span><span class="err">&#39;</span><span class="p">]</span>
-<span class="n">Select</span> <span class="n">flavor</span> <span class="p">[</span><span class="sc">&#39;l&#39;</span> <span class="n">to</span> <span class="n">list</span><span class="p">]</span><span class="o">:</span> <span class="n">t2</span><span class="p">.</span><span class="n">micro</span>
-<span class="n">Available</span> <span class="n">key</span> <span class="n">pairs</span><span class="o">:</span> <span class="p">[</span><span class="err">&#39;</span><span class="n">rushi</span><span class="o">-</span><span class="n">kp</span><span class="o">-</span><span class="mi">1</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">prod</span><span class="o">-</span><span class="n">keypair</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">test</span><span class="o">-</span><span class="n">keypair</span><span class="err">&#39;</span><span class="p">]</span>
-<span class="n">Select</span> <span class="n">keypair</span><span class="o">:</span> <span class="n">rushi</span><span class="o">-</span><span class="n">kp</span><span class="o">-</span><span class="mi">1</span>
-<span class="n">Available</span> <span class="n">security</span> <span class="n">groups</span><span class="o">:</span> <span class="p">[</span><span class="err">&#39;</span><span class="n">Rushi</span> <span class="n">SecGroup</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">openToAll</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">Rushi</span> <span class="n">SG</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">Rushi</span> <span class="n">Devstack</span> <span class="n">SG</span><span class="err">&#39;</span><span class="p">]</span>
-<span class="n">Select</span> <span class="n">security</span> <span class="n">group</span><span class="p">.</span> <span class="n">None</span> <span class="n">to</span> <span class="n">create</span> <span class="n">new</span> <span class="n">one</span><span class="o">:</span> <span class="n">Rushi</span> <span class="n">SecGroup</span>
-<span class="n">Enter</span> <span class="n">root</span> <span class="n">volume</span> <span class="n">size</span> <span class="n">in</span> <span class="n">GBs</span><span class="o">:</span> <span class="mi">8</span>
-<span class="n">r</span><span class="err">@</span><span class="n">rushi</span><span class="o">:~</span><span class="err">$</span>
-</pre></div>
 
+<pre><code>r@rushi:~$ mkvm
+Only Ubuntu image supported as of now
+Available flavors: ['t1.micro', 'm1.small', 'm1.medium', 'm1.large', 'm1.xlarge', 'm3.medium', 'm3.large', 'm3.xlarge', 'm3.2xlarge', 'm4.large', 'm4.xlarge', 'm4.2xlarge', 'm4.4xlarge', 'm4.10xlarge', 't2.micro', 't2.small', 't2.medium', 't2.large', 'm2.xlarge', 'm2.2xlarge', 'm2.4xlarge', 'cr1.8xlarge', 'i2.xlarge', 'i2.2xlarge', 'i2.4xlarge', 'i2.8xlarge', 'hi1.4xlarge', 'hs1.8xlarge', 'c1.medium', 'c1.xlarge', 'c3.large', 'c3.xlarge', 'c3.2xlarge', 'c3.4xlarge', 'c3.8xlarge', 'c4.large', 'c4.xlarge', 'c4.2xlarge', 'c4.4xlarge', 'c4.8xlarge', 'cc1.4xlarge', 'cc2.8xlarge', 'g2.2xlarge', 'cg1.4xlarge', 'r3.large', 'r3.xlarge', 'r3.2xlarge', 'r3.4xlarge', 'r3.8xlarge', 'd2.xlarge', 'd2.2xlarge', 'd2.4xlarge', 'd2.8xlarge']
+Select flavor ['l' to list]: t2.micro
+Available key pairs: ['rushi-kp-1', 'prod-keypair', 'test-keypair']
+Select keypair: rushi-kp-1
+Available security groups: ['Rushi SecGroup', 'openToAll', 'Rushi SG', 'Rushi Devstack SG']
+Select security group. None to create new one: Rushi SecGroup
+Enter root volume size in GBs: 8
+r@rushi:~$
+</code></pre>
 
-<h3>Ending notes</h3>
-<p>The AWS CLI was created maybe to help automation, but they're not quite
+<h3 id="ending-notes:a9c5ded79a164e4b6c02d02a570b1d97">Ending notes</h3>
+
+<p>The AWS CLI was created maybe to help automation, but they&rsquo;re not quite
 suitable for human use. Here is my attempt to show to the world how the things
 could be made easier for human consumption. I use these commands quite a lot
 when I want to quickly create a VM, or want to get information about already
 created VMs. Logging in into the console is way too slow for my liking.</p>
+
 <p>Just to recap:</p>
+
 <ol>
 <li>The commands are shorter, so you have to type less</li>
 <li>The output is concise - only important information is included</li>
-<li><code>mkvm</code> provides you with information which you'll require while creating the
-   instances, e.g. security group names, etc.</li>
+<li><code>mkvm</code> provides you with information which you&rsquo;ll require while creating the
+instances, e.g. security group names, etc.</li>
 <li>Nowhere do you need to specify (hexadecimal) IDs while creating VMs</li>
 </ol>
+
 <p>I just spent a few hours over the weekend to get this working. So obviously
 the code is going to have rough edges, frowned-upon software practices, and a
-lot of unhandled edge cases. I'll be pretty excited if you want to help wit
-the idea! I've created a repository at
+lot of unhandled edge cases. I&rsquo;ll be pretty excited if you want to help wit
+the idea! I&rsquo;ve created a repository at
 <a href="http://github.com/rushiagr/aclih">http://github.com/rushiagr/aclih</a> where
 please feel free to submit pull requests or issues. Interested in writing
-'rmvm' to delete VM anyone? :)</p>
-<p>Thank you :)</p></div>
-    <footer>
-<p class="meta">
-  <span class="byline author vcard">
-    Posted by <span class="fn">Rushi Agrawal</span>
-  </span>
-<time datetime="2016-01-02T00:00:00" pubdate>Sat 02 January 2016</time>  <span class="categories">
-    <a class="category" href="http://rushiagr.github.io/tag/commandline.html">commandline</a>
-    <a class="category" href="http://rushiagr.github.io/tag/cli.html">cli</a>
-    <a class="category" href="http://rushiagr.github.io/tag/terminal.html">terminal</a>
-    <a class="category" href="http://rushiagr.github.io/tag/ux.html">ux</a>
-    <a class="category" href="http://rushiagr.github.io/tag/aws.html">aws</a>
-    <a class="category" href="http://rushiagr.github.io/tag/python.html">python</a>
-    <a class="category" href="http://rushiagr.github.io/tag/boto.html">boto</a>
-  </span>
-</p><div class="sharing">
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2016/01/02/better-aws-command-line-interface/" data-via="rushiagr" data-counturl="http://rushiagr.github.io/blog/2016/01/02/better-aws-command-line-interface/" >Tweet</a>
-  <div class="g-plusone" data-size="medium"></div>
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-</div>    </footer>
-  </article>
+&lsquo;rmvm&rsquo; to delete VM anyone? :)</p>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
-  </section>
-</div>
-<aside class="sidebar">
-  <section>
-    <h1>Recent Posts</h1>
-    <ul id="recent_posts">
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/10/tmux-session-shortcuts/">Tmux session shortcuts</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/02/better-aws-command-line-interface/">Better AWS Command Line Interface</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/02/build-vm-images-using-diskimage-builder/">Build VM Images using Diskimage-builder</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2015/12/12/better-way-to-view-mysql-tables/">Better way to view MySQL tables</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2015/09/14/quick-justdial-scraper/">Quick JustDial scraper</a>
-      </li>
-    </ul>
-  </section>
-  <section>
-      
-    <h1>Categories</h1>
-    <ul id="recent_posts">
-        <li><a href="http://rushiagr.github.io/category/tech.html">tech</a></li>
-        <li><a href="http://rushiagr.github.io/category/thoughts.html">thoughts</a></li>
-    </ul>
-  </section>
- 
+<p>Thank you :)</p>
 
-  <section>
-  <h1>Tags</h1>
-    <a href="http://rushiagr.github.io/tag/operations.html">operations</a>,    <a href="http://rushiagr.github.io/tag/.html"></a>,    <a href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a>,    <a href="http://rushiagr.github.io/tag/nosql.html">nosql</a>,    <a href="http://rushiagr.github.io/tag/storage.html">storage</a>,    <a href="http://rushiagr.github.io/tag/squid.html">squid</a>,    <a href="http://rushiagr.github.io/tag/vm.html">vm</a>,    <a href="http://rushiagr.github.io/tag/apt.html">apt</a>,    <a href="http://rushiagr.github.io/tag/vim.html">vim</a>,    <a href="http://rushiagr.github.io/tag/packaging.html">packaging</a>,    <a href="http://rushiagr.github.io/tag/puppet.html">puppet</a>,    <a href="http://rushiagr.github.io/tag/ec2.html">ec2</a>,    <a href="http://rushiagr.github.io/tag/mysql.html">mysql</a>,    <a href="http://rushiagr.github.io/tag/openstack.html">openstack</a>,    <a href="http://rushiagr.github.io/tag/quicstart.html">quicstart</a>,    <a href="http://rushiagr.github.io/tag/technology.html">technology</a>,    <a href="http://rushiagr.github.io/tag/tempest.html">tempest</a>,    <a href="http://rushiagr.github.io/tag/cloud.html">cloud</a>,    <a href="http://rushiagr.github.io/tag/cassandra.html">cassandra</a>,    <a href="http://rushiagr.github.io/tag/block-storage.html">block-storage</a>,    <a href="http://rushiagr.github.io/tag/git.html">git</a>,    <a href="http://rushiagr.github.io/tag/productivity.html">productivity</a>,    <a href="http://rushiagr.github.io/tag/cli.html">cli</a>,    <a href="http://rushiagr.github.io/tag/iscsi.html">iscsi</a>,    <a href="http://rushiagr.github.io/tag/cache.html">cache</a>,    <a href="http://rushiagr.github.io/tag/distributed.html">distributed</a>,    <a href="http://rushiagr.github.io/tag/devops.html">devops</a>,    <a href="http://rushiagr.github.io/tag/terminal.html">terminal</a>,    <a href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>,    <a href="http://rushiagr.github.io/tag/systems.html">systems</a>,    <a href="http://rushiagr.github.io/tag/keystone.html">keystone</a>,    <a href="http://rushiagr.github.io/tag/screen.html">screen</a>,    <a href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a>,    <a href="http://rushiagr.github.io/tag/openid.html">openid</a>,    <a href="http://rushiagr.github.io/tag/testing.html">testing</a>,    <a href="http://rushiagr.github.io/tag/nontech.html">nontech</a>,    <a href="http://rushiagr.github.io/tag/python.html">python</a>,    <a href="http://rushiagr.github.io/tag/commandline.html">commandline</a>,    <a href="http://rushiagr.github.io/tag/aws.html">aws</a>,    <a href="http://rushiagr.github.io/tag/scalability.html">scalability</a>,    <a href="http://rushiagr.github.io/tag/automation.html">automation</a>,    <a href="http://rushiagr.github.io/tag/scraper.html">scraper</a>,    <a href="http://rushiagr.github.io/tag/amazon.html">amazon</a>,    <a href="http://rushiagr.github.io/tag/lxc.html">lxc</a>,    <a href="http://rushiagr.github.io/tag/tmux.html">tmux</a>,    <a href="http://rushiagr.github.io/tag/milestone.html">milestone</a>,    <a href="http://rushiagr.github.io/tag/apache.html">apache</a>,    <a href="http://rushiagr.github.io/tag/devstack.html">devstack</a>,    <a href="http://rushiagr.github.io/tag/data.html">data</a>,    <a href="http://rushiagr.github.io/tag/linux.html">linux</a>,    <a href="http://rushiagr.github.io/tag/github.html">github</a>,    <a href="http://rushiagr.github.io/tag/ux.html">ux</a>,    <a href="http://rushiagr.github.io/tag/boto.html">boto</a>,    <a href="http://rushiagr.github.io/tag/notes.html">notes</a>,    <a href="http://rushiagr.github.io/tag/server.html">server</a>,    <a href="http://rushiagr.github.io/tag/tech.html">tech</a>,    <a href="http://rushiagr.github.io/tag/containers.html">containers</a>,    <a href="http://rushiagr.github.io/tag/databases.html">databases</a>,    <a href="http://rushiagr.github.io/tag/lvm.html">lvm</a>,    <a href="http://rushiagr.github.io/tag/cinder.html">cinder</a>,    <a href="http://rushiagr.github.io/tag/docker.html">docker</a>,    <a href="http://rushiagr.github.io/tag/ubuntu.html">ubuntu</a>,    <a href="http://rushiagr.github.io/tag/virtualization.html">virtualization</a>  </section>
+    
 
+     
+	
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
 
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
 
-  <section>
-    <h1>GitHub Repos</h1>
-    <ul id="gh_repos">
-      <li class="loading">Status updating...</li>
-    </ul>
-      <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
-    <script type="text/javascript">
-      $.domReady(function(){
-          if (!window.jXHR){
-              var jxhr = document.createElement('script');
-              jxhr.type = 'text/javascript';
-              jxhr.src = 'http://rushiagr.github.io/theme/js/jXHR.js';
-              var s = document.getElementsByTagName('script')[0];
-              s.parentNode.insertBefore(jxhr, s);
-          }
-
-          github.showRepos({
-              user: 'rushiagr',
-              count: 5,
-              skip_forks: true,
-              target: '#gh_repos'
-          });
-      });
-    </script>
-    <script src="http://rushiagr.github.io/theme/js/github.js" type="text/javascript"> </script>
-  </section>
-
-    <section>
-        <h1>Social</h1>
-        <ul>
-            <li><a href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS</a></li>
-            <li><a href="http://twitter.com/rushiagr" target="_blank">twitter</a></li>
-            <li><a href="http://github.com/rushiagr" target="_blank">github</a></li>
-        </ul>
-    </section>
-
-<section>
-    <p>Follow <a href="http://twitter.com/rushiagr">@rushiagr</a></p>
-</section>
-</aside>    </div>
-  </div>
-  <footer role="contentinfo"><p>
-    Copyright &copy;  2012-2016  - Rushi Agrawal -
-  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
-</p></footer>
-    <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37074962-1']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-37074962-1');
-    ga('send', 'pageview');
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
 </script>
-	<script type="text/javascript">
-	  var disqus_shortname = 'rushiagr';
-          var disqus_identifier = '/blog/2016/01/02/better-aws-command-line-interface/';
-          var disqus_url = 'http://rushiagr.github.io/blog/2016/01/02/better-aws-command-line-interface/';
-          var disqus_title = 'Better AWS Command Line Interface';
-	  (function() {
-	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	   })();
-	</script>
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-</body>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+</div>
+</div> 
+
+</body>w
 </html>

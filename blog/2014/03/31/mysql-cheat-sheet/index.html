@@ -1,425 +1,330 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
-  <meta charset="utf-8">
-  <title>MySQL Cheat Sheet</title>
-  <meta name="author" content="Rushi Agrawal">
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-  <link href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
-        title="Sense, and Simplicity RSS Feed" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
+  
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> MySQL Cheat Sheet  &middot; rushiagr </title>
 
-  <link href="http://rushiagr.github.io/favicon.png" rel="icon">
-  <link href="http://rushiagr.github.io/theme/css/main.css" media="screen, projection"
-        rel="stylesheet" type="text/css">
-  <script src="http://rushiagr.github.io/theme/js/modernizr-2.0.js"></script>
-  <script src="http://rushiagr.github.io/theme/js/ender.js"></script>
-  <script src="http://rushiagr.github.io/theme/js/octopress.js" type="text/javascript"></script>
+  
+  <link rel="stylesheet" href="http://rushiagr.com/css/poole.css">
+  <link rel="stylesheet" href="http://rushiagr.com/css/syntax.css">
+  <link rel="stylesheet" href="http://rushiagr.com/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
-  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
-        rel="stylesheet" type="text/css">
-  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
-        rel="stylesheet" type="text/css">
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
 </head>
 
 <body>
-  <header role="banner"><hgroup>
-  <h1><a href="http://rushiagr.github.io/">Sense, and Simplicity</a></h1>
-</hgroup></header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="http://rushiagr.github.io/feeds/all.rss.xml" rel="subscribe-rss">RSS</a></li>
-</ul>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://rushiagr.com">rushiagr</a></h1>
+      <p class="lead">
+       code by Rushi Agrawal 
+      </p>
+    </div>
 
 
 
-<ul class="main-navigation">
-      <li><a href="http://rushiagr.github.io/pages/about-me.html">About me</a></li>
-    <li class="active">
-    <a href="http://rushiagr.github.io/category/tech.html">Tech</a>
-    </li>
-    <li >
-    <a href="http://rushiagr.github.io/category/thoughts.html">Thoughts</a>
-    </li>
-</ul></nav>
-  <div id="main">
-    <div id="content">
-<div>
-  <article class="hentry" role="article">
-<header>
-      <h1 class="entry-title">MySQL Cheat Sheet</h1>
-      <p class="meta"><time datetime="2014-03-31T00:00:00" pubdate>Mon 31 March 2014</time></p>
-</header>
+    <ul class="sidebar-nav">
+      <li><a href="http://rushiagr.com/blog">Posts</a></li>
+      
+        <li><a href="/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
 
-  <div class="entry-content"><p>Databases are so important, yet almost all the time I need to work with it, I find that I have already forgotten all the syntax! So here I am writing down a quick cheat sheet to get me up and running when I'm waking up from slumber. I hope this will help atleast one other guy on this planet.</p>
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">MySQL Cheat Sheet</h1>
+    <span class="post-date">Mar 31, 2014</span>
+    
+    
+
+<p>Databases are so important, yet almost all the time I need to work with it, I find that I have already forgotten all the syntax! So here I am writing down a quick cheat sheet to get me up and running when I&rsquo;m waking up from slumber. I hope this will help atleast one other guy on this planet.</p>
+
 <!-- more -->
 
 <p>I use mostly Ubuntu, so some of the commands might be Ubuntu specific.</p>
-<p>Install mysql</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">mysql</span><span class="o">-</span><span class="n">server</span>
-</pre></div>
 
+<p>Install mysql</p>
+
+<pre><code>sudo apt-get install mysql-server
+</code></pre>
 
 <p>A prompt will ask for the root password.</p>
+
 <p>To change the root password:</p>
-<div class="highlight"><pre><span class="n">FLUSH</span> <span class="n">PRIVILEGES</span><span class="p">;</span>
-    <span class="n">UPDATE</span> <span class="n">mysql</span><span class="p">.</span><span class="n">user</span> <span class="n">SET</span> <span class="n">password</span><span class="o">=</span><span class="n">PASSWORD</span><span class="p">(</span><span class="err">&#39;</span><span class="n">nova</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">WHERE</span> <span class="n">user</span><span class="o">=</span><span class="err">&#39;</span><span class="n">root</span><span class="err">&#39;</span><span class="p">;</span>
-</pre></div>
 
+<pre><code>FLUSH PRIVILEGES;
+    UPDATE mysql.user SET password=PASSWORD('nova') WHERE user='root';
+</code></pre>
 
-<p>NOTE: MySQL keywords are case insensitive. They're represented in capital here just so that they appear different than the rest. When you're just testing out some things logging into the DB console, people generally prefer writing in small caps. </p>
+<p>NOTE: MySQL keywords are case insensitive. They&rsquo;re represented in capital here just so that they appear different than the rest. When you&rsquo;re just testing out some things logging into the DB console, people generally prefer writing in small caps.</p>
+
 <p>Note that <code>PASSWORD</code> is a function, and unlike other MySQL keywords cannot be used in small caps.</p>
-<p>Log into MySQL console with user <code>root</code> and password <code>mysecretpassword</code>:</p>
-<div class="highlight"><pre><span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">pmysecretpassword</span>
-</pre></div>
 
+<p>Log into MySQL console with user <code>root</code> and password <code>mysecretpassword</code>:</p>
+
+<pre><code>mysql -uroot -pmysecretpassword
+</code></pre>
 
 <p>or</p>
-<div class="highlight"><pre><span class="n">mysql</span> <span class="o">-</span><span class="n">u</span><span class="err">&#39;</span><span class="n">root</span><span class="err">&#39;</span> <span class="o">-</span><span class="n">p</span><span class="err">&#39;</span><span class="n">mysecretpassword</span><span class="err">&#39;</span>
-</pre></div>
 
+<pre><code>mysql -u'root' -p'mysecretpassword'
+</code></pre>
 
-<p>or entering the password in 'secret' mode:</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">p</span>
-<span class="n">Enter</span> <span class="n">password</span><span class="o">:</span>
-</pre></div>
+<p>or entering the password in &lsquo;secret&rsquo; mode:</p>
 
+<pre><code>$ mysql -uroot -p
+Enter password: 
+</code></pre>
 
-<h3>MySQL console</h3>
+<h3 id="mysql-console:5aec0d683ee8bcb2a598c5a9ce48ebc9">MySQL console</h3>
+
 <p>List all databases:</p>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SHOW</span> <span class="n">DATABASES</span><span class="p">;</span>
-<span class="o">+--------------------+</span>
-<span class="o">|</span> <span class="n">Database</span>           <span class="o">|</span>
-<span class="o">+--------------------+</span>
-<span class="o">|</span> <span class="n">information_schema</span> <span class="o">|</span>
-<span class="o">|</span> <span class="n">mysql</span>              <span class="o">|</span>
-<span class="o">|</span> <span class="n">performance_schema</span> <span class="o">|</span>
-<span class="o">|</span> <span class="n">test</span>               <span class="o">|</span>
-<span class="o">+--------------------+</span>
-<span class="mi">4</span> <span class="n">rows</span> <span class="n">in</span> <span class="n">set</span> <span class="p">(</span><span class="mf">0.01</span> <span class="n">sec</span><span class="p">)</span>
-</pre></div>
 
+<pre><code>mysql&gt; SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+4 rows in set (0.01 sec)
+</code></pre>
 
 <p>Create a new database <code>rushi</code>:</p>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">CREATE</span> <span class="n">DATABASE</span> <span class="n">rushi</span><span class="p">;</span>
-<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">1</span> <span class="n">row</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">databases</span><span class="p">;</span>
-<span class="o">+--------------------+</span>
-<span class="o">|</span> <span class="n">Database</span>           <span class="o">|</span>
-<span class="o">+--------------------+</span>
-<span class="o">|</span> <span class="n">information_schema</span> <span class="o">|</span>
-<span class="o">|</span> <span class="n">mysql</span>              <span class="o">|</span>
-<span class="o">|</span> <span class="n">performance_schema</span> <span class="o">|</span>
-<span class="o">|</span> <span class="n">rushi</span>              <span class="o">|</span>
-<span class="o">|</span> <span class="n">test</span>               <span class="o">|</span>
-<span class="o">+--------------------+</span>
-<span class="mi">5</span> <span class="n">rows</span> <span class="n">in</span> <span class="n">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
-</pre></div>
+<pre><code>mysql&gt; CREATE DATABASE rushi;
+Query OK, 1 row affected (0.00 sec)
 
+mysql&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| rushi              |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+</code></pre>
 
 <p>Select database <code>rushi</code>, so that all the further operations are executed inside this database:</p>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">USE</span> <span class="n">rushi</span><span class="p">;</span>
-<span class="n">Database</span> <span class="n">changed</span>
-</pre></div>
 
+<pre><code>mysql&gt; USE rushi;
+Database changed
+</code></pre>
 
 <p>Create a table <code>friends</code> inside <code>rushi</code> database:</p>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">friends</span> <span class="p">(</span><span class="n">name</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="n">age</span> <span class="n">INT</span><span class="p">);</span>
-<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.03</span> <span class="n">sec</span><span class="p">)</span>
-</pre></div>
 
+<pre><code>mysql&gt; CREATE TABLE friends (name VARCHAR(20), age INT);
+Query OK, 0 rows affected (0.03 sec)
+</code></pre>
 
-<p>If you didn't select the database in the last to last command, you need to specify table in this format:<code>&lt;database&gt;.&lt;tablename&gt;</code>. So the last command would look like:</p>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">rushi</span><span class="p">.</span><span class="n">friends</span> <span class="p">(</span><span class="n">name</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="n">age</span> <span class="n">INT</span><span class="p">);</span>
-</pre></div>
+<p>If you didn&rsquo;t select the database in the last to last command, you need to specify table in this format:<code>&lt;database&gt;.&lt;tablename&gt;</code>. So the last command would look like:</p>
 
+<pre><code>mysql&gt; CREATE TABLE rushi.friends (name VARCHAR(20), age INT);
+</code></pre>
 
 <p>List all the tables:</p>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">tables</span><span class="p">;</span>
-<span class="o">+-----------------+</span>
-<span class="o">|</span> <span class="n">Tables_in_rushi</span> <span class="o">|</span>
-<span class="o">+-----------------+</span>
-<span class="o">|</span> <span class="n">friends</span>         <span class="o">|</span>
-<span class="o">+-----------------+</span>
-<span class="mi">1</span> <span class="n">rows</span> <span class="n">in</span> <span class="n">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
-</pre></div>
 
+<pre><code>mysql&gt; show tables;
++-----------------+
+| Tables_in_rushi |
++-----------------+
+| friends         |
++-----------------+
+1 rows in set (0.00 sec)
+</code></pre>
 
 <p>Insert data into <code>friends</code>:</p>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">friends</span> <span class="n">VALUES</span> <span class="p">(</span><span class="err">&#39;</span><span class="n">arvind</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">24</span><span class="p">);</span>
-<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">1</span> <span class="n">row</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.01</span> <span class="n">sec</span><span class="p">)</span>
-</pre></div>
 
+<pre><code>mysql&gt; INSERT INTO friends VALUES ('arvind', 24);
+Query OK, 1 row affected (0.01 sec)
+</code></pre>
 
 <p>Display all the data from the table:</p>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">friends</span><span class="p">;</span>
-<span class="o">+--------+------+</span>
-<span class="o">|</span> <span class="n">name</span>   <span class="o">|</span> <span class="n">age</span>  <span class="o">|</span>
-<span class="o">+--------+------+</span>
-<span class="o">|</span> <span class="n">arvind</span> <span class="o">|</span>   <span class="mi">24</span> <span class="o">|</span>
-<span class="o">+--------+------+</span>
-<span class="mi">1</span> <span class="n">row</span> <span class="n">in</span> <span class="n">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
-</pre></div>
 
+<pre><code>mysql&gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
++--------+------+
+1 row in set (0.00 sec)
+</code></pre>
 
 <p>Insert another friend:</p>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">friends</span> <span class="n">VALUES</span> <span class="p">(</span><span class="err">&#39;</span><span class="n">honshu</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">23</span><span class="p">);</span>
-<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">1</span> <span class="n">row</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">friends</span><span class="p">;</span>
-<span class="o">+--------+------+</span>
-<span class="o">|</span> <span class="n">name</span>   <span class="o">|</span> <span class="n">age</span>  <span class="o">|</span>
-<span class="o">+--------+------+</span>
-<span class="o">|</span> <span class="n">arvind</span> <span class="o">|</span>   <span class="mi">24</span> <span class="o">|</span>
-<span class="o">|</span> <span class="n">honshu</span> <span class="o">|</span>   <span class="mi">23</span> <span class="o">|</span>
-<span class="o">+--------+------+</span>
-<span class="mi">2</span> <span class="n">rows</span> <span class="n">in</span> <span class="n">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
-</pre></div>
+<pre><code>mysql&gt; INSERT INTO friends VALUES ('honshu', 23);
+Query OK, 1 row affected (0.00 sec)
 
+mysql&gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
+| honshu |   23 |
++--------+------+
+2 rows in set (0.00 sec)
+</code></pre>
 
 <p>Update a row in the table:</p>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">UPDATE</span> <span class="n">friends</span> <span class="n">SET</span> <span class="n">age</span><span class="o">=</span><span class="mi">22</span> <span class="n">WHERE</span> <span class="n">name</span><span class="o">=</span><span class="err">&#39;</span><span class="n">honshu</span><span class="err">&#39;</span><span class="p">;</span>
-<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">1</span> <span class="n">row</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.02</span> <span class="n">sec</span><span class="p">)</span>
-<span class="n">Rows</span> <span class="n">matched</span><span class="o">:</span> <span class="mi">1</span>  <span class="n">Changed</span><span class="o">:</span> <span class="mi">1</span>  <span class="n">Warnings</span><span class="o">:</span> <span class="mi">0</span>
 
-<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">friends</span><span class="p">;</span>
-<span class="o">+--------+------+</span>
-<span class="o">|</span> <span class="n">name</span>   <span class="o">|</span> <span class="n">age</span>  <span class="o">|</span>
-<span class="o">+--------+------+</span>
-<span class="o">|</span> <span class="n">arvind</span> <span class="o">|</span>   <span class="mi">24</span> <span class="o">|</span>
-<span class="o">|</span> <span class="n">honshu</span> <span class="o">|</span>   <span class="mi">22</span> <span class="o">|</span>
-<span class="o">+--------+------+</span>
-<span class="mi">2</span> <span class="n">rows</span> <span class="n">in</span> <span class="n">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
-</pre></div>
+<pre><code>mysql&gt; UPDATE friends SET age=22 WHERE name='honshu';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
 
+mysql&gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
+| honshu |   22 |
++--------+------+
+2 rows in set (0.00 sec)
+</code></pre>
 
 <p>Delete a row from table:</p>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">DELETE</span> <span class="n">FROM</span> <span class="n">friends</span> <span class="n">WHERE</span> <span class="n">age</span><span class="o">=</span><span class="mi">24</span><span class="p">;</span>
-<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">1</span> <span class="n">row</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
-<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">friends</span><span class="p">;</span>
-<span class="o">+--------+------+</span>
-<span class="o">|</span> <span class="n">name</span>   <span class="o">|</span> <span class="n">age</span>  <span class="o">|</span>
-<span class="o">+--------+------+</span>
-<span class="o">|</span> <span class="n">honshu</span> <span class="o">|</span>   <span class="mi">22</span> <span class="o">|</span>
-<span class="o">+--------+------+</span>
-<span class="mi">1</span> <span class="n">row</span> <span class="n">in</span> <span class="n">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
-</pre></div>
+<pre><code>mysql&gt; DELETE FROM friends WHERE age=24;
+Query OK, 1 row affected (0.00 sec)
 
+mysql&gt; select * from friends;
++--------+------+
+| name   | age  |
++--------+------+
+| honshu |   22 |
++--------+------+
+1 row in set (0.00 sec)
+</code></pre>
 
 <p>Delete all rows from the table in one go, and reset the autoincrement if any:</p>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">TRUNCATE</span> <span class="n">friends</span><span class="p">;</span>
-<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.04</span> <span class="n">sec</span><span class="p">)</span>
-</pre></div>
 
+<pre><code>mysql&gt; TRUNCATE friends;
+Query OK, 0 rows affected (0.04 sec)
+</code></pre>
 
 <p>Delete the table and all of its contents:</p>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">DROP</span> <span class="n">TABLE</span> <span class="n">friends</span><span class="p">;</span>
-</pre></div>
 
+<pre><code>mysql&gt; DROP TABLE friends;
+</code></pre>
 
 <p>Other commonly used commands are listed below. Try to try all of them out atleast once.
 Count the number of rows in a table:</p>
-<div class="highlight"><pre><span class="n">SELECT</span> <span class="n">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">FROM</span> <span class="n">friends</span><span class="p">;</span>
-</pre></div>
 
+<pre><code>SELECT COUNT(*) FROM friends;
+</code></pre>
 
 <p>Select distinct values for a row, and order them too:</p>
-<div class="highlight"><pre><span class="n">SELECT</span> <span class="n">DISTINCT</span> <span class="n">age</span> <span class="n">FROM</span> <span class="n">friends</span> <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">age</span><span class="p">;</span>
-</pre></div>
 
+<pre><code>SELECT DISTINCT age FROM friends ORDER BY age;
+</code></pre>
 
 <p>Modify table to add one more column to it:</p>
-<div class="highlight"><pre><span class="n">ALTER</span> <span class="n">TABLE</span> <span class="n">friend</span> <span class="n">ADD</span> <span class="n">height</span> <span class="nf">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-</pre></div>
 
+<pre><code>ALTER TABLE friend ADD height varchar(10);
+</code></pre>
 
 <p>Use regular expressions:</p>
-<div class="highlight"><pre><span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">friend</span> <span class="n">WHERE</span> <span class="n">name</span> <span class="n">REGEXP</span> <span class="err">&#39;</span><span class="n">arv</span><span class="o">*</span><span class="err">&#39;</span><span class="p">;</span>
-</pre></div>
 
+<pre><code>SELECT * FROM friend WHERE name REGEXP 'arv*';
+</code></pre>
 
 <p>CAUTION: Regular expressions comes with some binary/encoding trickery. Use it with a lot of caution.</p>
-<p>Create a new user for the database, and give it all the root privileges</p>
-<div class="highlight"><pre><span class="n">CREATE</span> <span class="n">USER</span> <span class="err">&#39;</span><span class="n">rushiagr</span><span class="sc">&#39;@&#39;</span><span class="n">localhost</span><span class="err">&#39;</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="err">&#39;</span><span class="n">mysecretpass</span><span class="err">&#39;</span>
-<span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="o">*</span> <span class="p">.</span> <span class="o">*</span> <span class="n">TO</span> <span class="err">&#39;</span><span class="n">rushiagr</span><span class="sc">&#39;@&#39;</span><span class="n">localhost</span><span class="err">&#39;</span>
-</pre></div>
 
+<p>Create a new user for the database, and give it all the root privileges</p>
+
+<pre><code>CREATE USER 'rushiagr'@'localhost' IDENTIFIED BY 'mysecretpass'
+GRANT ALL PRIVILEGES ON * . * TO 'rushiagr'@'localhost'
+</code></pre>
 
 <p>Take a dump of database <code>rushi</code> and store it in a file <code>db.dump</code>. Execute this command in bash shell, and not in the MySQL shell.:</p>
-<div class="highlight"><pre><span class="n">mysqldump</span> <span class="o">--</span><span class="n">user</span> <span class="n">root</span> <span class="n">rushi</span> <span class="o">&gt;</span> <span class="n">db</span><span class="p">.</span><span class="n">dump</span>
-</pre></div>
 
+<pre><code>mysqldump --user root rushi &gt; db.dump
+</code></pre>
 
 <p>The End!</p>
-<p>Comments/suggestions/feedback? Please feel free to comment and I'll make sure I acknowledge them to the fullest.</p>
-<p>Cheers!</p></div>
-    <footer>
-<p class="meta">
-  <span class="byline author vcard">
-    Posted by <span class="fn">Rushi Agrawal</span>
-  </span>
-<time datetime="2014-03-31T00:00:00" pubdate>Mon 31 March 2014</time>  <span class="categories">
-    <a class="category" href="http://rushiagr.github.io/tag/tech.html">tech</a>
-    <a class="category" href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>
-    <a class="category" href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a>
-    <a class="category" href="http://rushiagr.github.io/tag/ubuntu.html">ubuntu</a>
-    <a class="category" href="http://rushiagr.github.io/tag/mysql.html">mysql</a>
-    <a class="category" href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a>
-  </span>
-</p><div class="sharing">
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/" data-via="rushiagr" data-counturl="http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/" >Tweet</a>
-  <div class="g-plusone" data-size="medium"></div>
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-</div>    </footer>
-  </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
-  </section>
-</div>
-<aside class="sidebar">
-  <section>
-    <h1>Recent Posts</h1>
-    <ul id="recent_posts">
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/10/tmux-session-shortcuts/">Tmux session shortcuts</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/02/better-aws-command-line-interface/">Better AWS Command Line Interface</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2016/01/02/build-vm-images-using-diskimage-builder/">Build VM Images using Diskimage-builder</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2015/12/12/better-way-to-view-mysql-tables/">Better way to view MySQL tables</a>
-      </li>
-      <li class="post">
-          <a href="http://rushiagr.github.io/blog/2015/09/14/quick-justdial-scraper/">Quick JustDial scraper</a>
-      </li>
-    </ul>
-  </section>
-  <section>
-      
-    <h1>Categories</h1>
-    <ul id="recent_posts">
-        <li><a href="http://rushiagr.github.io/category/tech.html">tech</a></li>
-        <li><a href="http://rushiagr.github.io/category/thoughts.html">thoughts</a></li>
-    </ul>
-  </section>
- 
+<p>Comments/suggestions/feedback? Please feel free to comment and I&rsquo;ll make sure I acknowledge them to the fullest.</p>
 
-  <section>
-  <h1>Tags</h1>
-    <a href="http://rushiagr.github.io/tag/operations.html">operations</a>,    <a href="http://rushiagr.github.io/tag/.html"></a>,    <a href="http://rushiagr.github.io/tag/quickstart.html">quickstart</a>,    <a href="http://rushiagr.github.io/tag/nosql.html">nosql</a>,    <a href="http://rushiagr.github.io/tag/storage.html">storage</a>,    <a href="http://rushiagr.github.io/tag/squid.html">squid</a>,    <a href="http://rushiagr.github.io/tag/vm.html">vm</a>,    <a href="http://rushiagr.github.io/tag/apt.html">apt</a>,    <a href="http://rushiagr.github.io/tag/vim.html">vim</a>,    <a href="http://rushiagr.github.io/tag/packaging.html">packaging</a>,    <a href="http://rushiagr.github.io/tag/puppet.html">puppet</a>,    <a href="http://rushiagr.github.io/tag/ec2.html">ec2</a>,    <a href="http://rushiagr.github.io/tag/mysql.html">mysql</a>,    <a href="http://rushiagr.github.io/tag/openstack.html">openstack</a>,    <a href="http://rushiagr.github.io/tag/quicstart.html">quicstart</a>,    <a href="http://rushiagr.github.io/tag/technology.html">technology</a>,    <a href="http://rushiagr.github.io/tag/tempest.html">tempest</a>,    <a href="http://rushiagr.github.io/tag/cloud.html">cloud</a>,    <a href="http://rushiagr.github.io/tag/cassandra.html">cassandra</a>,    <a href="http://rushiagr.github.io/tag/block-storage.html">block-storage</a>,    <a href="http://rushiagr.github.io/tag/git.html">git</a>,    <a href="http://rushiagr.github.io/tag/productivity.html">productivity</a>,    <a href="http://rushiagr.github.io/tag/cli.html">cli</a>,    <a href="http://rushiagr.github.io/tag/iscsi.html">iscsi</a>,    <a href="http://rushiagr.github.io/tag/cache.html">cache</a>,    <a href="http://rushiagr.github.io/tag/distributed.html">distributed</a>,    <a href="http://rushiagr.github.io/tag/devops.html">devops</a>,    <a href="http://rushiagr.github.io/tag/terminal.html">terminal</a>,    <a href="http://rushiagr.github.io/tag/cheatsheet.html">cheatsheet</a>,    <a href="http://rushiagr.github.io/tag/systems.html">systems</a>,    <a href="http://rushiagr.github.io/tag/keystone.html">keystone</a>,    <a href="http://rushiagr.github.io/tag/screen.html">screen</a>,    <a href="http://rushiagr.github.io/tag/tutorial.html">tutorial</a>,    <a href="http://rushiagr.github.io/tag/openid.html">openid</a>,    <a href="http://rushiagr.github.io/tag/testing.html">testing</a>,    <a href="http://rushiagr.github.io/tag/nontech.html">nontech</a>,    <a href="http://rushiagr.github.io/tag/python.html">python</a>,    <a href="http://rushiagr.github.io/tag/commandline.html">commandline</a>,    <a href="http://rushiagr.github.io/tag/aws.html">aws</a>,    <a href="http://rushiagr.github.io/tag/scalability.html">scalability</a>,    <a href="http://rushiagr.github.io/tag/automation.html">automation</a>,    <a href="http://rushiagr.github.io/tag/scraper.html">scraper</a>,    <a href="http://rushiagr.github.io/tag/amazon.html">amazon</a>,    <a href="http://rushiagr.github.io/tag/lxc.html">lxc</a>,    <a href="http://rushiagr.github.io/tag/tmux.html">tmux</a>,    <a href="http://rushiagr.github.io/tag/milestone.html">milestone</a>,    <a href="http://rushiagr.github.io/tag/apache.html">apache</a>,    <a href="http://rushiagr.github.io/tag/devstack.html">devstack</a>,    <a href="http://rushiagr.github.io/tag/data.html">data</a>,    <a href="http://rushiagr.github.io/tag/linux.html">linux</a>,    <a href="http://rushiagr.github.io/tag/github.html">github</a>,    <a href="http://rushiagr.github.io/tag/ux.html">ux</a>,    <a href="http://rushiagr.github.io/tag/boto.html">boto</a>,    <a href="http://rushiagr.github.io/tag/notes.html">notes</a>,    <a href="http://rushiagr.github.io/tag/server.html">server</a>,    <a href="http://rushiagr.github.io/tag/tech.html">tech</a>,    <a href="http://rushiagr.github.io/tag/containers.html">containers</a>,    <a href="http://rushiagr.github.io/tag/databases.html">databases</a>,    <a href="http://rushiagr.github.io/tag/lvm.html">lvm</a>,    <a href="http://rushiagr.github.io/tag/cinder.html">cinder</a>,    <a href="http://rushiagr.github.io/tag/docker.html">docker</a>,    <a href="http://rushiagr.github.io/tag/ubuntu.html">ubuntu</a>,    <a href="http://rushiagr.github.io/tag/virtualization.html">virtualization</a>  </section>
+<p>Cheers!</p>
 
+    
 
+     
+	
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
 
-  <section>
-    <h1>GitHub Repos</h1>
-    <ul id="gh_repos">
-      <li class="loading">Status updating...</li>
-    </ul>
-      <a href="https://github.com/rushiagr">@rushiagr</a> on GitHub
-    <script type="text/javascript">
-      $.domReady(function(){
-          if (!window.jXHR){
-              var jxhr = document.createElement('script');
-              jxhr.type = 'text/javascript';
-              jxhr.src = 'http://rushiagr.github.io/theme/js/jXHR.js';
-              var s = document.getElementsByTagName('script')[0];
-              s.parentNode.insertBefore(jxhr, s);
-          }
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
 
-          github.showRepos({
-              user: 'rushiagr',
-              count: 5,
-              skip_forks: true,
-              target: '#gh_repos'
-          });
-      });
-    </script>
-    <script src="http://rushiagr.github.io/theme/js/github.js" type="text/javascript"> </script>
-  </section>
-
-    <section>
-        <h1>Social</h1>
-        <ul>
-            <li><a href="http://rushiagr.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS</a></li>
-            <li><a href="http://twitter.com/rushiagr" target="_blank">twitter</a></li>
-            <li><a href="http://github.com/rushiagr" target="_blank">github</a></li>
-        </ul>
-    </section>
-
-<section>
-    <p>Follow <a href="http://twitter.com/rushiagr">@rushiagr</a></p>
-</section>
-</aside>    </div>
-  </div>
-  <footer role="contentinfo"><p>
-    Copyright &copy;  2012-2016  - Rushi Agrawal -
-  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
-</p></footer>
-    <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37074962-1']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-37074962-1');
-    ga('send', 'pageview');
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
 </script>
-	<script type="text/javascript">
-	  var disqus_shortname = 'rushiagr';
-          var disqus_identifier = '/blog/2014/03/31/mysql-cheat-sheet/';
-          var disqus_url = 'http://rushiagr.github.io/blog/2014/03/31/mysql-cheat-sheet/';
-          var disqus_title = 'MySQL Cheat Sheet';
-	  (function() {
-	    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-	    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	   })();
-	</script>
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-</body>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+</div>
+</div> 
+
+</body>w
 </html>
