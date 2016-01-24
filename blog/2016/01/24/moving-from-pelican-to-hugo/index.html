@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  
+
+  <title> Moving from Pelican to Hugo  &middot; rushiagr </title>
+
+  
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
+      <p class="lead">
+       code by Rushi Agrawal 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://www.rushiagr.com/blog">Posts</a></li>
+      
+        <li><a href="/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">Moving from Pelican to Hugo</h1>
+    <span class="post-date">Jan 24, 2016</span>
+    
+    <p>I was looking for a better theme for my blog which is based on
+<a href="http://blog.getpelican.com/">Pelican</a> static site generator in Python, but then I happened to look at
+<a href="http://npf.io">this</a> blog written in Hugo - a Go counterpart of Pelican. The
+thing which caught my eye was the <a href="http://npf.io/blog/">posts</a> page, which is
+exactly how I wanted my first page to be. I&rsquo;ve always wanted something like
+Paul Graham&rsquo;s <a href="http://paulgraham.com/articles.html">essays</a> page, but couldn&rsquo;t
+find anything close to it until I found this site. After some thought, I
+decided to make the move. This move has no effect on my love for Python
+language. It&rsquo;s just laziness trumping drudgery :)</p>
+
+<p>The good thing about static site generators is all of them support markdown &ndash;
+the markup language in which my Pelican blog was written. Althought the syntax
+of Hugo was different, I could scribble up a <a href="https://github.com/rushiagr/public/blob/master/scripts/pelican-to-hugo.py">small Python
+script</a>
+to convert Pelican&rsquo;s way of writing blog metadata to Hugo&rsquo;s.</p>
+
+<p>Since I didn&rsquo;t want readers who saved my blog links as bookmarks to suffer, I
+had to manually make sure that the URLs of blog posts are not changed. Hugo by
+default uses the markdown file name as the URL name. Pelican by default
+converts blog post title to a slug and uses that slug in the URL. This has
+helped me provide markdown file names in lexicographical order (first one
+<code>a-my-first-blog.md</code>, second one being <code>b-sequel-of-first-article.md</code>, and so
+on) for chronological viewing. But now I had to either change the file names,
+or write a <code>slug</code> entry to blog post metadata. I figured out the earlier one
+would be less time consuming, and did just that.</p>
+
+<p>One problem I faced was, the site-generation script was throwing an error.
+Googling and stackoverflowing told me that it&rsquo;s due to Hugo version
+incompatibility. When Nate Finch, the original author of
+<a href="http://npf.io">npf.io</a> generated his site, he must have used an older version
+of Hugo. But I had only the latest Hugo binary, built from source. Within some
+time I was able to figure out the problem and
+<a href="https://github.com/rushiagr/npf/commit/712506d460dbeb7cb80757d9d4f533f75983968d">fixed</a> them, and then submitted
+<a href="https://github.com/natefinch/npf/pull/5">pull request</a> for the same too. Open
+source for the win :)</p>
+
+<p>I also realized than whenever I create a new blog post using <code>hugo new
+&lt;filename&gt;.md</code>, it would create another entry on the left sidebar, and not as a
+blog post inside the &lsquo;posts&rsquo; page. The workaround was easy here too: just move
+the markdown file to <code>blog</code> directory, and change a few variables as I&rsquo;ve now
+written in <a href="https://github.com/rushiagr/npf#create-a-new-post">readme</a>, and
+it works as expected. I should probably write a shell function to do all of
+these steps in one go :)</p>
+
+<p>I had to ensure that I remove all files generated by Pelican, as otherwise one
+blog entry was going to the older-Pelican themed page when clicked on its link.
+This and a
+<a href="https://github.com/rushiagr/npf/commit/384283276cd960e494f97df9de46fda2f7f58383">few</a>
+tweaks later, I had my shiny blog ready :)</p>
+
+    
+
+     
+	
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+</div>
+</div> 
+
+</body>w
+</html>

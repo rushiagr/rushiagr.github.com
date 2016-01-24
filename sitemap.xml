@@ -2,183 +2,188 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://rushiagr.com/</loc>
-    <lastmod>2016-01-24T11:14:25+00:00</lastmod>
+    <loc>http://www.rushiagr.com/</loc>
+    <lastmod>2016-01-24T21:19:26+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/about/</loc>
+    <loc>http://www.rushiagr.com/blog/2016/01/24/moving-from-pelican-to-hugo/</loc>
+    <lastmod>2016-01-24T21:19:26+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/about/</loc>
     <lastmod>2016-01-24T11:14:25+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2016/01/10/tmux-session-shortcuts/</loc>
+    <loc>http://www.rushiagr.com/blog/2016/01/10/tmux-session-shortcuts/</loc>
     <lastmod>2016-01-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2016/01/02/better-aws-command-line-interface/</loc>
+    <loc>http://www.rushiagr.com/blog/2016/01/02/better-aws-command-line-interface/</loc>
     <lastmod>2016-01-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2016/01/02/build-vm-image-using-diskimage-builder/</loc>
+    <loc>http://www.rushiagr.com/blog/2016/01/02/build-vm-image-using-diskimage-builder/</loc>
     <lastmod>2016-01-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2015/12/12/better-way-to-view-mysql-tables/</loc>
+    <loc>http://www.rushiagr.com/blog/2015/12/12/better-way-to-view-mysql-tables/</loc>
     <lastmod>2015-12-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2015/09/14/quick-justdial-scraper/</loc>
+    <loc>http://www.rushiagr.com/blog/2015/09/14/quick-justdial-scraper/</loc>
     <lastmod>2015-09-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</loc>
+    <loc>http://www.rushiagr.com/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</loc>
     <lastmod>2015-09-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</loc>
+    <loc>http://www.rushiagr.com/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</loc>
     <lastmod>2015-07-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2015/06/07/docker-quick-start-notes/</loc>
+    <loc>http://www.rushiagr.com/blog/2015/06/07/docker-quick-start-notes/</loc>
     <lastmod>2015-06-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2015/06/05/cache-apt-packages-with-squid-proxy/</loc>
+    <loc>http://www.rushiagr.com/blog/2015/06/05/cache-apt-packages-with-squid-proxy/</loc>
     <lastmod>2015-06-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/pie/</loc>
+    <loc>http://www.rushiagr.com/pie/</loc>
     <lastmod>2015-06-02T17:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/keep/</loc>
+    <loc>http://www.rushiagr.com/keep/</loc>
     <lastmod>2014-11-21T06:26:13-05:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/11/09/plight-of-online-banking-in-india/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/11/09/plight-of-online-banking-in-india/</loc>
     <lastmod>2014-11-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/09/14/puppet-installation-from-modules/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/09/14/puppet-installation-from-modules/</loc>
     <lastmod>2014-09-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/09/05/openstack-unit-testing-nuggets/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/09/05/openstack-unit-testing-nuggets/</loc>
     <lastmod>2014-09-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/</loc>
     <lastmod>2014-09-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/desc/series-hugo101/</loc>
+    <loc>http://www.rushiagr.com/desc/series-hugo101/</loc>
     <lastmod>2014-08-12T11:09:35+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/</loc>
     <lastmod>2014-08-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/08/05/devstack-behind-proxy/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/08/05/devstack-behind-proxy/</loc>
     <lastmod>2014-08-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/08/02/qcow2-mount/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/08/02/qcow2-mount/</loc>
     <lastmod>2014-08-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/npipe.v2/</loc>
+    <loc>http://www.rushiagr.com/npipe.v2/</loc>
     <lastmod>2014-08-01T10:15:15+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/lumberjack.v2/</loc>
+    <loc>http://www.rushiagr.com/lumberjack.v2/</loc>
     <lastmod>2014-07-28T11:28:15+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/04/12/open-source-puppet-quick-start/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/04/12/open-source-puppet-quick-start/</loc>
     <lastmod>2014-04-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/04/03/openstack-in-an-hour-with-devstack/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/04/03/openstack-in-an-hour-with-devstack/</loc>
     <lastmod>2014-04-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/03/31/mysql-cheat-sheet/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/03/31/mysql-cheat-sheet/</loc>
     <lastmod>2014-03-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/01/16/playing-around-with-cinder-backend/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/01/16/playing-around-with-cinder-backend/</loc>
     <lastmod>2014-01-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/01/14/quick-start-linux-logical-volume-manager/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/01/14/quick-start-linux-logical-volume-manager/</loc>
     <lastmod>2014-01-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/01/12/installing-openid-plugin-for-mediawiki/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/01/12/installing-openid-plugin-for-mediawiki/</loc>
     <lastmod>2014-01-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2014/01/01/bye-bye-2013-welcome-2014/</loc>
+    <loc>http://www.rushiagr.com/blog/2014/01/01/bye-bye-2013-welcome-2014/</loc>
     <lastmod>2014-01-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/</loc>
+    <loc>http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/</loc>
     <lastmod>2013-06-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2013/05/27/cinder-on-devstack-quick-start/</loc>
+    <loc>http://www.rushiagr.com/blog/2013/05/27/cinder-on-devstack-quick-start/</loc>
     <lastmod>2013-05-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/</loc>
+    <loc>http://www.rushiagr.com/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/</loc>
     <lastmod>2013-03-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2013/03/19/github-cheat-sheet/</loc>
+    <loc>http://www.rushiagr.com/blog/2013/03/19/github-cheat-sheet/</loc>
     <lastmod>2013-03-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2013/01/02/bye-bye-2012-welcome-2013/</loc>
+    <loc>http://www.rushiagr.com/blog/2013/01/02/bye-bye-2012-welcome-2013/</loc>
     <lastmod>2013-01-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://rushiagr.com/blog/2012/12/15/testing-the-new-blog/</loc>
+    <loc>http://www.rushiagr.com/blog/2012/12/15/testing-the-new-blog/</loc>
     <lastmod>2012-12-15T00:00:00+00:00</lastmod>
   </url>
   
