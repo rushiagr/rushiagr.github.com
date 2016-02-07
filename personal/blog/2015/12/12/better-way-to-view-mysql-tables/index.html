@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  
+
+  <title> Better way to view MySQL tables  &middot; rushiagr </title>
+
+  
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/poole.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/syntax.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://www.rushiagr.com/personal">rushiagr</a></h1>
+      <p class="lead">
+       not your average human being 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://www.rushiagr.com/personal/blog">Posts</a></li>
+      
+        <li><a href="/personal/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">Better way to view MySQL tables</h1>
+    <span class="post-date">Dec 12, 2015</span>
+    
+    
+
+<h3 id="the-problem:1a3447b8e3a40d86311532717f0ef6f7">The problem</h3>
+
+<p>You are trying to print a MySQL table with a large number of columns, with
+<code>SELECT *</code> command. You type <code>SELECT * FROM mysql.user LIMIT 1</code>, and your terminal
+becomes <a href="https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-table-with-many-rows-messy.png">this</a>.
+If you wanted to view more than one row, you&rsquo;re in a trouble :)</p>
+
+<h3 id="the-solution:1a3447b8e3a40d86311532717f0ef6f7">The solution</h3>
+
+<p>Run MySQL with this option:</p>
+
+<pre><code>mysql --pager=&quot;less --chop-long-lines --quit-if-one-screen --no-init'
+</code></pre>
+
+<p>This will make your table display only the rows it can in the current screen, something like <a href="https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-with-less-pager-neat.png">this</a>. You can
+use the arrow keys to move sideways to view the hidden column. Pressing the &lsquo;right&rsquo; arrow key will move half page towards right. Neat, isn&rsquo;t it?</p>
+
+<p>You can create an alias for mysql:</p>
+
+<pre><code># Using shorter version of 'less' flags mentioned above
+alias mysql='mysql -SFX'
+</code></pre>
+
+<p>You can put the above line in your <code>~/.bashrc</code> file to load this alias
+in every new terminal session.</p>
+
+<h3 id="bonus-point-for-vim-users:1a3447b8e3a40d86311532717f0ef6f7">Bonus point for Vim users</h3>
+
+<p><code>less</code> allows using keys <code>j</code> and <code>k</code> for scrolling down and scrolling up. Unfortunately, you cannot directly use keys <code>h</code> and <code>l</code> to move sideways using <code>less</code>. Fortunately, you can map <code>h</code> and <code>l</code> to move left or right, respectively. Here&rsquo;s how to do that:</p>
+
+<p>Create a file <code>.lesskey</code> in your home directory, with the following contents</p>
+
+<pre><code>l noaction 10\e)
+h noaction 10\e)
+</code></pre>
+
+<p>Now run this command, to generate <code>~/.less</code> file.</p>
+
+<pre><code>lesskey
+</code></pre>
+
+<p>This will generate a binary file which <code>less</code> understands. If you now start a new MySQL terminal session (of course with the above said <code>--pages</code> flag), you can use Vim&rsquo;s <code>HJKL</code> movements. Here I have specified to move 10 characters to the right if you make one &lsquo;right&rsquo; Vim movement.</p>
+
+<h3 id="quick-setup-script:1a3447b8e3a40d86311532717f0ef6f7">Quick setup script</h3>
+
+<p>Don&rsquo;t want to do the above stuff manually? Just run this command and your computer will be set up in a second!</p>
+
+<pre><code>sh -c &quot;$(wget -q https://raw.githubusercontent.com/rushiagr/public/master/scripts/mysql-pretty-table.sh -O -)&quot;
+</code></pre>
+
+<p>Note that changes will take effect from a new shell session (or you can run <code>source ~/.bashrc</code> if you want things to work in the current session too.</p>
+
+<h3 id="more-information:1a3447b8e3a40d86311532717f0ef6f7">More information</h3>
+
+<p>Find more information at below links:</p>
+
+<p><a href="http://unix.stackexchange.com/a/169969/91602">About mapping &lsquo;h&rsquo; and &lsquo;k&rsquo; to Vim movements in &lsquo;less&rsquo;</a></p>
+
+<p><a href="http://stackoverflow.com/a/6422698/1143173">About using &lsquo;less&rsquo; as MySQL pager</a></p>
+
+<p>Cheers!</p>
+
+    
+
+     
+	
+        <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+
+</div>
+</div> 
+
+</body>w
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  
+
+  <title> Quick Start: Linux Logical Volume Manager  &middot; rushiagr </title>
+
+  
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/poole.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/syntax.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://www.rushiagr.com/personal">rushiagr</a></h1>
+      <p class="lead">
+       not your average human being 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://www.rushiagr.com/personal/blog">Posts</a></li>
+      
+        <li><a href="/personal/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">Quick Start: Linux Logical Volume Manager</h1>
+    <span class="post-date">Jan 14, 2014</span>
+    
+    
+
+<p>While installing the latest Ubuntu OS on your computer, you will see that
+you can install the OS using LVM (Logical Volume Manager) utility. Ever wonder what is it?
+LVM (Logical Volume Manager) is that fantastic utility for storage administration.
+It provide the users with abilities which were not possible with raw disks.
+The storage is now &lsquo;virtualized&rsquo;. You can now easily create, move and extend volumes (for now, think of it as disk partitions)
+without bothering about data corruption. You can carve partitions out of multiple disks,
+and can add and remove disks from a &lsquo;volume group&rsquo; containing such volumes without the user noticing anything!
+List of all the features of LVM can be found at it&rsquo;s <a href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)"
+target="_blank">wiki page</a>.</p>
+
+<p>This blog scratches the surface of LVM, and gives some basic insights into some storage concepts.</p>
+
+<!-- more -->
+
+<p>I&rsquo;ll give you a simple example to better explain what a &lsquo;physical volume&rsquo;, a &lsquo;volume group&rsquo; and a
+&lsquo;logical volume&rsquo; is. Say I have two 1 TB hard disks - disk A and disk B. I have two equal-sized partitions on
+disk B, one of which I want to keep it to myself for my personal data. The &lsquo;partition&rsquo; term used here is
+same as what you see in a file explorer. For the unpartitioned disk, the complete disk is one single partition.</p>
+
+<p>The partitions I described above are &lsquo;physical volumes&rsquo;. That is, on the disk, these are physically separate bytes (think of that
+partitioned disk as a spiral on disk divided in its length at the midpoint).
+Out of the first disk and one partition of the second disk, we create a &lsquo;volume group&rsquo; &ndash; a logical pool of storage, out of which we can
+create lots of &lsquo;logical volumes&rsquo;. Even after you&rsquo;ve created logical volumes over this volume group, you can add and remove physical volumes (partitions) from the volume group. You can do many more operations such as resize, move and extend.</p>
+
+<p>I hope the basic idea written above is sufficiently clear. Else, head over to this Ubuntu <a href="https://wiki.ubuntu.com/Lvm" target="_blank">wiki</a> for a slightly more detailed, but still an overview, of LVM. Anyway, I&rsquo;m concentrating more on the demo, so lets move on.</p>
+
+<h4 id="hands-on:2d2bf322b35613aefa5a64a06c866c26">Hands-on</h4>
+
+<p>I&rsquo;m demo&rsquo;ing everything on an Ubuntu machine, but it should work on any Linux distro (after you install the LVM2 package)</p>
+
+<p>Install LVM2 package</p>
+
+<pre><code>sudo apt-get install lvm2
+</code></pre>
+
+<p>One nice thing is you don&rsquo;t need to create actual partitions on disks. We&rsquo;ll use files as <a href="http://en.wikipedia.org/wiki/Loop_device" target="_blank">loopback devices</a>, which will appear to the operating system as partitions. Neat.</p>
+
+<p>Create a file of size 1G to be later used as a physical volume.</p>
+
+<pre><code>rushi@jio:~$ truncate --size 1G backing_file_1
+</code></pre>
+
+<p>Create a loopback device over this file. Find the first free loopback device available and show its name.</p>
+
+<pre><code>rushi@jio:~$ sudo losetup --find --show backing_file_1 
+/dev/loop0
+</code></pre>
+
+<p>List all the loopback devices.</p>
+
+<pre><code>rushi@jio:~$ sudo losetup --all
+/dev/loop0: [fc00]:22811987 (/home/rushi/backing_file_1)
+</code></pre>
+
+<p>Create a physical volume over this loopback device. Note that</p>
+
+<pre><code>rushi@jio:~$ sudo pvcreate /dev/loop0 
+  Physical volume &quot;/dev/loop0&quot; successfully created
+</code></pre>
+
+<p>List physical volumes. Apart from <code>pvs</code> (Physical Volume Scan), there are two more
+commands which do the same thing, but with different level of verbosity and formatting: <code>pvscan</code> and <code>pvdisplay</code>. (Try them out too!)</p>
+
+<pre><code>rushi@jio:~$ sudo pvs
+  PV         VG        Fmt  Attr PSize   PFree 
+  /dev/loop0           lvm2 a--    1.00g  1.00g
+  /dev/sda5  ubuntu-vg lvm2 a--  931.27g 44.00m
+</code></pre>
+
+<p>Let us repeat the steps to create another physical volume:</p>
+
+<pre><code>rushi@jio:~$ truncate --size 1G backing_file_2
+rushi@jio:~$ sudo losetup --find --show backing_file_2 
+/dev/loop1
+rushi@jio:~$ sudo losetup --all
+/dev/loop0: [fc00]:22811987 (/home/rushi/backing_file_1)
+/dev/loop1: [fc00]:22812001 (/home/rushi/backing_file_2)
+rushi@jio:~$ sudo pvcreate /dev/loop1
+  Physical volume &quot;/dev/loop1&quot; successfully created
+rushi@jio:~$ sudo pvs
+  PV         VG        Fmt  Attr PSize   PFree 
+  /dev/loop0           lvm2 a--    1.00g  1.00g
+  /dev/loop1           lvm2 a--    1.00g  1.00g
+  /dev/sda5  ubuntu-vg lvm2 a--  931.27g 44.00m
+</code></pre>
+
+<p>Create a volume group <code>test-volgroup</code> over these two physical volumes. (Actually, even if you don&rsquo;t create physical volumes over loopback devices, while creating volume groups it will automatically create physical volumes over them).</p>
+
+<pre><code>rushi@jio:~$ sudo vgcreate test-volgroup /dev/loop0 /dev/loop1
+  Volume group &quot;test-volgroup&quot; successfully created
+</code></pre>
+
+<p>List the volume groups. (<code>vgs</code>, <code>vgscan</code> or <code>vgdisplay</code> can be used)</p>
+
+<pre><code>rushi@jio:~$ sudo vgs
+  VG            #PV #LV #SN Attr   VSize   VFree 
+  test-volgroup   2   0   0 wz--n-   1.99g  1.99g
+  ubuntu-vg       1   2   0 wz--n- 931.27g 44.00m
+</code></pre>
+
+<p>Create a logical volume <code>test-logicalvol</code> over the <code>test-volgroup</code> volume group.</p>
+
+<pre><code>rushi@jio:~$ sudo lvcreate --size 400M --name test-logicalvol test-volgroup
+  Logical volume &quot;test-logicalvol&quot; created
+</code></pre>
+
+<p>List logical volumes. (<code>lvs</code>, <code>lvscan</code>, <code>lvdisplay</code> can be used)</p>
+
+<pre><code>rushi@jio:~$ sudo lvs
+  LV              VG            Attr      LSize   Pool Origin Data%  Move Log Copy%  Convert
+  test-logicalvol test-volgroup -wi-a---- 400.00m                                           
+  root            ubuntu-vg     -wi-ao--- 923.35g                                           
+  swap_1          ubuntu-vg     -wi-ao---   7.88g                                           
+</code></pre>
+
+<p>Easy, isn&rsquo;t it? Let&rsquo;s tear down everything. Though a simpler way would be to just remove the loopback device, which will automatically
+remove all the physical, logical volumes/volume groups created over them, let&rsquo;s do it step-by-step. Note that you need to specify volume group while deleting logical volumes.</p>
+
+<pre><code>rushi@jio:~$ sudo lvremove test-volgroup
+Do you really want to remove active logical volume test-logicalvol? [y/n]: y
+  Logical volume &quot;test-logicalvol&quot; successfully removed
+rushi@jio:~$ sudo vgremove test-volgroup
+  Volume group &quot;test-volgroup&quot; successfully removed
+rushi@jio:~$ sudo pvremove /dev/loop0 /dev/loop1
+  Labels on physical volume &quot;/dev/loop0&quot; successfully wiped
+  Labels on physical volume &quot;/dev/loop1&quot; successfully wiped
+rushi@jio:~$ sudo losetup --detach /dev/loop0 /dev/loop1
+rushi@jio:~$ rm backing_file_1 backing_file_2
+</code></pre>
+
+<p>Cheers!</p>
+
+    
+
+     
+	
+        <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+
+</div>
+</div> 
+
+</body>w
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  
+
+  <title> Docker quick start notes  &middot; rushiagr </title>
+
+  
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/poole.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/syntax.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://www.rushiagr.com/personal">rushiagr</a></h1>
+      <p class="lead">
+       not your average human being 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://www.rushiagr.com/personal/blog">Posts</a></li>
+      
+        <li><a href="/personal/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">Docker quick start notes</h1>
+    <span class="post-date">Jun 7, 2015</span>
+    
+    
+
+<p>After reading about docker and containers, I thought let&rsquo;s try them out.
+Here are my notes. Obviously all of them are taken from Internet. Maybe this
+collection here will help someone start with docker faster than spending time
+searching all over the internet.</p>
+
+<p>It assumes your base OS is Ubuntu 14.04 Trusty Tahr (when was the last time
+you saw the codename spelled &lsquo;Trusty Tahr&rsquo; and not &lsquo;Trusty&rsquo;? :) ).</p>
+
+<p>Install docker</p>
+
+<pre><code>sudo apt-get install docker.io
+</code></pre>
+
+<p>See docker version</p>
+
+<pre><code>sudo docker version
+</code></pre>
+
+<p>Pull an Ubuntu Trusty docker image</p>
+
+<pre><code>sudo docker pull ubuntu:14.04
+</code></pre>
+
+<p>Alternatively, you can search for a docker image &lsquo;tutorial&rsquo; in docker&rsquo;s repository</p>
+
+<pre><code>sudo docker search tutorial
+</code></pre>
+
+<p>And them pull a docker image &lsquo;tutorial&rsquo; by user &lsquo;learn&rsquo;</p>
+
+<pre><code>sudo docker pull learn/tutorial
+</code></pre>
+
+<p>List all docker images present in the system</p>
+
+<pre><code>sudo docker images
+</code></pre>
+
+<p>Run a docker image, and execute command &lsquo;echo &ldquo;hello world&rdquo;&rsquo; in the docker
+container created out of that image</p>
+
+<pre><code>sudo docker run ubuntu:14.04 echo &quot;hello world&quot;
+</code></pre>
+
+<p>Container information is stored in /var/lib/docker</p>
+
+<p>If you run the above command multiple times, it will create a new container
+each time.</p>
+
+<p>To know the ID of the last container, run</p>
+
+<pre><code>sudo docker ps -l
+</code></pre>
+
+<p>To list all the running containers</p>
+
+<pre><code>sudo docker ps
+</code></pre>
+
+<p>Note that the above command will not show the container we last run, because
+the container which we ran last time terminated just after it finished
+executing echo command.</p>
+
+<p>Create a new docker image by name <code>&lt;yourname&gt;/echo</code> by &lsquo;committing&rsquo; the last
+container which you ran</p>
+
+<pre><code>sudo docker commit &lt;container ID&gt; &lt;yourname&gt;/echo
+</code></pre>
+
+<p>Now running <code>sudo docker images</code> will list you two containers instead of one</p>
+
+<p>Now you can run this new docker container like this:</p>
+
+<pre><code>sudo docker run &lt;yourname&gt;/echo ls -alrth
+</code></pre>
+
+<p>If we installed something, or created a file in the old container, it will
+be visible now in this container too.</p>
+
+<p>Get more information about a docker image or a running container:</p>
+
+<pre><code>sudo docker inspect &lt;yourname&gt;/echo
+</code></pre>
+
+<p>To push docker image to docker repository</p>
+
+<pre><code>sudo docker push &lt;yourname&gt;/echo
+</code></pre>
+
+<p>To download ubuntu Trusty base image if not present locally, and open a shell session into it</p>
+
+<pre><code>sudo docker run -t -i ubuntu:14.04 /bin/bash
+</code></pre>
+
+<p>-i i.e. &ndash;interactive=false, keeps STDIN open even if not attached</p>
+
+<p>-t i.e. &ndash;tty=false allocates a pseudo tty</p>
+
+<p>Don&rsquo;t worry what these mean. If you add these options, you&rsquo;ll see that
+you already get logged in into the container shell, and the container
+only dies off once you exit from that session (usually by writing <code>exit</code>
+or pressing CTRL + D.</p>
+
+<p>To remove an image:</p>
+
+<pre><code>sudo docker rmi learn/tutorial
+</code></pre>
+
+<h4 id="things-not-covered-in-this-tutorial:49285dca7b53d383ade641738736c634">Things not covered in this tutorial:</h4>
+
+<ol>
+<li>Create your own custom docker images and share with other people:
+<a href="https://docs.docker.com/userguide/dockerimages/">https://docs.docker.com/userguide/dockerimages/</a></li>
+</ol>
+
+<p>Cheers!</p>
+
+    
+
+     
+	
+        <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+
+</div>
+</div> 
+
+</body>w
+</html>

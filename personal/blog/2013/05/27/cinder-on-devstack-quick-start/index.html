@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  
+
+  <title> Cinder on DevStack - Quick Start  &middot; rushiagr </title>
+
+  
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/poole.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/syntax.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://www.rushiagr.com/personal">rushiagr</a></h1>
+      <p class="lead">
+       not your average human being 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://www.rushiagr.com/personal/blog">Posts</a></li>
+      
+        <li><a href="/personal/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">Cinder on DevStack - Quick Start</h1>
+    <span class="post-date">May 27, 2013</span>
+    
+    
+
+<p>This blog post covers all the important commands for OpenStack Cinder - The block storage project.
+Although this guide is written based on DevStack, it will work with actual deployment of OpenStack
+cloud also (except the DevStack/Linux specific bits).</p>
+
+<p>All the Cinder operations can be performed via either of these three means:</p>
+
+<ol>
+<li>CLI (Cinder&rsquo;s <code>python-cinderclient</code> command line module)</li>
+<li>GUI (Using OpenStack&rsquo;s GUI project <code>horizon</code>)</li>
+<li>Directly calling the Cinder APIs</li>
+</ol>
+
+<p>Internally, the CLI and GUI both use Cinder APIs to interact with the Cinder API server, but for
+a relatively new guy to OpenStack, I think an introduction through CLI would make the most sense.</p>
+
+<p>Assumptions made:</p>
+
+<ol>
+<li>You understand how to setup a DevStack environment and already have one ready at hand (remember <code>./stack.sh</code>?)</li>
+<li>You know how to pass default credentials to local shell environment (<code>. /home/path_to_your_devstack_repo/eucarc</code> will do)</li>
+</ol>
+
+<p>Let&rsquo;s start.</p>
+
+<h3 id="creation-and-deletion-of-volumes:426b24844d0e63b7c5c25db25682ca23">Creation and deletion of volumes</h3>
+
+<p>Create a 1-GB cinder volume with no name by running command <code>cinder create 1</code>.</p>
+
+<pre><code>stack@stlrx300s7-27:/$ cinder create 1
++---------------------+--------------------------------------+
+|       Property      |                Value                 |
++---------------------+--------------------------------------+
+|     attachments     |                  []                  |
+|  availability_zone  |                 nova                 |
+|       bootable      |                false                 |
+|      created_at     |      2013-05-28T10:32:47.243613      |
+| display_description |                 None                 |
+|     display_name    |                 None                 |
+|          id         | 6754d216-4792-4a38-964a-d002686c8f92 |
+|       metadata      |                  {}                  |
+|         size        |                  1                   |
+|     snapshot_id     |                 None                 |
+|     source_volid    |                 None                 |
+|        status       |               creating               |
+|     volume_type     |                 None                 |
++---------------------+--------------------------------------+
+</code></pre>
+
+<p>Here I am describing only the minimal functionality of a command. If you wish to see more info about what all you
+can do with that command, just type <code>cinder help &lt;command&gt;</code>, so to see all the optional parameters you can pass
+while creating a Cinder volume, execute <code>cinder help create</code>.</p>
+
+<pre><code>stack@stlrx300s7-27:/$ cinder help create
+usage: cinder create [--snapshot-id &lt;snapshot-id&gt;]
+                     [--source-volid &lt;source-volid&gt;] [--image-id &lt;image-id&gt;]
+                     [--display-name &lt;display-name&gt;]
+                     [--display-description &lt;display-description&gt;]
+                     [--volume-type &lt;volume-type&gt;]
+                     [--availability-zone &lt;availability-zone&gt;]
+                     [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
+                     &lt;size&gt;
+
+Add a new volume.
+
+Positional arguments:
+  &lt;size&gt;                Size of volume in GB
+
+Optional arguments:
+  --snapshot-id &lt;snapshot-id&gt;
+                        Create volume from snapshot id (Optional,
+                        Default=None)
+  --source-volid &lt;source-volid&gt;
+                        Create volume from volume id (Optional, Default=None)
+  --image-id &lt;image-id&gt;
+                        Create volume from image id (Optional, Default=None)
+  --display-name &lt;display-name&gt;
+                        Volume name (Optional, Default=None)
+  --display-description &lt;display-description&gt;
+                        Volume description (Optional, Default=None)
+  --volume-type &lt;volume-type&gt;
+                        Volume type (Optional, Default=None)
+  --availability-zone &lt;availability-zone&gt;
+                        Availability zone for volume (Optional, Default=None)
+  --metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]
+                        Metadata key=value pairs (Optional, Default=None)
+</code></pre>
+
+<p>Don&rsquo;t worry about the parameters, we&rsquo;ll use most of them in a short time.</p>
+
+<p>Let&rsquo;s create a Cinder volume of size 1GB with a name, using <code>cinder create --display-name my_second_vol 1</code>:</p>
+
+<pre><code>stack@stlrx300s7-27:/$ cinder create --display-name my_second_vol 1
++---------------------+--------------------------------------+
+|       Property      |                Value                 |
++---------------------+--------------------------------------+
+|     attachments     |                  []                  |
+|  availability_zone  |                 nova                 |
+|       bootable      |                false                 |
+|      created_at     |      2013-05-28T10:40:32.801981      |
+| display_description |                 None                 |
+|     display_name    |            my_second_vol             |
+|          id         | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
+|       metadata      |                  {}                  |
+|         size        |                  1                   |
+|     snapshot_id     |                 None                 |
+|     source_volid    |                 None                 |
+|        status       |               creating               |
+|     volume_type     |                 None                 |
++---------------------+--------------------------------------+
+</code></pre>
+
+<p>Now lets list out all the Cinder volumes, using <code>cinder list</code>:</p>
+
+<pre><code>stack@stlrx300s7-27:/$ cinder list
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
+| 6754d216-4792-4a38-964a-d002686c8f92 | available |      None     |  1   |     None    |  false   |             |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+</code></pre>
+
+<p>Now lets delete the first volume (the one without a name), using <code>cinder delete &lt;volume_id&gt;</code> command. If you
+execute <code>cinder list</code> real quick, you will see the status of the volume going to &lsquo;deleting&rsquo;, and after some time
+the volume will be deleted:</p>
+
+<pre><code>stack@stlrx300s7-27:/$ cinder delete 6754d216-4792-4a38-964a-d002686c8f92
+stack@stlrx300s7-27:/$ cinder list 
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
+| 6754d216-4792-4a38-964a-d002686c8f92 |  deleting |      None     |  1   |     None    |  false   |             |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+stack@stlrx300s7-27:/$ 
+stack@stlrx300s7-27:/$ 
+stack@stlrx300s7-27:/$ cinder list
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+</code></pre>
+
+<p>On a default DevStack installation, for a volume in Cinder, a &lsquo;logical volume&rsquo; is created on the Linux machine,
+inside the &lsquo;physical volume&rsquo; named <code>stack-volumes</code>. To see the logical volumes, and physical volumes on the
+ubuntu machine, just run <code>lvs</code> (logical volume scan) and <code>pvs</code> (physical volume scan) respectively (this is just
+for information and you can entirely skip this part):</p>
+
+<pre><code>stack@stlrx300s7-27:/$ sudo lvs
+  LV                                          VG            Attr   LSize Origin Snap%  Move Log Copy%  Convert
+  volume-25fa2028-46dc-4870-84c5-d062ae99dd7a stack-volumes -wi-ao 1.00g
+stack@stlrx300s7-27:/$
+stack@stlrx300s7-27:/$ sudo pvs
+  PV         VG            Fmt  Attr PSize PFree
+  /dev/loop0 stack-volumes lvm2 a-   5.01g 4.01g
+</code></pre>
+
+<h3 id="volume-snapshots:426b24844d0e63b7c5c25db25682ca23">Volume snapshots</h3>
+
+<p>Create the snapshot of volume:</p>
+
+<pre><code>stack@stlrx300s7-27:/$ cinder snapshot-create 25fa2028-46dc-4870-84c5-d062ae99dd7a
++---------------------+--------------------------------------+
+|       Property      |                Value                 |
++---------------------+--------------------------------------+
+|      created_at     |      2013-05-28T10:55:03.966690      |
+| display_description |                 None                 |
+|     display_name    |                 None                 |
+|          id         | baf8764f-4c9b-496a-b2ff-bd49825c5d09 |
+|       metadata      |                  {}                  |
+|         size        |                  1                   |
+|        status       |               creating               |
+|      volume_id      | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
++---------------------+--------------------------------------+
+</code></pre>
+
+<p>List all the snapshots:</p>
+
+<pre><code>stack@stlrx300s7-27:/$ cinder snapshot-list
++--------------------------------------+--------------------------------------+-----------+--------------+------+
+|                  ID                  |              Volume ID               |   Status  | Display Name | Size |
++--------------------------------------+--------------------------------------+-----------+--------------+------+
+| baf8764f-4c9b-496a-b2ff-bd49825c5d09 | 25fa2028-46dc-4870-84c5-d062ae99dd7a | available |     None     |  1   |
++--------------------------------------+--------------------------------------+-----------+--------------+------+
+</code></pre>
+
+<p>Now lets create a new volume of 1GB from the snapshot:</p>
+
+<pre><code>stack@stlrx300s7-27:/$ cinder create --snapshot-id baf8764f-4c9b-496a-b2ff-bd49825c5d09 1
++---------------------+--------------------------------------+
+|       Property      |                Value                 |
++---------------------+--------------------------------------+
+|     attachments     |                  []                  |
+|  availability_zone  |                 nova                 |
+|       bootable      |                false                 |
+|      created_at     |      2013-05-28T10:56:20.478141      |
+| display_description |                 None                 |
+|     display_name    |                 None                 |
+|          id         | 99ebe1d0-678b-4a9a-8ec4-438f9804d327 |
+|       metadata      |                  {}                  |
+|         size        |                  1                   |
+|     snapshot_id     | baf8764f-4c9b-496a-b2ff-bd49825c5d09 |
+|     source_volid    |                 None                 |
+|        status       |               creating               |
+|     volume_type     |                 None                 |
++---------------------+--------------------------------------+
+</code></pre>
+
+<p>Now you will see two volumes when you&rsquo;ll do a <code>cinder list</code>.</p>
+
+<h3 id="accessing-volumes-from-inside-a-virtual-instance:426b24844d0e63b7c5c25db25682ca23">Accessing volumes from inside a virtual instance</h3>
+
+<p>You can attach a volume to a VM instance, to provide additional persistent storage to that VM. It
+works just like you attach an external HDD to your computer/laptop. But first, we&rsquo;ll need to create a
+virtual machine for that.</p>
+
+<p>List out all the virtual machine images present in our DevStack setup, from which we can boot a
+brand new VM instance, using <code>glance image-list</code> or &lsquo;nova image-list`:</p>
+
+<pre><code>stack@stlrx300s7-27:/$ nova image-list
++--------------------------------------+---------------------------------+--------+--------+
+| ID                                   | Name                            | Status | Server |
++--------------------------------------+---------------------------------+--------+--------+
+| 291fe347-3a6f-4a21-9e85-e8809cb05d6e | cirros-0.3.1-x86_64-uec         | ACTIVE |        |
+| 69d14d74-4185-4ba3-9666-1e7f569f38c6 | cirros-0.3.1-x86_64-uec-kernel  | ACTIVE |        |
+| 8793532d-0c09-4b1c-aab8-d10832f13c09 | cirros-0.3.1-x86_64-uec-ramdisk | ACTIVE |        |
++--------------------------------------+---------------------------------+--------+--------+
+</code></pre>
+
+<p>We&rsquo;ll use the image with the shortest name, and boot an instance, giving it a name <code>myinstance</code>.
+You can list all the virtual machine instances registered with Nova using command <code>nova list</code>.
+If just after running the command to boot the virtual machine, you run <code>nova list</code> a few times,
+you will see the machine state going from &lsquo;BUILD&rsquo; to &lsquo;ACTIVE&rsquo; in a few seconds.</p>
+
+<pre><code>stack@stlrx300s7-27:/$ nova boot --flavor m1.tiny --image 291fe347-3a6f-4a21-9e85-e8809cb05d6e myinstance
++-----------------------------+--------------------------------------+
+| Property                    | Value                                |
++-----------------------------+--------------------------------------+
+| status                      | BUILD                                |
+| updated                     | 2013-05-28T11:03:47Z                 |
+| OS-EXT-STS:task_state       | scheduling                           |
+| key_name                    | None                                 |
+| image                       | cirros-0.3.1-x86_64-uec              |
+| hostId                      |                                      |
+| OS-EXT-STS:vm_state         | building                             |
+| flavor                      | m1.tiny                              |
+| id                          | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
+| security_groups             | [{u'name': u'default'}]              |
+| user_id                     | 35708cb6795845fcab6362e908e6b0cf     |
+| name                        | myinstance                           |
+| adminPass                   | cQh34G96dCHX                         |
+| tenant_id                   | 11f8fde7d627422d84036cabd6cbb7f8     |
+| created                     | 2013-05-28T11:03:47Z                 |
+| OS-DCF:diskConfig           | MANUAL                               |
+| metadata                    | {}                                   |
+| accessIPv4                  |                                      |
+| accessIPv6                  |                                      |
+| progress                    | 0                                    |
+| OS-EXT-STS:power_state      | 0                                    |
+| OS-EXT-AZ:availability_zone | nova                                 |
+| config_drive                |                                      |
++-----------------------------+--------------------------------------+
+stack@stlrx300s7-27:/$ nova list
++--------------------------------------+------------+--------+------------+-------------+----------+
+| ID                                   | Name       | Status | Task State | Power State | Networks |
++--------------------------------------+------------+--------+------------+-------------+----------+
+| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | BUILD  | networking | NOSTATE     |          |
++--------------------------------------+------------+--------+------------+-------------+----------+
+stack@stlrx300s7-27:/$ nova list
++--------------------------------------+------------+--------+------------+-------------+----------+
+| ID                                   | Name       | Status | Task State | Power State | Networks |
++--------------------------------------+------------+--------+------------+-------------+----------+
+| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | BUILD  | spawning   | NOSTATE     |          |
++--------------------------------------+------------+--------+------------+-------------+----------+
+stack@stlrx300s7-27:/$ nova list
++--------------------------------------+------------+--------+------------+-------------+------------------+
+| ID                                   | Name       | Status | Task State | Power State | Networks         |
++--------------------------------------+------------+--------+------------+-------------+------------------+
+| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | ACTIVE | None       | Running     | private=10.0.0.2 |
++--------------------------------------+------------+--------+------------+-------------+------------------+
+</code></pre>
+
+<p>Now lets attach one of our volume to this instance, and then try to peek into this volume after logging into the instance.</p>
+
+<p>Attach volume using command <code>nova volume-attach &lt;instance_id&gt; &lt;volume_id&gt; &lt;attach_location&gt;</code>. We&rsquo;ll attach at the first
+free device location: <code>/dev/vdb</code>:</p>
+
+<pre><code>stack@stlrx300s7-27:/$ nova volume-attach 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f 25fa2028-46dc-4870-84c5-d062ae99dd7a /dev/vdb
++----------+--------------------------------------+
+| Property | Value                                |
++----------+--------------------------------------+
+| device   | /dev/vdb                             |
+| serverId | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
+| id       | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
+| volumeId | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
++----------+--------------------------------------+
+</code></pre>
+
+<p>Now listing the volume will tell you that the volume is attached to an instance (in use):</p>
+
+<pre><code>stack@stlrx300s7-27:/$ cinder list
++--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable |             Attached to              |
++--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+| 25fa2028-46dc-4870-84c5-d062ae99dd7a |   in-use  | my_second_vol |  1   |     None    |  false   | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
+| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |                                      |
++--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+</code></pre>
+
+<p>Now let&rsquo;s login into this virtual machine using the private IP of the instance (<code>10.0.0.2</code> in our case). Note how an
+error message pops up if you have already created an instance last time when you installed DevStack. If such an error
+appears on your screen too, follow the instructions just like the way I did. The default password for the cirros image
+we used is <code>cubswin:)</code>. Enter into the instance, and then become root:</p>
+
+<pre><code>stack@stlrx300s7-27:/$ ssh cirros@10.0.0.2
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the RSA key sent by the remote host is
+f5:ac:45:4c:63:8e:e4:19:cc:5a:76:7e:a1:08:e7:c8.
+Please contact your system administrator.
+Add correct host key in /opt/stack/.ssh/known_hosts to get rid of this message.
+Offending RSA key in /opt/stack/.ssh/known_hosts:4
+  remove with: ssh-keygen -f &quot;/opt/stack/.ssh/known_hosts&quot; -R 10.0.0.2
+RSA host key for 10.0.0.2 has changed and you have requested strict checking.
+Host key verification failed.
+
+stack@stlrx300s7-27:/$ ssh-keygen -f &quot;/opt/stack/.ssh/known_hosts&quot; -R 10.0.0.2
+/opt/stack/.ssh/known_hosts updated.
+Original contents retained as /opt/stack/.ssh/known_hosts.old
+</code></pre>
+
+<pre><code>stack@stlrx300s7-27:/$ ssh cirros@10.0.0.2
+The authenticity of host '10.0.0.2 (10.0.0.2)' can't be established.
+RSA key fingerprint is f5:ac:45:4c:63:8e:e4:19:cc:5a:76:7e:a1:08:e7:c8.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '10.0.0.2' (RSA) to the list of known hosts.
+cirros@10.0.0.2's password: 
+$sudo -i
+#
+</code></pre>
+
+<p>Run <code>fdisk -l</code> to see the disks present for the instance. You will see that your newly attached disk
+<code>/dev/vdb</code> of size 1GB is now present:</p>
+
+<pre><code># fdisk -l
+
+Disk /dev/vda: 1073 MB, 1073741824 bytes
+16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk /dev/vda doesn't contain a valid partition table
+
+Disk /dev/vdb: 1073 MB, 1073741824 bytes
+16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk /dev/vdb doesn't contain a valid partition table
+</code></pre>
+
+<p>Command <code>blkid /dev/vd*</code> lists out the IDs of block devices for this machine and some related info. Running
+this command you will see that info of only the virtual disk <code>/dev/vda</code> is present, meaning our disk <code>/dev/vdb</code>
+needs formatting.</p>
+
+<pre><code># blkid /dev/vd*
+/dev/vda: LABEL=&quot;cirros-rootfs&quot; UUID=&quot;74251bb8-3a28-4a46-9a78-064497b26b9d&quot; SEC_TYPE=&quot;ext2&quot; TYPE=&quot;ext3&quot; 
+</code></pre>
+
+<p>Lets format it to make an EXT3 partition with block-size 1024 bytes using command <code>mkfs.ext3 -b 1024 /dev/vdb</code>:</p>
+
+<pre><code># mkfs.ext3 -b 1024 /dev/vdb
+mke2fs 1.42.2 (27-Mar-2012)
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+65536 inodes, 1048576 blocks
+52428 blocks (5.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=68157440
+128 block groups
+8192 blocks per group, 8192 fragments per group
+512 inodes per group
+Superblock backups stored on blocks: 
+        8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409, 663553, 
+        1024001
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information: done
+</code></pre>
+
+<p>Run <code>blkid</code> again to see the newly partitioned disk listed:</p>
+
+<pre><code># blkid /dev/vd*
+/dev/vda: LABEL=&quot;cirros-rootfs&quot; UUID=&quot;74251bb8-3a28-4a46-9a78-064497b26b9d&quot; SEC_TYPE=&quot;ext2&quot; TYPE=&quot;ext3&quot; 
+/dev/vdb: UUID=&quot;22838e81-eb97-457d-b1e0-4ff3d8e45b05&quot; SEC_TYPE=&quot;ext2&quot; TYPE=&quot;ext3&quot; 
+</code></pre>
+
+<p>In order to use this disk, you need to mount it at some location. I&rsquo;ll create a directory <code>/tempmount</code>
+and mount our virtual block device there:</p>
+
+<pre><code># mkdir /tempmount
+# mount /dev/vdb /tempmount/
+</code></pre>
+
+<p>Now you can see the disk listed in the machine disks, using <code>df -h</code> command:</p>
+
+<pre><code># df -h
+Filesystem                Size      Used Available Use% Mounted on
+/dev                    242.3M         0    242.3M   0% /dev
+/dev/vda                 31.0M      9.7M     19.7M  33% /
+tmpfs                   245.9M         0    245.9M   0% /dev/shm
+tmpfs                   200.0K     76.0K    124.0K  38% /run
+/dev/vdb               1007.7M     34.9M    921.6M   4% /tempmount
+</code></pre>
+
+<p>Now you can <code>cd</code> into <code>/tempmount</code> directory, and do whatever you want to do with the new disk &ndash; put some files there,
+or download one!</p>
+
+<p>Lets wrap up this part. Unmount this volume by <code>umount /tempmount</code>, and log out from the machine by pressing <code>CTRL+D</code> twice, and execute <code>nova volume-detach &lt;server_id&gt; &lt;volume_id&gt;</code> to detach this volume. You can now see the &lsquo;Attached to&rsquo; column becomes empty again after detaching.</p>
+
+<pre><code>stack@stlrx300s7-27:/$ cinder list
++--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable |             Attached to              |
++--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+| 25fa2028-46dc-4870-84c5-d062ae99dd7a |   in-use  | my_second_vol |  1   |     None    |  false   | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
+| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |                                      |
++--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+stack@stlrx300s7-27:/$ nova volume-detach 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f 25fa2028-46dc-4870-84c5-d062ae99dd7a
+stack@stlrx300s7-27:/$ cinder list
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
+| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |             |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+</code></pre>
+
+<h3 id="more-features:426b24844d0e63b7c5c25db25682ca23">More features</h3>
+
+<p>(Will update shortly)</p>
+
+<p>Cheers!</p>
+
+    
+
+     
+	
+        <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+
+</div>
+</div> 
+
+</body>w
+</html>

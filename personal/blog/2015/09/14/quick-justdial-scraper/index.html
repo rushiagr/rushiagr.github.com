@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  
+
+  <title> Quick JustDial scraper  &middot; rushiagr </title>
+
+  
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/poole.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/syntax.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://www.rushiagr.com/personal">rushiagr</a></h1>
+      <p class="lead">
+       not your average human being 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://www.rushiagr.com/personal/blog">Posts</a></li>
+      
+        <li><a href="/personal/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">Quick JustDial scraper</h1>
+    <span class="post-date">Sep 14, 2015</span>
+    
+    <p>So my friend asked me to scrape data from JustDial and give it to him in an excel sheet.
+I thought let&rsquo;s give it a try. He needed
+name of firm, address and phone number of any JustDial URL he wants to scrape. After effectively
+around 4 hours of work, the below script was created.</p>
+
+<p>Note that the script is dirty. You need to edit the jd_url to search any other URL. Also,
+the looping will go on forever, so you have to keep checking the file size of generated
+&lsquo;data.csv&rsquo; file, and when you&rsquo;re sure it&rsquo;s not increasing any more, kill the script by
+pressing CTRL+C. This script works as of today. Tomorrow it might not. Also, excuse
+stray comments/bad formatting of code. I&rsquo;m not sure I want to clean it right now :)</p>
+
+<p>Feel free to use/modify it the way you want.</p>
+
+<pre><code># PIP requirements: requests, beautifulsoup4
+import requests
+from bs4 import BeautifulSoup
+import json
+import csv
+
+jd_url = &quot;http://www.justdial.com/Bangalore/Car-Hire-%3Cnear%3E-Shanthinagar&quot;
+
+# Split http/https prefix if any
+# TODO: work on URLs which dont' have the CT part in URL
+jd_url = jd_url.split('http://www.justdial.com/')[-1].split('https://www.justdial.com/')[-1]
+city, search, cat_id = '', '', ''
+split_vals = jd_url.split('/')
+if len(split_vals) == 3:
+    city, search, cat_id = jd_url.split('/')
+    cat_id = cat_id.split('-')[-1]
+elif len(split_vals) == 2:
+    city, search = jd_url.split('/')
+search = search.replace('-', '+')
+
+
+with open('data.csv', 'w') as f:
+    #writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_ALL, lineterminator='\n')
+
+    page = 1
+    while True:
+        print 'page', page
+        resp = requests.get('http://www.justdial.com'+'/functions/ajxsearch.php?national_search=0&amp;act=pagination&amp;city={0}&amp;search={1}&amp;where=&amp;catid={2}&amp;psearch=&amp;prid=&amp;page={3}'.format(city, search, cat_id, page))
+        markup = resp.json()['markup'].replace('\/', '/')
+        soup = BeautifulSoup(markup, 'html.parser')
+
+
+        for thing in soup.find_all('section'):
+            csv_list = []
+            if thing.get('class')==[u'jcar']:
+                # Company name
+                for a_tag in thing.find_all('a'):
+                    if a_tag.get('onclick')==&quot;_ct('clntnm', 'lspg');&quot;:
+                        csv_list.append(a_tag.get('title'))
+
+                # Address
+                for span_tag in thing.find_all('span'):
+                    if span_tag.get('class')==[u'mrehover', u'dn']:
+                        csv_list.append(span_tag.get_text().strip())
+
+                # Phone number
+                for a_tag in thing.find_all('a'):
+                    if a_tag.get('href').startswith('tel:'):
+                        csv_list.append(a_tag.get('href').split(':')[-1])
+
+
+                csv_list = ['&quot;'+item+'&quot;' for item in csv_list]
+                writeline = ','.join(csv_list)+'\n'
+                f.write(','.join(csv_list)+'\n')
+        page+=1
+</code></pre>
+
+<p>Cheers!</p>
+
+    
+
+     
+	
+        <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+
+</div>
+</div> 
+
+</body>w
+</html>

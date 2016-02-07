@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  
+
+  <title> Build VM Images using Diskimage-builder  &middot; rushiagr </title>
+
+  
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/poole.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/syntax.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/personal/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://www.rushiagr.com/personal">rushiagr</a></h1>
+      <p class="lead">
+       not your average human being 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://www.rushiagr.com/personal/blog">Posts</a></li>
+      
+        <li><a href="/personal/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">Build VM Images using Diskimage-builder</h1>
+    <span class="post-date">Jan 2, 2016</span>
+    
+    <p>OpenStack has this nice tool <a href="https://github.com/openstack/diskimage-builder">diskimage-builder</a>to create virtual machine images without the need
+of a cloud. These vm images can then be uploaded to cloud (e.g. in Glance for
+OpenStack cloud), and they become immediately usable. You can also create VMs in
+virtualbox from these images (though I don&rsquo;t remember exact steps to make the
+image work with VirtualBox. Do let me know if you get the VM working with
+VirtualBox/Vagrant)</p>
+
+<p>Here I&rsquo;ll describe ways to create a bare cloud-uploadable Ubuntu image. I will
+also provide information as to how to build an image which will have some
+packages pre-installed in them. Note that the commands here will create only
+one image file as opposed to three &ndash; one each for ramdisk, kernel and machine image.</p>
+
+<p>Prerequisites</p>
+
+<pre><code>sudo apt-get install qemu-utils
+git clone http://github.com/openstack/diskimage-builder
+cd diskimage-builder
+sudo pip install -r requirements.txt
+</code></pre>
+
+<p>All the binaries are in bin filder. You can go in the <code>bin\</code> directory to
+execute diskimage-builder commands, or add that directory to your <code>$PATH</code></p>
+
+<p>Create bare Ubuntu image, which you can directly upload to a cloud e.g.
+OpenStack.</p>
+
+<pre><code>disk-image-create -a amd64 -o ubuntu-amd64 vm ubuntu
+</code></pre>
+
+<p>Image generated will be of name <code>ubuntu-amd64.qcow2</code>. Such an image will be for
+same OS version as your host Ubuntu version. If you want
+to build an image against a different OS version, specify
+<code>DIB_RELEASE=&lt;releasename&gt;</code> as a prefix to the command.</p>
+
+<pre><code>DIB_RELEASE=trusty disk-image-create -a amd64 -o ubuntu-amd64 vm ubuntu
+</code></pre>
+
+<p>Create an Ubuntu VM image which you can boot via KVM or VirtualBox/Vagrant.
+You will need to manually
+add public keys to authorized_keys for a user inside that VM.</p>
+
+<pre><code>disk-image-create -o base -a amd64 vm base ubuntu cloud-init-nocloud
+</code></pre>
+
+<p>Create an image with <code>mysql-server</code> and <code>tmux</code> package (and their dependencies) installed inside the image:</p>
+
+<pre><code>disk-image-create -a amd64 -o ubuntu-amd64 -p mysql-server,tmux vm ubuntu
+</code></pre>
+
+<p>How to upload image to glance:</p>
+
+<pre><code>glance image-create --name dib-ubuntu --disk-format=qcow2 --container-format=bare &lt; img/ubuntu-amd64.qcow2
+</code></pre>
+
+<p>Where <code>ubuntu-amd64.qcow2</code> is the image to upload.</p>
+
+<p>Thanks!</p>
+
+    
+
+     
+	
+        <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+
+</div>
+</div> 
+
+</body>w
+</html>
