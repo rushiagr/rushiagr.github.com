@@ -705,6 +705,10 @@ used.&lt;/p&gt;
       <guid>http://www.rushiagr.com/blog/2015/06/07/docker-quick-start-notes/</guid>
       <description>
 
+&lt;ul&gt;
+&lt;li&gt;Update *: Blog updated to use latest way to install docker.&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;p&gt;After reading about docker and containers, I thought let&amp;rsquo;s try them out.
 Here are my notes. Obviously all of them are taken from Internet. Maybe this
 collection here will help someone start with docker faster than spending time
@@ -713,9 +717,14 @@ searching all over the internet.&lt;/p&gt;
 &lt;p&gt;It assumes your base OS is Ubuntu 14.04 Trusty Tahr (when was the last time
 you saw the codename spelled &amp;lsquo;Trusty Tahr&amp;rsquo; and not &amp;lsquo;Trusty&amp;rsquo;? :) ).&lt;/p&gt;
 
+&lt;p&gt;Ensure kernel version is more than 3.10&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;uname -r
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;p&gt;Install docker&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;sudo apt-get install docker.io
+&lt;pre&gt;&lt;code&gt;curl -sSL https://get.docker.com/ | sh
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;See docker version&lt;/p&gt;
@@ -774,7 +783,7 @@ container which you ran&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo docker commit &amp;lt;container ID&amp;gt; &amp;lt;yourname&amp;gt;/echo
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Now running &lt;code&gt;sudo docker images&lt;/code&gt; will list you two containers instead of one&lt;/p&gt;
+&lt;p&gt;Now running &lt;code&gt;sudo docker images&lt;/code&gt; will list you two images instead of one&lt;/p&gt;
 
 &lt;p&gt;Now you can run this new docker container like this:&lt;/p&gt;
 

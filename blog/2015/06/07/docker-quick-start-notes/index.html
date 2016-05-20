@@ -89,6 +89,10 @@
     
     
 
+<ul>
+<li>Update *: Blog updated to use latest way to install docker.</li>
+</ul>
+
 <p>After reading about docker and containers, I thought let&rsquo;s try them out.
 Here are my notes. Obviously all of them are taken from Internet. Maybe this
 collection here will help someone start with docker faster than spending time
@@ -97,9 +101,14 @@ searching all over the internet.</p>
 <p>It assumes your base OS is Ubuntu 14.04 Trusty Tahr (when was the last time
 you saw the codename spelled &lsquo;Trusty Tahr&rsquo; and not &lsquo;Trusty&rsquo;? :) ).</p>
 
+<p>Ensure kernel version is more than 3.10</p>
+
+<pre><code>uname -r
+</code></pre>
+
 <p>Install docker</p>
 
-<pre><code>sudo apt-get install docker.io
+<pre><code>curl -sSL https://get.docker.com/ | sh
 </code></pre>
 
 <p>See docker version</p>
@@ -158,7 +167,7 @@ container which you ran</p>
 <pre><code>sudo docker commit &lt;container ID&gt; &lt;yourname&gt;/echo
 </code></pre>
 
-<p>Now running <code>sudo docker images</code> will list you two containers instead of one</p>
+<p>Now running <code>sudo docker images</code> will list you two images instead of one</p>
 
 <p>Now you can run this new docker container like this:</p>
 
