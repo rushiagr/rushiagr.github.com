@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/personal/tags/amazon/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2014 Rushi Agrawal</copyright>
+    <updated>Sat, 09 Aug 2014 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Amazon EC2 API with OpenStack - Developer Quick Start</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/</link>
+      <pubDate>Sat, 09 Aug 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/</guid>
+      <description>&lt;p&gt;OpenStack has support for EC2 API, that is, you can fire Amazon&amp;rsquo;s API against an OpenStack cloud and it will still work. This article gets you started with using them locally against DevStack. It is more of a starter guide to a novice.&lt;/p&gt;
+
+&lt;p&gt;Fire a DevStack with it&amp;rsquo;s default settings. See &lt;a href=&#34;http://www.rushiagr.com/blog/2014/04/03/openstack-in-an-hour-with-devstack&#34;&gt;this post&lt;/a&gt; for more information on it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone http://github.com/openstack-dev/devstack
+cd devstack/
+./stack.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Source openrc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;source openrc
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;View all EC2 credentials available for the current user (here, &lt;code&gt;demo&lt;/code&gt; user in &lt;code&gt;demo&lt;/code&gt; tenant)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ keystone ec2-credentials-list
++----------------------------------+----------------------------------+----------------------------------+
+|              tenant              |              access              |              secret              |
++----------------------------------+----------------------------------+----------------------------------+
+| 0e9f99a6f2064464aa054d305ba08052 | ef61007dae74468eb9593ffbbd22d9f1 | 28c7ad6248de4e6a8649b3e2d122ac5d |
+| 9b93a67201264492be3d0998b87d821b | 1b0a617dbef347cb968c8eed160de0b3 | b6525738ad6044ea9c49abeefabf86de |
++----------------------------------+----------------------------------+----------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But which one is my current tenant? Let&amp;rsquo;s get that from parsing the output of &lt;code&gt;token-get&lt;/code&gt; command&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ keystone token-get | grep tenant | awk &#39;{print $4}&#39;
+0e9f99a6f2064464aa054d305ba08052
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note the access and secret keys.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s get started with the &lt;code&gt;boto&lt;/code&gt; client for consuming AWS APIs. I prefer &lt;code&gt;ipython&lt;/code&gt; shell, for its interactive features, but normal Python shell is just fine too. (Install ipython as &lt;code&gt;sudo apt-get install ipython&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Import necessary module&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt; import boto
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a &lt;code&gt;conn&lt;/code&gt; connection object, which we&amp;rsquo;ll use for querying our cloud&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt; conn = boto.connect_ec2_endpoint(&#39;http://10.0.1.126:8773/services/Cloud&#39;,
+            aws_access_key_id=&#39;ef61007dae74468eb9593ffbbd22d9f1&#39;,
+            aws_secret_access_key=&#39;28c7ad6248de4e6a8649b3e2d122ac5d&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here &lt;code&gt;10.0.1.126&lt;/code&gt; is the IP of my machine. Don&amp;rsquo;t forget to change it to yours.&lt;/p&gt;
+
+&lt;p&gt;If everything is successful, call to &lt;code&gt;get_all_instances()&lt;/code&gt; will return an empty list&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt; conn.get_all_instances()
+[]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Okay, now let&amp;rsquo;s create an instance. List all the images first&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [20]: conn.get_all_images()
+Out[20]:
+[Image:aki-00000001,
+ Image:ari-00000002,
+ Image:ami-00000003,
+ Image:ami-00000004]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image &lt;code&gt;ami-00000003&lt;/code&gt; should be the cirros image from which we&amp;rsquo;ll create an instance. But still, let&amp;rsquo;s confirm that&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [26]: img = conn.get_image(&#39;ami-00000003&#39;)
+
+In [27]: img.name
+Out[27]: u&#39;cirros-0.3.2-x86_64-uec&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s use this image to create an instance. Boto&amp;rsquo;s &lt;code&gt;get_all_instances&lt;/code&gt; returns a list of reservations, which makes getting the instance object slightly roundabout.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [35]: conn.run_instances(image_id=&#39;ami-00000003&#39;, instance_type=&#39;m1.tiny&#39;)
+Out[35]: Reservation:r-08b8idoz
+
+In [40]: reservations = conn.get_all_instances()
+
+In [42]: resvn = reservations[0]
+
+In [44]: instance = resvn.instances[0]
+
+In [45]: instance.state
+Out[45]: u&#39;running&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And then delete it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [47]: conn.terminate_instances(&#39;i-00000002&#39;)
+Out[47]: [Instance:i-00000002]
+
+In [50]: conn.get_all_reservations()
+Out[50]: []
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s it for now :)&lt;/p&gt;
+
+&lt;p&gt;Use &lt;code&gt;ipython&lt;/code&gt; or &lt;code&gt;bpython&lt;/code&gt; for exploring boto library more and discover more APIs.&lt;/p&gt;
+
+&lt;p&gt;If you want to see what EC2 API was actually called behind the scenes, create a file &lt;code&gt;/etc/boto.cfg&lt;/code&gt; and add these two lines. Now whenever you will use an interactive Python terminal, you&amp;rsquo;ll see on your screen the EC2 API being called.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[Boto]
+debug=2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

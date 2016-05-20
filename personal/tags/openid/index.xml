@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/personal/tags/openid/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2014 Rushi Agrawal</copyright>
+    <updated>Sun, 12 Jan 2014 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Installing OpenID plugin for MediaWiki</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/01/12/installing-openid-plugin-for-mediawiki/</link>
+      <pubDate>Sun, 12 Jan 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/01/12/installing-openid-plugin-for-mediawiki/</guid>
+      <description>
+
+&lt;p&gt;This post is about setting up your wiki such that their users access the wiki
+only via an OpenID provider login (e.g. Google or Facebook login). This post assumes
+MediaWiki is already installed.&lt;/p&gt;
+
+&lt;h3 id=&#34;assumptions-prerequisites-and-requirements:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Assumptions, prerequisites and requirements&lt;/h3&gt;
+
+&lt;p&gt;All of what this blogpost says has been tried on an Ubuntu machine, but it
+should work well on other Linux distros too (except for the &lt;code&gt;apt-get&lt;/code&gt; package
+installs, for which you&amp;rsquo;ll need to find alternatives on your favourite distro).&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$IP&lt;/code&gt; is assumed to be the root of your wiki directory (which in my case is
+&lt;code&gt;/var/www/wikis/&amp;lt;my_wiki&amp;gt;/&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Install all the required packages for the plugin to work&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install php5-mcrypt php5-gmp
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;installing-the-plugin:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Installing the plugin&lt;/h2&gt;
+
+&lt;p&gt;Get the source code for the extension into &lt;code&gt;$IP/extensions&lt;/code&gt; directory&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;	cd extensions
+	git clone http://gerrit.wikimedia.org/r/p/mediawiki/extensions/OpenID.git 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Check your mediawiki version by going to &lt;code&gt;&amp;lt;your_wiki_URL&amp;gt;/index.php?title=Special:Version&lt;/code&gt;. Say your version is 1.19.x.
+  Check out branch for the same version of OpenID code&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;	git branch -a 
+	git checkout -b stable_REL1_19 origin/REL1_19 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Add this line at the end of LocalSettings.php file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;require_once &amp;quot;$IP/extensions/OpenID/OpenID.php&amp;quot;; 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now install Auth subdirectory as following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;	cd $IP/extensions/OpenID 
+	git clone http://github.com/openid/php-openid.git 
+	mv php-openid/Auth Auth 
+	rm -r php-openid 
+	cd $IP 
+	php maintenance/update.php --conf LocalSettings.php 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Restart apache server&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;	/etc/init.d/apache2 restart 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;editing-login-required-page:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Editing &amp;lsquo;Login required&amp;rsquo; page.&lt;/h3&gt;
+
+&lt;p&gt;By default, the main page of the wiki is not editable. Generally we would like
+to give some information to a user, e.g. what this wiki is all about, how
+to log into it, which OpenIDs are permitted, etc.&lt;/p&gt;
+
+&lt;p&gt;Now we&amp;rsquo;ll give any registered user the ability to edit the protected pages and the
+&amp;lsquo;interface&amp;rsquo; pages, of which our special login page is a part of. Add these lines
+ to &lt;code&gt;$IP/LocalSettings.php&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;	$wgGroupPermissions[&#39;user&#39;][&#39;editprotected&#39;] = true; 
+	$wgGroupPermissions[&#39;user&#39;][&#39;editinterface&#39;] = true; 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you can edit the &lt;code&gt;&amp;lt;your_wiki_URL&amp;gt;/jiocloud/index.phpmediawiki:loginreqpagetext&lt;/code&gt;
+ page which is presented when the user is not logged in.&lt;/p&gt;
+
+&lt;h3 id=&#34;other-settings:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Other settings&lt;/h3&gt;
+
+&lt;p&gt;Below you can see a snip of LocalSettings.php file, which contains many other
+fields which I used to customize my wiki. I allowed only the registered user
+an edit permission (which most of you would also want I guess). Also, I have disabled
+regular login, and made it mandatory users to login via only OpenID, and that too,
+only using their launchpad.net accounts (an issue tracking software from Canonical).&lt;/p&gt;
+
+&lt;p&gt;If you want to get more information regarding these (and more)
+configuration options, see &lt;a href=&#34;http://www.mediawiki.org/wiki/Extension:OpenID&#34; target=&#34;_blank&#34;&gt;this&lt;/a&gt; link.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Disable reading by anonymous users
+$wgGroupPermissions[&#39;*&#39;][&#39;read&#39;] = false;
+
+# Disable anonymous editing too
+$wgGroupPermissions[&#39;*&#39;][&#39;edit&#39;] = false;
+ 
+# But allow them to access the OpenID login page or else there will be no way to log in!
+$wgWhitelistRead = array (&amp;quot;Special:OpenIDLogin&amp;quot;, &amp;quot;Special:OpenIDFinish&amp;quot;, 
+&amp;quot;MediaWiki:Common.css&amp;quot;, &amp;quot;MediaWiki:Common.js&amp;quot;, &amp;quot;MediaWiki:Monobook.css&amp;quot;, 
+&amp;quot;MediaWiki:Monobook.js&amp;quot;, &amp;quot;-&amp;quot;);
+ 
+# For registered users, allow editing protected pages
+$wgGroupPermissions[&#39;user&#39;][&#39;editprotected&#39;] = true;
+$wgGroupPermissions[&#39;user&#39;][&#39;editinterface&#39;] = true;
+
+# Only allow OpenIDs for login
+$wgOpenIDLoginOnly = true;
+$wgOpenIDOnly = true;       # a value used with older versions. Optional
+
+# Your wiki web URL
+$wgOpenIDTrustRoot = &amp;quot;http://your.wiki.url.com/&amp;quot;;
+
+# By default, deny all OpenID
+$wgOpenIDConsumerDenyByDefault = true;
+
+# Then allow only launchpad.net OpenID (with and without HTTPS both)
+$wgOpenIDConsumerAllow = array(&amp;quot;@^(https://)?launchpad.net/@&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;troubleshooting:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Troubleshooting&lt;/h2&gt;
+
+&lt;p&gt;If there are troubles uploading a file via the MediaWiki web interface, go to the wiki directory on the server and chown the &lt;code&gt;images&lt;/code&gt; folder.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo chown -R www-data:www-data images/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Don&amp;rsquo;t forget to comment if you find the information presented here is outdated, or is not working for you.&lt;/p&gt;
+
+&lt;p&gt;Cheers,
+Rushi&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

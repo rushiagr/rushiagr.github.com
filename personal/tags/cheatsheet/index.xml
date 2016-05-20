@@ -1,0 +1,1928 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/personal/tags/cheatsheet/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2016 Rushi Agrawal</copyright>
+    <updated>Sun, 10 Jan 2016 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Tmux session shortcuts</title>
+      <link>http://www.rushiagr.com/personal/blog/2016/01/10/tmux-session-shortcuts/</link>
+      <pubDate>Sun, 10 Jan 2016 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2016/01/10/tmux-session-shortcuts/</guid>
+      <description>
+
+&lt;p&gt;Tmux is awesome. But the session management commands are way too long for my
+liking. Listing all sessions is &lt;code&gt;tmux list-sessions&lt;/code&gt;, attaching to a session
+&lt;code&gt;mysession&lt;/code&gt; is &lt;code&gt;tmux attach -t mysession&lt;/code&gt;, etc.&lt;/p&gt;
+
+&lt;p&gt;So I created a few functions and aliases, which can be found
+&lt;a href=&#34;https://github.com/rushiagr/myutils/blob/master/aliases/tmux.sh&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The general idea is, all commands start with &lt;code&gt;mx&lt;/code&gt;, which is basically a
+shortcut for &amp;lsquo;tMuX&amp;rsquo;. So &lt;code&gt;mxl&lt;/code&gt; is to &amp;lsquo;l&amp;rsquo;ist tmux sessions, &lt;code&gt;mxa&lt;/code&gt; is to &amp;lsquo;a&amp;rsquo;ttach
+to a tmux session, etc.&lt;/p&gt;
+
+&lt;p&gt;List all running tmux sessions&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@rushi:~$ mxl
+0: 4 windows (created Sun Jan 10 17:14:11 2016) [89x23] (attached)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can see one tmux session. Let&amp;rsquo;s create another tmux session with name
+&lt;code&gt;dev&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mx dev
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all sessions now&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@rushi:~$ mxl
+0: 4 windows (created Sun Jan 10 17:14:11 2016) [89x23] (attached)
+dev: 1 windows (created Sun Jan 10 17:59:30 2016) [89x23] (attached)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To attach to session with name &lt;code&gt;dev&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mxa dev
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can also omit session name, and it will attach to the last session you
+attached to.&lt;/p&gt;
+
+&lt;p&gt;If there was no session with name &lt;code&gt;dev2&lt;/code&gt;, and you type this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mxa dev2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It will automatically create a session for you and attach you to it.&lt;/p&gt;
+
+&lt;p&gt;To detach:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mxd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I find this &lt;code&gt;mxd&lt;/code&gt; to be easier to type than both &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;d&lt;/code&gt; and &lt;code&gt;tmux
+detach&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;installation:e0f68b4969c4b0e373b3bdfb560cffb9&#34;&gt;Installation&lt;/h3&gt;
+
+&lt;p&gt;You just need to copy the content in the above referenced link to &lt;code&gt;~/.bashrc&lt;/code&gt;
+file and from a new terminal session things will be ready for you to use :)&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Build VM Images using Diskimage-builder</title>
+      <link>http://www.rushiagr.com/personal/blog/2016/01/02/build-vm-image-using-diskimage-builder/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2016/01/02/build-vm-image-using-diskimage-builder/</guid>
+      <description>&lt;p&gt;OpenStack has this nice tool &lt;a href=&#34;https://github.com/openstack/diskimage-builder&#34;&gt;diskimage-builder&lt;/a&gt;to create virtual machine images without the need
+of a cloud. These vm images can then be uploaded to cloud (e.g. in Glance for
+OpenStack cloud), and they become immediately usable. You can also create VMs in
+virtualbox from these images (though I don&amp;rsquo;t remember exact steps to make the
+image work with VirtualBox. Do let me know if you get the VM working with
+VirtualBox/Vagrant)&lt;/p&gt;
+
+&lt;p&gt;Here I&amp;rsquo;ll describe ways to create a bare cloud-uploadable Ubuntu image. I will
+also provide information as to how to build an image which will have some
+packages pre-installed in them. Note that the commands here will create only
+one image file as opposed to three &amp;ndash; one each for ramdisk, kernel and machine image.&lt;/p&gt;
+
+&lt;p&gt;Prerequisites&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install qemu-utils
+git clone http://github.com/openstack/diskimage-builder
+cd diskimage-builder
+sudo pip install -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All the binaries are in bin filder. You can go in the &lt;code&gt;bin\&lt;/code&gt; directory to
+execute diskimage-builder commands, or add that directory to your &lt;code&gt;$PATH&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Create bare Ubuntu image, which you can directly upload to a cloud e.g.
+OpenStack.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;disk-image-create -a amd64 -o ubuntu-amd64 vm ubuntu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image generated will be of name &lt;code&gt;ubuntu-amd64.qcow2&lt;/code&gt;. Such an image will be for
+same OS version as your host Ubuntu version. If you want
+to build an image against a different OS version, specify
+&lt;code&gt;DIB_RELEASE=&amp;lt;releasename&amp;gt;&lt;/code&gt; as a prefix to the command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;DIB_RELEASE=trusty disk-image-create -a amd64 -o ubuntu-amd64 vm ubuntu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create an Ubuntu VM image which you can boot via KVM or VirtualBox/Vagrant.
+You will need to manually
+add public keys to authorized_keys for a user inside that VM.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;disk-image-create -o base -a amd64 vm base ubuntu cloud-init-nocloud
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create an image with &lt;code&gt;mysql-server&lt;/code&gt; and &lt;code&gt;tmux&lt;/code&gt; package (and their dependencies) installed inside the image:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;disk-image-create -a amd64 -o ubuntu-amd64 -p mysql-server,tmux vm ubuntu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;How to upload image to glance:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;glance image-create --name dib-ubuntu --disk-format=qcow2 --container-format=bare &amp;lt; img/ubuntu-amd64.qcow2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Where &lt;code&gt;ubuntu-amd64.qcow2&lt;/code&gt; is the image to upload.&lt;/p&gt;
+
+&lt;p&gt;Thanks!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Better way to view MySQL tables</title>
+      <link>http://www.rushiagr.com/personal/blog/2015/12/12/better-way-to-view-mysql-tables/</link>
+      <pubDate>Sat, 12 Dec 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2015/12/12/better-way-to-view-mysql-tables/</guid>
+      <description>
+
+&lt;h3 id=&#34;the-problem:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;The problem&lt;/h3&gt;
+
+&lt;p&gt;You are trying to print a MySQL table with a large number of columns, with
+&lt;code&gt;SELECT *&lt;/code&gt; command. You type &lt;code&gt;SELECT * FROM mysql.user LIMIT 1&lt;/code&gt;, and your terminal
+becomes &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-table-with-many-rows-messy.png&#34;&gt;this&lt;/a&gt;.
+If you wanted to view more than one row, you&amp;rsquo;re in a trouble :)&lt;/p&gt;
+
+&lt;h3 id=&#34;the-solution:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;The solution&lt;/h3&gt;
+
+&lt;p&gt;Run MySQL with this option:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql --pager=&amp;quot;less --chop-long-lines --quit-if-one-screen --no-init&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will make your table display only the rows it can in the current screen, something like &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-with-less-pager-neat.png&#34;&gt;this&lt;/a&gt;. You can
+use the arrow keys to move sideways to view the hidden column. Pressing the &amp;lsquo;right&amp;rsquo; arrow key will move half page towards right. Neat, isn&amp;rsquo;t it?&lt;/p&gt;
+
+&lt;p&gt;You can create an alias for mysql:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Using shorter version of &#39;less&#39; flags mentioned above
+alias mysql=&#39;mysql -SFX&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can put the above line in your &lt;code&gt;~/.bashrc&lt;/code&gt; file to load this alias
+in every new terminal session.&lt;/p&gt;
+
+&lt;h3 id=&#34;bonus-point-for-vim-users:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;Bonus point for Vim users&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;less&lt;/code&gt; allows using keys &lt;code&gt;j&lt;/code&gt; and &lt;code&gt;k&lt;/code&gt; for scrolling down and scrolling up. Unfortunately, you cannot directly use keys &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move sideways using &lt;code&gt;less&lt;/code&gt;. Fortunately, you can map &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move left or right, respectively. Here&amp;rsquo;s how to do that:&lt;/p&gt;
+
+&lt;p&gt;Create a file &lt;code&gt;.lesskey&lt;/code&gt; in your home directory, with the following contents&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;l noaction 10\e)
+h noaction 10\e)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now run this command, to generate &lt;code&gt;~/.less&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;lesskey
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will generate a binary file which &lt;code&gt;less&lt;/code&gt; understands. If you now start a new MySQL terminal session (of course with the above said &lt;code&gt;--pages&lt;/code&gt; flag), you can use Vim&amp;rsquo;s &lt;code&gt;HJKL&lt;/code&gt; movements. Here I have specified to move 10 characters to the right if you make one &amp;lsquo;right&amp;rsquo; Vim movement.&lt;/p&gt;
+
+&lt;h3 id=&#34;quick-setup-script:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;Quick setup script&lt;/h3&gt;
+
+&lt;p&gt;Don&amp;rsquo;t want to do the above stuff manually? Just run this command and your computer will be set up in a second!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sh -c &amp;quot;$(wget -q https://raw.githubusercontent.com/rushiagr/public/master/scripts/mysql-pretty-table.sh -O -)&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that changes will take effect from a new shell session (or you can run &lt;code&gt;source ~/.bashrc&lt;/code&gt; if you want things to work in the current session too.&lt;/p&gt;
+
+&lt;h3 id=&#34;more-information:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;More information&lt;/h3&gt;
+
+&lt;p&gt;Find more information at below links:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://unix.stackexchange.com/a/169969/91602&#34;&gt;About mapping &amp;lsquo;h&amp;rsquo; and &amp;lsquo;k&amp;rsquo; to Vim movements in &amp;lsquo;less&amp;rsquo;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/a/6422698/1143173&#34;&gt;About using &amp;lsquo;less&amp;rsquo; as MySQL pager&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Quick JustDial scraper</title>
+      <link>http://www.rushiagr.com/personal/blog/2015/09/14/quick-justdial-scraper/</link>
+      <pubDate>Mon, 14 Sep 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2015/09/14/quick-justdial-scraper/</guid>
+      <description>&lt;p&gt;So my friend asked me to scrape data from JustDial and give it to him in an excel sheet.
+I thought let&amp;rsquo;s give it a try. He needed
+name of firm, address and phone number of any JustDial URL he wants to scrape. After effectively
+around 4 hours of work, the below script was created.&lt;/p&gt;
+
+&lt;p&gt;Note that the script is dirty. You need to edit the jd_url to search any other URL. Also,
+the looping will go on forever, so you have to keep checking the file size of generated
+&amp;lsquo;data.csv&amp;rsquo; file, and when you&amp;rsquo;re sure it&amp;rsquo;s not increasing any more, kill the script by
+pressing CTRL+C. This script works as of today. Tomorrow it might not. Also, excuse
+stray comments/bad formatting of code. I&amp;rsquo;m not sure I want to clean it right now :)&lt;/p&gt;
+
+&lt;p&gt;Feel free to use/modify it the way you want.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# PIP requirements: requests, beautifulsoup4
+import requests
+from bs4 import BeautifulSoup
+import json
+import csv
+
+jd_url = &amp;quot;http://www.justdial.com/Bangalore/Car-Hire-%3Cnear%3E-Shanthinagar&amp;quot;
+
+# Split http/https prefix if any
+# TODO: work on URLs which dont&#39; have the CT part in URL
+jd_url = jd_url.split(&#39;http://www.justdial.com/&#39;)[-1].split(&#39;https://www.justdial.com/&#39;)[-1]
+city, search, cat_id = &#39;&#39;, &#39;&#39;, &#39;&#39;
+split_vals = jd_url.split(&#39;/&#39;)
+if len(split_vals) == 3:
+    city, search, cat_id = jd_url.split(&#39;/&#39;)
+    cat_id = cat_id.split(&#39;-&#39;)[-1]
+elif len(split_vals) == 2:
+    city, search = jd_url.split(&#39;/&#39;)
+search = search.replace(&#39;-&#39;, &#39;+&#39;)
+
+
+with open(&#39;data.csv&#39;, &#39;w&#39;) as f:
+    #writer = csv.writer(f, delimiter=&#39;,&#39;, quoting=csv.QUOTE_ALL, lineterminator=&#39;\n&#39;)
+
+    page = 1
+    while True:
+        print &#39;page&#39;, page
+        resp = requests.get(&#39;http://www.justdial.com&#39;+&#39;/functions/ajxsearch.php?national_search=0&amp;amp;act=pagination&amp;amp;city={0}&amp;amp;search={1}&amp;amp;where=&amp;amp;catid={2}&amp;amp;psearch=&amp;amp;prid=&amp;amp;page={3}&#39;.format(city, search, cat_id, page))
+        markup = resp.json()[&#39;markup&#39;].replace(&#39;\/&#39;, &#39;/&#39;)
+        soup = BeautifulSoup(markup, &#39;html.parser&#39;)
+
+
+        for thing in soup.find_all(&#39;section&#39;):
+            csv_list = []
+            if thing.get(&#39;class&#39;)==[u&#39;jcar&#39;]:
+                # Company name
+                for a_tag in thing.find_all(&#39;a&#39;):
+                    if a_tag.get(&#39;onclick&#39;)==&amp;quot;_ct(&#39;clntnm&#39;, &#39;lspg&#39;);&amp;quot;:
+                        csv_list.append(a_tag.get(&#39;title&#39;))
+
+                # Address
+                for span_tag in thing.find_all(&#39;span&#39;):
+                    if span_tag.get(&#39;class&#39;)==[u&#39;mrehover&#39;, u&#39;dn&#39;]:
+                        csv_list.append(span_tag.get_text().strip())
+
+                # Phone number
+                for a_tag in thing.find_all(&#39;a&#39;):
+                    if a_tag.get(&#39;href&#39;).startswith(&#39;tel:&#39;):
+                        csv_list.append(a_tag.get(&#39;href&#39;).split(&#39;:&#39;)[-1])
+
+
+                csv_list = [&#39;&amp;quot;&#39;+item+&#39;&amp;quot;&#39; for item in csv_list]
+                writeline = &#39;,&#39;.join(csv_list)+&#39;\n&#39;
+                f.write(&#39;,&#39;.join(csv_list)+&#39;\n&#39;)
+        page+=1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>OpenStack Keystone with Cassandra Database in DevStack</title>
+      <link>http://www.rushiagr.com/personal/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</link>
+      <pubDate>Thu, 10 Sep 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</guid>
+      <description>
+
+&lt;p&gt;Using Cassandra as backing database for OpenStack Keystone was our solution
+to multi-region deployment problem of OpenStack cloud. This blog post is not
+to discuss the problem. We are talking about how to have a development
+environment to play around with Keystone working with a dev Cassandra deployment.&lt;/p&gt;
+
+&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set:ac993324848a8aead891c139adf0f8b7&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
+
+&lt;p&gt;I&amp;rsquo;ve put together all commands into a script which can be found here:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;https://raw.githubusercontent.com/rushiagr/keystone-cassandra/master/keystone-cassandra.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you have a fresh Ubuntu VM, just copy this script into that machine and
+execute it. Give it 15-20 mins at least (depending upon your internet connection), and it will set up:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;DevStack with Keystone installed and running with all the data stored in/fetched from local Cassandra installation&lt;/li&gt;
+&lt;li&gt;A Cassandra development cluster (CCM) with 5 nodes and replication factor of 3&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Of course, you will need Internet access inside the VM. Also, give the VM around
+3GB of RAM, else things might not work properly. Actually, if you change the
+Cassandra configuration to one node instead of 5, probably 2 GB will suffice. But I&amp;rsquo;ve
+not tried it. (Let me know if you tried it and it works!)&lt;/p&gt;
+
+&lt;p&gt;Notes:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Remember, this is a dev cluster. It&amp;rsquo;s not supposed to be used in production. Hell, it&amp;rsquo;s not even ready for it.&lt;/li&gt;
+&lt;li&gt;Keystone is running on 127.0.0.1. I&amp;rsquo;ve done this so that it will work on any person&amp;rsquo;s VM&lt;/li&gt;
+&lt;li&gt;I&amp;rsquo;ve tested only on a Ubuntu Trusty VM, on Amazon EC2 m4.large instance which has 8 GB RAM. OpenStack on AWS &amp;ndash; ironic, isn&amp;rsquo;t it? :)&lt;/li&gt;
+&lt;li&gt;I&amp;rsquo;m using Java which comes with Ubuntu&amp;rsquo;s APT packages. In production one is supposed to use Oracle Java as per Cassandra folks.&lt;/li&gt;
+&lt;li&gt;The code for this script is located at &lt;code&gt;https://github.com/rushiagr/keystone/tree/liberty-cassandra&lt;/code&gt;, i.e. on &lt;code&gt;liberty-cassandra&lt;/code&gt; branch. Note that this work is currently based upon Keystone&amp;rsquo;s Liberty code as on first week of June. It might not work directly with latest code as it might require fixing imports which might have become outdated. However, I don&amp;rsquo;t think it&amp;rsquo;s going to take more than an hour to make it work with latest code; just that I don&amp;rsquo;t have enough motivation right now to keep the code updated with &amp;lsquo;latest&amp;rsquo; all the time.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;credits:ac993324848a8aead891c139adf0f8b7&#34;&gt;Credits&lt;/h4&gt;
+
+&lt;p&gt;This work was done by the &amp;lsquo;distributed database&amp;rsquo; team of 4 people: Ajaya Agrawal, Rushi Agrawal (me), Vivek Dhayaal and Yogeshwar Shenoy, listed in alphabetical order. And obviously Reliance, for providing us an opportunity to work on this thing.&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Apache mod_wsgi parallelization notes</title>
+      <link>http://www.rushiagr.com/personal/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</link>
+      <pubDate>Fri, 24 Jul 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</guid>
+      <description>
+
+&lt;p&gt;This is my notes on
+&lt;a href=&#34;https://code.google.com/p/modwsgi/wiki/ProcessesAndThreading&#34;&gt;&amp;lsquo;Processes and Threading&amp;rsquo;&lt;/a&gt;
+doc by the author of mod_wsgi module of Apache. This blog post just serves as a &amp;lsquo;quick refresher&amp;rsquo;, and
+is only useful if you have read the original document but it&amp;rsquo;s been too long since you
+read it :)&lt;/p&gt;
+
+&lt;h2 id=&#34;apache-with-mod-wsgi:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Apache with mod_wsgi&lt;/h2&gt;
+
+&lt;p&gt;A Python application can run with multiple processes as well as multiple threads
+with mod_wsgi.&lt;/p&gt;
+
+&lt;h3 id=&#34;prefork-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Prefork multiprocessing module&lt;/h3&gt;
+
+&lt;p&gt;Apache creates multiple processes, and each request is handled by one process.
+A process only handles one request at a time.
+This means, if you have set number of processes to 1, there will be only one
+request handeled at a time overall.&lt;/p&gt;
+
+&lt;h3 id=&#34;worker-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Worker multiprocessing module&lt;/h3&gt;
+
+&lt;p&gt;Multiple processes, and multiple threads in each processa.
+Even if a process is handling a request, another thread in the same process
+can handle one more request.
+You might need some synchronization primitive to make sure multiple threads
+of same process don&amp;rsquo;t corrupt shared memory (only occurs when shared memory
+is mutated)&lt;/p&gt;
+
+&lt;h3 id=&#34;but-gil:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;But GIL?&lt;/h3&gt;
+
+&lt;p&gt;Python GIL problem is largely alleviated with mod_wsgi since multiple processes
+can handle requests, and GIL has impact ranging to only one process. One more
+point to note is that the apache code which maps a URL/request to a wsgi application,
+and the code which maps static file URLs to actual static files to serve is
+written in C, and is free from GIL.&lt;/p&gt;
+
+&lt;p&gt;In the wsgi python code, two environment variables: &amp;lsquo;wsgi.multithread&amp;rsquo; and
+&amp;lsquo;wsgi.multiprocess&amp;rsquo; will define which of the above two modules are going to be
+used.&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Docker quick start notes</title>
+      <link>http://www.rushiagr.com/personal/blog/2015/06/07/docker-quick-start-notes/</link>
+      <pubDate>Sun, 07 Jun 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2015/06/07/docker-quick-start-notes/</guid>
+      <description>
+
+&lt;p&gt;After reading about docker and containers, I thought let&amp;rsquo;s try them out.
+Here are my notes. Obviously all of them are taken from Internet. Maybe this
+collection here will help someone start with docker faster than spending time
+searching all over the internet.&lt;/p&gt;
+
+&lt;p&gt;It assumes your base OS is Ubuntu 14.04 Trusty Tahr (when was the last time
+you saw the codename spelled &amp;lsquo;Trusty Tahr&amp;rsquo; and not &amp;lsquo;Trusty&amp;rsquo;? :) ).&lt;/p&gt;
+
+&lt;p&gt;Install docker&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install docker.io
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;See docker version&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker version
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Pull an Ubuntu Trusty docker image&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker pull ubuntu:14.04
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Alternatively, you can search for a docker image &amp;lsquo;tutorial&amp;rsquo; in docker&amp;rsquo;s repository&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker search tutorial
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And them pull a docker image &amp;lsquo;tutorial&amp;rsquo; by user &amp;lsquo;learn&amp;rsquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker pull learn/tutorial
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all docker images present in the system&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker images
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run a docker image, and execute command &amp;lsquo;echo &amp;ldquo;hello world&amp;rdquo;&amp;rsquo; in the docker
+container created out of that image&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker run ubuntu:14.04 echo &amp;quot;hello world&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Container information is stored in /var/lib/docker&lt;/p&gt;
+
+&lt;p&gt;If you run the above command multiple times, it will create a new container
+each time.&lt;/p&gt;
+
+&lt;p&gt;To know the ID of the last container, run&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker ps -l
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To list all the running containers&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker ps
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that the above command will not show the container we last run, because
+the container which we ran last time terminated just after it finished
+executing echo command.&lt;/p&gt;
+
+&lt;p&gt;Create a new docker image by name &lt;code&gt;&amp;lt;yourname&amp;gt;/echo&lt;/code&gt; by &amp;lsquo;committing&amp;rsquo; the last
+container which you ran&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker commit &amp;lt;container ID&amp;gt; &amp;lt;yourname&amp;gt;/echo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now running &lt;code&gt;sudo docker images&lt;/code&gt; will list you two containers instead of one&lt;/p&gt;
+
+&lt;p&gt;Now you can run this new docker container like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker run &amp;lt;yourname&amp;gt;/echo ls -alrth
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If we installed something, or created a file in the old container, it will
+be visible now in this container too.&lt;/p&gt;
+
+&lt;p&gt;Get more information about a docker image or a running container:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker inspect &amp;lt;yourname&amp;gt;/echo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To push docker image to docker repository&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker push &amp;lt;yourname&amp;gt;/echo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To download ubuntu Trusty base image if not present locally, and open a shell session into it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker run -t -i ubuntu:14.04 /bin/bash
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;-i i.e. &amp;ndash;interactive=false, keeps STDIN open even if not attached&lt;/p&gt;
+
+&lt;p&gt;-t i.e. &amp;ndash;tty=false allocates a pseudo tty&lt;/p&gt;
+
+&lt;p&gt;Don&amp;rsquo;t worry what these mean. If you add these options, you&amp;rsquo;ll see that
+you already get logged in into the container shell, and the container
+only dies off once you exit from that session (usually by writing &lt;code&gt;exit&lt;/code&gt;
+or pressing CTRL + D.&lt;/p&gt;
+
+&lt;p&gt;To remove an image:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker rmi learn/tutorial
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;things-not-covered-in-this-tutorial:49285dca7b53d383ade641738736c634&#34;&gt;Things not covered in this tutorial:&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Create your own custom docker images and share with other people:
+&lt;a href=&#34;https://docs.docker.com/userguide/dockerimages/&#34;&gt;https://docs.docker.com/userguide/dockerimages/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Puppet installation from modules</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/09/14/puppet-installation-from-modules/</link>
+      <pubDate>Sun, 14 Sep 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/09/14/puppet-installation-from-modules/</guid>
+      <description>&lt;p&gt;A quick example of how to use Puppet to install and manage MySQL. We&amp;rsquo;ll
+download required Puppet modules from their git repositories.&lt;/p&gt;
+
+&lt;p&gt;Again, everything is tried on Ubuntu (14.04).&lt;/p&gt;
+
+&lt;p&gt;Make sure &lt;code&gt;hostname -f&lt;/code&gt; shows your FQDN. Then install puppet&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install puppet
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We&amp;rsquo;ll use &lt;code&gt;git submodules&lt;/code&gt; to manage different git repositories. But first,
+create our own repository&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir puppet-mysql
+cd puppet-mysql
+git init
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install Puppet modules &lt;code&gt;stdlib&lt;/code&gt; and &lt;code&gt;mysql&lt;/code&gt; into directory &lt;code&gt;modules&lt;/code&gt; as git
+submodules.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git submodule add https://github.com/puppetlabs/puppetlabs-stdlib.git modules/stdlib
+git submodule add https://github.com/puppetlabs/puppetlabs-mysql.git modules/mysql
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now create a site.pp file in the root directory of this repository, with the following contents&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;node default {
+    class { &#39;mysql::server&#39;:
+        root_password =&amp;gt; &#39;nova&#39;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we&amp;rsquo;ll apply this &lt;code&gt;site.pp&lt;/code&gt; file to the system. As our modules directory is
+different from Puppet&amp;rsquo;s default, we&amp;rsquo;ll need to specify that while running
+Puppet.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo puppet apply site.pp --modulepath modules/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To see the action in more detail, also pass the &lt;code&gt;--debug&lt;/code&gt; option to the above
+execution&lt;/p&gt;
+
+&lt;p&gt;And you&amp;rsquo;re all set.&lt;/p&gt;
+
+&lt;p&gt;Now from your commandline, you can try to access mysql and it will work!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql -uroot -pnova
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Done! Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>OpenStack Unit Testing Nuggets</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/09/05/openstack-unit-testing-nuggets/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/09/05/openstack-unit-testing-nuggets/</guid>
+      <description>
+
+&lt;p&gt;A small post about little things I found out while running unit tests in
+OpenStack.&lt;/p&gt;
+
+&lt;h2 id=&#34;unit-testing-setup:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Unit-testing setup&lt;/h2&gt;
+
+&lt;p&gt;Everybody knows &lt;code&gt;./run_tests.sh&lt;/code&gt; is used to run the unit tests of an OpenStack
+project. But, you require to install dependencies before doing it. And
+installing dependencies might not always succeed. So make sure you install
+these packages before running &lt;code&gt;pip install -r requirements.txt&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install build-essential libssl-dev libffi-dev \
+    python-dev libxslt1-dev libpq-dev python-mysqldb \
+    libmysqlclient-dev libvirt-dev
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Atleast &lt;code&gt;cinder&lt;/code&gt; and &lt;code&gt;nova&lt;/code&gt; dependencies will get installed properly after
+this.&lt;/p&gt;
+
+&lt;h2 id=&#34;run-tests-frequently-used-commands:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests frequently used commands&lt;/h2&gt;
+
+&lt;p&gt;To force the tests to NOT run in a virtual environment, even if it is present:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh -N
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Force a clean rebuild of virtual environment&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh -f
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run only PEP8 checks&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh -p
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run PEP8 checks only on the files which have been changed since last commit&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh -8
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run all tests from a specific file only, e.g. nova/tests/test_utils.py&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run all tests of only a specific class inside a test file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils.ResourceFilterTestCase
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run only a specific test&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils.ResourceFilterTestCase.test_resource_filtering
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;wildcards-while-running-the-tests:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Wildcards while running the tests&lt;/h2&gt;
+
+&lt;p&gt;Frequently you&amp;rsquo;ll find yourself testing only a couple of tests. In such cases,
+a wildcard will save you from typing the whole path of the test. The below
+command will also run &lt;code&gt;test_resource_filtering&lt;/code&gt; test:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.*resource_filt*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I currently don&amp;rsquo;t know how to make a test work without adding &lt;code&gt;nova.tests&lt;/code&gt;
+before it&lt;/p&gt;
+
+&lt;h2 id=&#34;run-tests-is-not-happy:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests is not happy&lt;/h2&gt;
+
+&lt;p&gt;Sometimes you&amp;rsquo;ll see running &lt;code&gt;./run_tests.sh&lt;/code&gt; can throw a lot of lines of
+ununderstandable gibberish on your screen. In the end it will say &lt;code&gt;testr
+failed&lt;/code&gt;, but it won&amp;rsquo;t give an indication of where it failed and why. I have
+seen that this happens due to only one of the following two reasons:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;em&gt;Syntax error&lt;/em&gt;: There is a syntax error in your code.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;em&gt;Dependencies outdated&lt;/em&gt;: Dependencies in your virtual environment is
+outdated. In such cases, you will need to recreate a virtual environment with
+latest packages. Or better: just update the virtual environment with the latest
+packages using this command:&lt;/p&gt;
+
+&lt;p&gt;./run_tests.sh -u&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;UPDATE: I&amp;rsquo;ve seen that nowadays it doesn&amp;rsquo;t throw a lot of gibberish, but just
+says &amp;lsquo;testr failed&amp;rsquo;, without any error log or stacktrace. This is the same
+situation &amp;ndash; can only happen when there is a syntax error, or if the
+dependencies are outdated.&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s it for now.&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>iSCSI administration on Ubuntu - Quick Start</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/</guid>
+      <description>
+
+&lt;p&gt;This post get&amp;rsquo;s you started with iSCSI administration on an Ubuntu machine.
+Although I have used Ubuntu Trusty (14.04) version, it should work with Precise
+(12.04) too, with the latest packages.&lt;/p&gt;
+
+&lt;h4 id=&#34;prerequisites:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Prerequisites&lt;/h4&gt;
+
+&lt;p&gt;Make sure you have atleast a little idea of what these terms
+mean: iSCSI, LUN, IQN, initiator, target and portal. Google and wikipedia are
+your friends.&lt;/p&gt;
+
+&lt;h4 id=&#34;a-quick-summary:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;A quick summary:&lt;/h4&gt;
+
+&lt;p&gt;There are two parts of iSCSI communication - initiator and target. So let&amp;rsquo;s take an example. There is a storage server in your
+company, where you have a &amp;lsquo;drive&amp;rsquo; for your team. The storage server is the
+&amp;lsquo;target&amp;rsquo;, and your laptop, where you&amp;rsquo;ll mount the drive to access it&amp;rsquo;s contents
+is the &amp;lsquo;initiator&amp;rsquo;. In other words, target is like a &amp;lsquo;server&amp;rsquo; which stores
+data, and allows initiators (think &amp;lsquo;clients&amp;rsquo;) to connect to it.&lt;/p&gt;
+
+&lt;p&gt;In this short hands-on introduction, we&amp;rsquo;ll use the same Ubuntu machine as
+target as well as initiator. We can use a file as the storage behind the
+target, but this post also shows how to use LVM logical volume as the backing
+store for the iSCSI target.&lt;/p&gt;
+
+&lt;p&gt;Actually, we&amp;rsquo;ll back the logical volume (LV) with a file, as shown in
+&lt;a href=&#34;http://www.rushiagr.com/blog/2014/01/14/quick-start-linux-logical-volume-manager/&#34;&gt;this&lt;/a&gt;,
+so essentially we&amp;rsquo;re just using &amp;lsquo;file as a backing store for targets&amp;rsquo; but in a
+roundabout way :)&lt;/p&gt;
+
+&lt;p&gt;OK, let&amp;rsquo;s get started. Make sure you execute all the following commands as root
+user.&lt;/p&gt;
+
+&lt;p&gt;First install the required dependencies&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;apt-get install lvm2 tgt open-iscsi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;initialize-logical-volume:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initialize logical volume&lt;/h4&gt;
+
+&lt;p&gt;Create a file of 1GB, create a volume group over it, and then over it, create a
+400MB logical volume, and see if it got created or not&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# truncate --size 1G backingfile
+root@ra:~# sudo losetup --find --show backingfile 
+/dev/loop0
+root@ra:~# sudo vgcreate myvg /dev/loop0
+  No physical volume label read from /dev/loop0
+  Physical volume &amp;quot;/dev/loop0&amp;quot; successfully created
+  Volume group &amp;quot;myvg&amp;quot; successfully created
+root@ra:~# sudo lvcreate --size 400M --name mylv myvg
+  Logical volume &amp;quot;mylv&amp;quot; created
+root@ra:~# lvs
+  LV   VG   Attr      LSize   Pool Origin Data%  Move Log Copy% Convert
+  mylv myvg -wi-a---- 400.00m                                           
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;target-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Target administration&lt;/h4&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s create a target, with target ID 1, and give it an IQN (iSCSI
+Qualified Name) &lt;code&gt;iqn.2001-04.example.com:your.first.iscsi.target&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tgtadm --lld iscsi --op new --mode target --tid 1 -T iqn.2001-04.example.com:your.first.iscsi.target
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List the target, see it&amp;rsquo;s properties:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# tgtadm --lld iscsi --op show --mode target
+Target 1: iqn.2001-04.example.com:your.first.iscsi.target
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00010000
+            SCSI SN: beaf10
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags: 
+    Account information:
+    ACL information:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can see there is a LUN, LUN 0 attached to the target. Let&amp;rsquo;s attach our
+logical volume &lt;code&gt;mylv&lt;/code&gt; as LUN 1 to the target.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tgtadm --lld iscsi --op new --mode logicalunit --tid 1 --lun 1 -b /dev/myvg/mylv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here, actually you could&amp;rsquo;ve attached a flat file as a LUN to the target. So you
+could&amp;rsquo;ve skipped all the intermediate steps and attached the &lt;code&gt;backingfile&lt;/code&gt;
+directly to the target like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tgtadm --lld iscsi --op new --mode logicalunit --tid 1 --lun 1 -b backingfile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A backing file would&amp;rsquo;ve been good enough for this demo, but you know the benefits of logical volume isn&amp;rsquo;t it? :)&lt;/p&gt;
+
+&lt;p&gt;Okay, let&amp;rsquo;s see if the LUN got created:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# tgtadm --lld iscsi --op show --mode target
+Target 1: iqn.2001-04.example.com:your.first.iscsi.target
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00010000
+            SCSI SN: beaf10
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags: 
+        LUN: 1
+            Type: disk
+            SCSI ID: IET     00010001
+            SCSI SN: beaf11
+            Size: 419 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/myvg/mylv
+            Backing store flags: 
+    Account information:
+    ACL information:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s allow all initiators to bind to this target:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tgtadm --lld iscsi --op bind --mode target --tid 1 -I ALL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We&amp;rsquo;re done with the &amp;lsquo;target&amp;rsquo; side now. You can check, using &lt;code&gt;netstat&lt;/code&gt; that port
+3260, the default port, is now open. Note that all our commands so far started with
+&lt;code&gt;tgtadm&lt;/code&gt;, i.e., the target administration utility.&lt;/p&gt;
+
+&lt;h4 id=&#34;initiator-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initiator administration&lt;/h4&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s start from the &amp;lsquo;initiator&amp;rsquo; end. We&amp;rsquo;ll behave as if we&amp;rsquo;re a client
+trying to connect to the server &amp;ndash; the target.&lt;/p&gt;
+
+&lt;p&gt;Discover all the targets on our local machine (&lt;code&gt;127.0.0.1&lt;/code&gt;).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# sudo iscsiadm --mode discovery --type sendtargets --portal 127.0.0.1
+127.0.0.1:3260,1 iqn.2001-04.example.com:your.first.iscsi.target
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;From the client perspective, we&amp;rsquo;re now able to see a target. Let&amp;rsquo;s login into
+that target&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# sudo iscsiadm --mode node --targetname iqn.2001-04.example.com:your.first.iscsi.target --portal 127.0.0.1:3260 --login
+Logging in to [iface: default, target: iqn.2001-04.example.com:your.first.iscsi.target, portal: 127.0.0.1,3260] (multiple)
+Login to [iface: default, target: iqn.2001-04.example.com:your.first.iscsi.target, portal: 127.0.0.1,3260] successful.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After logging in, the target will be visible in the client&amp;rsquo;s system as a new
+device. Running a &lt;code&gt;fdisk -l&lt;/code&gt; shows that there is a new device &lt;code&gt;/dev/sda&lt;/code&gt; is now
+present.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# fdisk -l
+
+Disk /dev/vda: 57.1 GB, 57076908032 bytes
+255 heads, 63 sectors/track, 6939 cylinders, total 111478336 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0001cd46
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *        2048   106520575    53259264   83  Linux
+/dev/vda2       106522622   111476735     2477057    5  Extended
+/dev/vda5       106522624   111476735     2477056   82  Linux swap / Solaris
+
+Disk /dev/mapper/myvg-mylv: 419 MB, 419430400 bytes
+255 heads, 63 sectors/track, 50 cylinders, total 819200 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk /dev/mapper/myvg-mylv doesn&#39;t contain a valid partition table
+
+Disk /dev/sda: 419 MB, 419430400 bytes
+13 heads, 62 sectors/track, 1016 cylinders, total 819200 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk /dev/sda doesn&#39;t contain a valid partition table
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we just need to format this device with a filesystem, say EXT4, and then
+mount it at some location to start using it!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# sudo mkfs.ext4 /dev/sda
+mke2fs 1.42.9 (4-Feb-2014)
+/dev/sda is entire device, not just one partition!
+Proceed anyway? (y,n) y
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+102400 inodes, 409600 blocks
+20480 blocks (5.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=67633152
+50 block groups
+8192 blocks per group, 8192 fragments per group
+2048 inodes per group
+Superblock backups stored on blocks: 
+    8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information: done 
+
+root@ra:~# mkdir tempmount
+root@ra:~# mount /dev/sda tempmount/
+root@ra:~# cd tempmount/
+root@ra:~/tempmount# ls
+lost+found
+root@ra:~/tempmount# 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;destruction:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Destruction&lt;/h4&gt;
+
+&lt;p&gt;The simplest way to get rid of all the things you&amp;rsquo;ve created is to unmount the
+device, and restart the system.&lt;/p&gt;
+
+&lt;p&gt;Aaand done!&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Amazon EC2 API with OpenStack - Developer Quick Start</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/</link>
+      <pubDate>Sat, 09 Aug 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/</guid>
+      <description>&lt;p&gt;OpenStack has support for EC2 API, that is, you can fire Amazon&amp;rsquo;s API against an OpenStack cloud and it will still work. This article gets you started with using them locally against DevStack. It is more of a starter guide to a novice.&lt;/p&gt;
+
+&lt;p&gt;Fire a DevStack with it&amp;rsquo;s default settings. See &lt;a href=&#34;http://www.rushiagr.com/blog/2014/04/03/openstack-in-an-hour-with-devstack&#34;&gt;this post&lt;/a&gt; for more information on it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone http://github.com/openstack-dev/devstack
+cd devstack/
+./stack.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Source openrc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;source openrc
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;View all EC2 credentials available for the current user (here, &lt;code&gt;demo&lt;/code&gt; user in &lt;code&gt;demo&lt;/code&gt; tenant)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ keystone ec2-credentials-list
++----------------------------------+----------------------------------+----------------------------------+
+|              tenant              |              access              |              secret              |
++----------------------------------+----------------------------------+----------------------------------+
+| 0e9f99a6f2064464aa054d305ba08052 | ef61007dae74468eb9593ffbbd22d9f1 | 28c7ad6248de4e6a8649b3e2d122ac5d |
+| 9b93a67201264492be3d0998b87d821b | 1b0a617dbef347cb968c8eed160de0b3 | b6525738ad6044ea9c49abeefabf86de |
++----------------------------------+----------------------------------+----------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But which one is my current tenant? Let&amp;rsquo;s get that from parsing the output of &lt;code&gt;token-get&lt;/code&gt; command&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ keystone token-get | grep tenant | awk &#39;{print $4}&#39;
+0e9f99a6f2064464aa054d305ba08052
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note the access and secret keys.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s get started with the &lt;code&gt;boto&lt;/code&gt; client for consuming AWS APIs. I prefer &lt;code&gt;ipython&lt;/code&gt; shell, for its interactive features, but normal Python shell is just fine too. (Install ipython as &lt;code&gt;sudo apt-get install ipython&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Import necessary module&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt; import boto
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a &lt;code&gt;conn&lt;/code&gt; connection object, which we&amp;rsquo;ll use for querying our cloud&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt; conn = boto.connect_ec2_endpoint(&#39;http://10.0.1.126:8773/services/Cloud&#39;,
+            aws_access_key_id=&#39;ef61007dae74468eb9593ffbbd22d9f1&#39;,
+            aws_secret_access_key=&#39;28c7ad6248de4e6a8649b3e2d122ac5d&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here &lt;code&gt;10.0.1.126&lt;/code&gt; is the IP of my machine. Don&amp;rsquo;t forget to change it to yours.&lt;/p&gt;
+
+&lt;p&gt;If everything is successful, call to &lt;code&gt;get_all_instances()&lt;/code&gt; will return an empty list&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt; conn.get_all_instances()
+[]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Okay, now let&amp;rsquo;s create an instance. List all the images first&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [20]: conn.get_all_images()
+Out[20]:
+[Image:aki-00000001,
+ Image:ari-00000002,
+ Image:ami-00000003,
+ Image:ami-00000004]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image &lt;code&gt;ami-00000003&lt;/code&gt; should be the cirros image from which we&amp;rsquo;ll create an instance. But still, let&amp;rsquo;s confirm that&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [26]: img = conn.get_image(&#39;ami-00000003&#39;)
+
+In [27]: img.name
+Out[27]: u&#39;cirros-0.3.2-x86_64-uec&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s use this image to create an instance. Boto&amp;rsquo;s &lt;code&gt;get_all_instances&lt;/code&gt; returns a list of reservations, which makes getting the instance object slightly roundabout.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [35]: conn.run_instances(image_id=&#39;ami-00000003&#39;, instance_type=&#39;m1.tiny&#39;)
+Out[35]: Reservation:r-08b8idoz
+
+In [40]: reservations = conn.get_all_instances()
+
+In [42]: resvn = reservations[0]
+
+In [44]: instance = resvn.instances[0]
+
+In [45]: instance.state
+Out[45]: u&#39;running&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And then delete it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [47]: conn.terminate_instances(&#39;i-00000002&#39;)
+Out[47]: [Instance:i-00000002]
+
+In [50]: conn.get_all_reservations()
+Out[50]: []
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s it for now :)&lt;/p&gt;
+
+&lt;p&gt;Use &lt;code&gt;ipython&lt;/code&gt; or &lt;code&gt;bpython&lt;/code&gt; for exploring boto library more and discover more APIs.&lt;/p&gt;
+
+&lt;p&gt;If you want to see what EC2 API was actually called behind the scenes, create a file &lt;code&gt;/etc/boto.cfg&lt;/code&gt; and add these two lines. Now whenever you will use an interactive Python terminal, you&amp;rsquo;ll see on your screen the EC2 API being called.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[Boto]
+debug=2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Open Source Puppet - Quick Start</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/04/12/open-source-puppet-quick-start/</link>
+      <pubDate>Sat, 12 Apr 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/04/12/open-source-puppet-quick-start/</guid>
+      <description>
+
+&lt;p&gt;This post aims to be your quickest guide to get started with Puppet. We&amp;rsquo;ll be using the open source version of Puppet. An hour of spare time and two Ubuntu machines (physical or virtual doesn&amp;rsquo;t matter) is all that is needed.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h2 id=&#34;quick-introduction:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Quick Introduction&lt;/h2&gt;
+
+&lt;p&gt;Lets say you want to install and run apache server on one of the machines in your lab. On another, you want to create a new user. On a third machine, you want to install MySQL, and allow access to this machine only from the first server. Seems like a lot of manual work isn&amp;rsquo;t it? The power of Puppet is, you can specify all these tasks in a file, called &amp;lsquo;Puppet manifest&amp;rsquo;, and then execute it. Everything will be set up for you just as you wanted! Now what makes this &amp;lsquo;I care about the end result, not the process&amp;rsquo; approach really powerful is you can &amp;lsquo;apply&amp;rsquo; this manifest over and over again to get the same end result. You can easily modify this manifest file, extend it, and manage it under version control, just like you would with a piece of software. Welcome to the world of IT automation :)&lt;/p&gt;
+
+&lt;p&gt;Although the syntax of a Puppet manifest is Ruby-ish, no knowledge of Ruby is required at all (I don&amp;rsquo;t know Ruby).&lt;/p&gt;
+
+&lt;p&gt;There is a whole lot of things you can do with Puppet. Here, we&amp;rsquo;ll just get us started with it. Once you are through this post, you can head over to Puppet Labs&amp;rsquo; documents and tutorials, for more on &amp;ldquo;how&amp;rdquo;s and &amp;ldquo;why&amp;rdquo;s of Puppet.&lt;/p&gt;
+
+&lt;h2 id=&#34;setup:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Setup&lt;/h2&gt;
+
+&lt;p&gt;You just require two Ubuntu machines connected to each other. One will be the Puppet &amp;lsquo;master&amp;rsquo; node (the machine which will take care of managing the configuration and state of all the machines in our deployment), the other one &amp;lsquo;slave&amp;rsquo; (which unfortunately is the only actual machine in demo deployment :) ).&lt;/p&gt;
+
+&lt;p&gt;Here I am using two  virtual machines, but you can create one virtual machine and use your host machine as the other one. The hostnames of the master and slave in my setup are &lt;code&gt;puppet-master&lt;/code&gt; and &lt;code&gt;puppet-agent&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Make sure both the machines are ping-able from each other &amp;ndash; by their IP as well as hostnames (e.g. &lt;code&gt;ping 123.123.123.123&lt;/code&gt; and &lt;code&gt;ping puppet-master&lt;/code&gt;). Make sure your /etc/hosts file looks something like this to achieve that:&lt;/p&gt;
+
+&lt;p&gt;(&lt;code&gt;192.168.56.130&lt;/code&gt; and &lt;code&gt;192.168.56.131&lt;/code&gt; are the IP addresses of externally-visible interfaces of hosts &lt;code&gt;puppet-master&lt;/code&gt; and &lt;code&gt;puppet-agent&lt;/code&gt; respectively)&lt;/p&gt;
+
+&lt;p&gt;Master:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ cat /etc/hosts
+127.0.0.1   localhost
+127.0.1.1   puppet-master
+
+192.168.56.131  puppet-agent
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Slave:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ cat /etc/hosts
+127.0.0.1   localhost
+127.0.1.1   puppet-agent
+
+192.168.56.130  puppet-master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;getting-the-hands-dirty-puppet-cli:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Getting the hands dirty &amp;ndash; Puppet CLI&lt;/h2&gt;
+
+&lt;p&gt;Install &lt;code&gt;puppetmaster&lt;/code&gt; package on the master node&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install puppetmaster
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all the users on the current system:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;puppet resource user --list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So basically a &amp;lsquo;user&amp;rsquo; is a &amp;lsquo;resource&amp;rsquo; in Puppet terminology. Now only list a specific resource. &lt;code&gt;r&lt;/code&gt; is the current user in my case.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ puppet resource user r
+user { &#39;r&#39;:
+  ensure  =&amp;gt; &#39;present&#39;,
+  comment =&amp;gt; &#39;r,,,&#39;,
+  gid     =&amp;gt; &#39;1000&#39;,
+  groups  =&amp;gt; [&#39;adm&#39;, &#39;cdrom&#39;, &#39;sudo&#39;, &#39;dip&#39;, &#39;plugdev&#39;, &#39;lpadmin&#39;, &#39;sambashare&#39;],
+  home    =&amp;gt; &#39;/home/r&#39;,
+  shell   =&amp;gt; &#39;/bin/bash&#39;,
+  uid     =&amp;gt; &#39;1000&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice the syntax. Resource &amp;lsquo;r&amp;rsquo; is of type &amp;lsquo;user&amp;rsquo;, with &amp;lsquo;ensure&amp;rsquo;, &amp;lsquo;comment&amp;rsquo;, etc as keys/attributes, and &amp;lsquo;present&amp;rsquo;, &amp;lsquo;r,,,&amp;rsquo; as values for those attributes.&lt;/p&gt;
+
+&lt;p&gt;You can change the value using the Puppet CLI&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet resource user r comment=&#39;some text missing&#39;
+notice: /User[r]/comment: comment changed &#39;r,,,&#39; to &#39;some text missing&#39;
+user { &#39;r&#39;:
+  ensure  =&amp;gt; &#39;present&#39;,
+  comment =&amp;gt; &#39;some text missing&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a new user with specified key-value pairs&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet resource user katie ensure=present shell=/bin/bash
+notice: /User[katie]/ensure: created
+user { &#39;katie&#39;:
+  ensure =&amp;gt; &#39;present&#39;,
+  shell  =&amp;gt; &#39;/bin/bash&#39;,
+}
+r@puppet-master:~$ sudo puppet resource user katie 
+user { &#39;katie&#39;:
+  ensure           =&amp;gt; &#39;present&#39;,
+  gid              =&amp;gt; &#39;1001&#39;,
+  home             =&amp;gt; &#39;/home/katie&#39;,
+  password         =&amp;gt; &#39;!&#39;,
+  password_max_age =&amp;gt; &#39;99999&#39;,
+  password_min_age =&amp;gt; &#39;0&#39;,
+  shell            =&amp;gt; &#39;/bin/bash&#39;,
+  uid              =&amp;gt; &#39;1001&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Remove the newly created user, but this time, let&amp;rsquo;s put this information into a file &lt;code&gt;katie_remove.pp&lt;/code&gt; and ask Puppet to &amp;lsquo;apply&amp;rsquo; this file and thus removing the user &amp;lsquo;katie&amp;rsquo;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ cat katie_remove.pp 
+user {&#39;katie&#39;:
+    ensure =&amp;gt; absent,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Apply this Puppet manifest&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet apply katie_absent.pp 
+warning: Could not retrieve fact fqdn
+notice: /Stage[main]//User[katie]/ensure: removed
+notice: Finished catalog run in 0.47 seconds
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Puppet&amp;rsquo;s description of user &amp;lsquo;katie&amp;rsquo;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet resource user katie
+  user { &#39;katie&#39;:
+  ensure =&amp;gt; &#39;absent&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;is now same as that of a non-existent user.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet resource user absent-user
+  user { &#39;absent-user&#39;:
+  ensure =&amp;gt; &#39;absent&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That is, the user &amp;lsquo;katie&amp;rsquo; is now deleted. You can see that the &amp;lsquo;ensure&amp;rsquo; attribute can be used to make sure a user (or in general, any &amp;lsquo;resource&amp;rsquo;, is present, or absent).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Ignore the warning which is printed while applying a manifest from a file. Or if you are bothered by it popping up all the time, in the &lt;code&gt;/etc/hosts&lt;/code&gt; file, change&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;127.0.1.1   puppet-master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;to&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;127.0.1.1   puppet-master.rushiagr.com puppet-master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;where you can choose a domain name of your own choice in place of &lt;code&gt;.rushiagr.com&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;puppet-modules:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet modules&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; &lt;code&gt;puppet module&lt;/code&gt; doesn&amp;rsquo;t work on Precise (Ubuntu 12.04). You need to install ruby, and gems, etc. Too much of a hassle. So I&amp;rsquo;ll just post commands here which work for a higher version of Ubuntu.&lt;/p&gt;
+
+&lt;p&gt;Install standard library:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo puppet module install puppetlabs/stdlib
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;View all the installed modules&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet module list
+/etc/puppet/modules
+├── puppetlabs-mysql (v2.2.1)
+├── puppetlabs-ntp (v3.0.2)
+└── puppetlabs-stdlib (v4.1.0)
+/usr/share/puppet/modules (no modules installed)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All the modules, and all other information in the system goes in &lt;code&gt;/etc/puppet&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Modules installed via &lt;code&gt;sudo&lt;/code&gt; will be visible when you perform &lt;code&gt;puppet module list&lt;/code&gt; with &lt;code&gt;sudo&lt;/code&gt; only. Same for non-&lt;code&gt;sudo&lt;/code&gt; use.&lt;/p&gt;
+
+&lt;h2 id=&#34;puppet-in-master-client-configuration:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet in master-client configuration&lt;/h2&gt;
+
+&lt;p&gt;Everything we did so far concerned with a single machine. Let&amp;rsquo;s now introduce another machine &amp;ndash; Puppet agent.&lt;/p&gt;
+
+&lt;p&gt;Note that you need to set FQDNs for both the machines. See the step above, where we suppressed a warning.&lt;/p&gt;
+
+&lt;p&gt;First, we&amp;rsquo;ll need to install &lt;code&gt;puppet&lt;/code&gt; package (the agent) on the agent node.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install puppet
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;By default, the Puppet agent service will not be running.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ sudo service puppet status
+ * agent is not running
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Before starting it, change &lt;code&gt;START=no&lt;/code&gt; to &lt;code&gt;START=yes&lt;/code&gt; in &lt;code&gt;/etc/default/puppet&lt;/code&gt; file, to start the agent service by default when the system starts/reboots.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo sed -i s/START=no/START=yes/g /etc/default/puppet 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And add these two lines at the end of &lt;code&gt;/etc/puppet/puppet.conf&lt;/code&gt; to allow the agent to discover the master by its FQDN.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[agent]
+server = puppet-master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now start the Puppet agent service&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ sudo service puppet start
+ * Starting puppet agent                                   [ OK ] 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I also make sure that clocks of both the machines are synchronized by running &lt;code&gt;ntpdate&lt;/code&gt; on both master and slave. I am not sure if this is required, but doesn&amp;rsquo;t do any harm.
+    sudo ntpdate pool.ntp.org&lt;/p&gt;
+
+&lt;p&gt;Now the master needs to sign the certs by agent.&lt;/p&gt;
+
+&lt;p&gt;Execute this command on agent node.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo puppet agent --test --waitforcert 60
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now hop over to the master node, and retrieve the list of certs waiting to be signed&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet cert --list
+  &amp;quot;puppet-agent.rushiagr.com&amp;quot; (EB:0F:E4:14:6F:B2:7E:85:7E:21:26:C4:78:80:58:E1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Sign the cert&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet cert sign puppet-agent.rushiagr.com
+notice: Signed certificate request for puppet-agent.rushiagr.com
+notice: Removing file Puppet::SSL::CertificateRequest puppet-agent.rushiagr.com at &#39;/var/lib/puppet/ssl/ca/requests/puppet-agent.rushiagr.com.pem&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we are ready to go. Let&amp;rsquo;s create a file (&amp;lsquo;Puppet manifest&amp;rsquo;) on master where we write that: 1. We want apache package to be installed. 2. Once we ensure that the package is installed, we want to start the apache service. We&amp;rsquo;ll name the file &lt;code&gt;site.pp&lt;/code&gt;, which is the &amp;lsquo;main&amp;rsquo; configuration file for Puppet. We&amp;rsquo;ll put it into &lt;code&gt;/etc/puppet/manifests&lt;/code&gt; directory. Note how we can specify a dependency between resources.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;package { &#39;apache2&#39;:
+    ensure =&amp;gt; installed
+}
+
+service { &#39;apache2&#39;:
+    ensure =&amp;gt; true,
+    enable =&amp;gt; true,
+    require =&amp;gt; Package[&#39;apache2&#39;]
+}       
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Puppet works on &amp;lsquo;push&amp;rsquo; model, meaning configurations are pulled by agents at periodic intervals. I think the default periodic interval is 30 minutes. Alternatively, you can pull from agent at your own will, any time. Let&amp;rsquo;s do that now. Execute this command on the agent:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ sudo puppet agent --test
+info: Caching catalog for puppet-agent.rushiagr.com
+info: Applying configuration version &#39;1397343482&#39;
+notice: /Stage[main]//Package[apache2]/ensure: ensure changed &#39;purged&#39; to &#39;present&#39;
+notice: Finished catalog run in 6.30 seconds
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And you can see the apache server running!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ sudo service apache2 status
+Apache2 is running (pid 5874).
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ta! Da!&lt;/p&gt;
+
+&lt;p&gt;Please comment if you have any ideas to make this post easier for the newbies to understand.&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This is just a quick start guide. There are excellent resources and docs at &lt;a href=&#34;http://puppetlabs.com&#34;&gt;puppetlabs.com&lt;/a&gt;. I have their beginner&amp;rsquo;s &lt;a href=&#34;https://dl.dropboxusercontent.com/u/42084476/OpenStack/learningpuppet.pdf&#34;&gt;PDF&lt;/a&gt; saved in my DropBox.
+Around 80 pages long, it covers almost every aspect of basic Puppet. The only problem with this guide is it is (I think deliberately) made to work only with the Enterprise Puppet version, but you can always refer back to this post to know how to set the open source version :)&lt;/p&gt;
+
+&lt;p&gt;If you mess up the cert signing process, here is a quick and dirty way to get it resolved. On master:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo puppet cert clean puppet-agent.rushiagr.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;On both master and slave:
+    sudo rm -r /var/lib/puppet/ssl
+    sudo service puppet restart&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>OpenStack in an hour with DevStack</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/04/03/openstack-in-an-hour-with-devstack/</link>
+      <pubDate>Thu, 03 Apr 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/04/03/openstack-in-an-hour-with-devstack/</guid>
+      <description>
+
+&lt;p&gt;So you found out a cool new technology &amp;ldquo;OpenStack&amp;rdquo; and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; is your friend-in-need. No, don&amp;rsquo;t click that hyperlink just yet :)&lt;/p&gt;
+
+&lt;p&gt;To put it in a sentence, DevStack is &amp;ldquo;OpenStack in a box&amp;rdquo;. You just need a popular Linux based distribution with 2GB RAM and you&amp;rsquo;re all set to start. DevStack is basically a set of scripts which will install all the important OpenStack services in your computer. For this, it will first download all the essential packages, pull in the OpenStack code from various OpenStack projects, and set everything up for you to try out all of it.&lt;/p&gt;
+
+&lt;p&gt;NOTE: DO NOT set up DevStack for production clouds.&lt;/p&gt;
+
+&lt;p&gt;Here, in this tutorial, I&amp;rsquo;ll be setting up DevStack in a 64-bit Ubuntu 12.04 virtual machine. All your virtual machine needs to have is an Internet connection, and 2GB RAM.&lt;/p&gt;
+
+&lt;p&gt;NOTE: Do not run any of the script as a root user, unless specified otherwise explicitly.&lt;/p&gt;
+
+&lt;h3 id=&#34;getting-started:98c134cd40c558c50c274d316252e460&#34;&gt;Getting started&lt;/h3&gt;
+
+&lt;p&gt;Install git&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Clone the DevStack repository into your computer and &lt;code&gt;cd&lt;/code&gt; into it. This is the code which will set up the cloud for you.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone http://github.com/openstack-dev/devstack
+cd devstack/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you do a &lt;code&gt;ls&lt;/code&gt;, you will see &lt;code&gt;stack.sh&lt;/code&gt;, &lt;code&gt;unstack.sh&lt;/code&gt; and &lt;code&gt;rejoin-stack.sh&lt;/code&gt; files in there. These are the most important files.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@ra:~/devstack$ ls
+accrc         exercises         HACKING.rst  rejoin-stack.sh  tests
+AUTHORS       exercise.sh       lib          run_tests.sh     tools
+clean.sh      extras.d          LICENSE      samples          unstack.sh
+driver_certs  files             localrc      stackrc
+eucarc        functions         openrc       stack-screenrc
+exerciserc    functions-common  README.md    stack.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;File &lt;code&gt;stack.sh&lt;/code&gt; is the most important of them all. Running this script will:
+1. Pull OpenStack code from all of it&amp;rsquo;s important projects&amp;rsquo; repositories and put them in &lt;code&gt;/opt/stack&lt;/code&gt; directory. TODO: say that this directory is configurable.
+2. Installs all the dependencies these OpenStack projects have &amp;ndash; both in the form of Ubuntu packages, and also the Python &amp;ldquo;PIP&amp;rdquo; repositories.
+3. Starts all the OpenStack services with a default configuration.&lt;/p&gt;
+
+&lt;p&gt;Bringing down the DevStack-created cloud is easy too &amp;ndash; just invoke the &lt;code&gt;unstack.sh&lt;/code&gt; script, and all the services are down again, freeing up the memory that these services consume. I&amp;rsquo;ll talk about &lt;code&gt;rejoin-stack.sh&lt;/code&gt; in some time. Let&amp;rsquo;s get started before I start writing at lengths again :)&lt;/p&gt;
+
+&lt;p&gt;Execute the &lt;code&gt;stack.sh&lt;/code&gt; script&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@ra:~/devstack$ ./stack.sh 
+
+################################################################################
+ENTER A PASSWORD TO USE FOR THE DATABASE.
+################################################################################
+This value will be written to your localrc file so you don&#39;t have to enter it 
+again.  Use only alphanumeric characters.
+If you leave this blank, a random default value will be used.
+Enter a password now:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You need to add the MySQL database password here. Don&amp;rsquo;t worry if you have not installed MySQL on this system. Just provide a password here and this script will install MySQL and use this password there.&lt;/p&gt;
+
+&lt;p&gt;As you can see, MySQL is where all the important data is stored by different OpenStack components. You can peep into the database later if you want to see what data is stored, etc.&lt;/p&gt;
+
+&lt;p&gt;Also, note the first line after the heading. If the &lt;code&gt;stack.sh&lt;/code&gt; script finishes successfully, all the inputs you specify (this, and four more after this) will be written to a file named as &lt;code&gt;localrc&lt;/code&gt;. All the local configuration setting pertaining to the DevStack environment will go in this file. I&amp;rsquo;ll provide you with details of all of them very soon. Have patience :)&lt;/p&gt;
+
+&lt;p&gt;For the other four prompts, enter &amp;lsquo;nova&amp;rsquo;. Just use &amp;lsquo;nova&amp;rsquo; for this MySQL prompt too if it is not installed yet.&lt;/p&gt;
+
+&lt;p&gt;You will see that the script now starts spewing a lot of output on our screen. It is downloading all the required code, packages, dependencies, etc, and setting everything up for us &amp;ndash; databases, services, network, configurations, message queues. Pretty much everything. For the first time, the script might take about 30-minutes, but it again depends upon the speed of your Internet connection, and the processing speed of your virtual machine. From the next time, it can provide you with a cloud in less than 10 minutes!&lt;/p&gt;
+
+&lt;p&gt;If the script ends with something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;+ merge_config_group /home/r/devstack/local.conf post-extra
++ local localfile=/home/r/devstack/local.conf
++ shift
++ local matchgroups=post-extra
++ [[ -r /home/r/devstack/local.conf ]]
++ return 0
++ [[ -x /home/r/devstack/local.sh ]]
++ service_check
++ local service
++ local failures
++ SCREEN_NAME=stack
++ SERVICE_DIR=/opt/stack/status
++ [[ ! -d /opt/stack/status/stack ]]
+++ ls &#39;/opt/stack/status/stack/*.failure&#39;
+++ /bin/true
++ failures=
++ &#39;[&#39; -n &#39;&#39; &#39;]&#39;
++ set +o xtrace
+
+
+
+Horizon is now available at http://10.0.2.15/
+Keystone is serving at http://10.0.2.15:5000/v2.0/
+Examples on using novaclient command line is in exercise.sh
+The default users are: admin and demo
+The password: nova
+This is your host ip: 10.0.2.15
+stack.sh completed in 269 seconds.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That means your machine is now home to a Cloud! :)&lt;/p&gt;
+
+&lt;p&gt;Here, &lt;code&gt;10.0.2.15&lt;/code&gt; is the IP of my first network interface. Don&amp;rsquo;t worry about that for now.&lt;/p&gt;
+
+&lt;p&gt;So now you can head over to my blog &lt;a href=&#34;http://www.rushiagr.com/blog/2013/05/27/cinder-on-devstack-quick-start/&#34;&gt;Cinder on DevStack - Quick Start&lt;/a&gt; to get started with creating volumes (persistent storage in cloud) with Cinder &amp;ndash; OpenStack&amp;rsquo;s block-storage project. In that guide, you will also be creating a virtual machine, so it will be a good start to OpenStack. But let&amp;rsquo;s get back in our current scope.&lt;/p&gt;
+
+&lt;p&gt;You can type the host IP provided by the script into your browser, to access the dashboard &amp;lsquo;Horizon&amp;rsquo;. Log into it using username &amp;lsquo;admin&amp;rsquo;, or &amp;lsquo;demo&amp;rsquo; and password &amp;lsquo;nova&amp;rsquo;. (For simplicity&amp;rsquo;s sake, lets just assume there are two users who are allowed to access this cloud &amp;ndash; one has all the administrative privilages, and the other one is just a normal user).&lt;/p&gt;
+
+&lt;p&gt;You can view all the process logs inside screen, by typing:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;screen -x
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Head over to &lt;a href=&#34;http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/&#34;&gt;Linux Screens in DevStack&lt;/a&gt; for more information on how to work with &lt;code&gt;screen&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;housekeeping-and-customizations:98c134cd40c558c50c274d316252e460&#34;&gt;Housekeeping and customizations&lt;/h3&gt;
+
+&lt;p&gt;In your life as an OpenStack developer, you will be setting up and destroying DevStack instance quite a number of times. So it is good to know how to do that in the most efficient manner.&lt;/p&gt;
+
+&lt;p&gt;Just like &lt;code&gt;stack.sh&lt;/code&gt; script is used to set up DevStack, &lt;code&gt;unstack.sh&lt;/code&gt; is used to destroy the DevStack setup. Running it will kill all the services, BUT it will not delete any of the code. If you want to bring down all the services manually, just do a:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo killall screen
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that this will just kill all the process which were running, for which you were able to see the logs inside screen. &lt;code&gt;unstack.sh&lt;/code&gt; does some cleanups as well along with killing processes.&lt;/p&gt;
+
+&lt;p&gt;If you had previously run &lt;code&gt;./stack.sh&lt;/code&gt;, but have brought down the environment, you can bring it up back by executing the &lt;code&gt;rejoin_stack.sh&lt;/code&gt; script.&lt;/p&gt;
+
+&lt;p&gt;NOTE: DevStack environment doesn&amp;rsquo;t persist across reboots!&lt;/p&gt;
+
+&lt;p&gt;So you need to bring back up the DevStack environment manually everytime you reboot. Here is where using a virtual machine comes handy. You can take a snapshot of the virtual machine, and then go back to it when you want a clean DevStack environment.&lt;/p&gt;
+
+&lt;p&gt;Nonetheless, the best way to reboot is: first execute &lt;code&gt;unstack.sh&lt;/code&gt; to bring down the current running DevStack instance. Then reboot, and when your machine comes up again, run &lt;code&gt;rejoin_stack.sh&lt;/code&gt;. If you don&amp;rsquo;t run &lt;code&gt;unstack.sh&lt;/code&gt;, you will need to execute &lt;code&gt;stack.sh&lt;/code&gt; again to have the environment up.&lt;/p&gt;
+
+&lt;h3 id=&#34;localrc-configurations:98c134cd40c558c50c274d316252e460&#34;&gt;localrc configurations&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;localrc&lt;/code&gt; is the file where all the local configurations (local = your local machine) are kept.&lt;/p&gt;
+
+&lt;p&gt;After first successful &lt;code&gt;stack.sh&lt;/code&gt; run, will see that a localrc file gets created with the configuration values you specified while running that script.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cat localrc 
+DATABASE_PASSWORD=nova
+RABBIT_PASSWORD=nova
+SERVICE_TOKEN=nova
+SERVICE_PASSWORD=nova
+ADMIN_PASSWORD=nova
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Sometimes you will forget to unstack, and will reboot the machine. And then you will find that running &lt;code&gt;stack.sh&lt;/code&gt; will again do an &lt;code&gt;apt-get update&lt;/code&gt;, and check for all packages, etc.&lt;/p&gt;
+
+&lt;p&gt;If you specify an option &lt;code&gt;OFFLINE=True&lt;/code&gt; in a file named &lt;code&gt;localrc&lt;/code&gt;, inside the devstack directory, and if after specifying this you run &lt;code&gt;stack.sh&lt;/code&gt;, it will not check anything over the Internet, and will set up DevStack using all the packages and code residing in your machine. Setting up a DevStack using this config option will give you a running cloud in the shortest amount of time (after &lt;code&gt;rejoin_stack.sh&lt;/code&gt;, but you have already forgotten to do &lt;code&gt;unstack.sh&lt;/code&gt;, right :) ).&lt;/p&gt;
+
+&lt;p&gt;Note that &lt;code&gt;stack.sh&lt;/code&gt; will see if the git repositories of the OpenStack projects are present in &lt;code&gt;/opt/stack/&lt;/code&gt; directory. If they are, it will not fetch any latest code into them from Github. But if any of the directory (say, &lt;code&gt;nova&lt;/code&gt;), is absent, it will pull latest code into the newly created &lt;code&gt;nova&lt;/code&gt; directory inside &lt;code&gt;/opt/stack&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;What if you want to get the latest code into all the OpenStack repositories inside &lt;code&gt;/opt/stack&lt;/code&gt;? Just specify a &lt;code&gt;RECLONE=yes&lt;/code&gt; parameter in localrc, and rerun &lt;code&gt;./stack.sh&lt;/code&gt;. This comes particularly handy when you are developing new code.&lt;/p&gt;
+
+&lt;p&gt;NOTE: Keep in mind that while developing code, you need to &lt;strong&gt;commit your local changes&lt;/strong&gt; in, say, &lt;code&gt;/opt/stack/nova&lt;/code&gt; repository, before you restack (re-run &lt;code&gt;stack.sh&lt;/code&gt;) with &lt;code&gt;RECLONE=yes&lt;/code&gt; option, as otherwise, the changes will be wiped off. Save yourself from a rude shock. You have been warned.&lt;/p&gt;
+
+&lt;p&gt;Configuration options &lt;code&gt;RECLONE=yes&lt;/code&gt; and &lt;code&gt;OFFLINE=True&lt;/code&gt; are complementary, and hence, use only one of them at a time in &lt;code&gt;localrc&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you have more than one interfaces, you can specify which one to use for external IP using this configuration:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;HOST_IP=192.168.xxx.xxx
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;developing-code:98c134cd40c558c50c274d316252e460&#34;&gt;Developing code&lt;/h3&gt;
+
+&lt;p&gt;If you want to immediately test out your code by running it inside DevStack, you need to make the changes in the code, and restart the affected services.&lt;/p&gt;
+
+&lt;p&gt;For example, let us say you are making code changes in &lt;code&gt;nova&lt;/code&gt;. Just after you are done making the changes, go to the screen, and restart all the services which start with &amp;ldquo;n-&amp;rdquo;. If you are very sure that only one of the Nova service is affected, just restart that. Or if you don&amp;rsquo;t know which one to restart, it is safe to restart all of them.&lt;/p&gt;
+
+&lt;p&gt;In order to restart, go to the respective screen and press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;C&lt;/code&gt;. Then, press the up arrow once to get the last command which started this screen session, and then press &lt;code&gt;ENTER&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;final-words:98c134cd40c558c50c274d316252e460&#34;&gt;Final words&lt;/h3&gt;
+
+&lt;p&gt;Note that this guide just gets you started with OpenStack using DevStack. OpenStack, and cloud in general, is not about virtual machines or volumes or networks only. It is a philosophy. It is a complete paradigm shift, and as such, it is impossible to cover all of it by me. Your quest to know more about it has just started. Keep reading more and more about it and I guarantee you you will be fascinated by it&amp;rsquo;s limitless possibilities.&lt;/p&gt;
+
+&lt;p&gt;This post is written keeping in mind that it will be consumed by a newbie to OpenStack development. If you are one of the one benefitting from this guide, I would love it if you can provide me with suggestions to improve this post, and any feedback you have about it.&lt;/p&gt;
+
+&lt;p&gt;Now you can go to the &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; website :)&lt;/p&gt;
+
+&lt;p&gt;Cheers!
+Rushi&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>MySQL Cheat Sheet</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/03/31/mysql-cheat-sheet/</link>
+      <pubDate>Mon, 31 Mar 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/03/31/mysql-cheat-sheet/</guid>
+      <description>
+
+&lt;p&gt;Databases are so important, yet almost all the time I need to work with it, I find that I have already forgotten all the syntax! So here I am writing down a quick cheat sheet to get me up and running when I&amp;rsquo;m waking up from slumber. I hope this will help atleast one other guy on this planet.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;I use mostly Ubuntu, so some of the commands might be Ubuntu specific.&lt;/p&gt;
+
+&lt;p&gt;Install mysql&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install mysql-server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A prompt will ask for the root password.&lt;/p&gt;
+
+&lt;p&gt;To change the root password:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;FLUSH PRIVILEGES;
+    UPDATE mysql.user SET password=PASSWORD(&#39;nova&#39;) WHERE user=&#39;root&#39;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;NOTE: MySQL keywords are case insensitive. They&amp;rsquo;re represented in capital here just so that they appear different than the rest. When you&amp;rsquo;re just testing out some things logging into the DB console, people generally prefer writing in small caps.&lt;/p&gt;
+
+&lt;p&gt;Note that &lt;code&gt;PASSWORD&lt;/code&gt; is a function, and unlike other MySQL keywords cannot be used in small caps.&lt;/p&gt;
+
+&lt;p&gt;Log into MySQL console with user &lt;code&gt;root&lt;/code&gt; and password &lt;code&gt;mysecretpassword&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql -uroot -pmysecretpassword
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql -u&#39;root&#39; -p&#39;mysecretpassword&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or entering the password in &amp;lsquo;secret&amp;rsquo; mode:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ mysql -uroot -p
+Enter password: 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;mysql-console:5aec0d683ee8bcb2a598c5a9ce48ebc9&#34;&gt;MySQL console&lt;/h3&gt;
+
+&lt;p&gt;List all databases:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+4 rows in set (0.01 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a new database &lt;code&gt;rushi&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; CREATE DATABASE rushi;
+Query OK, 1 row affected (0.00 sec)
+
+mysql&amp;gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| rushi              |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Select database &lt;code&gt;rushi&lt;/code&gt;, so that all the further operations are executed inside this database:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; USE rushi;
+Database changed
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a table &lt;code&gt;friends&lt;/code&gt; inside &lt;code&gt;rushi&lt;/code&gt; database:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; CREATE TABLE friends (name VARCHAR(20), age INT);
+Query OK, 0 rows affected (0.03 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you didn&amp;rsquo;t select the database in the last to last command, you need to specify table in this format:&lt;code&gt;&amp;lt;database&amp;gt;.&amp;lt;tablename&amp;gt;&lt;/code&gt;. So the last command would look like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; CREATE TABLE rushi.friends (name VARCHAR(20), age INT);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all the tables:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; show tables;
++-----------------+
+| Tables_in_rushi |
++-----------------+
+| friends         |
++-----------------+
+1 rows in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Insert data into &lt;code&gt;friends&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; INSERT INTO friends VALUES (&#39;arvind&#39;, 24);
+Query OK, 1 row affected (0.01 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Display all the data from the table:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
++--------+------+
+1 row in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Insert another friend:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; INSERT INTO friends VALUES (&#39;honshu&#39;, 23);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&amp;gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
+| honshu |   23 |
++--------+------+
+2 rows in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Update a row in the table:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; UPDATE friends SET age=22 WHERE name=&#39;honshu&#39;;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql&amp;gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
+| honshu |   22 |
++--------+------+
+2 rows in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Delete a row from table:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; DELETE FROM friends WHERE age=24;
+Query OK, 1 row affected (0.00 sec)
+
+mysql&amp;gt; select * from friends;
++--------+------+
+| name   | age  |
++--------+------+
+| honshu |   22 |
++--------+------+
+1 row in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Delete all rows from the table in one go, and reset the autoincrement if any:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; TRUNCATE friends;
+Query OK, 0 rows affected (0.04 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Delete the table and all of its contents:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; DROP TABLE friends;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Other commonly used commands are listed below. Try to try all of them out atleast once.
+Count the number of rows in a table:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;SELECT COUNT(*) FROM friends;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Select distinct values for a row, and order them too:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;SELECT DISTINCT age FROM friends ORDER BY age;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Modify table to add one more column to it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ALTER TABLE friend ADD height varchar(10);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Use regular expressions:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;SELECT * FROM friend WHERE name REGEXP &#39;arv*&#39;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;CAUTION: Regular expressions comes with some binary/encoding trickery. Use it with a lot of caution.&lt;/p&gt;
+
+&lt;p&gt;Create a new user for the database, and give it all the root privileges&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;CREATE USER &#39;rushiagr&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;mysecretpass&#39;
+GRANT ALL PRIVILEGES ON * . * TO &#39;rushiagr&#39;@&#39;localhost&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Take a dump of database &lt;code&gt;rushi&lt;/code&gt; and store it in a file &lt;code&gt;db.dump&lt;/code&gt;. Execute this command in bash shell, and not in the MySQL shell.:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysqldump --user root rushi &amp;gt; db.dump
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The End!&lt;/p&gt;
+
+&lt;p&gt;Comments/suggestions/feedback? Please feel free to comment and I&amp;rsquo;ll make sure I acknowledge them to the fullest.&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Installing OpenID plugin for MediaWiki</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/01/12/installing-openid-plugin-for-mediawiki/</link>
+      <pubDate>Sun, 12 Jan 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/01/12/installing-openid-plugin-for-mediawiki/</guid>
+      <description>
+
+&lt;p&gt;This post is about setting up your wiki such that their users access the wiki
+only via an OpenID provider login (e.g. Google or Facebook login). This post assumes
+MediaWiki is already installed.&lt;/p&gt;
+
+&lt;h3 id=&#34;assumptions-prerequisites-and-requirements:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Assumptions, prerequisites and requirements&lt;/h3&gt;
+
+&lt;p&gt;All of what this blogpost says has been tried on an Ubuntu machine, but it
+should work well on other Linux distros too (except for the &lt;code&gt;apt-get&lt;/code&gt; package
+installs, for which you&amp;rsquo;ll need to find alternatives on your favourite distro).&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$IP&lt;/code&gt; is assumed to be the root of your wiki directory (which in my case is
+&lt;code&gt;/var/www/wikis/&amp;lt;my_wiki&amp;gt;/&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Install all the required packages for the plugin to work&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install php5-mcrypt php5-gmp
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;installing-the-plugin:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Installing the plugin&lt;/h2&gt;
+
+&lt;p&gt;Get the source code for the extension into &lt;code&gt;$IP/extensions&lt;/code&gt; directory&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;	cd extensions
+	git clone http://gerrit.wikimedia.org/r/p/mediawiki/extensions/OpenID.git 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Check your mediawiki version by going to &lt;code&gt;&amp;lt;your_wiki_URL&amp;gt;/index.php?title=Special:Version&lt;/code&gt;. Say your version is 1.19.x.
+  Check out branch for the same version of OpenID code&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;	git branch -a 
+	git checkout -b stable_REL1_19 origin/REL1_19 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Add this line at the end of LocalSettings.php file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;require_once &amp;quot;$IP/extensions/OpenID/OpenID.php&amp;quot;; 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now install Auth subdirectory as following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;	cd $IP/extensions/OpenID 
+	git clone http://github.com/openid/php-openid.git 
+	mv php-openid/Auth Auth 
+	rm -r php-openid 
+	cd $IP 
+	php maintenance/update.php --conf LocalSettings.php 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Restart apache server&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;	/etc/init.d/apache2 restart 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;editing-login-required-page:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Editing &amp;lsquo;Login required&amp;rsquo; page.&lt;/h3&gt;
+
+&lt;p&gt;By default, the main page of the wiki is not editable. Generally we would like
+to give some information to a user, e.g. what this wiki is all about, how
+to log into it, which OpenIDs are permitted, etc.&lt;/p&gt;
+
+&lt;p&gt;Now we&amp;rsquo;ll give any registered user the ability to edit the protected pages and the
+&amp;lsquo;interface&amp;rsquo; pages, of which our special login page is a part of. Add these lines
+ to &lt;code&gt;$IP/LocalSettings.php&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;	$wgGroupPermissions[&#39;user&#39;][&#39;editprotected&#39;] = true; 
+	$wgGroupPermissions[&#39;user&#39;][&#39;editinterface&#39;] = true; 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you can edit the &lt;code&gt;&amp;lt;your_wiki_URL&amp;gt;/jiocloud/index.phpmediawiki:loginreqpagetext&lt;/code&gt;
+ page which is presented when the user is not logged in.&lt;/p&gt;
+
+&lt;h3 id=&#34;other-settings:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Other settings&lt;/h3&gt;
+
+&lt;p&gt;Below you can see a snip of LocalSettings.php file, which contains many other
+fields which I used to customize my wiki. I allowed only the registered user
+an edit permission (which most of you would also want I guess). Also, I have disabled
+regular login, and made it mandatory users to login via only OpenID, and that too,
+only using their launchpad.net accounts (an issue tracking software from Canonical).&lt;/p&gt;
+
+&lt;p&gt;If you want to get more information regarding these (and more)
+configuration options, see &lt;a href=&#34;http://www.mediawiki.org/wiki/Extension:OpenID&#34; target=&#34;_blank&#34;&gt;this&lt;/a&gt; link.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Disable reading by anonymous users
+$wgGroupPermissions[&#39;*&#39;][&#39;read&#39;] = false;
+
+# Disable anonymous editing too
+$wgGroupPermissions[&#39;*&#39;][&#39;edit&#39;] = false;
+ 
+# But allow them to access the OpenID login page or else there will be no way to log in!
+$wgWhitelistRead = array (&amp;quot;Special:OpenIDLogin&amp;quot;, &amp;quot;Special:OpenIDFinish&amp;quot;, 
+&amp;quot;MediaWiki:Common.css&amp;quot;, &amp;quot;MediaWiki:Common.js&amp;quot;, &amp;quot;MediaWiki:Monobook.css&amp;quot;, 
+&amp;quot;MediaWiki:Monobook.js&amp;quot;, &amp;quot;-&amp;quot;);
+ 
+# For registered users, allow editing protected pages
+$wgGroupPermissions[&#39;user&#39;][&#39;editprotected&#39;] = true;
+$wgGroupPermissions[&#39;user&#39;][&#39;editinterface&#39;] = true;
+
+# Only allow OpenIDs for login
+$wgOpenIDLoginOnly = true;
+$wgOpenIDOnly = true;       # a value used with older versions. Optional
+
+# Your wiki web URL
+$wgOpenIDTrustRoot = &amp;quot;http://your.wiki.url.com/&amp;quot;;
+
+# By default, deny all OpenID
+$wgOpenIDConsumerDenyByDefault = true;
+
+# Then allow only launchpad.net OpenID (with and without HTTPS both)
+$wgOpenIDConsumerAllow = array(&amp;quot;@^(https://)?launchpad.net/@&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;troubleshooting:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Troubleshooting&lt;/h2&gt;
+
+&lt;p&gt;If there are troubles uploading a file via the MediaWiki web interface, go to the wiki directory on the server and chown the &lt;code&gt;images&lt;/code&gt; folder.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo chown -R www-data:www-data images/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Don&amp;rsquo;t forget to comment if you find the information presented here is outdated, or is not working for you.&lt;/p&gt;
+
+&lt;p&gt;Cheers,
+Rushi&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

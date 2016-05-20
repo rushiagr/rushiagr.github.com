@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/personal/tags/iscsi/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2014 Rushi Agrawal</copyright>
+    <updated>Fri, 05 Sep 2014 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>iSCSI administration on Ubuntu - Quick Start</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/</guid>
+      <description>
+
+&lt;p&gt;This post get&amp;rsquo;s you started with iSCSI administration on an Ubuntu machine.
+Although I have used Ubuntu Trusty (14.04) version, it should work with Precise
+(12.04) too, with the latest packages.&lt;/p&gt;
+
+&lt;h4 id=&#34;prerequisites:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Prerequisites&lt;/h4&gt;
+
+&lt;p&gt;Make sure you have atleast a little idea of what these terms
+mean: iSCSI, LUN, IQN, initiator, target and portal. Google and wikipedia are
+your friends.&lt;/p&gt;
+
+&lt;h4 id=&#34;a-quick-summary:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;A quick summary:&lt;/h4&gt;
+
+&lt;p&gt;There are two parts of iSCSI communication - initiator and target. So let&amp;rsquo;s take an example. There is a storage server in your
+company, where you have a &amp;lsquo;drive&amp;rsquo; for your team. The storage server is the
+&amp;lsquo;target&amp;rsquo;, and your laptop, where you&amp;rsquo;ll mount the drive to access it&amp;rsquo;s contents
+is the &amp;lsquo;initiator&amp;rsquo;. In other words, target is like a &amp;lsquo;server&amp;rsquo; which stores
+data, and allows initiators (think &amp;lsquo;clients&amp;rsquo;) to connect to it.&lt;/p&gt;
+
+&lt;p&gt;In this short hands-on introduction, we&amp;rsquo;ll use the same Ubuntu machine as
+target as well as initiator. We can use a file as the storage behind the
+target, but this post also shows how to use LVM logical volume as the backing
+store for the iSCSI target.&lt;/p&gt;
+
+&lt;p&gt;Actually, we&amp;rsquo;ll back the logical volume (LV) with a file, as shown in
+&lt;a href=&#34;http://www.rushiagr.com/blog/2014/01/14/quick-start-linux-logical-volume-manager/&#34;&gt;this&lt;/a&gt;,
+so essentially we&amp;rsquo;re just using &amp;lsquo;file as a backing store for targets&amp;rsquo; but in a
+roundabout way :)&lt;/p&gt;
+
+&lt;p&gt;OK, let&amp;rsquo;s get started. Make sure you execute all the following commands as root
+user.&lt;/p&gt;
+
+&lt;p&gt;First install the required dependencies&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;apt-get install lvm2 tgt open-iscsi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;initialize-logical-volume:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initialize logical volume&lt;/h4&gt;
+
+&lt;p&gt;Create a file of 1GB, create a volume group over it, and then over it, create a
+400MB logical volume, and see if it got created or not&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# truncate --size 1G backingfile
+root@ra:~# sudo losetup --find --show backingfile 
+/dev/loop0
+root@ra:~# sudo vgcreate myvg /dev/loop0
+  No physical volume label read from /dev/loop0
+  Physical volume &amp;quot;/dev/loop0&amp;quot; successfully created
+  Volume group &amp;quot;myvg&amp;quot; successfully created
+root@ra:~# sudo lvcreate --size 400M --name mylv myvg
+  Logical volume &amp;quot;mylv&amp;quot; created
+root@ra:~# lvs
+  LV   VG   Attr      LSize   Pool Origin Data%  Move Log Copy% Convert
+  mylv myvg -wi-a---- 400.00m                                           
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;target-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Target administration&lt;/h4&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s create a target, with target ID 1, and give it an IQN (iSCSI
+Qualified Name) &lt;code&gt;iqn.2001-04.example.com:your.first.iscsi.target&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tgtadm --lld iscsi --op new --mode target --tid 1 -T iqn.2001-04.example.com:your.first.iscsi.target
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List the target, see it&amp;rsquo;s properties:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# tgtadm --lld iscsi --op show --mode target
+Target 1: iqn.2001-04.example.com:your.first.iscsi.target
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00010000
+            SCSI SN: beaf10
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags: 
+    Account information:
+    ACL information:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can see there is a LUN, LUN 0 attached to the target. Let&amp;rsquo;s attach our
+logical volume &lt;code&gt;mylv&lt;/code&gt; as LUN 1 to the target.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tgtadm --lld iscsi --op new --mode logicalunit --tid 1 --lun 1 -b /dev/myvg/mylv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here, actually you could&amp;rsquo;ve attached a flat file as a LUN to the target. So you
+could&amp;rsquo;ve skipped all the intermediate steps and attached the &lt;code&gt;backingfile&lt;/code&gt;
+directly to the target like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tgtadm --lld iscsi --op new --mode logicalunit --tid 1 --lun 1 -b backingfile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A backing file would&amp;rsquo;ve been good enough for this demo, but you know the benefits of logical volume isn&amp;rsquo;t it? :)&lt;/p&gt;
+
+&lt;p&gt;Okay, let&amp;rsquo;s see if the LUN got created:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# tgtadm --lld iscsi --op show --mode target
+Target 1: iqn.2001-04.example.com:your.first.iscsi.target
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00010000
+            SCSI SN: beaf10
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags: 
+        LUN: 1
+            Type: disk
+            SCSI ID: IET     00010001
+            SCSI SN: beaf11
+            Size: 419 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/myvg/mylv
+            Backing store flags: 
+    Account information:
+    ACL information:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s allow all initiators to bind to this target:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tgtadm --lld iscsi --op bind --mode target --tid 1 -I ALL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We&amp;rsquo;re done with the &amp;lsquo;target&amp;rsquo; side now. You can check, using &lt;code&gt;netstat&lt;/code&gt; that port
+3260, the default port, is now open. Note that all our commands so far started with
+&lt;code&gt;tgtadm&lt;/code&gt;, i.e., the target administration utility.&lt;/p&gt;
+
+&lt;h4 id=&#34;initiator-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initiator administration&lt;/h4&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s start from the &amp;lsquo;initiator&amp;rsquo; end. We&amp;rsquo;ll behave as if we&amp;rsquo;re a client
+trying to connect to the server &amp;ndash; the target.&lt;/p&gt;
+
+&lt;p&gt;Discover all the targets on our local machine (&lt;code&gt;127.0.0.1&lt;/code&gt;).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# sudo iscsiadm --mode discovery --type sendtargets --portal 127.0.0.1
+127.0.0.1:3260,1 iqn.2001-04.example.com:your.first.iscsi.target
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;From the client perspective, we&amp;rsquo;re now able to see a target. Let&amp;rsquo;s login into
+that target&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# sudo iscsiadm --mode node --targetname iqn.2001-04.example.com:your.first.iscsi.target --portal 127.0.0.1:3260 --login
+Logging in to [iface: default, target: iqn.2001-04.example.com:your.first.iscsi.target, portal: 127.0.0.1,3260] (multiple)
+Login to [iface: default, target: iqn.2001-04.example.com:your.first.iscsi.target, portal: 127.0.0.1,3260] successful.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After logging in, the target will be visible in the client&amp;rsquo;s system as a new
+device. Running a &lt;code&gt;fdisk -l&lt;/code&gt; shows that there is a new device &lt;code&gt;/dev/sda&lt;/code&gt; is now
+present.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# fdisk -l
+
+Disk /dev/vda: 57.1 GB, 57076908032 bytes
+255 heads, 63 sectors/track, 6939 cylinders, total 111478336 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0001cd46
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *        2048   106520575    53259264   83  Linux
+/dev/vda2       106522622   111476735     2477057    5  Extended
+/dev/vda5       106522624   111476735     2477056   82  Linux swap / Solaris
+
+Disk /dev/mapper/myvg-mylv: 419 MB, 419430400 bytes
+255 heads, 63 sectors/track, 50 cylinders, total 819200 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk /dev/mapper/myvg-mylv doesn&#39;t contain a valid partition table
+
+Disk /dev/sda: 419 MB, 419430400 bytes
+13 heads, 62 sectors/track, 1016 cylinders, total 819200 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk /dev/sda doesn&#39;t contain a valid partition table
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we just need to format this device with a filesystem, say EXT4, and then
+mount it at some location to start using it!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# sudo mkfs.ext4 /dev/sda
+mke2fs 1.42.9 (4-Feb-2014)
+/dev/sda is entire device, not just one partition!
+Proceed anyway? (y,n) y
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+102400 inodes, 409600 blocks
+20480 blocks (5.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=67633152
+50 block groups
+8192 blocks per group, 8192 fragments per group
+2048 inodes per group
+Superblock backups stored on blocks: 
+    8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information: done 
+
+root@ra:~# mkdir tempmount
+root@ra:~# mount /dev/sda tempmount/
+root@ra:~# cd tempmount/
+root@ra:~/tempmount# ls
+lost+found
+root@ra:~/tempmount# 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;destruction:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Destruction&lt;/h4&gt;
+
+&lt;p&gt;The simplest way to get rid of all the things you&amp;rsquo;ve created is to unmount the
+device, and restart the system.&lt;/p&gt;
+
+&lt;p&gt;Aaand done!&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

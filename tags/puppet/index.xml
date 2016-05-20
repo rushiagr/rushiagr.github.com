@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/tags/puppet/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2014 Rushi Agrawal</copyright>
+    <updated>Sun, 14 Sep 2014 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Puppet installation from modules</title>
+      <link>http://www.rushiagr.com/blog/2014/09/14/puppet-installation-from-modules/</link>
+      <pubDate>Sun, 14 Sep 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2014/09/14/puppet-installation-from-modules/</guid>
+      <description>&lt;p&gt;A quick example of how to use Puppet to install and manage MySQL. We&amp;rsquo;ll
+download required Puppet modules from their git repositories.&lt;/p&gt;
+
+&lt;p&gt;Again, everything is tried on Ubuntu (14.04).&lt;/p&gt;
+
+&lt;p&gt;Make sure &lt;code&gt;hostname -f&lt;/code&gt; shows your FQDN. Then install puppet&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install puppet
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We&amp;rsquo;ll use &lt;code&gt;git submodules&lt;/code&gt; to manage different git repositories. But first,
+create our own repository&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir puppet-mysql
+cd puppet-mysql
+git init
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install Puppet modules &lt;code&gt;stdlib&lt;/code&gt; and &lt;code&gt;mysql&lt;/code&gt; into directory &lt;code&gt;modules&lt;/code&gt; as git
+submodules.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git submodule add https://github.com/puppetlabs/puppetlabs-stdlib.git modules/stdlib
+git submodule add https://github.com/puppetlabs/puppetlabs-mysql.git modules/mysql
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now create a site.pp file in the root directory of this repository, with the following contents&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;node default {
+    class { &#39;mysql::server&#39;:
+        root_password =&amp;gt; &#39;nova&#39;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we&amp;rsquo;ll apply this &lt;code&gt;site.pp&lt;/code&gt; file to the system. As our modules directory is
+different from Puppet&amp;rsquo;s default, we&amp;rsquo;ll need to specify that while running
+Puppet.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo puppet apply site.pp --modulepath modules/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To see the action in more detail, also pass the &lt;code&gt;--debug&lt;/code&gt; option to the above
+execution&lt;/p&gt;
+
+&lt;p&gt;And you&amp;rsquo;re all set.&lt;/p&gt;
+
+&lt;p&gt;Now from your commandline, you can try to access mysql and it will work!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql -uroot -pnova
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Done! Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Open Source Puppet - Quick Start</title>
+      <link>http://www.rushiagr.com/blog/2014/04/12/open-source-puppet-quick-start/</link>
+      <pubDate>Sat, 12 Apr 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2014/04/12/open-source-puppet-quick-start/</guid>
+      <description>
+
+&lt;p&gt;This post aims to be your quickest guide to get started with Puppet. We&amp;rsquo;ll be using the open source version of Puppet. An hour of spare time and two Ubuntu machines (physical or virtual doesn&amp;rsquo;t matter) is all that is needed.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h2 id=&#34;quick-introduction:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Quick Introduction&lt;/h2&gt;
+
+&lt;p&gt;Lets say you want to install and run apache server on one of the machines in your lab. On another, you want to create a new user. On a third machine, you want to install MySQL, and allow access to this machine only from the first server. Seems like a lot of manual work isn&amp;rsquo;t it? The power of Puppet is, you can specify all these tasks in a file, called &amp;lsquo;Puppet manifest&amp;rsquo;, and then execute it. Everything will be set up for you just as you wanted! Now what makes this &amp;lsquo;I care about the end result, not the process&amp;rsquo; approach really powerful is you can &amp;lsquo;apply&amp;rsquo; this manifest over and over again to get the same end result. You can easily modify this manifest file, extend it, and manage it under version control, just like you would with a piece of software. Welcome to the world of IT automation :)&lt;/p&gt;
+
+&lt;p&gt;Although the syntax of a Puppet manifest is Ruby-ish, no knowledge of Ruby is required at all (I don&amp;rsquo;t know Ruby).&lt;/p&gt;
+
+&lt;p&gt;There is a whole lot of things you can do with Puppet. Here, we&amp;rsquo;ll just get us started with it. Once you are through this post, you can head over to Puppet Labs&amp;rsquo; documents and tutorials, for more on &amp;ldquo;how&amp;rdquo;s and &amp;ldquo;why&amp;rdquo;s of Puppet.&lt;/p&gt;
+
+&lt;h2 id=&#34;setup:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Setup&lt;/h2&gt;
+
+&lt;p&gt;You just require two Ubuntu machines connected to each other. One will be the Puppet &amp;lsquo;master&amp;rsquo; node (the machine which will take care of managing the configuration and state of all the machines in our deployment), the other one &amp;lsquo;slave&amp;rsquo; (which unfortunately is the only actual machine in demo deployment :) ).&lt;/p&gt;
+
+&lt;p&gt;Here I am using two  virtual machines, but you can create one virtual machine and use your host machine as the other one. The hostnames of the master and slave in my setup are &lt;code&gt;puppet-master&lt;/code&gt; and &lt;code&gt;puppet-agent&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Make sure both the machines are ping-able from each other &amp;ndash; by their IP as well as hostnames (e.g. &lt;code&gt;ping 123.123.123.123&lt;/code&gt; and &lt;code&gt;ping puppet-master&lt;/code&gt;). Make sure your /etc/hosts file looks something like this to achieve that:&lt;/p&gt;
+
+&lt;p&gt;(&lt;code&gt;192.168.56.130&lt;/code&gt; and &lt;code&gt;192.168.56.131&lt;/code&gt; are the IP addresses of externally-visible interfaces of hosts &lt;code&gt;puppet-master&lt;/code&gt; and &lt;code&gt;puppet-agent&lt;/code&gt; respectively)&lt;/p&gt;
+
+&lt;p&gt;Master:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ cat /etc/hosts
+127.0.0.1   localhost
+127.0.1.1   puppet-master
+
+192.168.56.131  puppet-agent
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Slave:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ cat /etc/hosts
+127.0.0.1   localhost
+127.0.1.1   puppet-agent
+
+192.168.56.130  puppet-master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;getting-the-hands-dirty-puppet-cli:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Getting the hands dirty &amp;ndash; Puppet CLI&lt;/h2&gt;
+
+&lt;p&gt;Install &lt;code&gt;puppetmaster&lt;/code&gt; package on the master node&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install puppetmaster
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all the users on the current system:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;puppet resource user --list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So basically a &amp;lsquo;user&amp;rsquo; is a &amp;lsquo;resource&amp;rsquo; in Puppet terminology. Now only list a specific resource. &lt;code&gt;r&lt;/code&gt; is the current user in my case.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ puppet resource user r
+user { &#39;r&#39;:
+  ensure  =&amp;gt; &#39;present&#39;,
+  comment =&amp;gt; &#39;r,,,&#39;,
+  gid     =&amp;gt; &#39;1000&#39;,
+  groups  =&amp;gt; [&#39;adm&#39;, &#39;cdrom&#39;, &#39;sudo&#39;, &#39;dip&#39;, &#39;plugdev&#39;, &#39;lpadmin&#39;, &#39;sambashare&#39;],
+  home    =&amp;gt; &#39;/home/r&#39;,
+  shell   =&amp;gt; &#39;/bin/bash&#39;,
+  uid     =&amp;gt; &#39;1000&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice the syntax. Resource &amp;lsquo;r&amp;rsquo; is of type &amp;lsquo;user&amp;rsquo;, with &amp;lsquo;ensure&amp;rsquo;, &amp;lsquo;comment&amp;rsquo;, etc as keys/attributes, and &amp;lsquo;present&amp;rsquo;, &amp;lsquo;r,,,&amp;rsquo; as values for those attributes.&lt;/p&gt;
+
+&lt;p&gt;You can change the value using the Puppet CLI&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet resource user r comment=&#39;some text missing&#39;
+notice: /User[r]/comment: comment changed &#39;r,,,&#39; to &#39;some text missing&#39;
+user { &#39;r&#39;:
+  ensure  =&amp;gt; &#39;present&#39;,
+  comment =&amp;gt; &#39;some text missing&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a new user with specified key-value pairs&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet resource user katie ensure=present shell=/bin/bash
+notice: /User[katie]/ensure: created
+user { &#39;katie&#39;:
+  ensure =&amp;gt; &#39;present&#39;,
+  shell  =&amp;gt; &#39;/bin/bash&#39;,
+}
+r@puppet-master:~$ sudo puppet resource user katie 
+user { &#39;katie&#39;:
+  ensure           =&amp;gt; &#39;present&#39;,
+  gid              =&amp;gt; &#39;1001&#39;,
+  home             =&amp;gt; &#39;/home/katie&#39;,
+  password         =&amp;gt; &#39;!&#39;,
+  password_max_age =&amp;gt; &#39;99999&#39;,
+  password_min_age =&amp;gt; &#39;0&#39;,
+  shell            =&amp;gt; &#39;/bin/bash&#39;,
+  uid              =&amp;gt; &#39;1001&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Remove the newly created user, but this time, let&amp;rsquo;s put this information into a file &lt;code&gt;katie_remove.pp&lt;/code&gt; and ask Puppet to &amp;lsquo;apply&amp;rsquo; this file and thus removing the user &amp;lsquo;katie&amp;rsquo;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ cat katie_remove.pp 
+user {&#39;katie&#39;:
+    ensure =&amp;gt; absent,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Apply this Puppet manifest&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet apply katie_absent.pp 
+warning: Could not retrieve fact fqdn
+notice: /Stage[main]//User[katie]/ensure: removed
+notice: Finished catalog run in 0.47 seconds
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Puppet&amp;rsquo;s description of user &amp;lsquo;katie&amp;rsquo;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet resource user katie
+  user { &#39;katie&#39;:
+  ensure =&amp;gt; &#39;absent&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;is now same as that of a non-existent user.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet resource user absent-user
+  user { &#39;absent-user&#39;:
+  ensure =&amp;gt; &#39;absent&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That is, the user &amp;lsquo;katie&amp;rsquo; is now deleted. You can see that the &amp;lsquo;ensure&amp;rsquo; attribute can be used to make sure a user (or in general, any &amp;lsquo;resource&amp;rsquo;, is present, or absent).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Ignore the warning which is printed while applying a manifest from a file. Or if you are bothered by it popping up all the time, in the &lt;code&gt;/etc/hosts&lt;/code&gt; file, change&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;127.0.1.1   puppet-master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;to&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;127.0.1.1   puppet-master.rushiagr.com puppet-master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;where you can choose a domain name of your own choice in place of &lt;code&gt;.rushiagr.com&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;puppet-modules:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet modules&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; &lt;code&gt;puppet module&lt;/code&gt; doesn&amp;rsquo;t work on Precise (Ubuntu 12.04). You need to install ruby, and gems, etc. Too much of a hassle. So I&amp;rsquo;ll just post commands here which work for a higher version of Ubuntu.&lt;/p&gt;
+
+&lt;p&gt;Install standard library:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo puppet module install puppetlabs/stdlib
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;View all the installed modules&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet module list
+/etc/puppet/modules
+├── puppetlabs-mysql (v2.2.1)
+├── puppetlabs-ntp (v3.0.2)
+└── puppetlabs-stdlib (v4.1.0)
+/usr/share/puppet/modules (no modules installed)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All the modules, and all other information in the system goes in &lt;code&gt;/etc/puppet&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Modules installed via &lt;code&gt;sudo&lt;/code&gt; will be visible when you perform &lt;code&gt;puppet module list&lt;/code&gt; with &lt;code&gt;sudo&lt;/code&gt; only. Same for non-&lt;code&gt;sudo&lt;/code&gt; use.&lt;/p&gt;
+
+&lt;h2 id=&#34;puppet-in-master-client-configuration:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet in master-client configuration&lt;/h2&gt;
+
+&lt;p&gt;Everything we did so far concerned with a single machine. Let&amp;rsquo;s now introduce another machine &amp;ndash; Puppet agent.&lt;/p&gt;
+
+&lt;p&gt;Note that you need to set FQDNs for both the machines. See the step above, where we suppressed a warning.&lt;/p&gt;
+
+&lt;p&gt;First, we&amp;rsquo;ll need to install &lt;code&gt;puppet&lt;/code&gt; package (the agent) on the agent node.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install puppet
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;By default, the Puppet agent service will not be running.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ sudo service puppet status
+ * agent is not running
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Before starting it, change &lt;code&gt;START=no&lt;/code&gt; to &lt;code&gt;START=yes&lt;/code&gt; in &lt;code&gt;/etc/default/puppet&lt;/code&gt; file, to start the agent service by default when the system starts/reboots.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo sed -i s/START=no/START=yes/g /etc/default/puppet 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And add these two lines at the end of &lt;code&gt;/etc/puppet/puppet.conf&lt;/code&gt; to allow the agent to discover the master by its FQDN.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[agent]
+server = puppet-master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now start the Puppet agent service&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ sudo service puppet start
+ * Starting puppet agent                                   [ OK ] 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I also make sure that clocks of both the machines are synchronized by running &lt;code&gt;ntpdate&lt;/code&gt; on both master and slave. I am not sure if this is required, but doesn&amp;rsquo;t do any harm.
+    sudo ntpdate pool.ntp.org&lt;/p&gt;
+
+&lt;p&gt;Now the master needs to sign the certs by agent.&lt;/p&gt;
+
+&lt;p&gt;Execute this command on agent node.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo puppet agent --test --waitforcert 60
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now hop over to the master node, and retrieve the list of certs waiting to be signed&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet cert --list
+  &amp;quot;puppet-agent.rushiagr.com&amp;quot; (EB:0F:E4:14:6F:B2:7E:85:7E:21:26:C4:78:80:58:E1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Sign the cert&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet cert sign puppet-agent.rushiagr.com
+notice: Signed certificate request for puppet-agent.rushiagr.com
+notice: Removing file Puppet::SSL::CertificateRequest puppet-agent.rushiagr.com at &#39;/var/lib/puppet/ssl/ca/requests/puppet-agent.rushiagr.com.pem&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we are ready to go. Let&amp;rsquo;s create a file (&amp;lsquo;Puppet manifest&amp;rsquo;) on master where we write that: 1. We want apache package to be installed. 2. Once we ensure that the package is installed, we want to start the apache service. We&amp;rsquo;ll name the file &lt;code&gt;site.pp&lt;/code&gt;, which is the &amp;lsquo;main&amp;rsquo; configuration file for Puppet. We&amp;rsquo;ll put it into &lt;code&gt;/etc/puppet/manifests&lt;/code&gt; directory. Note how we can specify a dependency between resources.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;package { &#39;apache2&#39;:
+    ensure =&amp;gt; installed
+}
+
+service { &#39;apache2&#39;:
+    ensure =&amp;gt; true,
+    enable =&amp;gt; true,
+    require =&amp;gt; Package[&#39;apache2&#39;]
+}       
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Puppet works on &amp;lsquo;push&amp;rsquo; model, meaning configurations are pulled by agents at periodic intervals. I think the default periodic interval is 30 minutes. Alternatively, you can pull from agent at your own will, any time. Let&amp;rsquo;s do that now. Execute this command on the agent:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ sudo puppet agent --test
+info: Caching catalog for puppet-agent.rushiagr.com
+info: Applying configuration version &#39;1397343482&#39;
+notice: /Stage[main]//Package[apache2]/ensure: ensure changed &#39;purged&#39; to &#39;present&#39;
+notice: Finished catalog run in 6.30 seconds
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And you can see the apache server running!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ sudo service apache2 status
+Apache2 is running (pid 5874).
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ta! Da!&lt;/p&gt;
+
+&lt;p&gt;Please comment if you have any ideas to make this post easier for the newbies to understand.&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This is just a quick start guide. There are excellent resources and docs at &lt;a href=&#34;http://puppetlabs.com&#34;&gt;puppetlabs.com&lt;/a&gt;. I have their beginner&amp;rsquo;s &lt;a href=&#34;https://dl.dropboxusercontent.com/u/42084476/OpenStack/learningpuppet.pdf&#34;&gt;PDF&lt;/a&gt; saved in my DropBox.
+Around 80 pages long, it covers almost every aspect of basic Puppet. The only problem with this guide is it is (I think deliberately) made to work only with the Enterprise Puppet version, but you can always refer back to this post to know how to set the open source version :)&lt;/p&gt;
+
+&lt;p&gt;If you mess up the cert signing process, here is a quick and dirty way to get it resolved. On master:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo puppet cert clean puppet-agent.rushiagr.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;On both master and slave:
+    sudo rm -r /var/lib/puppet/ssl
+    sudo service puppet restart&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

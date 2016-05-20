@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/personal/tags/notes/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2016 Rushi Agrawal</copyright>
+    <updated>Sun, 10 Jan 2016 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Tmux session shortcuts</title>
+      <link>http://www.rushiagr.com/personal/blog/2016/01/10/tmux-session-shortcuts/</link>
+      <pubDate>Sun, 10 Jan 2016 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2016/01/10/tmux-session-shortcuts/</guid>
+      <description>
+
+&lt;p&gt;Tmux is awesome. But the session management commands are way too long for my
+liking. Listing all sessions is &lt;code&gt;tmux list-sessions&lt;/code&gt;, attaching to a session
+&lt;code&gt;mysession&lt;/code&gt; is &lt;code&gt;tmux attach -t mysession&lt;/code&gt;, etc.&lt;/p&gt;
+
+&lt;p&gt;So I created a few functions and aliases, which can be found
+&lt;a href=&#34;https://github.com/rushiagr/myutils/blob/master/aliases/tmux.sh&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The general idea is, all commands start with &lt;code&gt;mx&lt;/code&gt;, which is basically a
+shortcut for &amp;lsquo;tMuX&amp;rsquo;. So &lt;code&gt;mxl&lt;/code&gt; is to &amp;lsquo;l&amp;rsquo;ist tmux sessions, &lt;code&gt;mxa&lt;/code&gt; is to &amp;lsquo;a&amp;rsquo;ttach
+to a tmux session, etc.&lt;/p&gt;
+
+&lt;p&gt;List all running tmux sessions&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@rushi:~$ mxl
+0: 4 windows (created Sun Jan 10 17:14:11 2016) [89x23] (attached)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can see one tmux session. Let&amp;rsquo;s create another tmux session with name
+&lt;code&gt;dev&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mx dev
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all sessions now&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@rushi:~$ mxl
+0: 4 windows (created Sun Jan 10 17:14:11 2016) [89x23] (attached)
+dev: 1 windows (created Sun Jan 10 17:59:30 2016) [89x23] (attached)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To attach to session with name &lt;code&gt;dev&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mxa dev
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can also omit session name, and it will attach to the last session you
+attached to.&lt;/p&gt;
+
+&lt;p&gt;If there was no session with name &lt;code&gt;dev2&lt;/code&gt;, and you type this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mxa dev2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It will automatically create a session for you and attach you to it.&lt;/p&gt;
+
+&lt;p&gt;To detach:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mxd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I find this &lt;code&gt;mxd&lt;/code&gt; to be easier to type than both &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;d&lt;/code&gt; and &lt;code&gt;tmux
+detach&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;installation:e0f68b4969c4b0e373b3bdfb560cffb9&#34;&gt;Installation&lt;/h3&gt;
+
+&lt;p&gt;You just need to copy the content in the above referenced link to &lt;code&gt;~/.bashrc&lt;/code&gt;
+file and from a new terminal session things will be ready for you to use :)&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Build VM Images using Diskimage-builder</title>
+      <link>http://www.rushiagr.com/personal/blog/2016/01/02/build-vm-image-using-diskimage-builder/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2016/01/02/build-vm-image-using-diskimage-builder/</guid>
+      <description>&lt;p&gt;OpenStack has this nice tool &lt;a href=&#34;https://github.com/openstack/diskimage-builder&#34;&gt;diskimage-builder&lt;/a&gt;to create virtual machine images without the need
+of a cloud. These vm images can then be uploaded to cloud (e.g. in Glance for
+OpenStack cloud), and they become immediately usable. You can also create VMs in
+virtualbox from these images (though I don&amp;rsquo;t remember exact steps to make the
+image work with VirtualBox. Do let me know if you get the VM working with
+VirtualBox/Vagrant)&lt;/p&gt;
+
+&lt;p&gt;Here I&amp;rsquo;ll describe ways to create a bare cloud-uploadable Ubuntu image. I will
+also provide information as to how to build an image which will have some
+packages pre-installed in them. Note that the commands here will create only
+one image file as opposed to three &amp;ndash; one each for ramdisk, kernel and machine image.&lt;/p&gt;
+
+&lt;p&gt;Prerequisites&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install qemu-utils
+git clone http://github.com/openstack/diskimage-builder
+cd diskimage-builder
+sudo pip install -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All the binaries are in bin filder. You can go in the &lt;code&gt;bin\&lt;/code&gt; directory to
+execute diskimage-builder commands, or add that directory to your &lt;code&gt;$PATH&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Create bare Ubuntu image, which you can directly upload to a cloud e.g.
+OpenStack.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;disk-image-create -a amd64 -o ubuntu-amd64 vm ubuntu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image generated will be of name &lt;code&gt;ubuntu-amd64.qcow2&lt;/code&gt;. Such an image will be for
+same OS version as your host Ubuntu version. If you want
+to build an image against a different OS version, specify
+&lt;code&gt;DIB_RELEASE=&amp;lt;releasename&amp;gt;&lt;/code&gt; as a prefix to the command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;DIB_RELEASE=trusty disk-image-create -a amd64 -o ubuntu-amd64 vm ubuntu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create an Ubuntu VM image which you can boot via KVM or VirtualBox/Vagrant.
+You will need to manually
+add public keys to authorized_keys for a user inside that VM.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;disk-image-create -o base -a amd64 vm base ubuntu cloud-init-nocloud
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create an image with &lt;code&gt;mysql-server&lt;/code&gt; and &lt;code&gt;tmux&lt;/code&gt; package (and their dependencies) installed inside the image:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;disk-image-create -a amd64 -o ubuntu-amd64 -p mysql-server,tmux vm ubuntu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;How to upload image to glance:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;glance image-create --name dib-ubuntu --disk-format=qcow2 --container-format=bare &amp;lt; img/ubuntu-amd64.qcow2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Where &lt;code&gt;ubuntu-amd64.qcow2&lt;/code&gt; is the image to upload.&lt;/p&gt;
+
+&lt;p&gt;Thanks!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Quick JustDial scraper</title>
+      <link>http://www.rushiagr.com/personal/blog/2015/09/14/quick-justdial-scraper/</link>
+      <pubDate>Mon, 14 Sep 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2015/09/14/quick-justdial-scraper/</guid>
+      <description>&lt;p&gt;So my friend asked me to scrape data from JustDial and give it to him in an excel sheet.
+I thought let&amp;rsquo;s give it a try. He needed
+name of firm, address and phone number of any JustDial URL he wants to scrape. After effectively
+around 4 hours of work, the below script was created.&lt;/p&gt;
+
+&lt;p&gt;Note that the script is dirty. You need to edit the jd_url to search any other URL. Also,
+the looping will go on forever, so you have to keep checking the file size of generated
+&amp;lsquo;data.csv&amp;rsquo; file, and when you&amp;rsquo;re sure it&amp;rsquo;s not increasing any more, kill the script by
+pressing CTRL+C. This script works as of today. Tomorrow it might not. Also, excuse
+stray comments/bad formatting of code. I&amp;rsquo;m not sure I want to clean it right now :)&lt;/p&gt;
+
+&lt;p&gt;Feel free to use/modify it the way you want.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# PIP requirements: requests, beautifulsoup4
+import requests
+from bs4 import BeautifulSoup
+import json
+import csv
+
+jd_url = &amp;quot;http://www.justdial.com/Bangalore/Car-Hire-%3Cnear%3E-Shanthinagar&amp;quot;
+
+# Split http/https prefix if any
+# TODO: work on URLs which dont&#39; have the CT part in URL
+jd_url = jd_url.split(&#39;http://www.justdial.com/&#39;)[-1].split(&#39;https://www.justdial.com/&#39;)[-1]
+city, search, cat_id = &#39;&#39;, &#39;&#39;, &#39;&#39;
+split_vals = jd_url.split(&#39;/&#39;)
+if len(split_vals) == 3:
+    city, search, cat_id = jd_url.split(&#39;/&#39;)
+    cat_id = cat_id.split(&#39;-&#39;)[-1]
+elif len(split_vals) == 2:
+    city, search = jd_url.split(&#39;/&#39;)
+search = search.replace(&#39;-&#39;, &#39;+&#39;)
+
+
+with open(&#39;data.csv&#39;, &#39;w&#39;) as f:
+    #writer = csv.writer(f, delimiter=&#39;,&#39;, quoting=csv.QUOTE_ALL, lineterminator=&#39;\n&#39;)
+
+    page = 1
+    while True:
+        print &#39;page&#39;, page
+        resp = requests.get(&#39;http://www.justdial.com&#39;+&#39;/functions/ajxsearch.php?national_search=0&amp;amp;act=pagination&amp;amp;city={0}&amp;amp;search={1}&amp;amp;where=&amp;amp;catid={2}&amp;amp;psearch=&amp;amp;prid=&amp;amp;page={3}&#39;.format(city, search, cat_id, page))
+        markup = resp.json()[&#39;markup&#39;].replace(&#39;\/&#39;, &#39;/&#39;)
+        soup = BeautifulSoup(markup, &#39;html.parser&#39;)
+
+
+        for thing in soup.find_all(&#39;section&#39;):
+            csv_list = []
+            if thing.get(&#39;class&#39;)==[u&#39;jcar&#39;]:
+                # Company name
+                for a_tag in thing.find_all(&#39;a&#39;):
+                    if a_tag.get(&#39;onclick&#39;)==&amp;quot;_ct(&#39;clntnm&#39;, &#39;lspg&#39;);&amp;quot;:
+                        csv_list.append(a_tag.get(&#39;title&#39;))
+
+                # Address
+                for span_tag in thing.find_all(&#39;span&#39;):
+                    if span_tag.get(&#39;class&#39;)==[u&#39;mrehover&#39;, u&#39;dn&#39;]:
+                        csv_list.append(span_tag.get_text().strip())
+
+                # Phone number
+                for a_tag in thing.find_all(&#39;a&#39;):
+                    if a_tag.get(&#39;href&#39;).startswith(&#39;tel:&#39;):
+                        csv_list.append(a_tag.get(&#39;href&#39;).split(&#39;:&#39;)[-1])
+
+
+                csv_list = [&#39;&amp;quot;&#39;+item+&#39;&amp;quot;&#39; for item in csv_list]
+                writeline = &#39;,&#39;.join(csv_list)+&#39;\n&#39;
+                f.write(&#39;,&#39;.join(csv_list)+&#39;\n&#39;)
+        page+=1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>OpenStack Keystone with Cassandra Database in DevStack</title>
+      <link>http://www.rushiagr.com/personal/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</link>
+      <pubDate>Thu, 10 Sep 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</guid>
+      <description>
+
+&lt;p&gt;Using Cassandra as backing database for OpenStack Keystone was our solution
+to multi-region deployment problem of OpenStack cloud. This blog post is not
+to discuss the problem. We are talking about how to have a development
+environment to play around with Keystone working with a dev Cassandra deployment.&lt;/p&gt;
+
+&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set:ac993324848a8aead891c139adf0f8b7&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
+
+&lt;p&gt;I&amp;rsquo;ve put together all commands into a script which can be found here:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;https://raw.githubusercontent.com/rushiagr/keystone-cassandra/master/keystone-cassandra.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you have a fresh Ubuntu VM, just copy this script into that machine and
+execute it. Give it 15-20 mins at least (depending upon your internet connection), and it will set up:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;DevStack with Keystone installed and running with all the data stored in/fetched from local Cassandra installation&lt;/li&gt;
+&lt;li&gt;A Cassandra development cluster (CCM) with 5 nodes and replication factor of 3&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Of course, you will need Internet access inside the VM. Also, give the VM around
+3GB of RAM, else things might not work properly. Actually, if you change the
+Cassandra configuration to one node instead of 5, probably 2 GB will suffice. But I&amp;rsquo;ve
+not tried it. (Let me know if you tried it and it works!)&lt;/p&gt;
+
+&lt;p&gt;Notes:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Remember, this is a dev cluster. It&amp;rsquo;s not supposed to be used in production. Hell, it&amp;rsquo;s not even ready for it.&lt;/li&gt;
+&lt;li&gt;Keystone is running on 127.0.0.1. I&amp;rsquo;ve done this so that it will work on any person&amp;rsquo;s VM&lt;/li&gt;
+&lt;li&gt;I&amp;rsquo;ve tested only on a Ubuntu Trusty VM, on Amazon EC2 m4.large instance which has 8 GB RAM. OpenStack on AWS &amp;ndash; ironic, isn&amp;rsquo;t it? :)&lt;/li&gt;
+&lt;li&gt;I&amp;rsquo;m using Java which comes with Ubuntu&amp;rsquo;s APT packages. In production one is supposed to use Oracle Java as per Cassandra folks.&lt;/li&gt;
+&lt;li&gt;The code for this script is located at &lt;code&gt;https://github.com/rushiagr/keystone/tree/liberty-cassandra&lt;/code&gt;, i.e. on &lt;code&gt;liberty-cassandra&lt;/code&gt; branch. Note that this work is currently based upon Keystone&amp;rsquo;s Liberty code as on first week of June. It might not work directly with latest code as it might require fixing imports which might have become outdated. However, I don&amp;rsquo;t think it&amp;rsquo;s going to take more than an hour to make it work with latest code; just that I don&amp;rsquo;t have enough motivation right now to keep the code updated with &amp;lsquo;latest&amp;rsquo; all the time.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;credits:ac993324848a8aead891c139adf0f8b7&#34;&gt;Credits&lt;/h4&gt;
+
+&lt;p&gt;This work was done by the &amp;lsquo;distributed database&amp;rsquo; team of 4 people: Ajaya Agrawal, Rushi Agrawal (me), Vivek Dhayaal and Yogeshwar Shenoy, listed in alphabetical order. And obviously Reliance, for providing us an opportunity to work on this thing.&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Apache mod_wsgi parallelization notes</title>
+      <link>http://www.rushiagr.com/personal/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</link>
+      <pubDate>Fri, 24 Jul 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</guid>
+      <description>
+
+&lt;p&gt;This is my notes on
+&lt;a href=&#34;https://code.google.com/p/modwsgi/wiki/ProcessesAndThreading&#34;&gt;&amp;lsquo;Processes and Threading&amp;rsquo;&lt;/a&gt;
+doc by the author of mod_wsgi module of Apache. This blog post just serves as a &amp;lsquo;quick refresher&amp;rsquo;, and
+is only useful if you have read the original document but it&amp;rsquo;s been too long since you
+read it :)&lt;/p&gt;
+
+&lt;h2 id=&#34;apache-with-mod-wsgi:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Apache with mod_wsgi&lt;/h2&gt;
+
+&lt;p&gt;A Python application can run with multiple processes as well as multiple threads
+with mod_wsgi.&lt;/p&gt;
+
+&lt;h3 id=&#34;prefork-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Prefork multiprocessing module&lt;/h3&gt;
+
+&lt;p&gt;Apache creates multiple processes, and each request is handled by one process.
+A process only handles one request at a time.
+This means, if you have set number of processes to 1, there will be only one
+request handeled at a time overall.&lt;/p&gt;
+
+&lt;h3 id=&#34;worker-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Worker multiprocessing module&lt;/h3&gt;
+
+&lt;p&gt;Multiple processes, and multiple threads in each processa.
+Even if a process is handling a request, another thread in the same process
+can handle one more request.
+You might need some synchronization primitive to make sure multiple threads
+of same process don&amp;rsquo;t corrupt shared memory (only occurs when shared memory
+is mutated)&lt;/p&gt;
+
+&lt;h3 id=&#34;but-gil:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;But GIL?&lt;/h3&gt;
+
+&lt;p&gt;Python GIL problem is largely alleviated with mod_wsgi since multiple processes
+can handle requests, and GIL has impact ranging to only one process. One more
+point to note is that the apache code which maps a URL/request to a wsgi application,
+and the code which maps static file URLs to actual static files to serve is
+written in C, and is free from GIL.&lt;/p&gt;
+
+&lt;p&gt;In the wsgi python code, two environment variables: &amp;lsquo;wsgi.multithread&amp;rsquo; and
+&amp;lsquo;wsgi.multiprocess&amp;rsquo; will define which of the above two modules are going to be
+used.&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

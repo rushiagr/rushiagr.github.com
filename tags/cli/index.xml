@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/tags/cli/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2016 Rushi Agrawal</copyright>
+    <updated>Sat, 02 Jan 2016 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Better AWS Command Line Interface</title>
+      <link>http://www.rushiagr.com/blog/2016/01/02/better-aws-command-line-interface/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2016/01/02/better-aws-command-line-interface/</guid>
+      <description>
+
+&lt;p&gt;When I first tried to use the AWS CLIs provided by Amazon, I found them not so
+human-friendly. Sure, maybe they&amp;rsquo;re good for automating stuff, but if you just
+want to view the public IP of a virtual machine, and the CLI throws this on
+your screen for just one VM instance, you&amp;rsquo;re likely not going to be impressed:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@rushi:~$ aws ec2 describe-instances
+{
+    &amp;quot;Reservations&amp;quot;: [
+        {
+            &amp;quot;OwnerId&amp;quot;: &amp;quot;123456789012&amp;quot;,
+            &amp;quot;ReservationId&amp;quot;: &amp;quot;r-abcd1234&amp;quot;,
+            &amp;quot;Groups&amp;quot;: [],
+            &amp;quot;Instances&amp;quot;: [
+                {
+                    &amp;quot;Monitoring&amp;quot;: {
+                        &amp;quot;State&amp;quot;: &amp;quot;disabled&amp;quot;
+                    },
+                    &amp;quot;PublicDnsName&amp;quot;: &amp;quot;ec2-52-52-52-52.ap-southeast-1.compute.amazonaws.com&amp;quot;,
+                    &amp;quot;State&amp;quot;: {
+                        &amp;quot;Code&amp;quot;: 16,
+                        &amp;quot;Name&amp;quot;: &amp;quot;running&amp;quot;
+                    },
+                    &amp;quot;EbsOptimized&amp;quot;: false,
+                    &amp;quot;LaunchTime&amp;quot;: &amp;quot;2015-12-31T12:59:59.000Z&amp;quot;,
+                    &amp;quot;PublicIpAddress&amp;quot;: &amp;quot;52.52.52.52&amp;quot;,
+                    &amp;quot;PrivateIpAddress&amp;quot;: &amp;quot;172.31.31.31&amp;quot;,
+                    &amp;quot;ProductCodes&amp;quot;: [],
+                    &amp;quot;VpcId&amp;quot;: &amp;quot;vpc-1234abcd&amp;quot;,
+                    &amp;quot;StateTransitionReason&amp;quot;: &amp;quot;&amp;quot;,
+                    &amp;quot;InstanceId&amp;quot;: &amp;quot;i-1234abcd&amp;quot;,
+                    &amp;quot;ImageId&amp;quot;: &amp;quot;ami-1234abcd&amp;quot;,
+                    &amp;quot;PrivateDnsName&amp;quot;: &amp;quot;ip-172-31-31-31.ap-southeast-1.compute.internal&amp;quot;,
+                    &amp;quot;KeyName&amp;quot;: &amp;quot;mykey&amp;quot;,
+                    &amp;quot;SecurityGroups&amp;quot;: [
+                        {
+                            &amp;quot;GroupName&amp;quot;: &amp;quot;rushi-sg&amp;quot;,
+                            &amp;quot;GroupId&amp;quot;: &amp;quot;sg-abcd1234&amp;quot;
+                        }
+                    ],
+                    &amp;quot;ClientToken&amp;quot;: &amp;quot;&amp;quot;,
+                    &amp;quot;SubnetId&amp;quot;: &amp;quot;subnet-abcd1234&amp;quot;,
+                    &amp;quot;InstanceType&amp;quot;: &amp;quot;t2.micro&amp;quot;,
+                    &amp;quot;NetworkInterfaces&amp;quot;: [
+                        {
+                            &amp;quot;Status&amp;quot;: &amp;quot;in-use&amp;quot;,
+                            &amp;quot;MacAddress&amp;quot;: &amp;quot;06:f3:82:a1:fb:c5&amp;quot;,
+                            &amp;quot;SourceDestCheck&amp;quot;: true,
+                            &amp;quot;VpcId&amp;quot;: &amp;quot;vpc-abcd1234&amp;quot;,
+                            &amp;quot;Description&amp;quot;: &amp;quot;&amp;quot;,
+                            &amp;quot;Association&amp;quot;: {
+                                &amp;quot;PublicIp&amp;quot;: &amp;quot;52.52.52.52&amp;quot;,
+                                &amp;quot;PublicDnsName&amp;quot;: &amp;quot;ec2-52-52-52-52.ap-southeast-1.compute.amazonaws.com&amp;quot;,
+                                &amp;quot;IpOwnerId&amp;quot;: &amp;quot;amazon&amp;quot;
+                            },
+                            &amp;quot;NetworkInterfaceId&amp;quot;: &amp;quot;eni-abcd1234&amp;quot;,
+                            &amp;quot;PrivateIpAddresses&amp;quot;: [
+                                {
+                                    &amp;quot;PrivateDnsName&amp;quot;: &amp;quot;ip-172-31-31-32.ap-southeast-1.compute.internal&amp;quot;,
+                                    &amp;quot;Association&amp;quot;: {
+                                        &amp;quot;PublicIp&amp;quot;: &amp;quot;52.52.52.52&amp;quot;,
+                                        &amp;quot;PublicDnsName&amp;quot;: &amp;quot;ec2-52-52-52-52.ap-southeast-1.compute.amazonaws.com&amp;quot;,
+                                        &amp;quot;IpOwnerId&amp;quot;: &amp;quot;amazon&amp;quot;
+                                    },
+                                    &amp;quot;Primary&amp;quot;: true,
+                                    &amp;quot;PrivateIpAddress&amp;quot;: &amp;quot;172.31.31.31&amp;quot;
+                                }
+                            ],
+                            &amp;quot;PrivateDnsName&amp;quot;: &amp;quot;ip-172-31-31-31.ap-southeast-1.compute.internal&amp;quot;,
+                            &amp;quot;Attachment&amp;quot;: {
+                                &amp;quot;Status&amp;quot;: &amp;quot;attached&amp;quot;,
+                                &amp;quot;DeviceIndex&amp;quot;: 0,
+                                &amp;quot;DeleteOnTermination&amp;quot;: true,
+                                &amp;quot;AttachmentId&amp;quot;: &amp;quot;eni-attach-abcd1234&amp;quot;,
+                                &amp;quot;AttachTime&amp;quot;: &amp;quot;2015-12-31T12:59:59.000Z&amp;quot;
+                            },
+                            &amp;quot;Groups&amp;quot;: [
+                                {
+                                    &amp;quot;GroupName&amp;quot;: &amp;quot;mygroup&amp;quot;,
+                                    &amp;quot;GroupId&amp;quot;: &amp;quot;sg-abcd1234&amp;quot;
+                                }
+                            ],
+                            &amp;quot;SubnetId&amp;quot;: &amp;quot;subnet-abcd1234&amp;quot;,
+                            &amp;quot;OwnerId&amp;quot;: &amp;quot;123456789012&amp;quot;,
+                            &amp;quot;PrivateIpAddress&amp;quot;: &amp;quot;172.31.31.31&amp;quot;
+                        }
+                    ],
+                    &amp;quot;SourceDestCheck&amp;quot;: true,
+                    &amp;quot;Placement&amp;quot;: {
+                        &amp;quot;Tenancy&amp;quot;: &amp;quot;default&amp;quot;,
+                        &amp;quot;GroupName&amp;quot;: &amp;quot;&amp;quot;,
+                        &amp;quot;AvailabilityZone&amp;quot;: &amp;quot;ap-southeast-1a&amp;quot;
+                    },
+                    &amp;quot;Hypervisor&amp;quot;: &amp;quot;xen&amp;quot;,
+                    &amp;quot;BlockDeviceMappings&amp;quot;: [
+                        {
+                            &amp;quot;DeviceName&amp;quot;: &amp;quot;/dev/sda1&amp;quot;,
+                            &amp;quot;Ebs&amp;quot;: {
+                                &amp;quot;Status&amp;quot;: &amp;quot;attached&amp;quot;,
+                                &amp;quot;DeleteOnTermination&amp;quot;: true,
+                                &amp;quot;VolumeId&amp;quot;: &amp;quot;vol-abcd1234&amp;quot;,
+                                &amp;quot;AttachTime&amp;quot;: &amp;quot;2015-12-31T12:59:59.000Z&amp;quot;
+                            }
+                        }
+                    ],
+                    &amp;quot;Architecture&amp;quot;: &amp;quot;x86_64&amp;quot;,
+                    &amp;quot;RootDeviceType&amp;quot;: &amp;quot;ebs&amp;quot;,
+                    &amp;quot;RootDeviceName&amp;quot;: &amp;quot;/dev/sda1&amp;quot;,
+                    &amp;quot;VirtualizationType&amp;quot;: &amp;quot;hvm&amp;quot;,
+                    &amp;quot;Tags&amp;quot;: [
+                        {
+                            &amp;quot;Value&amp;quot;: &amp;quot;rushi some VM&amp;quot;,
+                            &amp;quot;Key&amp;quot;: &amp;quot;Name&amp;quot;
+                        }
+                    ],
+                    &amp;quot;AmiLaunchIndex&amp;quot;: 0
+                }
+            ]
+        },
+    ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The only things I&amp;rsquo;m interested in, after creating a VM is to see it&amp;rsquo;s public
+IP, it&amp;rsquo;s flavor, volume size, and instance name. The JSON output which it
+throws on my face makes viewing that basic information much harder.&lt;/p&gt;
+
+&lt;p&gt;Fortunately, I am a programmer. So I wrote a simple CLI: &lt;code&gt;lsvm&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@rushi:~$ lsvm -h
+lsvm [-h] [-s] [&amp;lt;name&amp;gt;]
+    -h      Prints helptext and exits
+    -s      Prints sizes of VM disks in GB, starting with root disk
+    &amp;lt;name&amp;gt;  Only prints VM whose name contains &#39;&amp;lt;name&amp;gt;&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Installing the CLI is simple. Just run this command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo sh -c &amp;quot;$(wget -q https://raw.githubusercontent.com/rushiagr/public/master/scripts/simplest-aws-cli.sh -O -)&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ensure that you have internet connection before running this command, and also
+make sure that your computer can run &lt;code&gt;pip&lt;/code&gt; commands. Keep your access and
+secret key handy.&lt;/p&gt;
+
+&lt;h3 id=&#34;list-all-the-vm-instances:a9c5ded79a164e4b6c02d02a570b1d97&#34;&gt;List all the VM instances&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;r@rushi:~$ lsvm
+    ID              Name           Status   Flavor        IP      Vols
+i-abcd1234     rushi dev m/c      running  t2.micro 52.12.123.123  1
+i-abcd1233   rushi pkg builder    running  t2.micro 52.12.123.122  1
+i-abcd1232 rushi vanilla devstack running  t2.large 54.12.123.121  1
+i-abcd1231  rushi dbaas devstack  running m4.xlarge 52.12.123.120  1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all VMs whose name contains word &amp;lsquo;devstack&amp;rsquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@rushi:~$ lsvm
+    ID              Name           Status   Flavor        IP      Vols
+i-abcd1232 rushi vanilla devstack running  t2.large 54.12.123.121  1
+i-abcd1231  rushi dbaas devstack  running m4.xlarge 52.12.123.120  1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Show sizes of volumes of instances:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@rushi:~$ lsvm  -s
+    ID                   Name               Status   Flavor        IP       Vols(GB)
+i-abcd1234          rushi dev m/c          running  t2.micro 52.12.123.123    [8]
+i-abcd1233        rushi pkg builder        running  t2.micro 52.12.123.122    [8]
+i-abcd1232      rushi vanilla devstack     running  t2.large 54.12.123.121    [50]
+i-abcd1231       rushi dbaas devstack      running m4.xlarge 52.12.123.120    [50]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;creating-vm-instance:a9c5ded79a164e4b6c02d02a570b1d97&#34;&gt;Creating VM instance&lt;/h3&gt;
+
+&lt;p&gt;Creating a VM instance is tough too, with AWS CLI, so I made another command
+&lt;code&gt;mkvm&lt;/code&gt; (installed already with the previous script) which is very intuitive for human use. It asks for information in a
+step-by-step manner - exactly the way a human sitting in front of a computer should be
+treated with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@rushi:~$ mkvm
+Only Ubuntu image supported as of now
+Available flavors: [&#39;t1.micro&#39;, &#39;m1.small&#39;, &#39;m1.medium&#39;, &#39;m1.large&#39;, &#39;m1.xlarge&#39;, &#39;m3.medium&#39;, &#39;m3.large&#39;, &#39;m3.xlarge&#39;, &#39;m3.2xlarge&#39;, &#39;m4.large&#39;, &#39;m4.xlarge&#39;, &#39;m4.2xlarge&#39;, &#39;m4.4xlarge&#39;, &#39;m4.10xlarge&#39;, &#39;t2.micro&#39;, &#39;t2.small&#39;, &#39;t2.medium&#39;, &#39;t2.large&#39;, &#39;m2.xlarge&#39;, &#39;m2.2xlarge&#39;, &#39;m2.4xlarge&#39;, &#39;cr1.8xlarge&#39;, &#39;i2.xlarge&#39;, &#39;i2.2xlarge&#39;, &#39;i2.4xlarge&#39;, &#39;i2.8xlarge&#39;, &#39;hi1.4xlarge&#39;, &#39;hs1.8xlarge&#39;, &#39;c1.medium&#39;, &#39;c1.xlarge&#39;, &#39;c3.large&#39;, &#39;c3.xlarge&#39;, &#39;c3.2xlarge&#39;, &#39;c3.4xlarge&#39;, &#39;c3.8xlarge&#39;, &#39;c4.large&#39;, &#39;c4.xlarge&#39;, &#39;c4.2xlarge&#39;, &#39;c4.4xlarge&#39;, &#39;c4.8xlarge&#39;, &#39;cc1.4xlarge&#39;, &#39;cc2.8xlarge&#39;, &#39;g2.2xlarge&#39;, &#39;cg1.4xlarge&#39;, &#39;r3.large&#39;, &#39;r3.xlarge&#39;, &#39;r3.2xlarge&#39;, &#39;r3.4xlarge&#39;, &#39;r3.8xlarge&#39;, &#39;d2.xlarge&#39;, &#39;d2.2xlarge&#39;, &#39;d2.4xlarge&#39;, &#39;d2.8xlarge&#39;]
+Select flavor [&#39;l&#39; to list]: t2.micro
+Available key pairs: [&#39;rushi-kp-1&#39;, &#39;prod-keypair&#39;, &#39;test-keypair&#39;]
+Select keypair: rushi-kp-1
+Available security groups: [&#39;Rushi SecGroup&#39;, &#39;openToAll&#39;, &#39;Rushi SG&#39;, &#39;Rushi Devstack SG&#39;]
+Select security group. None to create new one: Rushi SecGroup
+Enter root volume size in GBs: 8
+r@rushi:~$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;ending-notes:a9c5ded79a164e4b6c02d02a570b1d97&#34;&gt;Ending notes&lt;/h3&gt;
+
+&lt;p&gt;The AWS CLI was created maybe to help automation, but they&amp;rsquo;re not quite
+suitable for human use. Here is my attempt to show to the world how the things
+could be made easier for human consumption. I use these commands quite a lot
+when I want to quickly create a VM, or want to get information about already
+created VMs. Logging in into the console is way too slow for my liking.&lt;/p&gt;
+
+&lt;p&gt;Just to recap:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;The commands are shorter, so you have to type less&lt;/li&gt;
+&lt;li&gt;The output is concise - only important information is included&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mkvm&lt;/code&gt; provides you with information which you&amp;rsquo;ll require while creating the
+instances, e.g. security group names, etc.&lt;/li&gt;
+&lt;li&gt;Nowhere do you need to specify (hexadecimal) IDs while creating VMs&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I just spent a few hours over the weekend to get this working. So obviously
+the code is going to have rough edges, frowned-upon software practices, and a
+lot of unhandled edge cases. I&amp;rsquo;ll be pretty excited if you want to help wit
+the idea! I&amp;rsquo;ve created a repository at
+&lt;a href=&#34;http://github.com/rushiagr/aclih&#34;&gt;http://github.com/rushiagr/aclih&lt;/a&gt; where
+please feel free to submit pull requests or issues. Interested in writing
+&amp;lsquo;rmvm&amp;rsquo; to delete VM anyone? :)&lt;/p&gt;
+
+&lt;p&gt;Thank you :)&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Better way to view MySQL tables</title>
+      <link>http://www.rushiagr.com/blog/2015/12/12/better-way-to-view-mysql-tables/</link>
+      <pubDate>Sat, 12 Dec 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2015/12/12/better-way-to-view-mysql-tables/</guid>
+      <description>
+
+&lt;h3 id=&#34;the-problem:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;The problem&lt;/h3&gt;
+
+&lt;p&gt;You are trying to print a MySQL table with a large number of columns, with
+&lt;code&gt;SELECT *&lt;/code&gt; command. You type &lt;code&gt;SELECT * FROM mysql.user LIMIT 1&lt;/code&gt;, and your terminal
+becomes &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-table-with-many-rows-messy.png&#34;&gt;this&lt;/a&gt;.
+If you wanted to view more than one row, you&amp;rsquo;re in a trouble :)&lt;/p&gt;
+
+&lt;h3 id=&#34;the-solution:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;The solution&lt;/h3&gt;
+
+&lt;p&gt;Run MySQL with this option:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql --pager=&amp;quot;less --chop-long-lines --quit-if-one-screen --no-init&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will make your table display only the rows it can in the current screen, something like &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-with-less-pager-neat.png&#34;&gt;this&lt;/a&gt;. You can
+use the arrow keys to move sideways to view the hidden column. Pressing the &amp;lsquo;right&amp;rsquo; arrow key will move half page towards right. Neat, isn&amp;rsquo;t it?&lt;/p&gt;
+
+&lt;p&gt;You can create an alias for mysql:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Using shorter version of &#39;less&#39; flags mentioned above
+alias mysql=&#39;mysql -SFX&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can put the above line in your &lt;code&gt;~/.bashrc&lt;/code&gt; file to load this alias
+in every new terminal session.&lt;/p&gt;
+
+&lt;h3 id=&#34;bonus-point-for-vim-users:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;Bonus point for Vim users&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;less&lt;/code&gt; allows using keys &lt;code&gt;j&lt;/code&gt; and &lt;code&gt;k&lt;/code&gt; for scrolling down and scrolling up. Unfortunately, you cannot directly use keys &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move sideways using &lt;code&gt;less&lt;/code&gt;. Fortunately, you can map &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move left or right, respectively. Here&amp;rsquo;s how to do that:&lt;/p&gt;
+
+&lt;p&gt;Create a file &lt;code&gt;.lesskey&lt;/code&gt; in your home directory, with the following contents&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;l noaction 10\e)
+h noaction 10\e)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now run this command, to generate &lt;code&gt;~/.less&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;lesskey
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will generate a binary file which &lt;code&gt;less&lt;/code&gt; understands. If you now start a new MySQL terminal session (of course with the above said &lt;code&gt;--pages&lt;/code&gt; flag), you can use Vim&amp;rsquo;s &lt;code&gt;HJKL&lt;/code&gt; movements. Here I have specified to move 10 characters to the right if you make one &amp;lsquo;right&amp;rsquo; Vim movement.&lt;/p&gt;
+
+&lt;h3 id=&#34;quick-setup-script:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;Quick setup script&lt;/h3&gt;
+
+&lt;p&gt;Don&amp;rsquo;t want to do the above stuff manually? Just run this command and your computer will be set up in a second!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sh -c &amp;quot;$(wget -q https://raw.githubusercontent.com/rushiagr/public/master/scripts/mysql-pretty-table.sh -O -)&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that changes will take effect from a new shell session (or you can run &lt;code&gt;source ~/.bashrc&lt;/code&gt; if you want things to work in the current session too.&lt;/p&gt;
+
+&lt;h3 id=&#34;more-information:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;More information&lt;/h3&gt;
+
+&lt;p&gt;Find more information at below links:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://unix.stackexchange.com/a/169969/91602&#34;&gt;About mapping &amp;lsquo;h&amp;rsquo; and &amp;lsquo;k&amp;rsquo; to Vim movements in &amp;lsquo;less&amp;rsquo;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/a/6422698/1143173&#34;&gt;About using &amp;lsquo;less&amp;rsquo; as MySQL pager&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

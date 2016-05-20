@@ -1,0 +1,1975 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/personal/tags/cloud/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2016 Rushi Agrawal</copyright>
+    <updated>Sat, 02 Jan 2016 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Build VM Images using Diskimage-builder</title>
+      <link>http://www.rushiagr.com/personal/blog/2016/01/02/build-vm-image-using-diskimage-builder/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2016/01/02/build-vm-image-using-diskimage-builder/</guid>
+      <description>&lt;p&gt;OpenStack has this nice tool &lt;a href=&#34;https://github.com/openstack/diskimage-builder&#34;&gt;diskimage-builder&lt;/a&gt;to create virtual machine images without the need
+of a cloud. These vm images can then be uploaded to cloud (e.g. in Glance for
+OpenStack cloud), and they become immediately usable. You can also create VMs in
+virtualbox from these images (though I don&amp;rsquo;t remember exact steps to make the
+image work with VirtualBox. Do let me know if you get the VM working with
+VirtualBox/Vagrant)&lt;/p&gt;
+
+&lt;p&gt;Here I&amp;rsquo;ll describe ways to create a bare cloud-uploadable Ubuntu image. I will
+also provide information as to how to build an image which will have some
+packages pre-installed in them. Note that the commands here will create only
+one image file as opposed to three &amp;ndash; one each for ramdisk, kernel and machine image.&lt;/p&gt;
+
+&lt;p&gt;Prerequisites&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install qemu-utils
+git clone http://github.com/openstack/diskimage-builder
+cd diskimage-builder
+sudo pip install -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All the binaries are in bin filder. You can go in the &lt;code&gt;bin\&lt;/code&gt; directory to
+execute diskimage-builder commands, or add that directory to your &lt;code&gt;$PATH&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Create bare Ubuntu image, which you can directly upload to a cloud e.g.
+OpenStack.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;disk-image-create -a amd64 -o ubuntu-amd64 vm ubuntu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image generated will be of name &lt;code&gt;ubuntu-amd64.qcow2&lt;/code&gt;. Such an image will be for
+same OS version as your host Ubuntu version. If you want
+to build an image against a different OS version, specify
+&lt;code&gt;DIB_RELEASE=&amp;lt;releasename&amp;gt;&lt;/code&gt; as a prefix to the command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;DIB_RELEASE=trusty disk-image-create -a amd64 -o ubuntu-amd64 vm ubuntu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create an Ubuntu VM image which you can boot via KVM or VirtualBox/Vagrant.
+You will need to manually
+add public keys to authorized_keys for a user inside that VM.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;disk-image-create -o base -a amd64 vm base ubuntu cloud-init-nocloud
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create an image with &lt;code&gt;mysql-server&lt;/code&gt; and &lt;code&gt;tmux&lt;/code&gt; package (and their dependencies) installed inside the image:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;disk-image-create -a amd64 -o ubuntu-amd64 -p mysql-server,tmux vm ubuntu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;How to upload image to glance:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;glance image-create --name dib-ubuntu --disk-format=qcow2 --container-format=bare &amp;lt; img/ubuntu-amd64.qcow2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Where &lt;code&gt;ubuntu-amd64.qcow2&lt;/code&gt; is the image to upload.&lt;/p&gt;
+
+&lt;p&gt;Thanks!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>OpenStack Keystone with Cassandra Database in DevStack</title>
+      <link>http://www.rushiagr.com/personal/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</link>
+      <pubDate>Thu, 10 Sep 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</guid>
+      <description>
+
+&lt;p&gt;Using Cassandra as backing database for OpenStack Keystone was our solution
+to multi-region deployment problem of OpenStack cloud. This blog post is not
+to discuss the problem. We are talking about how to have a development
+environment to play around with Keystone working with a dev Cassandra deployment.&lt;/p&gt;
+
+&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set:ac993324848a8aead891c139adf0f8b7&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
+
+&lt;p&gt;I&amp;rsquo;ve put together all commands into a script which can be found here:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;https://raw.githubusercontent.com/rushiagr/keystone-cassandra/master/keystone-cassandra.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you have a fresh Ubuntu VM, just copy this script into that machine and
+execute it. Give it 15-20 mins at least (depending upon your internet connection), and it will set up:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;DevStack with Keystone installed and running with all the data stored in/fetched from local Cassandra installation&lt;/li&gt;
+&lt;li&gt;A Cassandra development cluster (CCM) with 5 nodes and replication factor of 3&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Of course, you will need Internet access inside the VM. Also, give the VM around
+3GB of RAM, else things might not work properly. Actually, if you change the
+Cassandra configuration to one node instead of 5, probably 2 GB will suffice. But I&amp;rsquo;ve
+not tried it. (Let me know if you tried it and it works!)&lt;/p&gt;
+
+&lt;p&gt;Notes:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Remember, this is a dev cluster. It&amp;rsquo;s not supposed to be used in production. Hell, it&amp;rsquo;s not even ready for it.&lt;/li&gt;
+&lt;li&gt;Keystone is running on 127.0.0.1. I&amp;rsquo;ve done this so that it will work on any person&amp;rsquo;s VM&lt;/li&gt;
+&lt;li&gt;I&amp;rsquo;ve tested only on a Ubuntu Trusty VM, on Amazon EC2 m4.large instance which has 8 GB RAM. OpenStack on AWS &amp;ndash; ironic, isn&amp;rsquo;t it? :)&lt;/li&gt;
+&lt;li&gt;I&amp;rsquo;m using Java which comes with Ubuntu&amp;rsquo;s APT packages. In production one is supposed to use Oracle Java as per Cassandra folks.&lt;/li&gt;
+&lt;li&gt;The code for this script is located at &lt;code&gt;https://github.com/rushiagr/keystone/tree/liberty-cassandra&lt;/code&gt;, i.e. on &lt;code&gt;liberty-cassandra&lt;/code&gt; branch. Note that this work is currently based upon Keystone&amp;rsquo;s Liberty code as on first week of June. It might not work directly with latest code as it might require fixing imports which might have become outdated. However, I don&amp;rsquo;t think it&amp;rsquo;s going to take more than an hour to make it work with latest code; just that I don&amp;rsquo;t have enough motivation right now to keep the code updated with &amp;lsquo;latest&amp;rsquo; all the time.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;credits:ac993324848a8aead891c139adf0f8b7&#34;&gt;Credits&lt;/h4&gt;
+
+&lt;p&gt;This work was done by the &amp;lsquo;distributed database&amp;rsquo; team of 4 people: Ajaya Agrawal, Rushi Agrawal (me), Vivek Dhayaal and Yogeshwar Shenoy, listed in alphabetical order. And obviously Reliance, for providing us an opportunity to work on this thing.&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Apache mod_wsgi parallelization notes</title>
+      <link>http://www.rushiagr.com/personal/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</link>
+      <pubDate>Fri, 24 Jul 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</guid>
+      <description>
+
+&lt;p&gt;This is my notes on
+&lt;a href=&#34;https://code.google.com/p/modwsgi/wiki/ProcessesAndThreading&#34;&gt;&amp;lsquo;Processes and Threading&amp;rsquo;&lt;/a&gt;
+doc by the author of mod_wsgi module of Apache. This blog post just serves as a &amp;lsquo;quick refresher&amp;rsquo;, and
+is only useful if you have read the original document but it&amp;rsquo;s been too long since you
+read it :)&lt;/p&gt;
+
+&lt;h2 id=&#34;apache-with-mod-wsgi:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Apache with mod_wsgi&lt;/h2&gt;
+
+&lt;p&gt;A Python application can run with multiple processes as well as multiple threads
+with mod_wsgi.&lt;/p&gt;
+
+&lt;h3 id=&#34;prefork-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Prefork multiprocessing module&lt;/h3&gt;
+
+&lt;p&gt;Apache creates multiple processes, and each request is handled by one process.
+A process only handles one request at a time.
+This means, if you have set number of processes to 1, there will be only one
+request handeled at a time overall.&lt;/p&gt;
+
+&lt;h3 id=&#34;worker-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Worker multiprocessing module&lt;/h3&gt;
+
+&lt;p&gt;Multiple processes, and multiple threads in each processa.
+Even if a process is handling a request, another thread in the same process
+can handle one more request.
+You might need some synchronization primitive to make sure multiple threads
+of same process don&amp;rsquo;t corrupt shared memory (only occurs when shared memory
+is mutated)&lt;/p&gt;
+
+&lt;h3 id=&#34;but-gil:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;But GIL?&lt;/h3&gt;
+
+&lt;p&gt;Python GIL problem is largely alleviated with mod_wsgi since multiple processes
+can handle requests, and GIL has impact ranging to only one process. One more
+point to note is that the apache code which maps a URL/request to a wsgi application,
+and the code which maps static file URLs to actual static files to serve is
+written in C, and is free from GIL.&lt;/p&gt;
+
+&lt;p&gt;In the wsgi python code, two environment variables: &amp;lsquo;wsgi.multithread&amp;rsquo; and
+&amp;lsquo;wsgi.multiprocess&amp;rsquo; will define which of the above two modules are going to be
+used.&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Docker quick start notes</title>
+      <link>http://www.rushiagr.com/personal/blog/2015/06/07/docker-quick-start-notes/</link>
+      <pubDate>Sun, 07 Jun 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2015/06/07/docker-quick-start-notes/</guid>
+      <description>
+
+&lt;p&gt;After reading about docker and containers, I thought let&amp;rsquo;s try them out.
+Here are my notes. Obviously all of them are taken from Internet. Maybe this
+collection here will help someone start with docker faster than spending time
+searching all over the internet.&lt;/p&gt;
+
+&lt;p&gt;It assumes your base OS is Ubuntu 14.04 Trusty Tahr (when was the last time
+you saw the codename spelled &amp;lsquo;Trusty Tahr&amp;rsquo; and not &amp;lsquo;Trusty&amp;rsquo;? :) ).&lt;/p&gt;
+
+&lt;p&gt;Install docker&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install docker.io
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;See docker version&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker version
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Pull an Ubuntu Trusty docker image&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker pull ubuntu:14.04
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Alternatively, you can search for a docker image &amp;lsquo;tutorial&amp;rsquo; in docker&amp;rsquo;s repository&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker search tutorial
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And them pull a docker image &amp;lsquo;tutorial&amp;rsquo; by user &amp;lsquo;learn&amp;rsquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker pull learn/tutorial
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all docker images present in the system&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker images
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run a docker image, and execute command &amp;lsquo;echo &amp;ldquo;hello world&amp;rdquo;&amp;rsquo; in the docker
+container created out of that image&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker run ubuntu:14.04 echo &amp;quot;hello world&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Container information is stored in /var/lib/docker&lt;/p&gt;
+
+&lt;p&gt;If you run the above command multiple times, it will create a new container
+each time.&lt;/p&gt;
+
+&lt;p&gt;To know the ID of the last container, run&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker ps -l
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To list all the running containers&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker ps
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that the above command will not show the container we last run, because
+the container which we ran last time terminated just after it finished
+executing echo command.&lt;/p&gt;
+
+&lt;p&gt;Create a new docker image by name &lt;code&gt;&amp;lt;yourname&amp;gt;/echo&lt;/code&gt; by &amp;lsquo;committing&amp;rsquo; the last
+container which you ran&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker commit &amp;lt;container ID&amp;gt; &amp;lt;yourname&amp;gt;/echo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now running &lt;code&gt;sudo docker images&lt;/code&gt; will list you two containers instead of one&lt;/p&gt;
+
+&lt;p&gt;Now you can run this new docker container like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker run &amp;lt;yourname&amp;gt;/echo ls -alrth
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If we installed something, or created a file in the old container, it will
+be visible now in this container too.&lt;/p&gt;
+
+&lt;p&gt;Get more information about a docker image or a running container:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker inspect &amp;lt;yourname&amp;gt;/echo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To push docker image to docker repository&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker push &amp;lt;yourname&amp;gt;/echo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To download ubuntu Trusty base image if not present locally, and open a shell session into it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker run -t -i ubuntu:14.04 /bin/bash
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;-i i.e. &amp;ndash;interactive=false, keeps STDIN open even if not attached&lt;/p&gt;
+
+&lt;p&gt;-t i.e. &amp;ndash;tty=false allocates a pseudo tty&lt;/p&gt;
+
+&lt;p&gt;Don&amp;rsquo;t worry what these mean. If you add these options, you&amp;rsquo;ll see that
+you already get logged in into the container shell, and the container
+only dies off once you exit from that session (usually by writing &lt;code&gt;exit&lt;/code&gt;
+or pressing CTRL + D.&lt;/p&gt;
+
+&lt;p&gt;To remove an image:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo docker rmi learn/tutorial
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;things-not-covered-in-this-tutorial:49285dca7b53d383ade641738736c634&#34;&gt;Things not covered in this tutorial:&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Create your own custom docker images and share with other people:
+&lt;a href=&#34;https://docs.docker.com/userguide/dockerimages/&#34;&gt;https://docs.docker.com/userguide/dockerimages/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>OpenStack Unit Testing Nuggets</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/09/05/openstack-unit-testing-nuggets/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/09/05/openstack-unit-testing-nuggets/</guid>
+      <description>
+
+&lt;p&gt;A small post about little things I found out while running unit tests in
+OpenStack.&lt;/p&gt;
+
+&lt;h2 id=&#34;unit-testing-setup:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Unit-testing setup&lt;/h2&gt;
+
+&lt;p&gt;Everybody knows &lt;code&gt;./run_tests.sh&lt;/code&gt; is used to run the unit tests of an OpenStack
+project. But, you require to install dependencies before doing it. And
+installing dependencies might not always succeed. So make sure you install
+these packages before running &lt;code&gt;pip install -r requirements.txt&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install build-essential libssl-dev libffi-dev \
+    python-dev libxslt1-dev libpq-dev python-mysqldb \
+    libmysqlclient-dev libvirt-dev
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Atleast &lt;code&gt;cinder&lt;/code&gt; and &lt;code&gt;nova&lt;/code&gt; dependencies will get installed properly after
+this.&lt;/p&gt;
+
+&lt;h2 id=&#34;run-tests-frequently-used-commands:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests frequently used commands&lt;/h2&gt;
+
+&lt;p&gt;To force the tests to NOT run in a virtual environment, even if it is present:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh -N
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Force a clean rebuild of virtual environment&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh -f
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run only PEP8 checks&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh -p
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run PEP8 checks only on the files which have been changed since last commit&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh -8
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run all tests from a specific file only, e.g. nova/tests/test_utils.py&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run all tests of only a specific class inside a test file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils.ResourceFilterTestCase
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run only a specific test&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils.ResourceFilterTestCase.test_resource_filtering
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;wildcards-while-running-the-tests:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Wildcards while running the tests&lt;/h2&gt;
+
+&lt;p&gt;Frequently you&amp;rsquo;ll find yourself testing only a couple of tests. In such cases,
+a wildcard will save you from typing the whole path of the test. The below
+command will also run &lt;code&gt;test_resource_filtering&lt;/code&gt; test:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.*resource_filt*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I currently don&amp;rsquo;t know how to make a test work without adding &lt;code&gt;nova.tests&lt;/code&gt;
+before it&lt;/p&gt;
+
+&lt;h2 id=&#34;run-tests-is-not-happy:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests is not happy&lt;/h2&gt;
+
+&lt;p&gt;Sometimes you&amp;rsquo;ll see running &lt;code&gt;./run_tests.sh&lt;/code&gt; can throw a lot of lines of
+ununderstandable gibberish on your screen. In the end it will say &lt;code&gt;testr
+failed&lt;/code&gt;, but it won&amp;rsquo;t give an indication of where it failed and why. I have
+seen that this happens due to only one of the following two reasons:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;em&gt;Syntax error&lt;/em&gt;: There is a syntax error in your code.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;em&gt;Dependencies outdated&lt;/em&gt;: Dependencies in your virtual environment is
+outdated. In such cases, you will need to recreate a virtual environment with
+latest packages. Or better: just update the virtual environment with the latest
+packages using this command:&lt;/p&gt;
+
+&lt;p&gt;./run_tests.sh -u&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;UPDATE: I&amp;rsquo;ve seen that nowadays it doesn&amp;rsquo;t throw a lot of gibberish, but just
+says &amp;lsquo;testr failed&amp;rsquo;, without any error log or stacktrace. This is the same
+situation &amp;ndash; can only happen when there is a syntax error, or if the
+dependencies are outdated.&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s it for now.&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>iSCSI administration on Ubuntu - Quick Start</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/</guid>
+      <description>
+
+&lt;p&gt;This post get&amp;rsquo;s you started with iSCSI administration on an Ubuntu machine.
+Although I have used Ubuntu Trusty (14.04) version, it should work with Precise
+(12.04) too, with the latest packages.&lt;/p&gt;
+
+&lt;h4 id=&#34;prerequisites:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Prerequisites&lt;/h4&gt;
+
+&lt;p&gt;Make sure you have atleast a little idea of what these terms
+mean: iSCSI, LUN, IQN, initiator, target and portal. Google and wikipedia are
+your friends.&lt;/p&gt;
+
+&lt;h4 id=&#34;a-quick-summary:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;A quick summary:&lt;/h4&gt;
+
+&lt;p&gt;There are two parts of iSCSI communication - initiator and target. So let&amp;rsquo;s take an example. There is a storage server in your
+company, where you have a &amp;lsquo;drive&amp;rsquo; for your team. The storage server is the
+&amp;lsquo;target&amp;rsquo;, and your laptop, where you&amp;rsquo;ll mount the drive to access it&amp;rsquo;s contents
+is the &amp;lsquo;initiator&amp;rsquo;. In other words, target is like a &amp;lsquo;server&amp;rsquo; which stores
+data, and allows initiators (think &amp;lsquo;clients&amp;rsquo;) to connect to it.&lt;/p&gt;
+
+&lt;p&gt;In this short hands-on introduction, we&amp;rsquo;ll use the same Ubuntu machine as
+target as well as initiator. We can use a file as the storage behind the
+target, but this post also shows how to use LVM logical volume as the backing
+store for the iSCSI target.&lt;/p&gt;
+
+&lt;p&gt;Actually, we&amp;rsquo;ll back the logical volume (LV) with a file, as shown in
+&lt;a href=&#34;http://www.rushiagr.com/blog/2014/01/14/quick-start-linux-logical-volume-manager/&#34;&gt;this&lt;/a&gt;,
+so essentially we&amp;rsquo;re just using &amp;lsquo;file as a backing store for targets&amp;rsquo; but in a
+roundabout way :)&lt;/p&gt;
+
+&lt;p&gt;OK, let&amp;rsquo;s get started. Make sure you execute all the following commands as root
+user.&lt;/p&gt;
+
+&lt;p&gt;First install the required dependencies&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;apt-get install lvm2 tgt open-iscsi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;initialize-logical-volume:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initialize logical volume&lt;/h4&gt;
+
+&lt;p&gt;Create a file of 1GB, create a volume group over it, and then over it, create a
+400MB logical volume, and see if it got created or not&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# truncate --size 1G backingfile
+root@ra:~# sudo losetup --find --show backingfile 
+/dev/loop0
+root@ra:~# sudo vgcreate myvg /dev/loop0
+  No physical volume label read from /dev/loop0
+  Physical volume &amp;quot;/dev/loop0&amp;quot; successfully created
+  Volume group &amp;quot;myvg&amp;quot; successfully created
+root@ra:~# sudo lvcreate --size 400M --name mylv myvg
+  Logical volume &amp;quot;mylv&amp;quot; created
+root@ra:~# lvs
+  LV   VG   Attr      LSize   Pool Origin Data%  Move Log Copy% Convert
+  mylv myvg -wi-a---- 400.00m                                           
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;target-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Target administration&lt;/h4&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s create a target, with target ID 1, and give it an IQN (iSCSI
+Qualified Name) &lt;code&gt;iqn.2001-04.example.com:your.first.iscsi.target&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tgtadm --lld iscsi --op new --mode target --tid 1 -T iqn.2001-04.example.com:your.first.iscsi.target
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List the target, see it&amp;rsquo;s properties:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# tgtadm --lld iscsi --op show --mode target
+Target 1: iqn.2001-04.example.com:your.first.iscsi.target
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00010000
+            SCSI SN: beaf10
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags: 
+    Account information:
+    ACL information:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can see there is a LUN, LUN 0 attached to the target. Let&amp;rsquo;s attach our
+logical volume &lt;code&gt;mylv&lt;/code&gt; as LUN 1 to the target.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tgtadm --lld iscsi --op new --mode logicalunit --tid 1 --lun 1 -b /dev/myvg/mylv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here, actually you could&amp;rsquo;ve attached a flat file as a LUN to the target. So you
+could&amp;rsquo;ve skipped all the intermediate steps and attached the &lt;code&gt;backingfile&lt;/code&gt;
+directly to the target like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tgtadm --lld iscsi --op new --mode logicalunit --tid 1 --lun 1 -b backingfile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A backing file would&amp;rsquo;ve been good enough for this demo, but you know the benefits of logical volume isn&amp;rsquo;t it? :)&lt;/p&gt;
+
+&lt;p&gt;Okay, let&amp;rsquo;s see if the LUN got created:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# tgtadm --lld iscsi --op show --mode target
+Target 1: iqn.2001-04.example.com:your.first.iscsi.target
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00010000
+            SCSI SN: beaf10
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags: 
+        LUN: 1
+            Type: disk
+            SCSI ID: IET     00010001
+            SCSI SN: beaf11
+            Size: 419 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/myvg/mylv
+            Backing store flags: 
+    Account information:
+    ACL information:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s allow all initiators to bind to this target:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tgtadm --lld iscsi --op bind --mode target --tid 1 -I ALL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We&amp;rsquo;re done with the &amp;lsquo;target&amp;rsquo; side now. You can check, using &lt;code&gt;netstat&lt;/code&gt; that port
+3260, the default port, is now open. Note that all our commands so far started with
+&lt;code&gt;tgtadm&lt;/code&gt;, i.e., the target administration utility.&lt;/p&gt;
+
+&lt;h4 id=&#34;initiator-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initiator administration&lt;/h4&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s start from the &amp;lsquo;initiator&amp;rsquo; end. We&amp;rsquo;ll behave as if we&amp;rsquo;re a client
+trying to connect to the server &amp;ndash; the target.&lt;/p&gt;
+
+&lt;p&gt;Discover all the targets on our local machine (&lt;code&gt;127.0.0.1&lt;/code&gt;).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# sudo iscsiadm --mode discovery --type sendtargets --portal 127.0.0.1
+127.0.0.1:3260,1 iqn.2001-04.example.com:your.first.iscsi.target
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;From the client perspective, we&amp;rsquo;re now able to see a target. Let&amp;rsquo;s login into
+that target&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# sudo iscsiadm --mode node --targetname iqn.2001-04.example.com:your.first.iscsi.target --portal 127.0.0.1:3260 --login
+Logging in to [iface: default, target: iqn.2001-04.example.com:your.first.iscsi.target, portal: 127.0.0.1,3260] (multiple)
+Login to [iface: default, target: iqn.2001-04.example.com:your.first.iscsi.target, portal: 127.0.0.1,3260] successful.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After logging in, the target will be visible in the client&amp;rsquo;s system as a new
+device. Running a &lt;code&gt;fdisk -l&lt;/code&gt; shows that there is a new device &lt;code&gt;/dev/sda&lt;/code&gt; is now
+present.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# fdisk -l
+
+Disk /dev/vda: 57.1 GB, 57076908032 bytes
+255 heads, 63 sectors/track, 6939 cylinders, total 111478336 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0001cd46
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *        2048   106520575    53259264   83  Linux
+/dev/vda2       106522622   111476735     2477057    5  Extended
+/dev/vda5       106522624   111476735     2477056   82  Linux swap / Solaris
+
+Disk /dev/mapper/myvg-mylv: 419 MB, 419430400 bytes
+255 heads, 63 sectors/track, 50 cylinders, total 819200 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk /dev/mapper/myvg-mylv doesn&#39;t contain a valid partition table
+
+Disk /dev/sda: 419 MB, 419430400 bytes
+13 heads, 62 sectors/track, 1016 cylinders, total 819200 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk /dev/sda doesn&#39;t contain a valid partition table
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we just need to format this device with a filesystem, say EXT4, and then
+mount it at some location to start using it!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;root@ra:~# sudo mkfs.ext4 /dev/sda
+mke2fs 1.42.9 (4-Feb-2014)
+/dev/sda is entire device, not just one partition!
+Proceed anyway? (y,n) y
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+102400 inodes, 409600 blocks
+20480 blocks (5.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=67633152
+50 block groups
+8192 blocks per group, 8192 fragments per group
+2048 inodes per group
+Superblock backups stored on blocks: 
+    8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information: done 
+
+root@ra:~# mkdir tempmount
+root@ra:~# mount /dev/sda tempmount/
+root@ra:~# cd tempmount/
+root@ra:~/tempmount# ls
+lost+found
+root@ra:~/tempmount# 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;destruction:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Destruction&lt;/h4&gt;
+
+&lt;p&gt;The simplest way to get rid of all the things you&amp;rsquo;ve created is to unmount the
+device, and restart the system.&lt;/p&gt;
+
+&lt;p&gt;Aaand done!&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Amazon EC2 API with OpenStack - Developer Quick Start</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/</link>
+      <pubDate>Sat, 09 Aug 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/</guid>
+      <description>&lt;p&gt;OpenStack has support for EC2 API, that is, you can fire Amazon&amp;rsquo;s API against an OpenStack cloud and it will still work. This article gets you started with using them locally against DevStack. It is more of a starter guide to a novice.&lt;/p&gt;
+
+&lt;p&gt;Fire a DevStack with it&amp;rsquo;s default settings. See &lt;a href=&#34;http://www.rushiagr.com/blog/2014/04/03/openstack-in-an-hour-with-devstack&#34;&gt;this post&lt;/a&gt; for more information on it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone http://github.com/openstack-dev/devstack
+cd devstack/
+./stack.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Source openrc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;source openrc
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;View all EC2 credentials available for the current user (here, &lt;code&gt;demo&lt;/code&gt; user in &lt;code&gt;demo&lt;/code&gt; tenant)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ keystone ec2-credentials-list
++----------------------------------+----------------------------------+----------------------------------+
+|              tenant              |              access              |              secret              |
++----------------------------------+----------------------------------+----------------------------------+
+| 0e9f99a6f2064464aa054d305ba08052 | ef61007dae74468eb9593ffbbd22d9f1 | 28c7ad6248de4e6a8649b3e2d122ac5d |
+| 9b93a67201264492be3d0998b87d821b | 1b0a617dbef347cb968c8eed160de0b3 | b6525738ad6044ea9c49abeefabf86de |
++----------------------------------+----------------------------------+----------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But which one is my current tenant? Let&amp;rsquo;s get that from parsing the output of &lt;code&gt;token-get&lt;/code&gt; command&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ keystone token-get | grep tenant | awk &#39;{print $4}&#39;
+0e9f99a6f2064464aa054d305ba08052
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note the access and secret keys.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s get started with the &lt;code&gt;boto&lt;/code&gt; client for consuming AWS APIs. I prefer &lt;code&gt;ipython&lt;/code&gt; shell, for its interactive features, but normal Python shell is just fine too. (Install ipython as &lt;code&gt;sudo apt-get install ipython&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Import necessary module&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt; import boto
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a &lt;code&gt;conn&lt;/code&gt; connection object, which we&amp;rsquo;ll use for querying our cloud&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt; conn = boto.connect_ec2_endpoint(&#39;http://10.0.1.126:8773/services/Cloud&#39;,
+            aws_access_key_id=&#39;ef61007dae74468eb9593ffbbd22d9f1&#39;,
+            aws_secret_access_key=&#39;28c7ad6248de4e6a8649b3e2d122ac5d&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here &lt;code&gt;10.0.1.126&lt;/code&gt; is the IP of my machine. Don&amp;rsquo;t forget to change it to yours.&lt;/p&gt;
+
+&lt;p&gt;If everything is successful, call to &lt;code&gt;get_all_instances()&lt;/code&gt; will return an empty list&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt; conn.get_all_instances()
+[]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Okay, now let&amp;rsquo;s create an instance. List all the images first&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [20]: conn.get_all_images()
+Out[20]:
+[Image:aki-00000001,
+ Image:ari-00000002,
+ Image:ami-00000003,
+ Image:ami-00000004]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image &lt;code&gt;ami-00000003&lt;/code&gt; should be the cirros image from which we&amp;rsquo;ll create an instance. But still, let&amp;rsquo;s confirm that&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [26]: img = conn.get_image(&#39;ami-00000003&#39;)
+
+In [27]: img.name
+Out[27]: u&#39;cirros-0.3.2-x86_64-uec&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s use this image to create an instance. Boto&amp;rsquo;s &lt;code&gt;get_all_instances&lt;/code&gt; returns a list of reservations, which makes getting the instance object slightly roundabout.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [35]: conn.run_instances(image_id=&#39;ami-00000003&#39;, instance_type=&#39;m1.tiny&#39;)
+Out[35]: Reservation:r-08b8idoz
+
+In [40]: reservations = conn.get_all_instances()
+
+In [42]: resvn = reservations[0]
+
+In [44]: instance = resvn.instances[0]
+
+In [45]: instance.state
+Out[45]: u&#39;running&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And then delete it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [47]: conn.terminate_instances(&#39;i-00000002&#39;)
+Out[47]: [Instance:i-00000002]
+
+In [50]: conn.get_all_reservations()
+Out[50]: []
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s it for now :)&lt;/p&gt;
+
+&lt;p&gt;Use &lt;code&gt;ipython&lt;/code&gt; or &lt;code&gt;bpython&lt;/code&gt; for exploring boto library more and discover more APIs.&lt;/p&gt;
+
+&lt;p&gt;If you want to see what EC2 API was actually called behind the scenes, create a file &lt;code&gt;/etc/boto.cfg&lt;/code&gt; and add these two lines. Now whenever you will use an interactive Python terminal, you&amp;rsquo;ll see on your screen the EC2 API being called.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[Boto]
+debug=2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>DevStack behind proxy</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/08/05/devstack-behind-proxy/</link>
+      <pubDate>Tue, 05 Aug 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/08/05/devstack-behind-proxy/</guid>
+      <description>&lt;p&gt;I have now seen some people struggling to get DevStack working behind proxy. Some, thinking it is a bug in DevStack, have actually posted patches for it too! Here, I&amp;rsquo;ll tell you the simple way to get &lt;code&gt;stack.sh&lt;/code&gt; complete succesfully from behind a proxy.&lt;/p&gt;
+
+&lt;p&gt;By default, &lt;code&gt;devstack&lt;/code&gt; will clone from the &amp;lsquo;actual&amp;rsquo; OpenStack git repositories, residing at &lt;code&gt;git://git.openstack.org&lt;/code&gt;. Some people might face a problem with it, as DevStack uses &lt;code&gt;git&lt;/code&gt; protocol to clone the repo. We&amp;rsquo;ll instead use HTTP which is provided by GitHub mirror  (yes, you heard it right. GitHub is just a &amp;lsquo;mirror&amp;rsquo; for OpenStack code, not the primary repository). For this we&amp;rsquo;ll need to set &lt;code&gt;GIT_BASE&lt;/code&gt; in &lt;code&gt;localrc&lt;/code&gt; as:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;GIT_BASE=http://github.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Export http and https proxy variables&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export http_proxy=&amp;lt;your-http-proxy&amp;gt;
+export https_proxy=&amp;lt;your-https-proxy&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now, you will need to export &lt;code&gt;no_proxy&lt;/code&gt; environment variable. This environment variable should contain localhost, as well as the IP your current machine has got. Say your current machine has IP &lt;code&gt;12.34.56.78&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export no_proxy=127.0.0.1,12.34.56.78
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After you have exported these three variables, you&amp;rsquo;re free to run &lt;code&gt;./stack.sh&lt;/code&gt;, and it should finish successfully.&lt;/p&gt;
+
+&lt;p&gt;If you are doing a single-node devstack setup, you don&amp;rsquo;t need to do anything
+else and can stop here. If you are doing a multi-node setup, the services
+running on one node might not communicate properly with services on a different node. In order to
+fix this, do this: go to individual services running inside screens, stop the
+service (by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;C&lt;/code&gt;), unset the proxy environment variables (&lt;code&gt;unset
+http_proxy https_proxy no_proxy&lt;/code&gt;), and restart the service again (by pressing
+up arrow and then pressing &lt;code&gt;Enter&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Mounting QCOW2 images</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/08/02/qcow2-mount/</link>
+      <pubDate>Sat, 02 Aug 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/08/02/qcow2-mount/</guid>
+      <description>&lt;p&gt;Isn&amp;rsquo;t it fun that even before you start a VM out of an image, you can add files to that image, see and edit the directory and file structure of that VM?&lt;/p&gt;
+
+&lt;p&gt;I wanted to boot a VM out of a disk-image, but how will I know out of the 256 available IPs for that VM, which one actually got assigned? I tried vnc console, but the connection was terribly flaky. Even so, it was felt quite ugly to use an interface when I was trying to move to a keyboard-only (command line) world.  So I just inserted a static IP into the &lt;code&gt;/etc/network/interfaces&lt;/code&gt; file of that image! (I wasn&amp;rsquo;t aware of &lt;code&gt;arp-scan&lt;/code&gt; before I discovered the trick described in this post)&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ll mount the image, tweak the filesystem of that image, and then boot the image.&lt;/p&gt;
+
+&lt;p&gt;Install &lt;code&gt;qemu-utils&lt;/code&gt; and enable &lt;code&gt;ndb&lt;/code&gt; module&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install qemu-utils
+sudo modprobe nbd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Use any qcow2 image, and if you don&amp;rsquo;t have any, download a small CirrOS cloud image (around 13MB).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;wget http://download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Connect the image to the first nbd device&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo qemu-nbd -c /dev/nbd0 cirros-0.3.2-x86_64-disk.img
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Mount the image. For nbd0, see all the devices available (&lt;code&gt;/dev/nbd0&amp;lt;some-number-or-string&amp;gt;&lt;/code&gt;) and try attaching to starting from the first one&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo mount /dev/nbd0p1 /mnt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now at /mnt, you can see the complete filesystem of that image, and make necessary changes. You can do all sorts of things &amp;ndash; change &lt;code&gt;sources.list&lt;/code&gt;, &lt;code&gt;/etc/network/interfaces&lt;/code&gt;, put additional files inside the VM for particular users, etc.&lt;/p&gt;
+
+&lt;p&gt;After you&amp;rsquo;re done, unmount it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo umount /mnt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And disconnect the loopback device too&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo qemu-nbd -d /dev/nbd0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Done!&lt;/p&gt;
+
+&lt;p&gt;PS: I actually created two functions for mounting and unmounting, so that I don&amp;rsquo;t remember all these commands. Find them &lt;a href=&#34;https://github.com/rushiagr/myutils/blob/master/aliases/qcow2-mount.sh&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Credits: Vigneshvar introduced me to &lt;code&gt;qemu-nbd&lt;/code&gt; tool.&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Playing around with Cinder multi-backend</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/01/16/playing-around-with-cinder-backend/</link>
+      <pubDate>Thu, 16 Jan 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/01/16/playing-around-with-cinder-backend/</guid>
+      <description>
+
+&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature &amp;ndash; multi-backends
+with filter scheduler. So now you can have more than one storage boxes for block storage
+and manage them with one Cinder deployment. Here, I&amp;rsquo;m going to test it out using our
+favourite method &amp;ndash; trying it out on DevStack!&lt;/p&gt;
+
+&lt;p&gt;DevStack can provide you with two LVM backends to play around with them. But you&amp;rsquo;ll need to restack it.&lt;/p&gt;
+
+&lt;p&gt;Go to the devstack directory and pull the latest code. Destroy previous DevStack deployment if it exists.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~/devstack$ git pull origin master
+rushi@jio:~/devstack$ ./unstack.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Add the config option to &lt;code&gt;localrc&lt;/code&gt; which give you pre-cooked multi-backend setup with two LVM backends, both of 10G. Stack&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ echo &amp;quot;CINDER_MULTI_LVM_BACKEND=True&amp;quot; &amp;gt;&amp;gt; localrc
+rushi@jio:~$ ./devstack/stack.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can see that the cinder.conf file now has two values for enabled backends:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ less /etc/cinder/cinder.conf | grep enabled_backends
+enabled_backends = lvmdriver-1,lvmdriver-2
+#enabled_backends=&amp;lt;None&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Also, you can see that there are two configuration groups created at the end of that config file, one each for configurations
+corresponding to that particular backend&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ tail /etc/cinder/cinder.conf 
+
+[lvmdriver-1]
+volume_backend_name = LVM_iSCSI
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes
+
+[lvmdriver-2]
+volume_backend_name = LVM_iSCSI_2
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So you have two volume groups created for respective backends. Lets check it directly without using Cinder.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g 10.01g
+  stack-volumes2   1   0   0 wz--n-  10.01g 10.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hmmm. Two volume groups, each of size 10G.&lt;/p&gt;
+
+&lt;h3 id=&#34;case-1-spreading-volumes-across-backends:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 1: Spreading volumes across backends&lt;/h3&gt;
+
+&lt;p&gt;Now, lets create a volume and see where it ends up.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder create 1
+ERROR: You must provide a username via either --os-username or env[OS_USERNAME]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Oops! Let me try again..&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ . devstack/openrc 
+rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:29:49.241493      |
+|    description    |                 None                 |
+|         id        | ecfbfebb-73d5-4faf-b625-e69f18020378 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ cinder list
++--------------------------------------+-----------+------+------+-------------+----------+-------------+
+|                  ID                  |   Status  | Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+------+------+-------------+----------+-------------+
+| ecfbfebb-73d5-4faf-b625-e69f18020378 | available | None |  1   |     None    |  false   |             |
++--------------------------------------+-----------+------+------+-------------+----------+-------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g 10.01g
+  stack-volumes2   1   2   0 wz--n-  10.01g  9.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So it went to backend number 2. If you are admin (&lt;code&gt;source devstack/openrc admin admin&lt;/code&gt;), you can do a &lt;code&gt;cinder show&lt;/code&gt; too, to get information
+as to which host did this volume go to. Only the admin is allowed to view the host information.&lt;/p&gt;
+
+&lt;p&gt;The scheduler now gets reported of the capabilities which the backends have (check out the &lt;code&gt;c-shr&lt;/code&gt; screen to see it). The scheduler then weighs the backend based on these capabilities and decides which of them has higher &amp;lsquo;weight&amp;rsquo; to serve the next &amp;lsquo;create&amp;rsquo; request. By default, the &amp;lsquo;weigher&amp;rsquo; for scheduler is &lt;code&gt;CapacityWeigher&lt;/code&gt;. That is, whichever backend has higher capacity, that backend will be chosen for the next &amp;lsquo;create&amp;rsquo; request.&lt;/p&gt;
+
+&lt;p&gt;So in our case, when we&amp;rsquo;ll do another &amp;lsquo;create volume&amp;rsquo; it will now land on to the first backend.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:39:23.958468      |
+|    description    |                 None                 |
+|         id        | aa79c608-47cc-44e3-a614-f4bddaab68e5 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g  9.01g
+  stack-volumes2   1   2   0 wz--n-  10.01g  9.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Neat!&lt;/p&gt;
+
+&lt;h3 id=&#34;case-2-stacking-all-volumes-at-one-backend:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 2 : Stacking all volumes at one backend&lt;/h3&gt;
+
+&lt;p&gt;What if we want to keep all the volumes at only one backend? Cinder allows you to do that too!
+There is a configuration option in cinder.conf, &lt;code&gt;capacity_weight_multiplier&lt;/code&gt;, which allows you to multiply the &amp;lsquo;capacity weight&amp;rsquo; by a number.
+So if the multiplier is 1, a backend with higher capacity will have higher weight, and will be the choice for the next volume creation request.
+This is the default case. BUT what if we set it to -1? The backend with higher available capacity will have more negative weight, which will make that backend less preferable for next &amp;lsquo;create&amp;rsquo; request, and hence the request will go to the backend which has lesser capacity!&lt;/p&gt;
+
+&lt;p&gt;Let us see this too in action.&lt;/p&gt;
+
+&lt;p&gt;Check out the config option from cinder.conf file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cat /etc/cinder/cinder.conf | grep -B 3 ^capacity_weight_multiplier
+
+# Multiplier used for weighing volume capacity. Negative
+# numbers mean to stack vs spread. (floating point value)
+# capacity_weight_multiplier=1.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The config option is commented out and is there just so that you can easily change it. Now uncomment it and change it&amp;rsquo;s value to -1.&lt;/p&gt;
+
+&lt;p&gt;Delete previously created volumes. Kill all the three Cinder screen processes (&lt;code&gt;c-api&lt;/code&gt;, &lt;code&gt;c-sch&lt;/code&gt; and &lt;code&gt;c-vol&lt;/code&gt;), and restart them.&lt;/p&gt;
+
+&lt;p&gt;Lets create two volumes and see where they end up..&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder list
++----+--------+------+------+-------------+----------+-------------+
+| ID | Status | Name | Size | Volume Type | Bootable | Attached to |
++----+--------+------+------+-------------+----------+-------------+
++----+--------+------+------+-------------+----------+-------------+
+rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:56:59.845733      |
+|    description    |                 None                 |
+|         id        | b927b328-5ae0-411a-9de2-22ed732b4946 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:57:01.132756      |
+|    description    |                 None                 |
+|         id        | 9f643f2d-7221-4a5c-bf48-1977c9b89fd3 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g 10.01g
+  stack-volumes2   1   2   0 wz--n-  10.01g  8.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;:)&lt;/p&gt;
+
+&lt;h3 id=&#34;case-3-custom-choice:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 3 : Custom choice&lt;/h3&gt;
+
+&lt;p&gt;What if I have two different backends (maybe one is slower, or costlier, than the other), and my users want to exactly specify how many volumes they want of each &amp;lsquo;type&amp;rsquo; of backends? Here, Cinder&amp;rsquo;s &amp;lsquo;volume types&amp;rsquo; have us covered.&lt;/p&gt;
+
+&lt;p&gt;We can associate a volume type with a backend, and then the users can create a volume of whatever &amp;lsquo;type&amp;rsquo; they want.
+Let&amp;rsquo;s throw some discrimination at these backends. I&amp;rsquo;ll create two volume types: &amp;lsquo;gold&amp;rsquo; and &amp;lsquo;bronze&amp;rsquo;, and associate &amp;lsquo;stack-volumes&amp;rsquo; with &amp;lsquo;gold&amp;rsquo; and similarly for &amp;lsquo;stack-volumes2&amp;rsquo;. Note that this job can only be done by the administrator.&lt;/p&gt;
+
+&lt;p&gt;Let us be admins&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ . devstack/openrc admin admin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create both the volume types and list them.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder type-create gold
++--------------------------------------+------+
+|                  ID                  | Name |
++--------------------------------------+------+
+| dd883ee0-24be-42e1-ab2e-b9a01454f2f9 | gold |
++--------------------------------------+------+
+rushi@jio:~$ cinder type-create bronze
++--------------------------------------+--------+
+|                  ID                  |  Name  |
++--------------------------------------+--------+
+| f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze |
++--------------------------------------+--------+
+
+rushi@jio:~$ cinder type-list
++--------------------------------------+--------+
+|                  ID                  |  Name  |
++--------------------------------------+--------+
+| dd883ee0-24be-42e1-ab2e-b9a01454f2f9 |  gold  |
+| f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze |
++--------------------------------------+--------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Get the backend names (&lt;code&gt;volume_backend_name&lt;/code&gt; config option) from cinder.conf file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ tail /etc/cinder/cinder.conf 
+
+[lvmdriver-1]
+volume_backend_name = LVM_iSCSI
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes
+
+[lvmdriver-2]
+volume_backend_name = LVM_iSCSI_2
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s associate backend &lt;code&gt;LVM_iSCSI&lt;/code&gt; with volume type &amp;lsquo;gold&amp;rsquo;, and similarly for the other one.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder type-key gold set volume_backend_name=LVM_iSCSI
+rushi@jio:~$ cinder type-key bronze set volume_backend_name=LVM_iSCSI_2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;These association are stored as key-value pairs in the volume type&amp;rsquo;s &amp;lsquo;extra specs&amp;rsquo;. Let&amp;rsquo;s see them&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder extra-specs-list 
++--------------------------------------+--------+------------------------------------------+
+|                  ID                  |  Name  |               extra_specs                |
++--------------------------------------+--------+------------------------------------------+
+| dd883ee0-24be-42e1-ab2e-b9a01454f2f9 |  gold  |  {u&#39;volume_backend_name&#39;: u&#39;LVM_iSCSI&#39;}  |
+| f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze | {u&#39;volume_backend_name&#39;: u&#39;LVM_iSCSI_2&#39;} |
++--------------------------------------+--------+------------------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can add more key-value pairs for these volume types with different key names. &lt;code&gt;volume_backend_name&lt;/code&gt; is a reserved key name, though.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s create two volumes of type &amp;lsquo;gold&amp;rsquo; and see where they end up being created:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder create --volume-type gold --name costly_vol_1 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T18:24:07.670635      |
+|    description    |                 None                 |
+|         id        | 767d4c56-6d3d-46f7-b0a3-4a00f696bcad |
+|      metadata     |                  {}                  |
+|        name       |             costly_vol_1             |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   c271eb32e71b411bb98ad7b93792d6d5   |
+|    volume_type    |                 gold                 |
++-------------------+--------------------------------------+
+rushi@jio:~$ cinder create --volume-type gold --name costly_vol_2 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T18:24:58.382180      |
+|    description    |                 None                 |
+|         id        | a938e556-65cf-4547-87ff-513d60f626d3 |
+|      metadata     |                  {}                  |
+|        name       |             costly_vol_2             |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   c271eb32e71b411bb98ad7b93792d6d5   |
+|    volume_type    |                 gold                 |
++-------------------+--------------------------------------+
+rushi@jio:~$ cinder list
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |     Name     | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+| 767d4c56-6d3d-46f7-b0a3-4a00f696bcad | available | costly_vol_1 |  1   |     gold    |  false   |             |
+| a938e556-65cf-4547-87ff-513d60f626d3 | available | costly_vol_2 |  1   |     gold    |  false   |             |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   2   0 wz--n-  10.01g  8.01g
+  stack-volumes2   1   0   0 wz--n-  10.01g 10.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now create another one, but with type &amp;lsquo;bronze&amp;rsquo; and ensure it is created on the other backend.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder create --volume-type bronze --name cheap_vol_1 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T18:27:05.852092      |
+|    description    |                 None                 |
+|         id        | 97f62c7a-b974-41e8-a659-1e6d3eb876d5 |
+|      metadata     |                  {}                  |
+|        name       |             cheap_vol_1              |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   c271eb32e71b411bb98ad7b93792d6d5   |
+|    volume_type    |                bronze                |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ sudo pvs
+  PV         VG             Fmt  Attr PSize   PFree 
+  /dev/loop0 stack-volumes  lvm2 a--   10.01g  8.01g
+  /dev/loop1 stack-volumes2 lvm2 a--   10.01g  9.01g
+  /dev/sda5  ubuntu-vg      lvm2 a--  931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Done :)&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Linux Screens in DevStack</title>
+      <link>http://www.rushiagr.com/personal/blog/2013/06/05/linux-screens-in-devstack/</link>
+      <pubDate>Wed, 05 Jun 2013 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2013/06/05/linux-screens-in-devstack/</guid>
+      <description>
+
+&lt;p&gt;This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.&lt;/p&gt;
+
+&lt;p&gt;In a DevStack environment, all the processes run under something special in Linux, called as a &lt;code&gt;screen&lt;/code&gt;. For now, you can think of a ‘screen’ as a terminal running inside a terminal, with the special property that when you close your current terminal, your ‘screens’ will not actually die, so that you can reconnect to them when you connect to the Linux system through another terminal again! Now that should give you a hint why people use screens :)&lt;/p&gt;
+
+&lt;p&gt;Each screen runs a special ‘service’ of OpenStack. So the logs of each service will go to the respective screen. If you created the DevStack environment as a root user, the process of going to a screen is slightly complicated: You first need to become the &lt;code&gt;stack&lt;/code&gt; user if you are currently &lt;code&gt;root&lt;/code&gt;, and even before that, you need to run this command in most of the cases:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;chown stack:stack `readlink /proc/self/fd/0`
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Else it will produce this error &lt;code&gt;Cannot open your terminal &#39;/dev/pts/2&#39; - please check.&lt;/code&gt; , and then you can proceed to run this command to get to the screens:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;screen -x
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And if you ran the DevStack &lt;code&gt;stack.sh&lt;/code&gt; script as a non-root user, you just need to run that last little thingy to see the screens. One more reason why you should run DevStack as a non-root.&lt;/p&gt;
+
+&lt;p&gt;The way to detach from a screen is &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;D&lt;/code&gt;, that is, first press &lt;code&gt;CTRL+A&lt;/code&gt;, and then press &lt;code&gt;D&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;navigating-across-screens:81565885f4011e665cf1e89d6280caf9&#34;&gt;Navigating across screens&lt;/h2&gt;
+
+&lt;p&gt;You will see names of all the screens at the bottom of the terminal. The screen on which you currently are bears an asterisk (&lt;code&gt;*&lt;/code&gt;) near its name. To move to the right screen, do a &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;N&lt;/code&gt;. Keep in mind that you are going to use &lt;code&gt;CTRL+A&lt;/code&gt; a lot of times during your adventures with screen. Similar to the command &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;N&lt;/code&gt; to move to the right (“next”) screen, to move to the left screen the command is &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;P&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;There is one more way to jump directly to a screen. Lets say you want to directly jump to the fourth screen. You just need to do a &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;4&lt;/code&gt;, to go to fourth screen! Wasn’t that easy? But hey! How do I get to the seventeenth screen? Frankly, I don’t know a ‘direct’ way. I do a &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;9&lt;/code&gt; once, and &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;N&lt;/code&gt; eight more times. :( If you have a better way, please do tell me.&lt;/p&gt;
+
+&lt;p&gt;Navigating inside a screen&lt;/p&gt;
+
+&lt;p&gt;The first and biggest difficulty I faced while tracking an error in the screen logs is the periodic updates in Cinder dumps some lines to the Cinder screens every now and then. So if you have a stack trace of an error on the screen, it will go up and up and up till you can no more see it! Nope, scrolling your mouse up, or pulling the scrollbar up won’t help either (why not try it once :) ).&lt;/p&gt;
+
+&lt;p&gt;Within a few days, I thought “Hey, I’ll just reduce the font of the terminal and I’ll be able to see more lines of screen logs on my screen!”. I knew the command to reduce the font size of the terminal font: &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;-&lt;/code&gt; (just for the sake of completeness, the command to increase font is &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;+&lt;/code&gt;). That worked pretty okay upto a point. It actually helps to have logs in small font, as the logs will fit in one line on the screen and will look prettier. But what if I come after say a ten-minute break, and see all my logs are too far up to be able to see even by reducing font size?&lt;/p&gt;
+
+&lt;p&gt;Then I got to know the command which saved a ton of time in my life: The command to actually scroll up and down the screen.&lt;/p&gt;
+
+&lt;p&gt;To scroll up, first press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;[&lt;/code&gt;. After that, you can use arrow keys to scroll up and down. You can also use &lt;code&gt;page-up&lt;/code&gt; and &lt;code&gt;page-down&lt;/code&gt; buttons to scroll one complete page up or down. This isn’t all of it. If you are vim user, you will find that the &lt;code&gt;H&lt;/code&gt; &lt;code&gt;J&lt;/code&gt; &lt;code&gt;K&lt;/code&gt; &lt;code&gt;L&lt;/code&gt; will work for for &lt;code&gt;left&lt;/code&gt;, &lt;code&gt;down&lt;/code&gt;, &lt;code&gt;up&lt;/code&gt;, and &lt;code&gt;right&lt;/code&gt; respectively. And the last and most convenient thing: once you press &lt;code&gt;CTRL&lt;/code&gt; &lt;code&gt;[&lt;/code&gt;, that is, once you are in ‘copy mode’, you can then use your mouse scroll wheel too to scroll up and down!! Now that is a perfect delight :)&lt;/p&gt;
+
+&lt;p&gt;To come out of this copy mode (so that you can switch to another screen, and do other such stuff), press &lt;code&gt;]&lt;/code&gt; and you are back to normal once again.&lt;/p&gt;
+
+&lt;h2 id=&#34;some-more-generic-screen-commands:81565885f4011e665cf1e89d6280caf9&#34;&gt;Some more ‘generic’ screen commands&lt;/h2&gt;
+
+&lt;p&gt;So that you can start playing around with screens outside OpenStack too&lt;/p&gt;
+
+&lt;p&gt;Create a new screen&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;screen
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To detach from current screen&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ctrl+A,D
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To reattach to an existing screen&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;screen -rd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To view all the screens, their states and IDs&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;screen -list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To kill a screen with id SCREENID&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;screen -X -S SCREENID kill
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+
+&lt;p&gt;-Rushi Agrawal&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Cinder on DevStack - Quick Start</title>
+      <link>http://www.rushiagr.com/personal/blog/2013/05/27/cinder-on-devstack-quick-start/</link>
+      <pubDate>Mon, 27 May 2013 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2013/05/27/cinder-on-devstack-quick-start/</guid>
+      <description>
+
+&lt;p&gt;This blog post covers all the important commands for OpenStack Cinder - The block storage project.
+Although this guide is written based on DevStack, it will work with actual deployment of OpenStack
+cloud also (except the DevStack/Linux specific bits).&lt;/p&gt;
+
+&lt;p&gt;All the Cinder operations can be performed via either of these three means:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;CLI (Cinder&amp;rsquo;s &lt;code&gt;python-cinderclient&lt;/code&gt; command line module)&lt;/li&gt;
+&lt;li&gt;GUI (Using OpenStack&amp;rsquo;s GUI project &lt;code&gt;horizon&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Directly calling the Cinder APIs&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Internally, the CLI and GUI both use Cinder APIs to interact with the Cinder API server, but for
+a relatively new guy to OpenStack, I think an introduction through CLI would make the most sense.&lt;/p&gt;
+
+&lt;p&gt;Assumptions made:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;You understand how to setup a DevStack environment and already have one ready at hand (remember &lt;code&gt;./stack.sh&lt;/code&gt;?)&lt;/li&gt;
+&lt;li&gt;You know how to pass default credentials to local shell environment (&lt;code&gt;. /home/path_to_your_devstack_repo/eucarc&lt;/code&gt; will do)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Let&amp;rsquo;s start.&lt;/p&gt;
+
+&lt;h3 id=&#34;creation-and-deletion-of-volumes:426b24844d0e63b7c5c25db25682ca23&#34;&gt;Creation and deletion of volumes&lt;/h3&gt;
+
+&lt;p&gt;Create a 1-GB cinder volume with no name by running command &lt;code&gt;cinder create 1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ cinder create 1
++---------------------+--------------------------------------+
+|       Property      |                Value                 |
++---------------------+--------------------------------------+
+|     attachments     |                  []                  |
+|  availability_zone  |                 nova                 |
+|       bootable      |                false                 |
+|      created_at     |      2013-05-28T10:32:47.243613      |
+| display_description |                 None                 |
+|     display_name    |                 None                 |
+|          id         | 6754d216-4792-4a38-964a-d002686c8f92 |
+|       metadata      |                  {}                  |
+|         size        |                  1                   |
+|     snapshot_id     |                 None                 |
+|     source_volid    |                 None                 |
+|        status       |               creating               |
+|     volume_type     |                 None                 |
++---------------------+--------------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here I am describing only the minimal functionality of a command. If you wish to see more info about what all you
+can do with that command, just type &lt;code&gt;cinder help &amp;lt;command&amp;gt;&lt;/code&gt;, so to see all the optional parameters you can pass
+while creating a Cinder volume, execute &lt;code&gt;cinder help create&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ cinder help create
+usage: cinder create [--snapshot-id &amp;lt;snapshot-id&amp;gt;]
+                     [--source-volid &amp;lt;source-volid&amp;gt;] [--image-id &amp;lt;image-id&amp;gt;]
+                     [--display-name &amp;lt;display-name&amp;gt;]
+                     [--display-description &amp;lt;display-description&amp;gt;]
+                     [--volume-type &amp;lt;volume-type&amp;gt;]
+                     [--availability-zone &amp;lt;availability-zone&amp;gt;]
+                     [--metadata [&amp;lt;key=value&amp;gt; [&amp;lt;key=value&amp;gt; ...]]]
+                     &amp;lt;size&amp;gt;
+
+Add a new volume.
+
+Positional arguments:
+  &amp;lt;size&amp;gt;                Size of volume in GB
+
+Optional arguments:
+  --snapshot-id &amp;lt;snapshot-id&amp;gt;
+                        Create volume from snapshot id (Optional,
+                        Default=None)
+  --source-volid &amp;lt;source-volid&amp;gt;
+                        Create volume from volume id (Optional, Default=None)
+  --image-id &amp;lt;image-id&amp;gt;
+                        Create volume from image id (Optional, Default=None)
+  --display-name &amp;lt;display-name&amp;gt;
+                        Volume name (Optional, Default=None)
+  --display-description &amp;lt;display-description&amp;gt;
+                        Volume description (Optional, Default=None)
+  --volume-type &amp;lt;volume-type&amp;gt;
+                        Volume type (Optional, Default=None)
+  --availability-zone &amp;lt;availability-zone&amp;gt;
+                        Availability zone for volume (Optional, Default=None)
+  --metadata [&amp;lt;key=value&amp;gt; [&amp;lt;key=value&amp;gt; ...]]
+                        Metadata key=value pairs (Optional, Default=None)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Don&amp;rsquo;t worry about the parameters, we&amp;rsquo;ll use most of them in a short time.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s create a Cinder volume of size 1GB with a name, using &lt;code&gt;cinder create --display-name my_second_vol 1&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ cinder create --display-name my_second_vol 1
++---------------------+--------------------------------------+
+|       Property      |                Value                 |
++---------------------+--------------------------------------+
+|     attachments     |                  []                  |
+|  availability_zone  |                 nova                 |
+|       bootable      |                false                 |
+|      created_at     |      2013-05-28T10:40:32.801981      |
+| display_description |                 None                 |
+|     display_name    |            my_second_vol             |
+|          id         | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
+|       metadata      |                  {}                  |
+|         size        |                  1                   |
+|     snapshot_id     |                 None                 |
+|     source_volid    |                 None                 |
+|        status       |               creating               |
+|     volume_type     |                 None                 |
++---------------------+--------------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now lets list out all the Cinder volumes, using &lt;code&gt;cinder list&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ cinder list
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
+| 6754d216-4792-4a38-964a-d002686c8f92 | available |      None     |  1   |     None    |  false   |             |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now lets delete the first volume (the one without a name), using &lt;code&gt;cinder delete &amp;lt;volume_id&amp;gt;&lt;/code&gt; command. If you
+execute &lt;code&gt;cinder list&lt;/code&gt; real quick, you will see the status of the volume going to &amp;lsquo;deleting&amp;rsquo;, and after some time
+the volume will be deleted:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ cinder delete 6754d216-4792-4a38-964a-d002686c8f92
+stack@stlrx300s7-27:/$ cinder list 
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
+| 6754d216-4792-4a38-964a-d002686c8f92 |  deleting |      None     |  1   |     None    |  false   |             |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+stack@stlrx300s7-27:/$ 
+stack@stlrx300s7-27:/$ 
+stack@stlrx300s7-27:/$ cinder list
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;On a default DevStack installation, for a volume in Cinder, a &amp;lsquo;logical volume&amp;rsquo; is created on the Linux machine,
+inside the &amp;lsquo;physical volume&amp;rsquo; named &lt;code&gt;stack-volumes&lt;/code&gt;. To see the logical volumes, and physical volumes on the
+ubuntu machine, just run &lt;code&gt;lvs&lt;/code&gt; (logical volume scan) and &lt;code&gt;pvs&lt;/code&gt; (physical volume scan) respectively (this is just
+for information and you can entirely skip this part):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ sudo lvs
+  LV                                          VG            Attr   LSize Origin Snap%  Move Log Copy%  Convert
+  volume-25fa2028-46dc-4870-84c5-d062ae99dd7a stack-volumes -wi-ao 1.00g
+stack@stlrx300s7-27:/$
+stack@stlrx300s7-27:/$ sudo pvs
+  PV         VG            Fmt  Attr PSize PFree
+  /dev/loop0 stack-volumes lvm2 a-   5.01g 4.01g
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;volume-snapshots:426b24844d0e63b7c5c25db25682ca23&#34;&gt;Volume snapshots&lt;/h3&gt;
+
+&lt;p&gt;Create the snapshot of volume:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ cinder snapshot-create 25fa2028-46dc-4870-84c5-d062ae99dd7a
++---------------------+--------------------------------------+
+|       Property      |                Value                 |
++---------------------+--------------------------------------+
+|      created_at     |      2013-05-28T10:55:03.966690      |
+| display_description |                 None                 |
+|     display_name    |                 None                 |
+|          id         | baf8764f-4c9b-496a-b2ff-bd49825c5d09 |
+|       metadata      |                  {}                  |
+|         size        |                  1                   |
+|        status       |               creating               |
+|      volume_id      | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
++---------------------+--------------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all the snapshots:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ cinder snapshot-list
++--------------------------------------+--------------------------------------+-----------+--------------+------+
+|                  ID                  |              Volume ID               |   Status  | Display Name | Size |
++--------------------------------------+--------------------------------------+-----------+--------------+------+
+| baf8764f-4c9b-496a-b2ff-bd49825c5d09 | 25fa2028-46dc-4870-84c5-d062ae99dd7a | available |     None     |  1   |
++--------------------------------------+--------------------------------------+-----------+--------------+------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now lets create a new volume of 1GB from the snapshot:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ cinder create --snapshot-id baf8764f-4c9b-496a-b2ff-bd49825c5d09 1
++---------------------+--------------------------------------+
+|       Property      |                Value                 |
++---------------------+--------------------------------------+
+|     attachments     |                  []                  |
+|  availability_zone  |                 nova                 |
+|       bootable      |                false                 |
+|      created_at     |      2013-05-28T10:56:20.478141      |
+| display_description |                 None                 |
+|     display_name    |                 None                 |
+|          id         | 99ebe1d0-678b-4a9a-8ec4-438f9804d327 |
+|       metadata      |                  {}                  |
+|         size        |                  1                   |
+|     snapshot_id     | baf8764f-4c9b-496a-b2ff-bd49825c5d09 |
+|     source_volid    |                 None                 |
+|        status       |               creating               |
+|     volume_type     |                 None                 |
++---------------------+--------------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you will see two volumes when you&amp;rsquo;ll do a &lt;code&gt;cinder list&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;accessing-volumes-from-inside-a-virtual-instance:426b24844d0e63b7c5c25db25682ca23&#34;&gt;Accessing volumes from inside a virtual instance&lt;/h3&gt;
+
+&lt;p&gt;You can attach a volume to a VM instance, to provide additional persistent storage to that VM. It
+works just like you attach an external HDD to your computer/laptop. But first, we&amp;rsquo;ll need to create a
+virtual machine for that.&lt;/p&gt;
+
+&lt;p&gt;List out all the virtual machine images present in our DevStack setup, from which we can boot a
+brand new VM instance, using &lt;code&gt;glance image-list&lt;/code&gt; or &amp;lsquo;nova image-list`:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ nova image-list
++--------------------------------------+---------------------------------+--------+--------+
+| ID                                   | Name                            | Status | Server |
++--------------------------------------+---------------------------------+--------+--------+
+| 291fe347-3a6f-4a21-9e85-e8809cb05d6e | cirros-0.3.1-x86_64-uec         | ACTIVE |        |
+| 69d14d74-4185-4ba3-9666-1e7f569f38c6 | cirros-0.3.1-x86_64-uec-kernel  | ACTIVE |        |
+| 8793532d-0c09-4b1c-aab8-d10832f13c09 | cirros-0.3.1-x86_64-uec-ramdisk | ACTIVE |        |
++--------------------------------------+---------------------------------+--------+--------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We&amp;rsquo;ll use the image with the shortest name, and boot an instance, giving it a name &lt;code&gt;myinstance&lt;/code&gt;.
+You can list all the virtual machine instances registered with Nova using command &lt;code&gt;nova list&lt;/code&gt;.
+If just after running the command to boot the virtual machine, you run &lt;code&gt;nova list&lt;/code&gt; a few times,
+you will see the machine state going from &amp;lsquo;BUILD&amp;rsquo; to &amp;lsquo;ACTIVE&amp;rsquo; in a few seconds.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ nova boot --flavor m1.tiny --image 291fe347-3a6f-4a21-9e85-e8809cb05d6e myinstance
++-----------------------------+--------------------------------------+
+| Property                    | Value                                |
++-----------------------------+--------------------------------------+
+| status                      | BUILD                                |
+| updated                     | 2013-05-28T11:03:47Z                 |
+| OS-EXT-STS:task_state       | scheduling                           |
+| key_name                    | None                                 |
+| image                       | cirros-0.3.1-x86_64-uec              |
+| hostId                      |                                      |
+| OS-EXT-STS:vm_state         | building                             |
+| flavor                      | m1.tiny                              |
+| id                          | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
+| security_groups             | [{u&#39;name&#39;: u&#39;default&#39;}]              |
+| user_id                     | 35708cb6795845fcab6362e908e6b0cf     |
+| name                        | myinstance                           |
+| adminPass                   | cQh34G96dCHX                         |
+| tenant_id                   | 11f8fde7d627422d84036cabd6cbb7f8     |
+| created                     | 2013-05-28T11:03:47Z                 |
+| OS-DCF:diskConfig           | MANUAL                               |
+| metadata                    | {}                                   |
+| accessIPv4                  |                                      |
+| accessIPv6                  |                                      |
+| progress                    | 0                                    |
+| OS-EXT-STS:power_state      | 0                                    |
+| OS-EXT-AZ:availability_zone | nova                                 |
+| config_drive                |                                      |
++-----------------------------+--------------------------------------+
+stack@stlrx300s7-27:/$ nova list
++--------------------------------------+------------+--------+------------+-------------+----------+
+| ID                                   | Name       | Status | Task State | Power State | Networks |
++--------------------------------------+------------+--------+------------+-------------+----------+
+| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | BUILD  | networking | NOSTATE     |          |
++--------------------------------------+------------+--------+------------+-------------+----------+
+stack@stlrx300s7-27:/$ nova list
++--------------------------------------+------------+--------+------------+-------------+----------+
+| ID                                   | Name       | Status | Task State | Power State | Networks |
++--------------------------------------+------------+--------+------------+-------------+----------+
+| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | BUILD  | spawning   | NOSTATE     |          |
++--------------------------------------+------------+--------+------------+-------------+----------+
+stack@stlrx300s7-27:/$ nova list
++--------------------------------------+------------+--------+------------+-------------+------------------+
+| ID                                   | Name       | Status | Task State | Power State | Networks         |
++--------------------------------------+------------+--------+------------+-------------+------------------+
+| 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f | myinstance | ACTIVE | None       | Running     | private=10.0.0.2 |
++--------------------------------------+------------+--------+------------+-------------+------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now lets attach one of our volume to this instance, and then try to peek into this volume after logging into the instance.&lt;/p&gt;
+
+&lt;p&gt;Attach volume using command &lt;code&gt;nova volume-attach &amp;lt;instance_id&amp;gt; &amp;lt;volume_id&amp;gt; &amp;lt;attach_location&amp;gt;&lt;/code&gt;. We&amp;rsquo;ll attach at the first
+free device location: &lt;code&gt;/dev/vdb&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ nova volume-attach 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f 25fa2028-46dc-4870-84c5-d062ae99dd7a /dev/vdb
++----------+--------------------------------------+
+| Property | Value                                |
++----------+--------------------------------------+
+| device   | /dev/vdb                             |
+| serverId | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
+| id       | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
+| volumeId | 25fa2028-46dc-4870-84c5-d062ae99dd7a |
++----------+--------------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now listing the volume will tell you that the volume is attached to an instance (in use):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ cinder list
++--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable |             Attached to              |
++--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+| 25fa2028-46dc-4870-84c5-d062ae99dd7a |   in-use  | my_second_vol |  1   |     None    |  false   | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
+| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |                                      |
++--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s login into this virtual machine using the private IP of the instance (&lt;code&gt;10.0.0.2&lt;/code&gt; in our case). Note how an
+error message pops up if you have already created an instance last time when you installed DevStack. If such an error
+appears on your screen too, follow the instructions just like the way I did. The default password for the cirros image
+we used is &lt;code&gt;cubswin:)&lt;/code&gt;. Enter into the instance, and then become root:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ ssh cirros@10.0.0.2
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the RSA key sent by the remote host is
+f5:ac:45:4c:63:8e:e4:19:cc:5a:76:7e:a1:08:e7:c8.
+Please contact your system administrator.
+Add correct host key in /opt/stack/.ssh/known_hosts to get rid of this message.
+Offending RSA key in /opt/stack/.ssh/known_hosts:4
+  remove with: ssh-keygen -f &amp;quot;/opt/stack/.ssh/known_hosts&amp;quot; -R 10.0.0.2
+RSA host key for 10.0.0.2 has changed and you have requested strict checking.
+Host key verification failed.
+
+stack@stlrx300s7-27:/$ ssh-keygen -f &amp;quot;/opt/stack/.ssh/known_hosts&amp;quot; -R 10.0.0.2
+/opt/stack/.ssh/known_hosts updated.
+Original contents retained as /opt/stack/.ssh/known_hosts.old
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ ssh cirros@10.0.0.2
+The authenticity of host &#39;10.0.0.2 (10.0.0.2)&#39; can&#39;t be established.
+RSA key fingerprint is f5:ac:45:4c:63:8e:e4:19:cc:5a:76:7e:a1:08:e7:c8.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added &#39;10.0.0.2&#39; (RSA) to the list of known hosts.
+cirros@10.0.0.2&#39;s password: 
+$sudo -i
+#
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run &lt;code&gt;fdisk -l&lt;/code&gt; to see the disks present for the instance. You will see that your newly attached disk
+&lt;code&gt;/dev/vdb&lt;/code&gt; of size 1GB is now present:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# fdisk -l
+
+Disk /dev/vda: 1073 MB, 1073741824 bytes
+16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk /dev/vda doesn&#39;t contain a valid partition table
+
+Disk /dev/vdb: 1073 MB, 1073741824 bytes
+16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk /dev/vdb doesn&#39;t contain a valid partition table
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Command &lt;code&gt;blkid /dev/vd*&lt;/code&gt; lists out the IDs of block devices for this machine and some related info. Running
+this command you will see that info of only the virtual disk &lt;code&gt;/dev/vda&lt;/code&gt; is present, meaning our disk &lt;code&gt;/dev/vdb&lt;/code&gt;
+needs formatting.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# blkid /dev/vd*
+/dev/vda: LABEL=&amp;quot;cirros-rootfs&amp;quot; UUID=&amp;quot;74251bb8-3a28-4a46-9a78-064497b26b9d&amp;quot; SEC_TYPE=&amp;quot;ext2&amp;quot; TYPE=&amp;quot;ext3&amp;quot; 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lets format it to make an EXT3 partition with block-size 1024 bytes using command &lt;code&gt;mkfs.ext3 -b 1024 /dev/vdb&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# mkfs.ext3 -b 1024 /dev/vdb
+mke2fs 1.42.2 (27-Mar-2012)
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+65536 inodes, 1048576 blocks
+52428 blocks (5.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=68157440
+128 block groups
+8192 blocks per group, 8192 fragments per group
+512 inodes per group
+Superblock backups stored on blocks: 
+        8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409, 663553, 
+        1024001
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information: done
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run &lt;code&gt;blkid&lt;/code&gt; again to see the newly partitioned disk listed:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# blkid /dev/vd*
+/dev/vda: LABEL=&amp;quot;cirros-rootfs&amp;quot; UUID=&amp;quot;74251bb8-3a28-4a46-9a78-064497b26b9d&amp;quot; SEC_TYPE=&amp;quot;ext2&amp;quot; TYPE=&amp;quot;ext3&amp;quot; 
+/dev/vdb: UUID=&amp;quot;22838e81-eb97-457d-b1e0-4ff3d8e45b05&amp;quot; SEC_TYPE=&amp;quot;ext2&amp;quot; TYPE=&amp;quot;ext3&amp;quot; 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In order to use this disk, you need to mount it at some location. I&amp;rsquo;ll create a directory &lt;code&gt;/tempmount&lt;/code&gt;
+and mount our virtual block device there:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# mkdir /tempmount
+# mount /dev/vdb /tempmount/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you can see the disk listed in the machine disks, using &lt;code&gt;df -h&lt;/code&gt; command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# df -h
+Filesystem                Size      Used Available Use% Mounted on
+/dev                    242.3M         0    242.3M   0% /dev
+/dev/vda                 31.0M      9.7M     19.7M  33% /
+tmpfs                   245.9M         0    245.9M   0% /dev/shm
+tmpfs                   200.0K     76.0K    124.0K  38% /run
+/dev/vdb               1007.7M     34.9M    921.6M   4% /tempmount
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you can &lt;code&gt;cd&lt;/code&gt; into &lt;code&gt;/tempmount&lt;/code&gt; directory, and do whatever you want to do with the new disk &amp;ndash; put some files there,
+or download one!&lt;/p&gt;
+
+&lt;p&gt;Lets wrap up this part. Unmount this volume by &lt;code&gt;umount /tempmount&lt;/code&gt;, and log out from the machine by pressing &lt;code&gt;CTRL+D&lt;/code&gt; twice, and execute &lt;code&gt;nova volume-detach &amp;lt;server_id&amp;gt; &amp;lt;volume_id&amp;gt;&lt;/code&gt; to detach this volume. You can now see the &amp;lsquo;Attached to&amp;rsquo; column becomes empty again after detaching.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;stack@stlrx300s7-27:/$ cinder list
++--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable |             Attached to              |
++--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+| 25fa2028-46dc-4870-84c5-d062ae99dd7a |   in-use  | my_second_vol |  1   |     None    |  false   | 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f |
+| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |                                      |
++--------------------------------------+-----------+---------------+------+-------------+----------+--------------------------------------+
+stack@stlrx300s7-27:/$ nova volume-detach 3b6dd9f1-3ca3-4eed-a508-1cd62d55629f 25fa2028-46dc-4870-84c5-d062ae99dd7a
+stack@stlrx300s7-27:/$ cinder list
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |  Display Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+| 25fa2028-46dc-4870-84c5-d062ae99dd7a | available | my_second_vol |  1   |     None    |  false   |             |
+| 99ebe1d0-678b-4a9a-8ec4-438f9804d327 | available |      None     |  1   |     None    |  false   |             |
++--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;more-features:426b24844d0e63b7c5c25db25682ca23&#34;&gt;More features&lt;/h3&gt;
+
+&lt;p&gt;(Will update shortly)&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>OpenStack Tempest quick start with DevStack</title>
+      <link>http://www.rushiagr.com/personal/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/</link>
+      <pubDate>Wed, 20 Mar 2013 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/</guid>
+      <description>&lt;p&gt;UPDATE(April 2014): Now when you set up DevStack, Tempest is automatically set up for you.&lt;/p&gt;
+
+&lt;p&gt;This quick start guide explains setting up Tempest with a DevStack environment
+for Grizzly release. Most of the information here is taken from
+&lt;a href=&#34;http://www.joinfu.com/2012/03/testing-essex-rc1-with-devstack-and-tempest/&#34;&gt;here&lt;/a&gt;, the only difference being this blog post is more recent, and is based on Grizzly.&lt;/p&gt;
+
+&lt;p&gt;Assumptions made are that you understand:
+1. What is a &lt;code&gt;localrc&lt;/code&gt; file in DevStack.
+2. What does &lt;code&gt;./stack.sh&lt;/code&gt; do in DevStack.
+3. How to clone using git.&lt;/p&gt;
+
+&lt;p&gt;##Setting up DevStack&lt;/p&gt;
+
+&lt;p&gt;Clone DevStack&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/openstack-dev/devstack.git
+cd devstack
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Tempest requires that the rate-limiting for DevStack is turned off. By default, it is turned on, so turn it off by adding this line to the localrc file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;API_RATE_LIMIT=False
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you have already created a DevStack environment, you will have to go through the labour of setting it all again by unstacking and restacking it with this parameter in localrc.
+Quick tip: If you already had a working DevStack in your computer, adding &lt;code&gt;OFFLINE=True&lt;/code&gt; line in localrc will create the DevStack environment in your computer WITHOUT
+downloading all the OpenStack code all over again from the Github repos, but will build the environment from the existing code (thus saving you some Internet bandwidth and time).&lt;/p&gt;
+
+&lt;p&gt;Build the DevStack environment&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./stack.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Supply all the five passwords. (If you are just playing around, just like me, then
+you can easily supply &lt;code&gt;nova&lt;/code&gt; to all the passwords.)&lt;/p&gt;
+
+&lt;p&gt;Note the IP of the system where DevStack is running (The &amp;lsquo;host IP&amp;rsquo; mentioned at the last of the output after running &lt;code&gt;stack.sh&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;##Setting up Tempest&lt;/p&gt;
+
+&lt;p&gt;Clone latest Tempest code&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/openstack/tempest.git
+cd tempest
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create tempest.conf file from the sample configuration file. This file will contain the configuration information of the OpenStack environment (here, the DevStack
+environment)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cp etc/tempest.conf.sample etc/tempest.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now open the file tempest.conf in an editor, and replace all instance of word &lt;code&gt;secret&lt;/code&gt; with the appropriate password (&lt;code&gt;nova&lt;/code&gt; if you followed me, and just typed &lt;code&gt;nova&lt;/code&gt; whenever the
+&lt;code&gt;stack.sh&lt;/code&gt; script asked for passwords)&lt;/p&gt;
+
+&lt;p&gt;If, for example, your host IP is 10.0.24.30, change this line in tempest.conf&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;uri = http://127.0.0.1:5000/v2.0/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;to make it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;uri = http://10.0.24.30:5000/v2.0/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The last thing to update in the tempest.conf file is the ID of the Cirros image. The image ID can be obtained by two ways
+####Image ID using glance
+This command will return the image ID. Note that I have used the password &lt;code&gt;nova&lt;/code&gt; in this line. You might also need to change the host IP address&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;glance -I admin -K nova -T admin -N http://10.0.24.30:5000/v2.0 -S keystone index | grep ami | cut -f1 | awk &#39;{print $1}&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;####Image ID using OpenStack CLI
+Become stack user&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;su - stack
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Source the sample credentials file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;. /opt/stack/devstack/eucarc
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;OR&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;. /opt/stack/devstack/openrc
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Show all the images, with their IDs&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ nova image-list
++--------------------------------------+---------------------------------+--------+--------+
+| ID                                   | Name                            | Status | Server |
++--------------------------------------+---------------------------------+--------+--------+
+| 13abf9c8-5603-48cb-802e-e27162e10b58 | cirros-0.3.0-x86_64-uec         | ACTIVE |        |
+| 39b023ae-9201-427d-8350-4f30e5bbc01a | cirros-0.3.0-x86_64-uec-kernel  | ACTIVE |        |
+| 431a9c04-47b1-47e4-9521-7f12295c78e0 | cirros-0.3.0-x86_64-uec-ramdisk | ACTIVE |        |
++--------------------------------------+---------------------------------+--------+--------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The ID of the smallest image name is what we&amp;rsquo;re interested in.&lt;/p&gt;
+
+&lt;p&gt;Now replace &lt;code&gt;{$IMAGE_ID}&lt;/code&gt; and &lt;code&gt;{$IMAGE_ID_ALT}&lt;/code&gt; with this value, to make those two lines appear in tempest.conf as&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;image_ref = 13abf9c8-5603-48cb-802e-e27162e10b58
+image_ref_alt = 13abf9c8-5603-48cb-802e-e27162e10b58
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##Installing required dependencies
+Install all the required packages needed to run Tempest integration test suite. (The list of required packages is maintained in file &lt;code&gt;tools/pip-requires&lt;/code&gt;)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo pip install -r tools/pip-requires 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##Show time!
+We&amp;rsquo;ll run all the tests in verbose mode. To run all the tests:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;nosetests -v tempest
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To run tests only from a specific file, say &lt;code&gt;tempest/tests/volume/test_volumes_list.py&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;nosetests -sv tempest.tests.volume.test_volumes_list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;OR&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;nosetests -sv tempest.tests.volume.test_volumes_list.py
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To run a specific test &lt;code&gt;test_volume_list_with_details&lt;/code&gt; from test class &lt;code&gt;VolumeListTest&lt;/code&gt;, which resides in the above file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    nosetests -sv tempest.tests.volume.test_volumes_list:VolumeListTest.test_volume_list_with_details
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And that ladies and gentlemen, is the end! :)&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

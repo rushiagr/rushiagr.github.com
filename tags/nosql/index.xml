@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/tags/nosql/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2015 Rushi Agrawal</copyright>
+    <updated>Thu, 10 Sep 2015 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>OpenStack Keystone with Cassandra Database in DevStack</title>
+      <link>http://www.rushiagr.com/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</link>
+      <pubDate>Thu, 10 Sep 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</guid>
+      <description>
+
+&lt;p&gt;Using Cassandra as backing database for OpenStack Keystone was our solution
+to multi-region deployment problem of OpenStack cloud. This blog post is not
+to discuss the problem. We are talking about how to have a development
+environment to play around with Keystone working with a dev Cassandra deployment.&lt;/p&gt;
+
+&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set:ac993324848a8aead891c139adf0f8b7&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
+
+&lt;p&gt;I&amp;rsquo;ve put together all commands into a script which can be found here:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;https://raw.githubusercontent.com/rushiagr/keystone-cassandra/master/keystone-cassandra.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you have a fresh Ubuntu VM, just copy this script into that machine and
+execute it. Give it 15-20 mins at least (depending upon your internet connection), and it will set up:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;DevStack with Keystone installed and running with all the data stored in/fetched from local Cassandra installation&lt;/li&gt;
+&lt;li&gt;A Cassandra development cluster (CCM) with 5 nodes and replication factor of 3&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Of course, you will need Internet access inside the VM. Also, give the VM around
+3GB of RAM, else things might not work properly. Actually, if you change the
+Cassandra configuration to one node instead of 5, probably 2 GB will suffice. But I&amp;rsquo;ve
+not tried it. (Let me know if you tried it and it works!)&lt;/p&gt;
+
+&lt;p&gt;Notes:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Remember, this is a dev cluster. It&amp;rsquo;s not supposed to be used in production. Hell, it&amp;rsquo;s not even ready for it.&lt;/li&gt;
+&lt;li&gt;Keystone is running on 127.0.0.1. I&amp;rsquo;ve done this so that it will work on any person&amp;rsquo;s VM&lt;/li&gt;
+&lt;li&gt;I&amp;rsquo;ve tested only on a Ubuntu Trusty VM, on Amazon EC2 m4.large instance which has 8 GB RAM. OpenStack on AWS &amp;ndash; ironic, isn&amp;rsquo;t it? :)&lt;/li&gt;
+&lt;li&gt;I&amp;rsquo;m using Java which comes with Ubuntu&amp;rsquo;s APT packages. In production one is supposed to use Oracle Java as per Cassandra folks.&lt;/li&gt;
+&lt;li&gt;The code for this script is located at &lt;code&gt;https://github.com/rushiagr/keystone/tree/liberty-cassandra&lt;/code&gt;, i.e. on &lt;code&gt;liberty-cassandra&lt;/code&gt; branch. Note that this work is currently based upon Keystone&amp;rsquo;s Liberty code as on first week of June. It might not work directly with latest code as it might require fixing imports which might have become outdated. However, I don&amp;rsquo;t think it&amp;rsquo;s going to take more than an hour to make it work with latest code; just that I don&amp;rsquo;t have enough motivation right now to keep the code updated with &amp;lsquo;latest&amp;rsquo; all the time.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;credits:ac993324848a8aead891c139adf0f8b7&#34;&gt;Credits&lt;/h4&gt;
+
+&lt;p&gt;This work was done by the &amp;lsquo;distributed database&amp;rsquo; team of 4 people: Ajaya Agrawal, Rushi Agrawal (me), Vivek Dhayaal and Yogeshwar Shenoy, listed in alphabetical order. And obviously Reliance, for providing us an opportunity to work on this thing.&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

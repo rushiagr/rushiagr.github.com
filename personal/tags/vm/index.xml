@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/personal/tags/vm/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2016 Rushi Agrawal</copyright>
+    <updated>Sat, 02 Jan 2016 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Build VM Images using Diskimage-builder</title>
+      <link>http://www.rushiagr.com/personal/blog/2016/01/02/build-vm-image-using-diskimage-builder/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2016/01/02/build-vm-image-using-diskimage-builder/</guid>
+      <description>&lt;p&gt;OpenStack has this nice tool &lt;a href=&#34;https://github.com/openstack/diskimage-builder&#34;&gt;diskimage-builder&lt;/a&gt;to create virtual machine images without the need
+of a cloud. These vm images can then be uploaded to cloud (e.g. in Glance for
+OpenStack cloud), and they become immediately usable. You can also create VMs in
+virtualbox from these images (though I don&amp;rsquo;t remember exact steps to make the
+image work with VirtualBox. Do let me know if you get the VM working with
+VirtualBox/Vagrant)&lt;/p&gt;
+
+&lt;p&gt;Here I&amp;rsquo;ll describe ways to create a bare cloud-uploadable Ubuntu image. I will
+also provide information as to how to build an image which will have some
+packages pre-installed in them. Note that the commands here will create only
+one image file as opposed to three &amp;ndash; one each for ramdisk, kernel and machine image.&lt;/p&gt;
+
+&lt;p&gt;Prerequisites&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install qemu-utils
+git clone http://github.com/openstack/diskimage-builder
+cd diskimage-builder
+sudo pip install -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All the binaries are in bin filder. You can go in the &lt;code&gt;bin\&lt;/code&gt; directory to
+execute diskimage-builder commands, or add that directory to your &lt;code&gt;$PATH&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Create bare Ubuntu image, which you can directly upload to a cloud e.g.
+OpenStack.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;disk-image-create -a amd64 -o ubuntu-amd64 vm ubuntu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Image generated will be of name &lt;code&gt;ubuntu-amd64.qcow2&lt;/code&gt;. Such an image will be for
+same OS version as your host Ubuntu version. If you want
+to build an image against a different OS version, specify
+&lt;code&gt;DIB_RELEASE=&amp;lt;releasename&amp;gt;&lt;/code&gt; as a prefix to the command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;DIB_RELEASE=trusty disk-image-create -a amd64 -o ubuntu-amd64 vm ubuntu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create an Ubuntu VM image which you can boot via KVM or VirtualBox/Vagrant.
+You will need to manually
+add public keys to authorized_keys for a user inside that VM.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;disk-image-create -o base -a amd64 vm base ubuntu cloud-init-nocloud
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create an image with &lt;code&gt;mysql-server&lt;/code&gt; and &lt;code&gt;tmux&lt;/code&gt; package (and their dependencies) installed inside the image:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;disk-image-create -a amd64 -o ubuntu-amd64 -p mysql-server,tmux vm ubuntu
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;How to upload image to glance:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;glance image-create --name dib-ubuntu --disk-format=qcow2 --container-format=bare &amp;lt; img/ubuntu-amd64.qcow2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Where &lt;code&gt;ubuntu-amd64.qcow2&lt;/code&gt; is the image to upload.&lt;/p&gt;
+
+&lt;p&gt;Thanks!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

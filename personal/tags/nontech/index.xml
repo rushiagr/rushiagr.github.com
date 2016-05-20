@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/personal/tags/nontech/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2014 Rushi Agrawal</copyright>
+    <updated>Sun, 09 Nov 2014 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Plight of Online Banking in India</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/11/09/plight-of-online-banking-in-india/</link>
+      <pubDate>Sun, 09 Nov 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/11/09/plight-of-online-banking-in-india/</guid>
+      <description>
+
+&lt;p&gt;So India is moving ahead. Industry is growing, common facilities are improving,
+conditions for living are improving (or so it seems from a middle class guy&amp;rsquo;s
+eyes). Banks are becoming more accessible, and easier to use. All banks now
+have online banking facility, and makes it less of a hassle to transact - now
+you can sit at home and pay your bills, buy things, transfer money to friends
+or parents, etc. But, after using online banking for about 4 years, I feel
+there is a lot still to be achieved. I find it&amp;rsquo;s not &amp;lsquo;very very&amp;rsquo; convenient.
+Online banking experience can be made much much better by fixing these issues.
+Below I&amp;rsquo;m writing about my experiences with some of the Indian banks I&amp;rsquo;ve done
+online banking with.&lt;/p&gt;
+
+&lt;h2 id=&#34;state-bank-of-india:8e2dd647e7d0560715f28db5fe7e69c3&#34;&gt;State Bank of India&lt;/h2&gt;
+
+&lt;p&gt;Hands down India&amp;rsquo;s largest bank. But the user interface of the online website
+haven&amp;rsquo;t changed much in the last 4 years I&amp;rsquo;ve seen. There are quite a few
+problems with the way the site behaves.&lt;/p&gt;
+
+&lt;h4 id=&#34;immediate-transfer:8e2dd647e7d0560715f28db5fe7e69c3&#34;&gt;Immediate transfer&lt;/h4&gt;
+
+&lt;p&gt;The rules of beneficiary addition, and
+money transfer are outdated. You can&amp;rsquo;t transfer any amount within the first 24
+hours of beneficiary addition. It&amp;rsquo;s Painful that you cannot add a
+beneficiary immediately. Beneficiary addition and approval can take upto 24
+hours, and I&amp;rsquo;ve seen it taking 4+ hours all the time. If you want to transfer
+money immediately, you&amp;rsquo;re out of luck!&lt;/p&gt;
+
+&lt;h4 id=&#34;imps-is-not-really-immediate:8e2dd647e7d0560715f28db5fe7e69c3&#34;&gt;IMPS is not really &amp;lsquo;Immediate&amp;rsquo;&lt;/h4&gt;
+
+&lt;p&gt;IMPS was introduced as a faster &amp;lsquo;NEFT&amp;rsquo; &amp;ndash; to work around the limitation that
+NEFT transfer cannot be done outside bank working hours, so that you can
+transact round the clock. Frustratingly, SBI&amp;rsquo;s IMPS works only till 8PM. You
+cannot transfer money after 8PM!&lt;/p&gt;
+
+&lt;p&gt;If that was not all, beneficiary addition is separate for NEFT and IMPS. So you
+have to add your friend/relative&amp;rsquo;s account number &amp;lsquo;twice&amp;rsquo; to be able to do both
+types of transactions.&lt;/p&gt;
+
+&lt;p&gt;Also, you need to remember two passwords - one your online banking password,
+and another, the &amp;lsquo;profile&amp;rsquo; password, where you can change your profile
+settings. I don&amp;rsquo;t know who came up with this idea of two passwords (both
+requiring a special character, and a capital, and a digit, sigh) thinking it
+might &amp;lsquo;enhance&amp;rsquo; security. Who cares about users anyway, right?&lt;/p&gt;
+
+&lt;h2 id=&#34;icici:8e2dd647e7d0560715f28db5fe7e69c3&#34;&gt;ICICI&lt;/h2&gt;
+
+&lt;p&gt;This bank recently completely refurbished its UI, and it&amp;rsquo;s pretty good compared
+to the old one. I was pretty impressed that a bank is really putting efforts
+into improving the user experience, and not just introducing online banking
+because all have it, and just be done with it. Only problem is, it thinks I&amp;rsquo;m
+dumb, and wants to force it&amp;rsquo;s own unreasonable &amp;lsquo;secure&amp;rsquo; policies on me.&lt;/p&gt;
+
+&lt;p&gt;ICICI debit card has alphabet-digit combinations at the back. For example
+A=23,B=01,C=81 upto P=44. Every time you have to do an online transaction, you
+need to possess near you 1. Your mobile phone (where it will send an OTP (one
+time password), and 2. Your debit card, so that you can enter digits for any
+three randomly selected alphabets. I&amp;rsquo;m not sure how the second part increases
+security. The bank stops asking OTP once it knows that some specific IP is your
+home computer, but still, the debit card alphabet thingy is mandatory. And you
+know, there is NO option whatsoever to change this behavior.&lt;/p&gt;
+
+&lt;p&gt;There have been two cases when I needed to urgently transfer some amount, but the
+poor OTP SMS got stuck somewhere on their servers and didn&amp;rsquo;t reach me for the
+whole freaking day.&lt;/p&gt;
+
+&lt;h2 id=&#34;citibank:8e2dd647e7d0560715f28db5fe7e69c3&#34;&gt;CitiBank&lt;/h2&gt;
+
+&lt;p&gt;For a couple of months, funnily, their site was not working on any browser except
+Internet Explorer. Also, this bank also takes security too seriously. It
+doesn&amp;rsquo;t show you all the digits of your bank account (e.g. 1234xxxxxx9), and
+does the same with all the account numbers of beneficiaries you added. So once
+you add your friend as a beneficiary to this bank, and later you want to add
+him/her to another bank, you cannot see his/her account number here by any
+possible way. You need to ask him/her again his bank details, or store it
+somewhere in your notepad, physical or virtual.&lt;/p&gt;
+
+&lt;h2 id=&#34;common-problem:8e2dd647e7d0560715f28db5fe7e69c3&#34;&gt;Common problem&lt;/h2&gt;
+
+&lt;p&gt;All of this don&amp;rsquo;t frustrate me enough. What makes me really furious is
+these banks have a habit of not sending an SMS when they debit my account for
+maintenance charges or a default. Every other transaction, be it a 10 Rupee
+mobile recharge, is accompanied with an SMS. Except when it&amp;rsquo;s them who are
+deducting the amount. SBI does it for annual debit card charges, Citibank
+deducted 300 Rupees each month, for 4 months, when my account stopped
+receiving any salary, without my attention. Turned out they changed my account
+from &amp;lsquo;suvidha&amp;rsquo; to &amp;lsquo;basic&amp;rsquo; without my knowledge. And ICICI did that with me too,
+debiting annual maintenance fee for the trading account, without a hint of me
+noticing. Do they want me to keep checking the online transaction history once
+in a while to catch my mistakes?&lt;/p&gt;
+
+&lt;p&gt;I consider this practice as ugly way of treating customers, and very very unfair, and should be stopped if the banks
+have any moral sense left in them. Perhaps I&amp;rsquo;ll some day use consumer forum (or
+will I need to file a PIL maybe?)
+to stop this fooling of common people by
+these banks. For today, I have an excuse that I don&amp;rsquo;t have enough time.&lt;/p&gt;
+
+&lt;p&gt;I am sure these are not the only banks which are below par in customer
+satisfaction. India has always had this culture that you need to be just as
+good as your competitors. If they are exploiting, you too can exploit upto the
+same extent. These banks too don&amp;rsquo;t seem to bother much about user satisfaction.
+They are just trying to be as good as their competitors. They don&amp;rsquo;t see this
+that if they provide superior services than their rivals, a guy will never ever
+leave them and won&amp;rsquo;t think of opening another bank account in his life.&lt;/p&gt;
+
+&lt;p&gt;Comments welcome!&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+
+&lt;p&gt;-Rushi&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Bye bye 2013. Welcome 2014</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/01/01/bye-bye-2013-welcome-2014/</link>
+      <pubDate>Wed, 01 Jan 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/01/01/bye-bye-2013-welcome-2014/</guid>
+      <description>
+
+&lt;p&gt;How year 2013 fared for me, and my plans for 2014.&lt;/p&gt;
+
+&lt;p&gt;Mixed bag of a year. Some pretty hard decisions were made by me. I left the job I loved so much &amp;ndash; joined Amazon,
+rival of the technology I was working on (OpenStack). I knew my life was going to be tougher at Amazon. It was not only about
+the work, but also about the philosophy. In NetApp, it was a complete opensource, collaborative model of development. Nothing
+of this sort of freedom I was going to get at Amazon. But there were some internal issues of working at NetApp which prompted
+me to switch over to another company. It wasn&amp;rsquo;t me who approached them for the job but it was the other way round.  The funny part was, I didn&amp;rsquo;t think of joining Amazon till I got the offer letter. I said okay, anyways I will need to move out of this job
+(due to those internal conflicts, and partly due to the lower salary), so why not get some interviewing practice by appearing
+for them at Amazon! The compensation they were offering was significantly higher than my then salary, which just gave me another reason to accept the offer. I convinced myself that I am going to anyway leave the job at Amazon as soon as I get a better opportunity
+at a more freedom-loving place (freedom both in the sense of work-life balance as well as freedom of working on opensource softwares).
+I made a mental note for myself that I am going to work for Amazon for 6 months at the max.&lt;/p&gt;
+
+&lt;p&gt;But God has different plans. Within a week of joining Amazon, I got a mail that Rick Clark, one of the founders of OpenStack wants to meet me, and wants me on his team which is going to work on OpenStack. The way in which he likes to work, as was told by him over a phone call, impressed me, and I quickly switched jobs. Again, in just over a month. Believe me, joining Reliance, a name not at all known in the software industry, was one heck of a decision. Not to say that switching over to Amazon from NetApp was any less emotionally draining.&lt;/p&gt;
+
+&lt;p&gt;Even after joining Reliance (Reliance Jio Infocomm to be precise), as the Bangalore office was not completely set up by the time I joined, I worked from Mumbai office, and then from home for a couple of months. Life before and after this four-month period starting from leaving job at NetApp was more sedate and stable.&lt;/p&gt;
+
+&lt;h2 id=&#34;things-that-went-well-for-me:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Things that went well for me&lt;/h2&gt;
+
+&lt;h4 id=&#34;day-job:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Day job&lt;/h4&gt;
+
+&lt;p&gt;Absolutely happy with the day job. Totally in love with the ownership model we have in place. I get to decide which project I will be most interested to work on. I decide what needs to be done in what time. Though this causes laziness, I manage it by following a stricter schedule, and by giving importance of the sense of trust shown in me &amp;ndash; if someone trusts me this much, it is my moral responsibility to not disappoint him by underperforming.&lt;/p&gt;
+
+&lt;p&gt;Our chief arhitect, Soren Hansen, is exceptionally brilliant, and equally understanding. I can talk to him just like a friend.&lt;/p&gt;
+
+&lt;h4 id=&#34;day-job-compensation:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Day job compensation&lt;/h4&gt;
+
+&lt;p&gt;My salary has grown to an amount that my spendings are now less than 1/5th of my total salary. This means I have fairly early in my career reached a level where I don&amp;rsquo;t care too much about my salary, and how much it is going to increase, and related stuff. It is just another number reflected in my bank account.&lt;/p&gt;
+
+&lt;h4 id=&#34;task-tracking:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Task tracking&lt;/h4&gt;
+
+&lt;p&gt;Be it tracking articles to read, blogposts to write, side projects to do, or things to learn; I am tracking each of them very efficiently thanks to the Trello. An awesome tool, and I definitely recommend you to use it. Till last year, I used to rely upon Microsoft OneNote, and thankfully I have found a better alternative for that after quite some time.&lt;/p&gt;
+
+&lt;p&gt;I also now maintain a notebook and a pen. This helps a lot for things to do in a short time, as I can have my notebook always open at my desk &amp;ndash; not the same case with any software in the computer which always gets hidden in the background once we start working. It is a nice feeling to strike off items one-by-one from the bullet list you write down on a paper. I also find paper notebooks very helpful when I am planning something, e.g. a side project. The free form writing/drawing it allows is still not possible in the digital world, I believe.&lt;/p&gt;
+
+&lt;h4 id=&#34;setting-up-priorities-in-life:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Setting up priorities in life&lt;/h4&gt;
+
+&lt;p&gt;Not anymore in mood of going for higher studies. Not going to prepare for interviews, and algorithmic questions. Going to work on side projects, and will look for opportunities of starting something of my own. Marriage? Don&amp;rsquo;t talk about it just yet.&lt;/p&gt;
+
+&lt;h2 id=&#34;things-that-didn-t-go-that-well:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Things that didn&amp;rsquo;t go that well&lt;/h2&gt;
+
+&lt;p&gt;As always, more negatives than positives :)&lt;/p&gt;
+
+&lt;h4 id=&#34;side-projects:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Side projects&lt;/h4&gt;
+
+&lt;p&gt;Two job changes, time spent in decision making and relocation, and day job work from four cities all made my life a little unsettled for a majority of this year. As a result, I couldn&amp;rsquo;t spend much time on any of them. I started with ResumAppGAE (I know, a poor name by any standards), an application to create your resume in a single-page HTML file, but left it completely as soon as I was offered a job at Amazon. Another one, &lt;a href=&#34;http://www.rushiagr.com/202020rule/&#34; target=&#34;_blank&#34;&gt;20-20-20 rule&lt;/a&gt;, is a simple one, and I am pretty happy with its progress. Not much learning involved in it, but it gave me important lessons with respect to time and priority management.&lt;/p&gt;
+
+&lt;h4 id=&#34;very-less-blogs:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Very less blogs&lt;/h4&gt;
+
+&lt;p&gt;I did work on a lot of items on which I can write blog articles, but always fell short of doing that. This article can be thought of an attempt to start fixing that.&lt;/p&gt;
+
+&lt;h4 id=&#34;feeble-concentration:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Feeble Concentration&lt;/h4&gt;
+
+&lt;p&gt;Failed hopelessly on the promise of using less online social networking. Still spending too much time on online news and social networks. I still think that at the most half an hour each day is enough to keep oneself abreast of all the happenings in the world, plus keeping in contact with friends. The harder part is execution :)&lt;/p&gt;
+
+&lt;p&gt;Also, there is still a very long way to go before I am confident of my breaks between working. Proper management of breaks directly affect the productivity when one is not on a break.&lt;/p&gt;
+
+&lt;h4 id=&#34;poor-time-management:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Poor time management&lt;/h4&gt;
+
+&lt;p&gt;Only in the last months was I able to reasonably balance my time between my day job, family and friends. I hope to continue the same in the coming year.&lt;/p&gt;
+
+&lt;h4 id=&#34;very-less-travelling-vacation:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Very less travelling/vacation&lt;/h4&gt;
+
+&lt;p&gt;Not a single trip to any place worth visiting in the whole year. Whatever vacations I took I spent time at home. I am going to repent in my old age if I continue like this.&lt;/p&gt;
+
+&lt;h2 id=&#34;plans-for-upcoming-year:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Plans for upcoming year&lt;/h2&gt;
+
+&lt;h4 id=&#34;better-planning:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Better planning&lt;/h4&gt;
+
+&lt;p&gt;Of day job, side projects, blog writing, vacations, time for friends and family.&lt;/p&gt;
+
+&lt;h4 id=&#34;write-blogs:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Write blogs&lt;/h4&gt;
+
+&lt;p&gt;Write as much as I can. It is the easiest, simplest and cheapest medium by which I can help people gain knowledge.&lt;/p&gt;
+
+&lt;h4 id=&#34;final-goal-plus-some-resolutions:d9471f9e8ad67160d0e6ab12cdc84eea&#34;&gt;Final goal, plus some resolutions&lt;/h4&gt;
+
+&lt;p&gt;Become expert in OpenStack. Implement and popularize a couple side projects (i.e. get people to love it). Lose weight. Do a simple workout daily.&lt;/p&gt;
+
+&lt;p&gt;All in all, a decent year. Not as good as I wanted it to be, but definitely better than the last one.&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Bye-Bye 2012, Welcome 2013</title>
+      <link>http://www.rushiagr.com/personal/blog/2013/01/02/bye-bye-2012-welcome-2013/</link>
+      <pubDate>Wed, 02 Jan 2013 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2013/01/02/bye-bye-2012-welcome-2013/</guid>
+      <description>
+
+&lt;p&gt;Listing down the things which went well for me in 2012, and which didn&amp;rsquo;t, and the plans for upcoming year 2013. Beware: More technical stuff than emotional.&lt;/p&gt;
+
+&lt;h2 id=&#34;things-which-went-well-in-2012:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Things which went well in 2012&lt;/h2&gt;
+
+&lt;h4 id=&#34;python:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Python&lt;/h4&gt;
+
+&lt;p&gt;Started learning Python at the start of year 2012, early January, and this same language landed me in the job which I absolutely love: working in one of the biggest &amp;lsquo;OpenSource&amp;rsquo; project in the world, written in Python! Getting paid for working on an opensource project is as awesome as it can become for me.&lt;/p&gt;
+
+&lt;h4 id=&#34;the-hunger-to-become-different-from-the-rest:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;The hunger to become different from the rest&lt;/h4&gt;
+
+&lt;p&gt;Gathered a lot of info on how things work in computer industry. Kept myself in contact with various hot topics, opensource projects.&lt;/p&gt;
+
+&lt;h4 id=&#34;the-job:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;The job&lt;/h4&gt;
+
+&lt;p&gt;Not faring too well on this front - the full time job. But still, I would consider I did good enough with regards to the work assigned to me. I, after six months into the job, still goes to office every morning with a thirst to make a difference.&lt;/p&gt;
+
+&lt;h4 id=&#34;cleanliness:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Cleanliness&lt;/h4&gt;
+
+&lt;p&gt;Scored much better in the second half. Spent dedicated amount of time each week to keep my room and flat clean and in order.&lt;/p&gt;
+
+&lt;h4 id=&#34;maintaining-a-todo-list:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Maintaining a TODO list&lt;/h4&gt;
+
+&lt;p&gt;Started late in the year, but seems a good progress on that front.&lt;/p&gt;
+
+&lt;h2 id=&#34;things-which-didn-t-go-that-well-in-2012:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Things which didn&amp;rsquo;t go that well in 2012&lt;/h2&gt;
+
+&lt;h4 id=&#34;concentration:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Concentration&lt;/h4&gt;
+
+&lt;p&gt;Still not able to concentrate on one thing for long. Get distracted too easily. Only rarely I sat at one place, focussed on one thing, for more than 50 minutes. Also, the last year&amp;rsquo;s resolution of opening FaceBook only once a day was put in trashcan on in the very first week of January!&lt;/p&gt;
+
+&lt;h4 id=&#34;not-focussed-enough-on-the-future-direction:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Not focussed enough on the future direction&lt;/h4&gt;
+
+&lt;p&gt;Poor goal setting. Peeked into a lot of opensource projects, dedicated proper time into none. Opensourced my projects too, but did not work on it much either. Made myself a perfect example of &amp;lsquo;naam bade aur darshan chhote&amp;rsquo; (appearing like an eminent personality, acting like a jerk).&lt;/p&gt;
+
+&lt;h4 id=&#34;programming-contest:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Programming contest&lt;/h4&gt;
+
+&lt;p&gt;Only kept in touch. Not solved much problems. This year, need to focus a lot on this front.&lt;/p&gt;
+
+&lt;h4 id=&#34;time-management:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Time management&lt;/h4&gt;
+
+&lt;p&gt;Never was able to manage time. Was not working on the same thing for even a week. Somewhere in the middle of working on a project, I find out &amp;lsquo;hey, this looks cool! Time to try hands on it!&amp;rsquo;. What about the thingy you were currently working on? Into the TODO list! Such an idiot.&lt;/p&gt;
+
+&lt;h4 id=&#34;work-life-balance:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Work life balance&lt;/h4&gt;
+
+&lt;p&gt;Went for a toss. Not able to regularise job timings. Started and stopped gym. Started and stopped working on many projects. Completed none. Wasted a heck of a lot of time.&lt;/p&gt;
+
+&lt;h2 id=&#34;plans-for-upcoming-year:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Plans for upcoming year&lt;/h2&gt;
+
+&lt;h4 id=&#34;better-planning:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Better planning&lt;/h4&gt;
+
+&lt;p&gt;I need to plan things before acting on it. I would take everything into consideration before jumping into hacking something, and then set a deadline for it. And till that deadline, I would promise I would not digress getting enticed by something which makes my mouth watery.&lt;/p&gt;
+
+&lt;h4 id=&#34;don-t-just-outright-neglect-daytime-job:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Don&amp;rsquo;t just outright neglect daytime job&lt;/h4&gt;
+
+&lt;p&gt;I agree my daytime job is awesome. But I end up considering the work I do at office as secondary. Need to value it much higher. I concentrate on other projects and aim to complete and polish them. What I did not thought was the work I am doing in my job itself is a project! If I am not faring well in the project on which I work 8 hours a day, how can I expect myself to do good in something I am spending only a fraction of time I spend on the daytime project! And expectedly, none of my projects are in good enough shape to talk about it confidently in public. I need to value OpenStack more. Really.&lt;/p&gt;
+
+&lt;h4 id=&#34;start-coding-for-programming-contests:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;START coding for programming contests&lt;/h4&gt;
+
+&lt;p&gt;Enough of promises, enough of &amp;lsquo;From next month I&amp;rsquo;m gonna do it&amp;rsquo;. I SHOULD spend a specific time every week for coding for programming contests. Looks like I need to start with solving old problems from CodeChef.com alongwith the editorials provided with them.&lt;/p&gt;
+
+&lt;h4 id=&#34;facebook-once-in-a-day:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Facebook once in a day&lt;/h4&gt;
+
+&lt;p&gt;Period.&lt;/p&gt;
+
+&lt;h4 id=&#34;need-to-plan-breaks-too:99646ca7efbf03e7e0246d61a4261ee0&#34;&gt;Need to plan breaks too&lt;/h4&gt;
+
+&lt;p&gt;Realised only the last month that opening facebook, checking out news, and reading articles on Hacker News does not count in a break. A break is not in front of a computer screen. A break is something which gives your strained eyes a rest, especially when you end up spending half of your year staring at a computer screen!&lt;/p&gt;
+
+&lt;p&gt;PS. The article is for the writer himself. It is okay if you are finding it a bad piece of English text.&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

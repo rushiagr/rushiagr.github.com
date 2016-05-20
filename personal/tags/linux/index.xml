@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/personal/tags/linux/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2014 Rushi Agrawal</copyright>
+    <updated>Tue, 14 Jan 2014 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Quick Start: Linux Logical Volume Manager</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/01/14/quick-start-linux-logical-volume-manager/</link>
+      <pubDate>Tue, 14 Jan 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/01/14/quick-start-linux-logical-volume-manager/</guid>
+      <description>
+
+&lt;p&gt;While installing the latest Ubuntu OS on your computer, you will see that
+you can install the OS using LVM (Logical Volume Manager) utility. Ever wonder what is it?
+LVM (Logical Volume Manager) is that fantastic utility for storage administration.
+It provide the users with abilities which were not possible with raw disks.
+The storage is now &amp;lsquo;virtualized&amp;rsquo;. You can now easily create, move and extend volumes (for now, think of it as disk partitions)
+without bothering about data corruption. You can carve partitions out of multiple disks,
+and can add and remove disks from a &amp;lsquo;volume group&amp;rsquo; containing such volumes without the user noticing anything!
+List of all the features of LVM can be found at it&amp;rsquo;s &lt;a href=&#34;http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)&#34;
+target=&#34;_blank&#34;&gt;wiki page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This blog scratches the surface of LVM, and gives some basic insights into some storage concepts.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;I&amp;rsquo;ll give you a simple example to better explain what a &amp;lsquo;physical volume&amp;rsquo;, a &amp;lsquo;volume group&amp;rsquo; and a
+&amp;lsquo;logical volume&amp;rsquo; is. Say I have two 1 TB hard disks - disk A and disk B. I have two equal-sized partitions on
+disk B, one of which I want to keep it to myself for my personal data. The &amp;lsquo;partition&amp;rsquo; term used here is
+same as what you see in a file explorer. For the unpartitioned disk, the complete disk is one single partition.&lt;/p&gt;
+
+&lt;p&gt;The partitions I described above are &amp;lsquo;physical volumes&amp;rsquo;. That is, on the disk, these are physically separate bytes (think of that
+partitioned disk as a spiral on disk divided in its length at the midpoint).
+Out of the first disk and one partition of the second disk, we create a &amp;lsquo;volume group&amp;rsquo; &amp;ndash; a logical pool of storage, out of which we can
+create lots of &amp;lsquo;logical volumes&amp;rsquo;. Even after you&amp;rsquo;ve created logical volumes over this volume group, you can add and remove physical volumes (partitions) from the volume group. You can do many more operations such as resize, move and extend.&lt;/p&gt;
+
+&lt;p&gt;I hope the basic idea written above is sufficiently clear. Else, head over to this Ubuntu &lt;a href=&#34;https://wiki.ubuntu.com/Lvm&#34; target=&#34;_blank&#34;&gt;wiki&lt;/a&gt; for a slightly more detailed, but still an overview, of LVM. Anyway, I&amp;rsquo;m concentrating more on the demo, so lets move on.&lt;/p&gt;
+
+&lt;h4 id=&#34;hands-on:2d2bf322b35613aefa5a64a06c866c26&#34;&gt;Hands-on&lt;/h4&gt;
+
+&lt;p&gt;I&amp;rsquo;m demo&amp;rsquo;ing everything on an Ubuntu machine, but it should work on any Linux distro (after you install the LVM2 package)&lt;/p&gt;
+
+&lt;p&gt;Install LVM2 package&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install lvm2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;One nice thing is you don&amp;rsquo;t need to create actual partitions on disks. We&amp;rsquo;ll use files as &lt;a href=&#34;http://en.wikipedia.org/wiki/Loop_device&#34; target=&#34;_blank&#34;&gt;loopback devices&lt;/a&gt;, which will appear to the operating system as partitions. Neat.&lt;/p&gt;
+
+&lt;p&gt;Create a file of size 1G to be later used as a physical volume.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ truncate --size 1G backing_file_1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a loopback device over this file. Find the first free loopback device available and show its name.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ sudo losetup --find --show backing_file_1 
+/dev/loop0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all the loopback devices.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ sudo losetup --all
+/dev/loop0: [fc00]:22811987 (/home/rushi/backing_file_1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a physical volume over this loopback device. Note that&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ sudo pvcreate /dev/loop0 
+  Physical volume &amp;quot;/dev/loop0&amp;quot; successfully created
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List physical volumes. Apart from &lt;code&gt;pvs&lt;/code&gt; (Physical Volume Scan), there are two more
+commands which do the same thing, but with different level of verbosity and formatting: &lt;code&gt;pvscan&lt;/code&gt; and &lt;code&gt;pvdisplay&lt;/code&gt;. (Try them out too!)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ sudo pvs
+  PV         VG        Fmt  Attr PSize   PFree 
+  /dev/loop0           lvm2 a--    1.00g  1.00g
+  /dev/sda5  ubuntu-vg lvm2 a--  931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let us repeat the steps to create another physical volume:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ truncate --size 1G backing_file_2
+rushi@jio:~$ sudo losetup --find --show backing_file_2 
+/dev/loop1
+rushi@jio:~$ sudo losetup --all
+/dev/loop0: [fc00]:22811987 (/home/rushi/backing_file_1)
+/dev/loop1: [fc00]:22812001 (/home/rushi/backing_file_2)
+rushi@jio:~$ sudo pvcreate /dev/loop1
+  Physical volume &amp;quot;/dev/loop1&amp;quot; successfully created
+rushi@jio:~$ sudo pvs
+  PV         VG        Fmt  Attr PSize   PFree 
+  /dev/loop0           lvm2 a--    1.00g  1.00g
+  /dev/loop1           lvm2 a--    1.00g  1.00g
+  /dev/sda5  ubuntu-vg lvm2 a--  931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a volume group &lt;code&gt;test-volgroup&lt;/code&gt; over these two physical volumes. (Actually, even if you don&amp;rsquo;t create physical volumes over loopback devices, while creating volume groups it will automatically create physical volumes over them).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ sudo vgcreate test-volgroup /dev/loop0 /dev/loop1
+  Volume group &amp;quot;test-volgroup&amp;quot; successfully created
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List the volume groups. (&lt;code&gt;vgs&lt;/code&gt;, &lt;code&gt;vgscan&lt;/code&gt; or &lt;code&gt;vgdisplay&lt;/code&gt; can be used)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ sudo vgs
+  VG            #PV #LV #SN Attr   VSize   VFree 
+  test-volgroup   2   0   0 wz--n-   1.99g  1.99g
+  ubuntu-vg       1   2   0 wz--n- 931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a logical volume &lt;code&gt;test-logicalvol&lt;/code&gt; over the &lt;code&gt;test-volgroup&lt;/code&gt; volume group.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ sudo lvcreate --size 400M --name test-logicalvol test-volgroup
+  Logical volume &amp;quot;test-logicalvol&amp;quot; created
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List logical volumes. (&lt;code&gt;lvs&lt;/code&gt;, &lt;code&gt;lvscan&lt;/code&gt;, &lt;code&gt;lvdisplay&lt;/code&gt; can be used)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ sudo lvs
+  LV              VG            Attr      LSize   Pool Origin Data%  Move Log Copy%  Convert
+  test-logicalvol test-volgroup -wi-a---- 400.00m                                           
+  root            ubuntu-vg     -wi-ao--- 923.35g                                           
+  swap_1          ubuntu-vg     -wi-ao---   7.88g                                           
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Easy, isn&amp;rsquo;t it? Let&amp;rsquo;s tear down everything. Though a simpler way would be to just remove the loopback device, which will automatically
+remove all the physical, logical volumes/volume groups created over them, let&amp;rsquo;s do it step-by-step. Note that you need to specify volume group while deleting logical volumes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ sudo lvremove test-volgroup
+Do you really want to remove active logical volume test-logicalvol? [y/n]: y
+  Logical volume &amp;quot;test-logicalvol&amp;quot; successfully removed
+rushi@jio:~$ sudo vgremove test-volgroup
+  Volume group &amp;quot;test-volgroup&amp;quot; successfully removed
+rushi@jio:~$ sudo pvremove /dev/loop0 /dev/loop1
+  Labels on physical volume &amp;quot;/dev/loop0&amp;quot; successfully wiped
+  Labels on physical volume &amp;quot;/dev/loop1&amp;quot; successfully wiped
+rushi@jio:~$ sudo losetup --detach /dev/loop0 /dev/loop1
+rushi@jio:~$ rm backing_file_1 backing_file_2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Linux Screens in DevStack</title>
+      <link>http://www.rushiagr.com/personal/blog/2013/06/05/linux-screens-in-devstack/</link>
+      <pubDate>Wed, 05 Jun 2013 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2013/06/05/linux-screens-in-devstack/</guid>
+      <description>
+
+&lt;p&gt;This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.&lt;/p&gt;
+
+&lt;p&gt;In a DevStack environment, all the processes run under something special in Linux, called as a &lt;code&gt;screen&lt;/code&gt;. For now, you can think of a ‘screen’ as a terminal running inside a terminal, with the special property that when you close your current terminal, your ‘screens’ will not actually die, so that you can reconnect to them when you connect to the Linux system through another terminal again! Now that should give you a hint why people use screens :)&lt;/p&gt;
+
+&lt;p&gt;Each screen runs a special ‘service’ of OpenStack. So the logs of each service will go to the respective screen. If you created the DevStack environment as a root user, the process of going to a screen is slightly complicated: You first need to become the &lt;code&gt;stack&lt;/code&gt; user if you are currently &lt;code&gt;root&lt;/code&gt;, and even before that, you need to run this command in most of the cases:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;chown stack:stack `readlink /proc/self/fd/0`
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Else it will produce this error &lt;code&gt;Cannot open your terminal &#39;/dev/pts/2&#39; - please check.&lt;/code&gt; , and then you can proceed to run this command to get to the screens:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;screen -x
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And if you ran the DevStack &lt;code&gt;stack.sh&lt;/code&gt; script as a non-root user, you just need to run that last little thingy to see the screens. One more reason why you should run DevStack as a non-root.&lt;/p&gt;
+
+&lt;p&gt;The way to detach from a screen is &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;D&lt;/code&gt;, that is, first press &lt;code&gt;CTRL+A&lt;/code&gt;, and then press &lt;code&gt;D&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;navigating-across-screens:81565885f4011e665cf1e89d6280caf9&#34;&gt;Navigating across screens&lt;/h2&gt;
+
+&lt;p&gt;You will see names of all the screens at the bottom of the terminal. The screen on which you currently are bears an asterisk (&lt;code&gt;*&lt;/code&gt;) near its name. To move to the right screen, do a &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;N&lt;/code&gt;. Keep in mind that you are going to use &lt;code&gt;CTRL+A&lt;/code&gt; a lot of times during your adventures with screen. Similar to the command &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;N&lt;/code&gt; to move to the right (“next”) screen, to move to the left screen the command is &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;P&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;There is one more way to jump directly to a screen. Lets say you want to directly jump to the fourth screen. You just need to do a &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;4&lt;/code&gt;, to go to fourth screen! Wasn’t that easy? But hey! How do I get to the seventeenth screen? Frankly, I don’t know a ‘direct’ way. I do a &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;9&lt;/code&gt; once, and &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;N&lt;/code&gt; eight more times. :( If you have a better way, please do tell me.&lt;/p&gt;
+
+&lt;p&gt;Navigating inside a screen&lt;/p&gt;
+
+&lt;p&gt;The first and biggest difficulty I faced while tracking an error in the screen logs is the periodic updates in Cinder dumps some lines to the Cinder screens every now and then. So if you have a stack trace of an error on the screen, it will go up and up and up till you can no more see it! Nope, scrolling your mouse up, or pulling the scrollbar up won’t help either (why not try it once :) ).&lt;/p&gt;
+
+&lt;p&gt;Within a few days, I thought “Hey, I’ll just reduce the font of the terminal and I’ll be able to see more lines of screen logs on my screen!”. I knew the command to reduce the font size of the terminal font: &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;-&lt;/code&gt; (just for the sake of completeness, the command to increase font is &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;+&lt;/code&gt;). That worked pretty okay upto a point. It actually helps to have logs in small font, as the logs will fit in one line on the screen and will look prettier. But what if I come after say a ten-minute break, and see all my logs are too far up to be able to see even by reducing font size?&lt;/p&gt;
+
+&lt;p&gt;Then I got to know the command which saved a ton of time in my life: The command to actually scroll up and down the screen.&lt;/p&gt;
+
+&lt;p&gt;To scroll up, first press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;[&lt;/code&gt;. After that, you can use arrow keys to scroll up and down. You can also use &lt;code&gt;page-up&lt;/code&gt; and &lt;code&gt;page-down&lt;/code&gt; buttons to scroll one complete page up or down. This isn’t all of it. If you are vim user, you will find that the &lt;code&gt;H&lt;/code&gt; &lt;code&gt;J&lt;/code&gt; &lt;code&gt;K&lt;/code&gt; &lt;code&gt;L&lt;/code&gt; will work for for &lt;code&gt;left&lt;/code&gt;, &lt;code&gt;down&lt;/code&gt;, &lt;code&gt;up&lt;/code&gt;, and &lt;code&gt;right&lt;/code&gt; respectively. And the last and most convenient thing: once you press &lt;code&gt;CTRL&lt;/code&gt; &lt;code&gt;[&lt;/code&gt;, that is, once you are in ‘copy mode’, you can then use your mouse scroll wheel too to scroll up and down!! Now that is a perfect delight :)&lt;/p&gt;
+
+&lt;p&gt;To come out of this copy mode (so that you can switch to another screen, and do other such stuff), press &lt;code&gt;]&lt;/code&gt; and you are back to normal once again.&lt;/p&gt;
+
+&lt;h2 id=&#34;some-more-generic-screen-commands:81565885f4011e665cf1e89d6280caf9&#34;&gt;Some more ‘generic’ screen commands&lt;/h2&gt;
+
+&lt;p&gt;So that you can start playing around with screens outside OpenStack too&lt;/p&gt;
+
+&lt;p&gt;Create a new screen&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;screen
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To detach from current screen&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ctrl+A,D
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To reattach to an existing screen&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;screen -rd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To view all the screens, their states and IDs&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;screen -list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To kill a screen with id SCREENID&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;screen -X -S SCREENID kill
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+
+&lt;p&gt;-Rushi Agrawal&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

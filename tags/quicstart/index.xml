@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/tags/quicstart/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2014 Rushi Agrawal</copyright>
+    <updated>Sat, 12 Apr 2014 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Open Source Puppet - Quick Start</title>
+      <link>http://www.rushiagr.com/blog/2014/04/12/open-source-puppet-quick-start/</link>
+      <pubDate>Sat, 12 Apr 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2014/04/12/open-source-puppet-quick-start/</guid>
+      <description>
+
+&lt;p&gt;This post aims to be your quickest guide to get started with Puppet. We&amp;rsquo;ll be using the open source version of Puppet. An hour of spare time and two Ubuntu machines (physical or virtual doesn&amp;rsquo;t matter) is all that is needed.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h2 id=&#34;quick-introduction:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Quick Introduction&lt;/h2&gt;
+
+&lt;p&gt;Lets say you want to install and run apache server on one of the machines in your lab. On another, you want to create a new user. On a third machine, you want to install MySQL, and allow access to this machine only from the first server. Seems like a lot of manual work isn&amp;rsquo;t it? The power of Puppet is, you can specify all these tasks in a file, called &amp;lsquo;Puppet manifest&amp;rsquo;, and then execute it. Everything will be set up for you just as you wanted! Now what makes this &amp;lsquo;I care about the end result, not the process&amp;rsquo; approach really powerful is you can &amp;lsquo;apply&amp;rsquo; this manifest over and over again to get the same end result. You can easily modify this manifest file, extend it, and manage it under version control, just like you would with a piece of software. Welcome to the world of IT automation :)&lt;/p&gt;
+
+&lt;p&gt;Although the syntax of a Puppet manifest is Ruby-ish, no knowledge of Ruby is required at all (I don&amp;rsquo;t know Ruby).&lt;/p&gt;
+
+&lt;p&gt;There is a whole lot of things you can do with Puppet. Here, we&amp;rsquo;ll just get us started with it. Once you are through this post, you can head over to Puppet Labs&amp;rsquo; documents and tutorials, for more on &amp;ldquo;how&amp;rdquo;s and &amp;ldquo;why&amp;rdquo;s of Puppet.&lt;/p&gt;
+
+&lt;h2 id=&#34;setup:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Setup&lt;/h2&gt;
+
+&lt;p&gt;You just require two Ubuntu machines connected to each other. One will be the Puppet &amp;lsquo;master&amp;rsquo; node (the machine which will take care of managing the configuration and state of all the machines in our deployment), the other one &amp;lsquo;slave&amp;rsquo; (which unfortunately is the only actual machine in demo deployment :) ).&lt;/p&gt;
+
+&lt;p&gt;Here I am using two  virtual machines, but you can create one virtual machine and use your host machine as the other one. The hostnames of the master and slave in my setup are &lt;code&gt;puppet-master&lt;/code&gt; and &lt;code&gt;puppet-agent&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Make sure both the machines are ping-able from each other &amp;ndash; by their IP as well as hostnames (e.g. &lt;code&gt;ping 123.123.123.123&lt;/code&gt; and &lt;code&gt;ping puppet-master&lt;/code&gt;). Make sure your /etc/hosts file looks something like this to achieve that:&lt;/p&gt;
+
+&lt;p&gt;(&lt;code&gt;192.168.56.130&lt;/code&gt; and &lt;code&gt;192.168.56.131&lt;/code&gt; are the IP addresses of externally-visible interfaces of hosts &lt;code&gt;puppet-master&lt;/code&gt; and &lt;code&gt;puppet-agent&lt;/code&gt; respectively)&lt;/p&gt;
+
+&lt;p&gt;Master:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ cat /etc/hosts
+127.0.0.1   localhost
+127.0.1.1   puppet-master
+
+192.168.56.131  puppet-agent
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Slave:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ cat /etc/hosts
+127.0.0.1   localhost
+127.0.1.1   puppet-agent
+
+192.168.56.130  puppet-master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;getting-the-hands-dirty-puppet-cli:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Getting the hands dirty &amp;ndash; Puppet CLI&lt;/h2&gt;
+
+&lt;p&gt;Install &lt;code&gt;puppetmaster&lt;/code&gt; package on the master node&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install puppetmaster
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all the users on the current system:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;puppet resource user --list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So basically a &amp;lsquo;user&amp;rsquo; is a &amp;lsquo;resource&amp;rsquo; in Puppet terminology. Now only list a specific resource. &lt;code&gt;r&lt;/code&gt; is the current user in my case.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ puppet resource user r
+user { &#39;r&#39;:
+  ensure  =&amp;gt; &#39;present&#39;,
+  comment =&amp;gt; &#39;r,,,&#39;,
+  gid     =&amp;gt; &#39;1000&#39;,
+  groups  =&amp;gt; [&#39;adm&#39;, &#39;cdrom&#39;, &#39;sudo&#39;, &#39;dip&#39;, &#39;plugdev&#39;, &#39;lpadmin&#39;, &#39;sambashare&#39;],
+  home    =&amp;gt; &#39;/home/r&#39;,
+  shell   =&amp;gt; &#39;/bin/bash&#39;,
+  uid     =&amp;gt; &#39;1000&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice the syntax. Resource &amp;lsquo;r&amp;rsquo; is of type &amp;lsquo;user&amp;rsquo;, with &amp;lsquo;ensure&amp;rsquo;, &amp;lsquo;comment&amp;rsquo;, etc as keys/attributes, and &amp;lsquo;present&amp;rsquo;, &amp;lsquo;r,,,&amp;rsquo; as values for those attributes.&lt;/p&gt;
+
+&lt;p&gt;You can change the value using the Puppet CLI&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet resource user r comment=&#39;some text missing&#39;
+notice: /User[r]/comment: comment changed &#39;r,,,&#39; to &#39;some text missing&#39;
+user { &#39;r&#39;:
+  ensure  =&amp;gt; &#39;present&#39;,
+  comment =&amp;gt; &#39;some text missing&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a new user with specified key-value pairs&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet resource user katie ensure=present shell=/bin/bash
+notice: /User[katie]/ensure: created
+user { &#39;katie&#39;:
+  ensure =&amp;gt; &#39;present&#39;,
+  shell  =&amp;gt; &#39;/bin/bash&#39;,
+}
+r@puppet-master:~$ sudo puppet resource user katie 
+user { &#39;katie&#39;:
+  ensure           =&amp;gt; &#39;present&#39;,
+  gid              =&amp;gt; &#39;1001&#39;,
+  home             =&amp;gt; &#39;/home/katie&#39;,
+  password         =&amp;gt; &#39;!&#39;,
+  password_max_age =&amp;gt; &#39;99999&#39;,
+  password_min_age =&amp;gt; &#39;0&#39;,
+  shell            =&amp;gt; &#39;/bin/bash&#39;,
+  uid              =&amp;gt; &#39;1001&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Remove the newly created user, but this time, let&amp;rsquo;s put this information into a file &lt;code&gt;katie_remove.pp&lt;/code&gt; and ask Puppet to &amp;lsquo;apply&amp;rsquo; this file and thus removing the user &amp;lsquo;katie&amp;rsquo;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ cat katie_remove.pp 
+user {&#39;katie&#39;:
+    ensure =&amp;gt; absent,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Apply this Puppet manifest&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet apply katie_absent.pp 
+warning: Could not retrieve fact fqdn
+notice: /Stage[main]//User[katie]/ensure: removed
+notice: Finished catalog run in 0.47 seconds
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Puppet&amp;rsquo;s description of user &amp;lsquo;katie&amp;rsquo;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet resource user katie
+  user { &#39;katie&#39;:
+  ensure =&amp;gt; &#39;absent&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;is now same as that of a non-existent user.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet resource user absent-user
+  user { &#39;absent-user&#39;:
+  ensure =&amp;gt; &#39;absent&#39;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That is, the user &amp;lsquo;katie&amp;rsquo; is now deleted. You can see that the &amp;lsquo;ensure&amp;rsquo; attribute can be used to make sure a user (or in general, any &amp;lsquo;resource&amp;rsquo;, is present, or absent).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Ignore the warning which is printed while applying a manifest from a file. Or if you are bothered by it popping up all the time, in the &lt;code&gt;/etc/hosts&lt;/code&gt; file, change&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;127.0.1.1   puppet-master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;to&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;127.0.1.1   puppet-master.rushiagr.com puppet-master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;where you can choose a domain name of your own choice in place of &lt;code&gt;.rushiagr.com&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;puppet-modules:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet modules&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; &lt;code&gt;puppet module&lt;/code&gt; doesn&amp;rsquo;t work on Precise (Ubuntu 12.04). You need to install ruby, and gems, etc. Too much of a hassle. So I&amp;rsquo;ll just post commands here which work for a higher version of Ubuntu.&lt;/p&gt;
+
+&lt;p&gt;Install standard library:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo puppet module install puppetlabs/stdlib
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;View all the installed modules&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet module list
+/etc/puppet/modules
+├── puppetlabs-mysql (v2.2.1)
+├── puppetlabs-ntp (v3.0.2)
+└── puppetlabs-stdlib (v4.1.0)
+/usr/share/puppet/modules (no modules installed)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All the modules, and all other information in the system goes in &lt;code&gt;/etc/puppet&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Modules installed via &lt;code&gt;sudo&lt;/code&gt; will be visible when you perform &lt;code&gt;puppet module list&lt;/code&gt; with &lt;code&gt;sudo&lt;/code&gt; only. Same for non-&lt;code&gt;sudo&lt;/code&gt; use.&lt;/p&gt;
+
+&lt;h2 id=&#34;puppet-in-master-client-configuration:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet in master-client configuration&lt;/h2&gt;
+
+&lt;p&gt;Everything we did so far concerned with a single machine. Let&amp;rsquo;s now introduce another machine &amp;ndash; Puppet agent.&lt;/p&gt;
+
+&lt;p&gt;Note that you need to set FQDNs for both the machines. See the step above, where we suppressed a warning.&lt;/p&gt;
+
+&lt;p&gt;First, we&amp;rsquo;ll need to install &lt;code&gt;puppet&lt;/code&gt; package (the agent) on the agent node.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install puppet
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;By default, the Puppet agent service will not be running.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ sudo service puppet status
+ * agent is not running
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Before starting it, change &lt;code&gt;START=no&lt;/code&gt; to &lt;code&gt;START=yes&lt;/code&gt; in &lt;code&gt;/etc/default/puppet&lt;/code&gt; file, to start the agent service by default when the system starts/reboots.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo sed -i s/START=no/START=yes/g /etc/default/puppet 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And add these two lines at the end of &lt;code&gt;/etc/puppet/puppet.conf&lt;/code&gt; to allow the agent to discover the master by its FQDN.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[agent]
+server = puppet-master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now start the Puppet agent service&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ sudo service puppet start
+ * Starting puppet agent                                   [ OK ] 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I also make sure that clocks of both the machines are synchronized by running &lt;code&gt;ntpdate&lt;/code&gt; on both master and slave. I am not sure if this is required, but doesn&amp;rsquo;t do any harm.
+    sudo ntpdate pool.ntp.org&lt;/p&gt;
+
+&lt;p&gt;Now the master needs to sign the certs by agent.&lt;/p&gt;
+
+&lt;p&gt;Execute this command on agent node.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo puppet agent --test --waitforcert 60
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now hop over to the master node, and retrieve the list of certs waiting to be signed&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet cert --list
+  &amp;quot;puppet-agent.rushiagr.com&amp;quot; (EB:0F:E4:14:6F:B2:7E:85:7E:21:26:C4:78:80:58:E1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Sign the cert&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-master:~$ sudo puppet cert sign puppet-agent.rushiagr.com
+notice: Signed certificate request for puppet-agent.rushiagr.com
+notice: Removing file Puppet::SSL::CertificateRequest puppet-agent.rushiagr.com at &#39;/var/lib/puppet/ssl/ca/requests/puppet-agent.rushiagr.com.pem&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we are ready to go. Let&amp;rsquo;s create a file (&amp;lsquo;Puppet manifest&amp;rsquo;) on master where we write that: 1. We want apache package to be installed. 2. Once we ensure that the package is installed, we want to start the apache service. We&amp;rsquo;ll name the file &lt;code&gt;site.pp&lt;/code&gt;, which is the &amp;lsquo;main&amp;rsquo; configuration file for Puppet. We&amp;rsquo;ll put it into &lt;code&gt;/etc/puppet/manifests&lt;/code&gt; directory. Note how we can specify a dependency between resources.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;package { &#39;apache2&#39;:
+    ensure =&amp;gt; installed
+}
+
+service { &#39;apache2&#39;:
+    ensure =&amp;gt; true,
+    enable =&amp;gt; true,
+    require =&amp;gt; Package[&#39;apache2&#39;]
+}       
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Puppet works on &amp;lsquo;push&amp;rsquo; model, meaning configurations are pulled by agents at periodic intervals. I think the default periodic interval is 30 minutes. Alternatively, you can pull from agent at your own will, any time. Let&amp;rsquo;s do that now. Execute this command on the agent:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ sudo puppet agent --test
+info: Caching catalog for puppet-agent.rushiagr.com
+info: Applying configuration version &#39;1397343482&#39;
+notice: /Stage[main]//Package[apache2]/ensure: ensure changed &#39;purged&#39; to &#39;present&#39;
+notice: Finished catalog run in 6.30 seconds
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And you can see the apache server running!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@puppet-agent:~$ sudo service apache2 status
+Apache2 is running (pid 5874).
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ta! Da!&lt;/p&gt;
+
+&lt;p&gt;Please comment if you have any ideas to make this post easier for the newbies to understand.&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This is just a quick start guide. There are excellent resources and docs at &lt;a href=&#34;http://puppetlabs.com&#34;&gt;puppetlabs.com&lt;/a&gt;. I have their beginner&amp;rsquo;s &lt;a href=&#34;https://dl.dropboxusercontent.com/u/42084476/OpenStack/learningpuppet.pdf&#34;&gt;PDF&lt;/a&gt; saved in my DropBox.
+Around 80 pages long, it covers almost every aspect of basic Puppet. The only problem with this guide is it is (I think deliberately) made to work only with the Enterprise Puppet version, but you can always refer back to this post to know how to set the open source version :)&lt;/p&gt;
+
+&lt;p&gt;If you mess up the cert signing process, here is a quick and dirty way to get it resolved. On master:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo puppet cert clean puppet-agent.rushiagr.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;On both master and slave:
+    sudo rm -r /var/lib/puppet/ssl
+    sudo service puppet restart&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Playing around with Cinder multi-backend</title>
+      <link>http://www.rushiagr.com/blog/2014/01/16/playing-around-with-cinder-backend/</link>
+      <pubDate>Thu, 16 Jan 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2014/01/16/playing-around-with-cinder-backend/</guid>
+      <description>
+
+&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature &amp;ndash; multi-backends
+with filter scheduler. So now you can have more than one storage boxes for block storage
+and manage them with one Cinder deployment. Here, I&amp;rsquo;m going to test it out using our
+favourite method &amp;ndash; trying it out on DevStack!&lt;/p&gt;
+
+&lt;p&gt;DevStack can provide you with two LVM backends to play around with them. But you&amp;rsquo;ll need to restack it.&lt;/p&gt;
+
+&lt;p&gt;Go to the devstack directory and pull the latest code. Destroy previous DevStack deployment if it exists.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~/devstack$ git pull origin master
+rushi@jio:~/devstack$ ./unstack.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Add the config option to &lt;code&gt;localrc&lt;/code&gt; which give you pre-cooked multi-backend setup with two LVM backends, both of 10G. Stack&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ echo &amp;quot;CINDER_MULTI_LVM_BACKEND=True&amp;quot; &amp;gt;&amp;gt; localrc
+rushi@jio:~$ ./devstack/stack.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can see that the cinder.conf file now has two values for enabled backends:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ less /etc/cinder/cinder.conf | grep enabled_backends
+enabled_backends = lvmdriver-1,lvmdriver-2
+#enabled_backends=&amp;lt;None&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Also, you can see that there are two configuration groups created at the end of that config file, one each for configurations
+corresponding to that particular backend&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ tail /etc/cinder/cinder.conf 
+
+[lvmdriver-1]
+volume_backend_name = LVM_iSCSI
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes
+
+[lvmdriver-2]
+volume_backend_name = LVM_iSCSI_2
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So you have two volume groups created for respective backends. Lets check it directly without using Cinder.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g 10.01g
+  stack-volumes2   1   0   0 wz--n-  10.01g 10.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hmmm. Two volume groups, each of size 10G.&lt;/p&gt;
+
+&lt;h3 id=&#34;case-1-spreading-volumes-across-backends:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 1: Spreading volumes across backends&lt;/h3&gt;
+
+&lt;p&gt;Now, lets create a volume and see where it ends up.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder create 1
+ERROR: You must provide a username via either --os-username or env[OS_USERNAME]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Oops! Let me try again..&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ . devstack/openrc 
+rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:29:49.241493      |
+|    description    |                 None                 |
+|         id        | ecfbfebb-73d5-4faf-b625-e69f18020378 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ cinder list
++--------------------------------------+-----------+------+------+-------------+----------+-------------+
+|                  ID                  |   Status  | Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+------+------+-------------+----------+-------------+
+| ecfbfebb-73d5-4faf-b625-e69f18020378 | available | None |  1   |     None    |  false   |             |
++--------------------------------------+-----------+------+------+-------------+----------+-------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g 10.01g
+  stack-volumes2   1   2   0 wz--n-  10.01g  9.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So it went to backend number 2. If you are admin (&lt;code&gt;source devstack/openrc admin admin&lt;/code&gt;), you can do a &lt;code&gt;cinder show&lt;/code&gt; too, to get information
+as to which host did this volume go to. Only the admin is allowed to view the host information.&lt;/p&gt;
+
+&lt;p&gt;The scheduler now gets reported of the capabilities which the backends have (check out the &lt;code&gt;c-shr&lt;/code&gt; screen to see it). The scheduler then weighs the backend based on these capabilities and decides which of them has higher &amp;lsquo;weight&amp;rsquo; to serve the next &amp;lsquo;create&amp;rsquo; request. By default, the &amp;lsquo;weigher&amp;rsquo; for scheduler is &lt;code&gt;CapacityWeigher&lt;/code&gt;. That is, whichever backend has higher capacity, that backend will be chosen for the next &amp;lsquo;create&amp;rsquo; request.&lt;/p&gt;
+
+&lt;p&gt;So in our case, when we&amp;rsquo;ll do another &amp;lsquo;create volume&amp;rsquo; it will now land on to the first backend.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:39:23.958468      |
+|    description    |                 None                 |
+|         id        | aa79c608-47cc-44e3-a614-f4bddaab68e5 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g  9.01g
+  stack-volumes2   1   2   0 wz--n-  10.01g  9.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Neat!&lt;/p&gt;
+
+&lt;h3 id=&#34;case-2-stacking-all-volumes-at-one-backend:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 2 : Stacking all volumes at one backend&lt;/h3&gt;
+
+&lt;p&gt;What if we want to keep all the volumes at only one backend? Cinder allows you to do that too!
+There is a configuration option in cinder.conf, &lt;code&gt;capacity_weight_multiplier&lt;/code&gt;, which allows you to multiply the &amp;lsquo;capacity weight&amp;rsquo; by a number.
+So if the multiplier is 1, a backend with higher capacity will have higher weight, and will be the choice for the next volume creation request.
+This is the default case. BUT what if we set it to -1? The backend with higher available capacity will have more negative weight, which will make that backend less preferable for next &amp;lsquo;create&amp;rsquo; request, and hence the request will go to the backend which has lesser capacity!&lt;/p&gt;
+
+&lt;p&gt;Let us see this too in action.&lt;/p&gt;
+
+&lt;p&gt;Check out the config option from cinder.conf file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cat /etc/cinder/cinder.conf | grep -B 3 ^capacity_weight_multiplier
+
+# Multiplier used for weighing volume capacity. Negative
+# numbers mean to stack vs spread. (floating point value)
+# capacity_weight_multiplier=1.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The config option is commented out and is there just so that you can easily change it. Now uncomment it and change it&amp;rsquo;s value to -1.&lt;/p&gt;
+
+&lt;p&gt;Delete previously created volumes. Kill all the three Cinder screen processes (&lt;code&gt;c-api&lt;/code&gt;, &lt;code&gt;c-sch&lt;/code&gt; and &lt;code&gt;c-vol&lt;/code&gt;), and restart them.&lt;/p&gt;
+
+&lt;p&gt;Lets create two volumes and see where they end up..&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder list
++----+--------+------+------+-------------+----------+-------------+
+| ID | Status | Name | Size | Volume Type | Bootable | Attached to |
++----+--------+------+------+-------------+----------+-------------+
++----+--------+------+------+-------------+----------+-------------+
+rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:56:59.845733      |
+|    description    |                 None                 |
+|         id        | b927b328-5ae0-411a-9de2-22ed732b4946 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+rushi@jio:~$ cinder create 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T17:57:01.132756      |
+|    description    |                 None                 |
+|         id        | 9f643f2d-7221-4a5c-bf48-1977c9b89fd3 |
+|      metadata     |                  {}                  |
+|        name       |                 None                 |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   e441f49105f343da87316ab7157e2ab7   |
+|    volume_type    |                 None                 |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   0   0 wz--n-  10.01g 10.01g
+  stack-volumes2   1   2   0 wz--n-  10.01g  8.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;:)&lt;/p&gt;
+
+&lt;h3 id=&#34;case-3-custom-choice:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 3 : Custom choice&lt;/h3&gt;
+
+&lt;p&gt;What if I have two different backends (maybe one is slower, or costlier, than the other), and my users want to exactly specify how many volumes they want of each &amp;lsquo;type&amp;rsquo; of backends? Here, Cinder&amp;rsquo;s &amp;lsquo;volume types&amp;rsquo; have us covered.&lt;/p&gt;
+
+&lt;p&gt;We can associate a volume type with a backend, and then the users can create a volume of whatever &amp;lsquo;type&amp;rsquo; they want.
+Let&amp;rsquo;s throw some discrimination at these backends. I&amp;rsquo;ll create two volume types: &amp;lsquo;gold&amp;rsquo; and &amp;lsquo;bronze&amp;rsquo;, and associate &amp;lsquo;stack-volumes&amp;rsquo; with &amp;lsquo;gold&amp;rsquo; and similarly for &amp;lsquo;stack-volumes2&amp;rsquo;. Note that this job can only be done by the administrator.&lt;/p&gt;
+
+&lt;p&gt;Let us be admins&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ . devstack/openrc admin admin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create both the volume types and list them.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder type-create gold
++--------------------------------------+------+
+|                  ID                  | Name |
++--------------------------------------+------+
+| dd883ee0-24be-42e1-ab2e-b9a01454f2f9 | gold |
++--------------------------------------+------+
+rushi@jio:~$ cinder type-create bronze
++--------------------------------------+--------+
+|                  ID                  |  Name  |
++--------------------------------------+--------+
+| f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze |
++--------------------------------------+--------+
+
+rushi@jio:~$ cinder type-list
++--------------------------------------+--------+
+|                  ID                  |  Name  |
++--------------------------------------+--------+
+| dd883ee0-24be-42e1-ab2e-b9a01454f2f9 |  gold  |
+| f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze |
++--------------------------------------+--------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Get the backend names (&lt;code&gt;volume_backend_name&lt;/code&gt; config option) from cinder.conf file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ tail /etc/cinder/cinder.conf 
+
+[lvmdriver-1]
+volume_backend_name = LVM_iSCSI
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes
+
+[lvmdriver-2]
+volume_backend_name = LVM_iSCSI_2
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_group = stack-volumes2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s associate backend &lt;code&gt;LVM_iSCSI&lt;/code&gt; with volume type &amp;lsquo;gold&amp;rsquo;, and similarly for the other one.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder type-key gold set volume_backend_name=LVM_iSCSI
+rushi@jio:~$ cinder type-key bronze set volume_backend_name=LVM_iSCSI_2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;These association are stored as key-value pairs in the volume type&amp;rsquo;s &amp;lsquo;extra specs&amp;rsquo;. Let&amp;rsquo;s see them&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder extra-specs-list 
++--------------------------------------+--------+------------------------------------------+
+|                  ID                  |  Name  |               extra_specs                |
++--------------------------------------+--------+------------------------------------------+
+| dd883ee0-24be-42e1-ab2e-b9a01454f2f9 |  gold  |  {u&#39;volume_backend_name&#39;: u&#39;LVM_iSCSI&#39;}  |
+| f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze | {u&#39;volume_backend_name&#39;: u&#39;LVM_iSCSI_2&#39;} |
++--------------------------------------+--------+------------------------------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can add more key-value pairs for these volume types with different key names. &lt;code&gt;volume_backend_name&lt;/code&gt; is a reserved key name, though.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s create two volumes of type &amp;lsquo;gold&amp;rsquo; and see where they end up being created:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder create --volume-type gold --name costly_vol_1 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T18:24:07.670635      |
+|    description    |                 None                 |
+|         id        | 767d4c56-6d3d-46f7-b0a3-4a00f696bcad |
+|      metadata     |                  {}                  |
+|        name       |             costly_vol_1             |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   c271eb32e71b411bb98ad7b93792d6d5   |
+|    volume_type    |                 gold                 |
++-------------------+--------------------------------------+
+rushi@jio:~$ cinder create --volume-type gold --name costly_vol_2 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T18:24:58.382180      |
+|    description    |                 None                 |
+|         id        | a938e556-65cf-4547-87ff-513d60f626d3 |
+|      metadata     |                  {}                  |
+|        name       |             costly_vol_2             |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   c271eb32e71b411bb98ad7b93792d6d5   |
+|    volume_type    |                 gold                 |
++-------------------+--------------------------------------+
+rushi@jio:~$ cinder list
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |     Name     | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+| 767d4c56-6d3d-46f7-b0a3-4a00f696bcad | available | costly_vol_1 |  1   |     gold    |  false   |             |
+| a938e556-65cf-4547-87ff-513d60f626d3 | available | costly_vol_2 |  1   |     gold    |  false   |             |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+
+rushi@jio:~$ sudo vgs
+  VG             #PV #LV #SN Attr   VSize   VFree 
+  stack-volumes    1   2   0 wz--n-  10.01g  8.01g
+  stack-volumes2   1   0   0 wz--n-  10.01g 10.01g
+  ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now create another one, but with type &amp;lsquo;bronze&amp;rsquo; and ensure it is created on the other backend.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rushi@jio:~$ cinder create --volume-type bronze --name cheap_vol_1 1
++-------------------+--------------------------------------+
+|      Property     |                Value                 |
++-------------------+--------------------------------------+
+|    attachments    |                  []                  |
+| availability_zone |                 nova                 |
+|      bootable     |                false                 |
+|     created_at    |      2014-01-16T18:27:05.852092      |
+|    description    |                 None                 |
+|         id        | 97f62c7a-b974-41e8-a659-1e6d3eb876d5 |
+|      metadata     |                  {}                  |
+|        name       |             cheap_vol_1              |
+|        size       |                  1                   |
+|    snapshot_id    |                 None                 |
+|    source_volid   |                 None                 |
+|       status      |               creating               |
+|      user_id      |   c271eb32e71b411bb98ad7b93792d6d5   |
+|    volume_type    |                bronze                |
++-------------------+--------------------------------------+
+
+rushi@jio:~$ sudo pvs
+  PV         VG             Fmt  Attr PSize   PFree 
+  /dev/loop0 stack-volumes  lvm2 a--   10.01g  8.01g
+  /dev/loop1 stack-volumes2 lvm2 a--   10.01g  9.01g
+  /dev/sda5  ubuntu-vg      lvm2 a--  931.27g 44.00m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Done :)&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

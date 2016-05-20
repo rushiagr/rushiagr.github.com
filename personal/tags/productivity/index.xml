@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/personal/tags/productivity/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2016 Rushi Agrawal</copyright>
+    <updated>Sun, 10 Jan 2016 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Tmux session shortcuts</title>
+      <link>http://www.rushiagr.com/personal/blog/2016/01/10/tmux-session-shortcuts/</link>
+      <pubDate>Sun, 10 Jan 2016 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2016/01/10/tmux-session-shortcuts/</guid>
+      <description>
+
+&lt;p&gt;Tmux is awesome. But the session management commands are way too long for my
+liking. Listing all sessions is &lt;code&gt;tmux list-sessions&lt;/code&gt;, attaching to a session
+&lt;code&gt;mysession&lt;/code&gt; is &lt;code&gt;tmux attach -t mysession&lt;/code&gt;, etc.&lt;/p&gt;
+
+&lt;p&gt;So I created a few functions and aliases, which can be found
+&lt;a href=&#34;https://github.com/rushiagr/myutils/blob/master/aliases/tmux.sh&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The general idea is, all commands start with &lt;code&gt;mx&lt;/code&gt;, which is basically a
+shortcut for &amp;lsquo;tMuX&amp;rsquo;. So &lt;code&gt;mxl&lt;/code&gt; is to &amp;lsquo;l&amp;rsquo;ist tmux sessions, &lt;code&gt;mxa&lt;/code&gt; is to &amp;lsquo;a&amp;rsquo;ttach
+to a tmux session, etc.&lt;/p&gt;
+
+&lt;p&gt;List all running tmux sessions&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@rushi:~$ mxl
+0: 4 windows (created Sun Jan 10 17:14:11 2016) [89x23] (attached)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can see one tmux session. Let&amp;rsquo;s create another tmux session with name
+&lt;code&gt;dev&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mx dev
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all sessions now&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;r@rushi:~$ mxl
+0: 4 windows (created Sun Jan 10 17:14:11 2016) [89x23] (attached)
+dev: 1 windows (created Sun Jan 10 17:59:30 2016) [89x23] (attached)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To attach to session with name &lt;code&gt;dev&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mxa dev
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can also omit session name, and it will attach to the last session you
+attached to.&lt;/p&gt;
+
+&lt;p&gt;If there was no session with name &lt;code&gt;dev2&lt;/code&gt;, and you type this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mxa dev2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It will automatically create a session for you and attach you to it.&lt;/p&gt;
+
+&lt;p&gt;To detach:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mxd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I find this &lt;code&gt;mxd&lt;/code&gt; to be easier to type than both &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;d&lt;/code&gt; and &lt;code&gt;tmux
+detach&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;installation:e0f68b4969c4b0e373b3bdfb560cffb9&#34;&gt;Installation&lt;/h3&gt;
+
+&lt;p&gt;You just need to copy the content in the above referenced link to &lt;code&gt;~/.bashrc&lt;/code&gt;
+file and from a new terminal session things will be ready for you to use :)&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

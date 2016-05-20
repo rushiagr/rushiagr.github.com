@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/tags/testing/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2014 Rushi Agrawal</copyright>
+    <updated>Fri, 05 Sep 2014 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>OpenStack Unit Testing Nuggets</title>
+      <link>http://www.rushiagr.com/blog/2014/09/05/openstack-unit-testing-nuggets/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2014/09/05/openstack-unit-testing-nuggets/</guid>
+      <description>
+
+&lt;p&gt;A small post about little things I found out while running unit tests in
+OpenStack.&lt;/p&gt;
+
+&lt;h2 id=&#34;unit-testing-setup:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Unit-testing setup&lt;/h2&gt;
+
+&lt;p&gt;Everybody knows &lt;code&gt;./run_tests.sh&lt;/code&gt; is used to run the unit tests of an OpenStack
+project. But, you require to install dependencies before doing it. And
+installing dependencies might not always succeed. So make sure you install
+these packages before running &lt;code&gt;pip install -r requirements.txt&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install build-essential libssl-dev libffi-dev \
+    python-dev libxslt1-dev libpq-dev python-mysqldb \
+    libmysqlclient-dev libvirt-dev
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Atleast &lt;code&gt;cinder&lt;/code&gt; and &lt;code&gt;nova&lt;/code&gt; dependencies will get installed properly after
+this.&lt;/p&gt;
+
+&lt;h2 id=&#34;run-tests-frequently-used-commands:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests frequently used commands&lt;/h2&gt;
+
+&lt;p&gt;To force the tests to NOT run in a virtual environment, even if it is present:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh -N
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Force a clean rebuild of virtual environment&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh -f
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run only PEP8 checks&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh -p
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run PEP8 checks only on the files which have been changed since last commit&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh -8
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run all tests from a specific file only, e.g. nova/tests/test_utils.py&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run all tests of only a specific class inside a test file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils.ResourceFilterTestCase
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run only a specific test&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils.ResourceFilterTestCase.test_resource_filtering
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;wildcards-while-running-the-tests:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Wildcards while running the tests&lt;/h2&gt;
+
+&lt;p&gt;Frequently you&amp;rsquo;ll find yourself testing only a couple of tests. In such cases,
+a wildcard will save you from typing the whole path of the test. The below
+command will also run &lt;code&gt;test_resource_filtering&lt;/code&gt; test:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.*resource_filt*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I currently don&amp;rsquo;t know how to make a test work without adding &lt;code&gt;nova.tests&lt;/code&gt;
+before it&lt;/p&gt;
+
+&lt;h2 id=&#34;run-tests-is-not-happy:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests is not happy&lt;/h2&gt;
+
+&lt;p&gt;Sometimes you&amp;rsquo;ll see running &lt;code&gt;./run_tests.sh&lt;/code&gt; can throw a lot of lines of
+ununderstandable gibberish on your screen. In the end it will say &lt;code&gt;testr
+failed&lt;/code&gt;, but it won&amp;rsquo;t give an indication of where it failed and why. I have
+seen that this happens due to only one of the following two reasons:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;em&gt;Syntax error&lt;/em&gt;: There is a syntax error in your code.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;em&gt;Dependencies outdated&lt;/em&gt;: Dependencies in your virtual environment is
+outdated. In such cases, you will need to recreate a virtual environment with
+latest packages. Or better: just update the virtual environment with the latest
+packages using this command:&lt;/p&gt;
+
+&lt;p&gt;./run_tests.sh -u&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;UPDATE: I&amp;rsquo;ve seen that nowadays it doesn&amp;rsquo;t throw a lot of gibberish, but just
+says &amp;lsquo;testr failed&amp;rsquo;, without any error log or stacktrace. This is the same
+situation &amp;ndash; can only happen when there is a syntax error, or if the
+dependencies are outdated.&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s it for now.&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>OpenStack Tempest quick start with DevStack</title>
+      <link>http://www.rushiagr.com/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/</link>
+      <pubDate>Wed, 20 Mar 2013 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/</guid>
+      <description>&lt;p&gt;UPDATE(April 2014): Now when you set up DevStack, Tempest is automatically set up for you.&lt;/p&gt;
+
+&lt;p&gt;This quick start guide explains setting up Tempest with a DevStack environment
+for Grizzly release. Most of the information here is taken from
+&lt;a href=&#34;http://www.joinfu.com/2012/03/testing-essex-rc1-with-devstack-and-tempest/&#34;&gt;here&lt;/a&gt;, the only difference being this blog post is more recent, and is based on Grizzly.&lt;/p&gt;
+
+&lt;p&gt;Assumptions made are that you understand:
+1. What is a &lt;code&gt;localrc&lt;/code&gt; file in DevStack.
+2. What does &lt;code&gt;./stack.sh&lt;/code&gt; do in DevStack.
+3. How to clone using git.&lt;/p&gt;
+
+&lt;p&gt;##Setting up DevStack&lt;/p&gt;
+
+&lt;p&gt;Clone DevStack&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/openstack-dev/devstack.git
+cd devstack
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Tempest requires that the rate-limiting for DevStack is turned off. By default, it is turned on, so turn it off by adding this line to the localrc file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;API_RATE_LIMIT=False
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you have already created a DevStack environment, you will have to go through the labour of setting it all again by unstacking and restacking it with this parameter in localrc.
+Quick tip: If you already had a working DevStack in your computer, adding &lt;code&gt;OFFLINE=True&lt;/code&gt; line in localrc will create the DevStack environment in your computer WITHOUT
+downloading all the OpenStack code all over again from the Github repos, but will build the environment from the existing code (thus saving you some Internet bandwidth and time).&lt;/p&gt;
+
+&lt;p&gt;Build the DevStack environment&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./stack.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Supply all the five passwords. (If you are just playing around, just like me, then
+you can easily supply &lt;code&gt;nova&lt;/code&gt; to all the passwords.)&lt;/p&gt;
+
+&lt;p&gt;Note the IP of the system where DevStack is running (The &amp;lsquo;host IP&amp;rsquo; mentioned at the last of the output after running &lt;code&gt;stack.sh&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;##Setting up Tempest&lt;/p&gt;
+
+&lt;p&gt;Clone latest Tempest code&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/openstack/tempest.git
+cd tempest
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create tempest.conf file from the sample configuration file. This file will contain the configuration information of the OpenStack environment (here, the DevStack
+environment)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cp etc/tempest.conf.sample etc/tempest.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now open the file tempest.conf in an editor, and replace all instance of word &lt;code&gt;secret&lt;/code&gt; with the appropriate password (&lt;code&gt;nova&lt;/code&gt; if you followed me, and just typed &lt;code&gt;nova&lt;/code&gt; whenever the
+&lt;code&gt;stack.sh&lt;/code&gt; script asked for passwords)&lt;/p&gt;
+
+&lt;p&gt;If, for example, your host IP is 10.0.24.30, change this line in tempest.conf&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;uri = http://127.0.0.1:5000/v2.0/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;to make it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;uri = http://10.0.24.30:5000/v2.0/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The last thing to update in the tempest.conf file is the ID of the Cirros image. The image ID can be obtained by two ways
+####Image ID using glance
+This command will return the image ID. Note that I have used the password &lt;code&gt;nova&lt;/code&gt; in this line. You might also need to change the host IP address&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;glance -I admin -K nova -T admin -N http://10.0.24.30:5000/v2.0 -S keystone index | grep ami | cut -f1 | awk &#39;{print $1}&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;####Image ID using OpenStack CLI
+Become stack user&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;su - stack
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Source the sample credentials file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;. /opt/stack/devstack/eucarc
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;OR&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;. /opt/stack/devstack/openrc
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Show all the images, with their IDs&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ nova image-list
++--------------------------------------+---------------------------------+--------+--------+
+| ID                                   | Name                            | Status | Server |
++--------------------------------------+---------------------------------+--------+--------+
+| 13abf9c8-5603-48cb-802e-e27162e10b58 | cirros-0.3.0-x86_64-uec         | ACTIVE |        |
+| 39b023ae-9201-427d-8350-4f30e5bbc01a | cirros-0.3.0-x86_64-uec-kernel  | ACTIVE |        |
+| 431a9c04-47b1-47e4-9521-7f12295c78e0 | cirros-0.3.0-x86_64-uec-ramdisk | ACTIVE |        |
++--------------------------------------+---------------------------------+--------+--------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The ID of the smallest image name is what we&amp;rsquo;re interested in.&lt;/p&gt;
+
+&lt;p&gt;Now replace &lt;code&gt;{$IMAGE_ID}&lt;/code&gt; and &lt;code&gt;{$IMAGE_ID_ALT}&lt;/code&gt; with this value, to make those two lines appear in tempest.conf as&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;image_ref = 13abf9c8-5603-48cb-802e-e27162e10b58
+image_ref_alt = 13abf9c8-5603-48cb-802e-e27162e10b58
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##Installing required dependencies
+Install all the required packages needed to run Tempest integration test suite. (The list of required packages is maintained in file &lt;code&gt;tools/pip-requires&lt;/code&gt;)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo pip install -r tools/pip-requires 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##Show time!
+We&amp;rsquo;ll run all the tests in verbose mode. To run all the tests:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;nosetests -v tempest
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To run tests only from a specific file, say &lt;code&gt;tempest/tests/volume/test_volumes_list.py&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;nosetests -sv tempest.tests.volume.test_volumes_list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;OR&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;nosetests -sv tempest.tests.volume.test_volumes_list.py
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To run a specific test &lt;code&gt;test_volume_list_with_details&lt;/code&gt; from test class &lt;code&gt;VolumeListTest&lt;/code&gt;, which resides in the above file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    nosetests -sv tempest.tests.volume.test_volumes_list:VolumeListTest.test_volume_list_with_details
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And that ladies and gentlemen, is the end! :)&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

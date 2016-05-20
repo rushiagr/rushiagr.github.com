@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/personal/tags/mysql/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2015 Rushi Agrawal</copyright>
+    <updated>Sat, 12 Dec 2015 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Better way to view MySQL tables</title>
+      <link>http://www.rushiagr.com/personal/blog/2015/12/12/better-way-to-view-mysql-tables/</link>
+      <pubDate>Sat, 12 Dec 2015 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2015/12/12/better-way-to-view-mysql-tables/</guid>
+      <description>
+
+&lt;h3 id=&#34;the-problem:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;The problem&lt;/h3&gt;
+
+&lt;p&gt;You are trying to print a MySQL table with a large number of columns, with
+&lt;code&gt;SELECT *&lt;/code&gt; command. You type &lt;code&gt;SELECT * FROM mysql.user LIMIT 1&lt;/code&gt;, and your terminal
+becomes &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-table-with-many-rows-messy.png&#34;&gt;this&lt;/a&gt;.
+If you wanted to view more than one row, you&amp;rsquo;re in a trouble :)&lt;/p&gt;
+
+&lt;h3 id=&#34;the-solution:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;The solution&lt;/h3&gt;
+
+&lt;p&gt;Run MySQL with this option:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql --pager=&amp;quot;less --chop-long-lines --quit-if-one-screen --no-init&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will make your table display only the rows it can in the current screen, something like &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-with-less-pager-neat.png&#34;&gt;this&lt;/a&gt;. You can
+use the arrow keys to move sideways to view the hidden column. Pressing the &amp;lsquo;right&amp;rsquo; arrow key will move half page towards right. Neat, isn&amp;rsquo;t it?&lt;/p&gt;
+
+&lt;p&gt;You can create an alias for mysql:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Using shorter version of &#39;less&#39; flags mentioned above
+alias mysql=&#39;mysql -SFX&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can put the above line in your &lt;code&gt;~/.bashrc&lt;/code&gt; file to load this alias
+in every new terminal session.&lt;/p&gt;
+
+&lt;h3 id=&#34;bonus-point-for-vim-users:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;Bonus point for Vim users&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;less&lt;/code&gt; allows using keys &lt;code&gt;j&lt;/code&gt; and &lt;code&gt;k&lt;/code&gt; for scrolling down and scrolling up. Unfortunately, you cannot directly use keys &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move sideways using &lt;code&gt;less&lt;/code&gt;. Fortunately, you can map &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move left or right, respectively. Here&amp;rsquo;s how to do that:&lt;/p&gt;
+
+&lt;p&gt;Create a file &lt;code&gt;.lesskey&lt;/code&gt; in your home directory, with the following contents&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;l noaction 10\e)
+h noaction 10\e)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now run this command, to generate &lt;code&gt;~/.less&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;lesskey
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will generate a binary file which &lt;code&gt;less&lt;/code&gt; understands. If you now start a new MySQL terminal session (of course with the above said &lt;code&gt;--pages&lt;/code&gt; flag), you can use Vim&amp;rsquo;s &lt;code&gt;HJKL&lt;/code&gt; movements. Here I have specified to move 10 characters to the right if you make one &amp;lsquo;right&amp;rsquo; Vim movement.&lt;/p&gt;
+
+&lt;h3 id=&#34;quick-setup-script:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;Quick setup script&lt;/h3&gt;
+
+&lt;p&gt;Don&amp;rsquo;t want to do the above stuff manually? Just run this command and your computer will be set up in a second!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sh -c &amp;quot;$(wget -q https://raw.githubusercontent.com/rushiagr/public/master/scripts/mysql-pretty-table.sh -O -)&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that changes will take effect from a new shell session (or you can run &lt;code&gt;source ~/.bashrc&lt;/code&gt; if you want things to work in the current session too.&lt;/p&gt;
+
+&lt;h3 id=&#34;more-information:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;More information&lt;/h3&gt;
+
+&lt;p&gt;Find more information at below links:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://unix.stackexchange.com/a/169969/91602&#34;&gt;About mapping &amp;lsquo;h&amp;rsquo; and &amp;lsquo;k&amp;rsquo; to Vim movements in &amp;lsquo;less&amp;rsquo;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/a/6422698/1143173&#34;&gt;About using &amp;lsquo;less&amp;rsquo; as MySQL pager&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Puppet installation from modules</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/09/14/puppet-installation-from-modules/</link>
+      <pubDate>Sun, 14 Sep 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/09/14/puppet-installation-from-modules/</guid>
+      <description>&lt;p&gt;A quick example of how to use Puppet to install and manage MySQL. We&amp;rsquo;ll
+download required Puppet modules from their git repositories.&lt;/p&gt;
+
+&lt;p&gt;Again, everything is tried on Ubuntu (14.04).&lt;/p&gt;
+
+&lt;p&gt;Make sure &lt;code&gt;hostname -f&lt;/code&gt; shows your FQDN. Then install puppet&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install puppet
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We&amp;rsquo;ll use &lt;code&gt;git submodules&lt;/code&gt; to manage different git repositories. But first,
+create our own repository&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir puppet-mysql
+cd puppet-mysql
+git init
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install Puppet modules &lt;code&gt;stdlib&lt;/code&gt; and &lt;code&gt;mysql&lt;/code&gt; into directory &lt;code&gt;modules&lt;/code&gt; as git
+submodules.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git submodule add https://github.com/puppetlabs/puppetlabs-stdlib.git modules/stdlib
+git submodule add https://github.com/puppetlabs/puppetlabs-mysql.git modules/mysql
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now create a site.pp file in the root directory of this repository, with the following contents&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;node default {
+    class { &#39;mysql::server&#39;:
+        root_password =&amp;gt; &#39;nova&#39;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we&amp;rsquo;ll apply this &lt;code&gt;site.pp&lt;/code&gt; file to the system. As our modules directory is
+different from Puppet&amp;rsquo;s default, we&amp;rsquo;ll need to specify that while running
+Puppet.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo puppet apply site.pp --modulepath modules/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To see the action in more detail, also pass the &lt;code&gt;--debug&lt;/code&gt; option to the above
+execution&lt;/p&gt;
+
+&lt;p&gt;And you&amp;rsquo;re all set.&lt;/p&gt;
+
+&lt;p&gt;Now from your commandline, you can try to access mysql and it will work!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql -uroot -pnova
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Done! Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>MySQL Cheat Sheet</title>
+      <link>http://www.rushiagr.com/personal/blog/2014/03/31/mysql-cheat-sheet/</link>
+      <pubDate>Mon, 31 Mar 2014 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/personal/blog/2014/03/31/mysql-cheat-sheet/</guid>
+      <description>
+
+&lt;p&gt;Databases are so important, yet almost all the time I need to work with it, I find that I have already forgotten all the syntax! So here I am writing down a quick cheat sheet to get me up and running when I&amp;rsquo;m waking up from slumber. I hope this will help atleast one other guy on this planet.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;I use mostly Ubuntu, so some of the commands might be Ubuntu specific.&lt;/p&gt;
+
+&lt;p&gt;Install mysql&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install mysql-server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A prompt will ask for the root password.&lt;/p&gt;
+
+&lt;p&gt;To change the root password:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;FLUSH PRIVILEGES;
+    UPDATE mysql.user SET password=PASSWORD(&#39;nova&#39;) WHERE user=&#39;root&#39;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;NOTE: MySQL keywords are case insensitive. They&amp;rsquo;re represented in capital here just so that they appear different than the rest. When you&amp;rsquo;re just testing out some things logging into the DB console, people generally prefer writing in small caps.&lt;/p&gt;
+
+&lt;p&gt;Note that &lt;code&gt;PASSWORD&lt;/code&gt; is a function, and unlike other MySQL keywords cannot be used in small caps.&lt;/p&gt;
+
+&lt;p&gt;Log into MySQL console with user &lt;code&gt;root&lt;/code&gt; and password &lt;code&gt;mysecretpassword&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql -uroot -pmysecretpassword
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql -u&#39;root&#39; -p&#39;mysecretpassword&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or entering the password in &amp;lsquo;secret&amp;rsquo; mode:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ mysql -uroot -p
+Enter password: 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;mysql-console:5aec0d683ee8bcb2a598c5a9ce48ebc9&#34;&gt;MySQL console&lt;/h3&gt;
+
+&lt;p&gt;List all databases:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+4 rows in set (0.01 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a new database &lt;code&gt;rushi&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; CREATE DATABASE rushi;
+Query OK, 1 row affected (0.00 sec)
+
+mysql&amp;gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| rushi              |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Select database &lt;code&gt;rushi&lt;/code&gt;, so that all the further operations are executed inside this database:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; USE rushi;
+Database changed
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a table &lt;code&gt;friends&lt;/code&gt; inside &lt;code&gt;rushi&lt;/code&gt; database:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; CREATE TABLE friends (name VARCHAR(20), age INT);
+Query OK, 0 rows affected (0.03 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you didn&amp;rsquo;t select the database in the last to last command, you need to specify table in this format:&lt;code&gt;&amp;lt;database&amp;gt;.&amp;lt;tablename&amp;gt;&lt;/code&gt;. So the last command would look like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; CREATE TABLE rushi.friends (name VARCHAR(20), age INT);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;List all the tables:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; show tables;
++-----------------+
+| Tables_in_rushi |
++-----------------+
+| friends         |
++-----------------+
+1 rows in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Insert data into &lt;code&gt;friends&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; INSERT INTO friends VALUES (&#39;arvind&#39;, 24);
+Query OK, 1 row affected (0.01 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Display all the data from the table:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
++--------+------+
+1 row in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Insert another friend:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; INSERT INTO friends VALUES (&#39;honshu&#39;, 23);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&amp;gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
+| honshu |   23 |
++--------+------+
+2 rows in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Update a row in the table:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; UPDATE friends SET age=22 WHERE name=&#39;honshu&#39;;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql&amp;gt; SELECT * FROM friends;
++--------+------+
+| name   | age  |
++--------+------+
+| arvind |   24 |
+| honshu |   22 |
++--------+------+
+2 rows in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Delete a row from table:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; DELETE FROM friends WHERE age=24;
+Query OK, 1 row affected (0.00 sec)
+
+mysql&amp;gt; select * from friends;
++--------+------+
+| name   | age  |
++--------+------+
+| honshu |   22 |
++--------+------+
+1 row in set (0.00 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Delete all rows from the table in one go, and reset the autoincrement if any:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; TRUNCATE friends;
+Query OK, 0 rows affected (0.04 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Delete the table and all of its contents:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; DROP TABLE friends;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Other commonly used commands are listed below. Try to try all of them out atleast once.
+Count the number of rows in a table:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;SELECT COUNT(*) FROM friends;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Select distinct values for a row, and order them too:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;SELECT DISTINCT age FROM friends ORDER BY age;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Modify table to add one more column to it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ALTER TABLE friend ADD height varchar(10);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Use regular expressions:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;SELECT * FROM friend WHERE name REGEXP &#39;arv*&#39;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;CAUTION: Regular expressions comes with some binary/encoding trickery. Use it with a lot of caution.&lt;/p&gt;
+
+&lt;p&gt;Create a new user for the database, and give it all the root privileges&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;CREATE USER &#39;rushiagr&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;mysecretpass&#39;
+GRANT ALL PRIVILEGES ON * . * TO &#39;rushiagr&#39;@&#39;localhost&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Take a dump of database &lt;code&gt;rushi&lt;/code&gt; and store it in a file &lt;code&gt;db.dump&lt;/code&gt;. Execute this command in bash shell, and not in the MySQL shell.:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysqldump --user root rushi &amp;gt; db.dump
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The End!&lt;/p&gt;
+
+&lt;p&gt;Comments/suggestions/feedback? Please feel free to comment and I&amp;rsquo;ll make sure I acknowledge them to the fullest.&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>

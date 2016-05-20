@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>rushiagr</title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://www.rushiagr.com/tags/</link>
+    <language>en-us</language>
+    <author>Rushi Agrawal</author>
+    <copyright>2012 Rushi Agrawal</copyright>
+    <updated>Sat, 15 Dec 2012 00:00:00 &#43;0000</updated>
+    
+    
+    <item>
+      <title>Testing the new blog</title>
+      <link>http://www.rushiagr.com/blog/2012/12/15/testing-the-new-blog/</link>
+      <pubDate>Sat, 15 Dec 2012 00:00:00 &#43;0000</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2012/12/15/testing-the-new-blog/</guid>
+      <description>
+
+&lt;p&gt;This is a test blog, just to check out some of the basic functionalities of
+MarkDown. Visit the MarkDown source of this blog post &lt;a href=&#34;https://raw.github.com/rushiagr/rushiagr.github.com/source/source/_posts/2012-12-15-testing-the-new-blog.markdown&#34;&gt;here&lt;/a&gt;
+to understand the simplicity with which a post can be written using MarkDown!&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h2 id=&#34;this-is-a-subheading:636b095ce918d91cdf51da5ad4a6cada&#34;&gt;This is a subheading&lt;/h2&gt;
+
+&lt;p&gt;And below is an example of H1 heading in the main text&lt;/p&gt;
+
+&lt;h1 id=&#34;the-heading:636b095ce918d91cdf51da5ad4a6cada&#34;&gt;THE heading&lt;/h1&gt;
+
+&lt;p&gt;And below is sub-subheading&lt;/p&gt;
+
+&lt;h3 id=&#34;the-h3-heading:636b095ce918d91cdf51da5ad4a6cada&#34;&gt;The H3 heading&lt;/h3&gt;
+
+&lt;p&gt;Trying a smaller heading:&lt;/p&gt;
+
+&lt;h4 id=&#34;the-sub-sub-subheading:636b095ce918d91cdf51da5ad4a6cada&#34;&gt;The sub sub subheading&lt;/h4&gt;
+
+&lt;p&gt;Following is a block of syntax-highlighted python code.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def factorial(number):
+    answer = 1
+    for counter in range(1, number+1):
+        answer *= counter
+    return answer
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To write a monospace block, enclose it in backticks. An example would be a directory location: &lt;code&gt;/home/rushi/Desktop/&lt;/code&gt; is where the files on my desktop
+reside.&lt;/p&gt;
+
+&lt;p&gt;Here is an embedded image:&lt;/p&gt;
+
+&lt;p&gt;{% img &lt;a href=&#34;http://rushiagr.github.com/images/bird_32_gray.png&#34;&gt;http://rushiagr.github.com/images/bird_32_gray.png&lt;/a&gt; %}&lt;/p&gt;
+
+&lt;p&gt;Thank you!&lt;/p&gt;
+</description>
+    </item>
+    
+    
+  </channel>
+</rss>
