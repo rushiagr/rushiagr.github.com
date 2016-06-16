@@ -6,8 +6,133 @@
     <link>http://www.rushiagr.com/tags/tutorial/</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2014 Rushi Agrawal</copyright>
-    <updated>Sun, 14 Sep 2014 00:00:00 &#43;0000</updated>
+    <copyright>2016 Rushi Agrawal</copyright>
+    <updated>Thu, 16 Jun 2016 10:58:02 IST</updated>
+    
+    
+    <item>
+      <title>Everything you need to know about Tmux copy pasting</title>
+      <link>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-in-ubuntu/</link>
+      <pubDate>Thu, 16 Jun 2016 10:58:02 IST</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-in-ubuntu/</guid>
+      <description>
+
+&lt;p&gt;Estimated reading time: 30 minutes if performing a hands-on.&lt;/p&gt;
+
+&lt;p&gt;Note: This Guide is written by running commands on Ubuntu Trusty (14.04), which
+comes with Tmux version 1.8. For later versions of Tmux, things which are
+different are mentioned at appropriate places .  You can check Tmux version
+with &lt;code&gt;tmux -V&lt;/code&gt; command. Please feel free to comment if you find something
+missing or wrong, or know something worth adding.&lt;/p&gt;
+
+&lt;p&gt;Note: It is best if you actually execute steps in this tutorial along with
+reading it&lt;/p&gt;
+
+&lt;h3 id=&#34;tmux-copy-paste-the-defaults:d2b06fe9f2165254f8d25ac375c2538e&#34;&gt;Tmux copy-paste - the defaults&lt;/h3&gt;
+
+&lt;p&gt;I&amp;rsquo;m going to explain you the tmux defaults in this section, but don&amp;rsquo;t remember
+any of it! The following methods are slightly involved, so we will soon create
+Tmux shortcuts for them which are easier to remember. More so, they are
+Vim-like, so if you are a Vim user, you&amp;rsquo;ll need to learn even less new
+stuff :)&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Enter &amp;lsquo;copy mode&amp;rsquo;. This is the mode in which you can move the cursor
+anywhere on the screen. Do this by pressing the &amp;lsquo;prefix&amp;rsquo; (&lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;), and
+then pressing &lt;code&gt;[&lt;/code&gt; key. So basically press &lt;code&gt;CTRL&lt;/code&gt; and then &lt;code&gt;j&lt;/code&gt; while holding
+the &lt;code&gt;CTRL&lt;/code&gt; button, then release both keys, and then press &lt;code&gt;[&lt;/code&gt; key. Such
+sequence will be mentioned as &lt;code&gt;CTRL&lt;/code&gt;+&amp;lsquo;b&amp;rsquo;, &lt;code&gt;[&lt;/code&gt; from now on for other such
+sequences too.&lt;/li&gt;
+&lt;li&gt;Now use the arrow keys to go to the start of the text you want to copy, and
+then press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;SPACE&lt;/code&gt;, or &lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;SPACE&lt;/code&gt;. The cursor should now change
+to yellow colour, meaning it has started highlighting.&lt;/li&gt;
+&lt;li&gt;Now using arrow keys, move to the point till where you want to copy, and
+then press &lt;code&gt;ENTER&lt;/code&gt;. Alternatively, you can press &lt;code&gt;ALT&lt;/code&gt; + &lt;code&gt;w&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Now you can paste the copied text by doing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;, &lt;code&gt;]&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;tmux-vim-bindings-for-copy-and-paste:d2b06fe9f2165254f8d25ac375c2538e&#34;&gt;Tmux Vim-bindings for copy and paste&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Add these lines file by name ~/.tmux.conf.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;bind P paste-buffer
+bind-key -t vi-copy &#39;v&#39; begin-selection
+bind-key -t vi-copy &#39;y&#39; copy-selection
+bind-key -t vi-copy &#39;r&#39; rectangle-toggle
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Now you can enter copy mode as described above (&lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;[&lt;/code&gt;), and then go
+to start point and press &amp;lsquo;v&amp;rsquo; to start copying. After you have selected text
+you want to copy, you can just press &amp;lsquo;y&amp;rsquo; to copy the text into Tmux&amp;rsquo;s
+buffer. This is exactly the commands you would use in Vim to copy text.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To paste, press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;P&lt;/code&gt;. Note that it&amp;rsquo;s capital &amp;lsquo;p&amp;rsquo; (i.e.
+&lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;p&lt;/code&gt;). This again is similar to Vim&amp;rsquo;s shortcut &amp;lsquo;p&amp;rsquo; for paste, though
+not exactly similar. You&amp;rsquo;ll realize in your Tmux journey why didn&amp;rsquo;t we use a
+small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Before we move ahead, I want to tell you that Tmux&amp;rsquo;s copy buffer is independent
+of system clipboard. That is, whatever you copied using &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt; command,
+it&amp;rsquo;ll still be pasted when you do a &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;v&lt;/code&gt;, and the stuff you copied in
+Tmux using Tmux&amp;rsquo;s way to copy stuff won&amp;rsquo;t be available by default outside of
+that Tmux session. But you can change that behavior. I&amp;rsquo;ve now started to use
+Mac, and somehow it just works in it, so I don&amp;rsquo;t really know how to make it
+work in Ubuntu any more :(. I &amp;lsquo;guess&amp;rsquo; if you follow steps in &amp;lsquo;Copy from remote server&amp;rsquo;, you&amp;rsquo;ll get it working. Do let me know if you are trying it!&lt;/p&gt;
+
+&lt;h3 id=&#34;tmux-copy-with-mouse-drag:d2b06fe9f2165254f8d25ac375c2538e&#34;&gt;Tmux copy with mouse drag!&lt;/h3&gt;
+
+&lt;p&gt;You can enable what is called as &amp;lsquo;mouse mode&amp;rsquo;. Using it, you can just select
+text by dragging mouse and making a selection. For doin that, you just need to
+add these lines to your &lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;setw -g mode-mouse on
+set -g mouse-select-window on
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that this works only with Tmux version 1.8 or earlier. For later versions
+of Tmux, just add this single line:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;set -g mouse on
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse:d2b06fe9f2165254f8d25ac375c2538e&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h3&gt;
+
+&lt;p&gt;You&amp;rsquo;ll notice that now all your selections will go to tmux buffer, and not
+system&amp;rsquo;s buffer (called &amp;lsquo;clipboard&amp;rsquo;). The solution is very simple &amp;ndash; just use
+&lt;code&gt;SHIFT&lt;/code&gt; button (and on Macs, use &lt;code&gt;ALT&lt;/code&gt; button).&lt;/p&gt;
+
+&lt;p&gt;This is all what you need to know if you are using only your local computer.
+But if you are a developer, there is a chance you might be dealing with remote
+servers over SSH, and might want to copy text in Tmux on a remote server, and
+have it accessible locally. For example you might want to copy an error message
+from remote server and send it over to your colleague over chat from you local
+computer. There is a way to do that too!&lt;/p&gt;
+
+&lt;h3 id=&#34;copy-from-a-remote-server:d2b06fe9f2165254f8d25ac375c2538e&#34;&gt;Copy from a remote server&lt;/h3&gt;
+
+&lt;p&gt;You will need to install &lt;code&gt;xclip&lt;/code&gt; on the remote server and local computer too.
+On Ubuntu, this can be done by doing &lt;code&gt;sudo apt-get install xclip&lt;/code&gt;. Add this
+line to your &lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;bind -t vi-copy y copy-pipe &amp;quot;xclip -sel clip -i&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then SSH on the remote server using -X option:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ssh -X remoteuser@remotehost
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now anything you copy on that system using Tmux will come to local system&amp;rsquo;s
+clipboard.&lt;/p&gt;
+
+&lt;p&gt;Done! Don&amp;rsquo;t forget to comment if you know something worth letting everybody
+know! Thank you:)&lt;/p&gt;
+</description>
+    </item>
+    
     
     
     <item>
