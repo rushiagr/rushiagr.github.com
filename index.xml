@@ -18,6 +18,8 @@
       <guid>http://www.rushiagr.com/blog/2016/06/17/you-dont-need-vim-swap-files-and-how-to-get-rid-of-them/</guid>
       <description>
 
+&lt;p&gt;Estimated reading time: 5 minutes.&lt;/p&gt;
+
 &lt;p&gt;Almost all IDEs today have &amp;lsquo;autosave&amp;rsquo; feature. That is, you don&amp;rsquo;t need to
 explicitly save a file. The file is automatically saved as you type, so that
 even if your computer crashes, you don&amp;rsquo;t lose data. This makes me wonder why
