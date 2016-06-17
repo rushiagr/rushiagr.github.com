@@ -12,13 +12,16 @@
     
     <item>
       <title>Everything you need to know about Tmux copy pasting</title>
-      <link>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-in-ubuntu/</link>
+      <link>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/</link>
       <pubDate>Thu, 16 Jun 2016 10:58:02 IST</pubDate>
       <author>Rushi Agrawal</author>
-      <guid>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-in-ubuntu/</guid>
+      <guid>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/</guid>
       <description>
 
-&lt;p&gt;Estimated reading time: 30 minutes if performing a hands-on.&lt;/p&gt;
+&lt;p&gt;Note: It is best if you actually execute steps in this tutorial along with
+reading it&lt;/p&gt;
+
+&lt;p&gt;Estimated reading time: 30 minutes if performing a hands-on. Else 10 minutes.&lt;/p&gt;
 
 &lt;p&gt;Note: This Guide is written by running commands on Ubuntu Trusty (14.04), which
 comes with Tmux version 1.8. For later versions of Tmux, things which are
@@ -26,10 +29,7 @@ different are mentioned at appropriate places .  You can check Tmux version
 with &lt;code&gt;tmux -V&lt;/code&gt; command. Please feel free to comment if you find something
 missing or wrong, or know something worth adding.&lt;/p&gt;
 
-&lt;p&gt;Note: It is best if you actually execute steps in this tutorial along with
-reading it&lt;/p&gt;
-
-&lt;h3 id=&#34;tmux-copy-paste-the-defaults:d2b06fe9f2165254f8d25ac375c2538e&#34;&gt;Tmux copy-paste - the defaults&lt;/h3&gt;
+&lt;h3 id=&#34;tmux-copy-paste-the-defaults:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux copy-paste - the defaults&lt;/h3&gt;
 
 &lt;p&gt;I&amp;rsquo;m going to explain you the tmux defaults in this section, but don&amp;rsquo;t remember
 any of it! The following methods are slightly involved, so we will soon create
@@ -52,7 +52,7 @@ then press &lt;code&gt;ENTER&lt;/code&gt;. Alternatively, you can press &lt;code
 &lt;li&gt;Now you can paste the copied text by doing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;, &lt;code&gt;]&lt;/code&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h3 id=&#34;tmux-vim-bindings-for-copy-and-paste:d2b06fe9f2165254f8d25ac375c2538e&#34;&gt;Tmux Vim-bindings for copy and paste&lt;/h3&gt;
+&lt;h3 id=&#34;tmux-vim-bindings-for-copy-and-paste:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux Vim-bindings for copy and paste&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;Add these lines file by name ~/.tmux.conf.&lt;/p&gt;
@@ -75,14 +75,17 @@ small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt
 &lt;/ol&gt;
 
 &lt;p&gt;Before we move ahead, I want to tell you that Tmux&amp;rsquo;s copy buffer is independent
-of system clipboard. That is, whatever you copied using &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt; command,
-it&amp;rsquo;ll still be pasted when you do a &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;v&lt;/code&gt;, and the stuff you copied in
-Tmux using Tmux&amp;rsquo;s way to copy stuff won&amp;rsquo;t be available by default outside of
-that Tmux session. But you can change that behavior. I&amp;rsquo;ve now started to use
-Mac, and somehow it just works in it, so I don&amp;rsquo;t really know how to make it
-work in Ubuntu any more :(. I &amp;lsquo;guess&amp;rsquo; if you follow steps in &amp;lsquo;Copy from remote server&amp;rsquo;, you&amp;rsquo;ll get it working. Do let me know if you are trying it!&lt;/p&gt;
+of system clipboard (at least on Tmux 1.8. In Tmux 2.0 this seems to be no
+longer the case on El Capitan Mac. I unfortunately don&amp;rsquo;t have an Ubuntu Desktop
+handy). That is, whatever you copied using &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt; command, it&amp;rsquo;ll still be
+pasted when you do a &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;v&lt;/code&gt;, and the stuff you copied in Tmux using Tmux&amp;rsquo;s
+way to copy stuff won&amp;rsquo;t be available by default outside of that Tmux session.
+But you can change that behavior. I&amp;rsquo;ve now started to use Mac, and somehow it
+just works in it, so I don&amp;rsquo;t really know how to make it work in Ubuntu any more
+:(. I &amp;lsquo;guess&amp;rsquo; if you follow steps in &amp;lsquo;Copy from remote server&amp;rsquo;, you&amp;rsquo;ll get it
+working. Do let me know if you are trying it!&lt;/p&gt;
 
-&lt;h3 id=&#34;tmux-copy-with-mouse-drag:d2b06fe9f2165254f8d25ac375c2538e&#34;&gt;Tmux copy with mouse drag!&lt;/h3&gt;
+&lt;h3 id=&#34;tmux-copy-with-mouse-drag:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux copy with mouse drag!&lt;/h3&gt;
 
 &lt;p&gt;You can enable what is called as &amp;lsquo;mouse mode&amp;rsquo;. Using it, you can just select
 text by dragging mouse and making a selection. For doin that, you just need to
@@ -98,7 +101,7 @@ of Tmux, just add this single line:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;set -g mouse on
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse:d2b06fe9f2165254f8d25ac375c2538e&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h3&gt;
+&lt;h3 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h3&gt;
 
 &lt;p&gt;You&amp;rsquo;ll notice that now all your selections will go to tmux buffer, and not
 system&amp;rsquo;s buffer (called &amp;lsquo;clipboard&amp;rsquo;). The solution is very simple &amp;ndash; just use
@@ -111,7 +114,7 @@ have it accessible locally. For example you might want to copy an error message
 from remote server and send it over to your colleague over chat from you local
 computer. There is a way to do that too!&lt;/p&gt;
 
-&lt;h3 id=&#34;copy-from-a-remote-server:d2b06fe9f2165254f8d25ac375c2538e&#34;&gt;Copy from a remote server&lt;/h3&gt;
+&lt;h3 id=&#34;copy-from-a-remote-server:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Copy from a remote server&lt;/h3&gt;
 
 &lt;p&gt;You will need to install &lt;code&gt;xclip&lt;/code&gt; on the remote server and local computer too.
 On Ubuntu, this can be done by doing &lt;code&gt;sudo apt-get install xclip&lt;/code&gt;. Add this
