@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  
+
+  <title> You dont need Vim swap files. And how to get rid of them  &middot; rushiagr </title>
+
+  
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
+      <p class="lead">
+       not your average coder 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://www.rushiagr.com/blog">Posts</a></li>
+      
+        <li><a href="/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+        <li><a href="http://www.rushiagr.com/personal">Personal Blog</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">You dont need Vim swap files. And how to get rid of them</h1>
+    <span class="post-date">Jun 17, 2016</span>
+    
+    
+
+<p>Almost all IDEs today have &lsquo;autosave&rsquo; feature. That is, you don&rsquo;t need to
+explicitly save a file. The file is automatically saved as you type, so that
+even if your computer crashes, you don&rsquo;t lose data. This makes me wonder why
+does Vim&rsquo;s default behavior is of using swap files. Swap files are annoying.
+I&rsquo;ve seen all Vim developers, including me, struggle with swap files at one
+point in their life.</p>
+
+<p>There is a Vim plugin for autosaving, and it has saved a lot of my time. I have
+used the plugin such that every time I enter normal mode (after making edits in
+Insert mode), it autosaves file. And, most importantly, I have disabled swap
+file creation by Vim. It&rsquo;s really that simple folks. You don&rsquo;t really need swap
+files 99.99% of the times.</p>
+
+<h3 id="how-to-vim-autosave:c3bd95eae5779c78f8b280be1e967fb5">How to Vim autosave</h3>
+
+<p>Download the plugin, which is present at
+<a href="https://github.com/907th/vim-auto-save">https://github.com/907th/vim-auto-save</a>, and put the plugin file in <code>~/.vim/plugin</code> directory:</p>
+
+<pre><code>mkdir -p ~/.vim/plugin
+cd ~/.vim/plugin
+wget https://raw.githubusercontent.com/907th/vim-auto-save/master/plugin/AutoSave.vim
+</code></pre>
+
+<p>Now open the <code>~/.vimrc</code> file and add these lines. Comments are
+self-explanatory.</p>
+
+<pre><code># Enable autosave plugin
+let g:auto_save = 1
+
+# Only save in Normal mode periodically. If the value is changed to '1',
+# then changes are saved when you are in Insert mode too, as you type, but
+# I would say prefer not save in Insert mode
+let g:auto_save_in_insert_mode = 0
+
+# Silently autosave. If you disable this option by changing value to '0',
+# then in the vim status, it will display &quot;(AutoSaved at &lt;current time&gt;)&quot; all
+# the time, which might get annoying
+let g:auto_save_silent = 1
+
+# And now turn Vim swapfile off
+set noswapfile
+</code></pre>
+
+<h3 id="things-to-note:c3bd95eae5779c78f8b280be1e967fb5">Things to note</h3>
+
+<p>There are a few things to note when you switch to this &lsquo;autosave, no swap
+files&rsquo; mode:</p>
+
+<ol>
+<li>You can&rsquo;t just do a <code>:q!</code> to exit without writing your unsaved changes.
+Autosave already has saved your changes, so the only real way to discard
+your changes is to undo all the changes you&rsquo;ve made (<code>u</code> key) and then exit
+the file.</li>
+
+<li><p>Earlier, you can&rsquo;t modify a Vim file which is already open in another
+terminal. Now too Vim will throw a warning message. The difference is how
+you&rsquo;re notified of it. Previously, even before opening the file Vim will say
+that a swap file exists. But now, Vim will allow you to open the file, and
+start editing it too. Only when you come out of Insert mode, AND you are
+making a conflicting change, will it say:</p>
+
+<pre><code>WARNING: The file has been changed since reading it!!!
+Do you really want to write to it (y/n)?
+</code></pre>
+
+<p>A conflicting change basically means you are making edits at a place where
+edits are already made in another terminal where that same file is open.
+For example, the file initially had &lsquo;one&rsquo; written on first line when it&rsquo;s
+opened in both terminals. In one terminal, you add a second line saying
+&lsquo;two&rsquo;, and in another terminal when you add the second line saying &lsquo;three&rsquo;,
+we have a conflict. This is because we are writing &lsquo;three&rsquo; at line number 2
+where &lsquo;two&rsquo; is alredy written (from another terminal)</p></li>
+</ol>
+
+<p>I hope this helps. Questions, comments, suggestions, feedback? Comment :)</p>
+
+<p>Thank you.</p>
+
+    
+
+     
+	
+        <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+
+</div>
+</div> 
+
+</body>w
+</html>

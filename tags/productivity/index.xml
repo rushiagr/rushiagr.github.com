@@ -7,7 +7,97 @@
     <language>en-us</language>
     <author>Rushi Agrawal</author>
     <copyright>2016 Rushi Agrawal</copyright>
-    <updated>Thu, 16 Jun 2016 10:58:02 IST</updated>
+    <updated>Fri, 17 Jun 2016 11:18:27 IST</updated>
+    
+    
+    <item>
+      <title>You dont need Vim swap files. And how to get rid of them</title>
+      <link>http://www.rushiagr.com/blog/2016/06/17/you-dont-need-vim-swap-files-and-how-to-get-rid-of-them/</link>
+      <pubDate>Fri, 17 Jun 2016 11:18:27 IST</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2016/06/17/you-dont-need-vim-swap-files-and-how-to-get-rid-of-them/</guid>
+      <description>
+
+&lt;p&gt;Almost all IDEs today have &amp;lsquo;autosave&amp;rsquo; feature. That is, you don&amp;rsquo;t need to
+explicitly save a file. The file is automatically saved as you type, so that
+even if your computer crashes, you don&amp;rsquo;t lose data. This makes me wonder why
+does Vim&amp;rsquo;s default behavior is of using swap files. Swap files are annoying.
+I&amp;rsquo;ve seen all Vim developers, including me, struggle with swap files at one
+point in their life.&lt;/p&gt;
+
+&lt;p&gt;There is a Vim plugin for autosaving, and it has saved a lot of my time. I have
+used the plugin such that every time I enter normal mode (after making edits in
+Insert mode), it autosaves file. And, most importantly, I have disabled swap
+file creation by Vim. It&amp;rsquo;s really that simple folks. You don&amp;rsquo;t really need swap
+files 99.99% of the times.&lt;/p&gt;
+
+&lt;h3 id=&#34;how-to-vim-autosave:c3bd95eae5779c78f8b280be1e967fb5&#34;&gt;How to Vim autosave&lt;/h3&gt;
+
+&lt;p&gt;Download the plugin, which is present at
+&lt;a href=&#34;https://github.com/907th/vim-auto-save&#34;&gt;https://github.com/907th/vim-auto-save&lt;/a&gt;, and put the plugin file in &lt;code&gt;~/.vim/plugin&lt;/code&gt; directory:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir -p ~/.vim/plugin
+cd ~/.vim/plugin
+wget https://raw.githubusercontent.com/907th/vim-auto-save/master/plugin/AutoSave.vim
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now open the &lt;code&gt;~/.vimrc&lt;/code&gt; file and add these lines. Comments are
+self-explanatory.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Enable autosave plugin
+let g:auto_save = 1
+
+# Only save in Normal mode periodically. If the value is changed to &#39;1&#39;,
+# then changes are saved when you are in Insert mode too, as you type, but
+# I would say prefer not save in Insert mode
+let g:auto_save_in_insert_mode = 0
+
+# Silently autosave. If you disable this option by changing value to &#39;0&#39;,
+# then in the vim status, it will display &amp;quot;(AutoSaved at &amp;lt;current time&amp;gt;)&amp;quot; all
+# the time, which might get annoying
+let g:auto_save_silent = 1
+
+# And now turn Vim swapfile off
+set noswapfile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;things-to-note:c3bd95eae5779c78f8b280be1e967fb5&#34;&gt;Things to note&lt;/h3&gt;
+
+&lt;p&gt;There are a few things to note when you switch to this &amp;lsquo;autosave, no swap
+files&amp;rsquo; mode:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;You can&amp;rsquo;t just do a &lt;code&gt;:q!&lt;/code&gt; to exit without writing your unsaved changes.
+Autosave already has saved your changes, so the only real way to discard
+your changes is to undo all the changes you&amp;rsquo;ve made (&lt;code&gt;u&lt;/code&gt; key) and then exit
+the file.&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Earlier, you can&amp;rsquo;t modify a Vim file which is already open in another
+terminal. Now too Vim will throw a warning message. The difference is how
+you&amp;rsquo;re notified of it. Previously, even before opening the file Vim will say
+that a swap file exists. But now, Vim will allow you to open the file, and
+start editing it too. Only when you come out of Insert mode, AND you are
+making a conflicting change, will it say:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;WARNING: The file has been changed since reading it!!!
+Do you really want to write to it (y/n)?
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A conflicting change basically means you are making edits at a place where
+edits are already made in another terminal where that same file is open.
+For example, the file initially had &amp;lsquo;one&amp;rsquo; written on first line when it&amp;rsquo;s
+opened in both terminals. In one terminal, you add a second line saying
+&amp;lsquo;two&amp;rsquo;, and in another terminal when you add the second line saying &amp;lsquo;three&amp;rsquo;,
+we have a conflict. This is because we are writing &amp;lsquo;three&amp;rsquo; at line number 2
+where &amp;lsquo;two&amp;rsquo; is alredy written (from another terminal)&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I hope this helps. Questions, comments, suggestions, feedback? Comment :)&lt;/p&gt;
+
+&lt;p&gt;Thank you.&lt;/p&gt;
+</description>
+    </item>
+    
     
     
     <item>
