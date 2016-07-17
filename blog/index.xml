@@ -69,10 +69,9 @@ set noswapfile
 files&amp;rsquo; mode:&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;You can&amp;rsquo;t just do a &lt;code&gt;:q!&lt;/code&gt; to exit without writing your unsaved changes.
-Autosave already has saved your changes, so the only real way to discard
-your changes is to undo all the changes you&amp;rsquo;ve made (&lt;code&gt;u&lt;/code&gt; key) and then exit
-the file.&lt;/li&gt;
+&lt;li&gt;You can&amp;rsquo;t just do a &lt;code&gt;:q!&lt;/code&gt; to discard unsaved changes.  Autosave already has
+saved your changes! So the only real way to discard your changes is to undo
+all the changes you&amp;rsquo;ve made (&lt;code&gt;u&lt;/code&gt; key) and then exit the file.&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;Earlier, you can&amp;rsquo;t modify a Vim file which is already open in another
 terminal. Now too Vim will throw a warning message. The difference is how
