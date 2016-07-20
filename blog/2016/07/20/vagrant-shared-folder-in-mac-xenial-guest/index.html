@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  
+
+  <title> Make shared folders work in Vagrant for Mac OS X host with Ubuntu Xenial guest  &middot; rushiagr </title>
+
+  
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
+      <p class="lead">
+       not your average coder 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://www.rushiagr.com/blog">Posts</a></li>
+      
+        <li><a href="/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+        <li><a href="http://www.rushiagr.com/personal">Personal Blog</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">Make shared folders work in Vagrant for Mac OS X host with Ubuntu Xenial guest</h1>
+    <span class="post-date">Jul 20, 2016</span>
+    
+    <p>Today I installed latest Vagrant, version 1.8.5. I was waiting for a newer
+release because 1.8.1 and previous versions don&rsquo;t work well with host-only
+networks for Ubuntu Xenial (16.04) guests on my Mac running El Capitan. But I
+faced another issue now:</p>
+
+<pre><code>mount: unknown filesystem type 'vboxsf'
+</code></pre>
+
+<p>This is while specifying a synced folder in my <code>Vagrantfile</code> with this line:</p>
+
+<pre><code>config.vm.synced_folder(&quot;/Users/apple/src/myutils&quot;, &quot;/home/ubuntu/myutils&quot;)
+</code></pre>
+
+<p>where <a href="https://github.com/rushiagr/myutils">myutils</a> is where I keep all my
+commanline shortcuts, tricks, and other shortcut-ish stuff. I Googled but
+couldn&rsquo;t find an article which described a way to fix this in one go, hence
+this blog post :)</p>
+
+<p>The actual answer is pretty simple. Just install the &lsquo;vbguest&rsquo; plugin.</p>
+
+<pre><code>vagrant plugin install vagrant-vbguest
+</code></pre>
+
+<p>Of course I&rsquo;m assuming you&rsquo;re running Vagrant with VirtualBox :)</p>
+
+<p>After that just shut down the VM (<code>vagrant halt &lt;vmname&gt;</code>), and start it again
+(<code>vagrant up &lt;vmname&gt;</code>), and everything should work as expected. I noticed two
+things:
+1. Vagrant tries to install guest additions inside the VM by doing some
+   <code>apt-get</code> stuff. Don&rsquo;t worry about it and let it finish.
+2. Note that unlike Ubuntu Trusty (14.04), my hostname on Ubuntu Xenial is
+   <code>ubuntu</code> and not <code>vagrant</code>, so change the <code>synced_folder</code> line in your
+   <code>Vagrantfile</code> accordingly.</p>
+
+<p>Cheers!
+Rushi</p>
+
+    
+
+     
+	
+        <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+
+</div>
+</div> 
+
+</body>w
+</html>

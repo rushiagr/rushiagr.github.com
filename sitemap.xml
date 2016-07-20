@@ -3,8 +3,13 @@
   
   <url>
     <loc>http://www.rushiagr.com/</loc>
-    <lastmod>2016-06-17T11:18:27+05:30</lastmod>
+    <lastmod>2016-07-20T23:18:24+05:30</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/blog/2016/07/20/vagrant-shared-folder-in-mac-xenial-guest/</loc>
+    <lastmod>2016-07-20T23:18:24+05:30</lastmod>
   </url>
   
   <url>
