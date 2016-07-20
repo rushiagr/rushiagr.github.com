@@ -11,7 +11,7 @@
     
     
     <item>
-      <title>Make shared folders work in Vagrant for Mac OS X host with Ubuntu Xenial guest</title>
+      <title>Make Vagrant Synced folders on Ubuntu Xenial guest work on Mac</title>
       <link>http://www.rushiagr.com/blog/2016/07/20/vagrant-shared-folder-in-mac-xenial-guest/</link>
       <pubDate>Wed, 20 Jul 2016 23:18:24 IST</pubDate>
       <author>Rushi Agrawal</author>
