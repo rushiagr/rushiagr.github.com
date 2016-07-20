@@ -43,12 +43,15 @@ this blog post :)&lt;/p&gt;
 
 &lt;p&gt;After that just shut down the VM (&lt;code&gt;vagrant halt &amp;lt;vmname&amp;gt;&lt;/code&gt;), and start it again
 (&lt;code&gt;vagrant up &amp;lt;vmname&amp;gt;&lt;/code&gt;), and everything should work as expected. I noticed two
-things:
-1. Vagrant tries to install guest additions inside the VM by doing some
-   &lt;code&gt;apt-get&lt;/code&gt; stuff. Don&amp;rsquo;t worry about it and let it finish.
-2. Note that unlike Ubuntu Trusty (14.04), my hostname on Ubuntu Xenial is
-   &lt;code&gt;ubuntu&lt;/code&gt; and not &lt;code&gt;vagrant&lt;/code&gt;, so change the &lt;code&gt;synced_folder&lt;/code&gt; line in your
-   &lt;code&gt;Vagrantfile&lt;/code&gt; accordingly.&lt;/p&gt;
+things:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Vagrant tries to install guest additions inside the VM by doing some
+&lt;code&gt;apt-get&lt;/code&gt; stuff. Don&amp;rsquo;t worry about it and let it finish.&lt;/li&gt;
+&lt;li&gt;Note that unlike Ubuntu Trusty (14.04), my hostname on Ubuntu Xenial is
+&lt;code&gt;ubuntu&lt;/code&gt; and not &lt;code&gt;vagrant&lt;/code&gt;, so change the &lt;code&gt;synced_folder&lt;/code&gt; line in your
+&lt;code&gt;Vagrantfile&lt;/code&gt; accordingly.&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;p&gt;Cheers!
 Rushi&lt;/p&gt;

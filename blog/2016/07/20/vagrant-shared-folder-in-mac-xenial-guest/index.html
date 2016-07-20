@@ -115,12 +115,15 @@ this blog post :)</p>
 
 <p>After that just shut down the VM (<code>vagrant halt &lt;vmname&gt;</code>), and start it again
 (<code>vagrant up &lt;vmname&gt;</code>), and everything should work as expected. I noticed two
-things:
-1. Vagrant tries to install guest additions inside the VM by doing some
-   <code>apt-get</code> stuff. Don&rsquo;t worry about it and let it finish.
-2. Note that unlike Ubuntu Trusty (14.04), my hostname on Ubuntu Xenial is
-   <code>ubuntu</code> and not <code>vagrant</code>, so change the <code>synced_folder</code> line in your
-   <code>Vagrantfile</code> accordingly.</p>
+things:</p>
+
+<ol>
+<li>Vagrant tries to install guest additions inside the VM by doing some
+<code>apt-get</code> stuff. Don&rsquo;t worry about it and let it finish.</li>
+<li>Note that unlike Ubuntu Trusty (14.04), my hostname on Ubuntu Xenial is
+<code>ubuntu</code> and not <code>vagrant</code>, so change the <code>synced_folder</code> line in your
+<code>Vagrantfile</code> accordingly.</li>
+</ol>
 
 <p>Cheers!
 Rushi</p>
