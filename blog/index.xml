@@ -152,51 +152,57 @@ where &amp;lsquo;two&amp;rsquo; is alredy written (from another terminal)&lt;/p&
     
     
     <item>
-      <title>Everything you need to know about Tmux copy pasting</title>
+      <title>Everything you need to know about Tmux copy paste - Mac OS</title>
       <link>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/</link>
       <pubDate>Thu, 16 Jun 2016 10:58:02 IST</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/</guid>
       <description>
 
-&lt;p&gt;Note: It is best if you actually execute steps in this tutorial along with
-reading it&lt;/p&gt;
+&lt;p&gt;Copying from a Tmux session is something every Tmux user struggled with once.
+I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
 
-&lt;p&gt;Estimated reading time: 30 minutes if performing a hands-on. Else 10 minutes.&lt;/p&gt;
+&lt;p&gt;I tested everything on Mac OS X El Capitan, which runs Tmux version 2.1. To
+check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Linux (e.g. Ubuntu) machine, go
+(here)[&lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/&#34;&gt;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/&lt;/a&gt;].&lt;/p&gt;
 
-&lt;p&gt;Note: This Guide is written by running commands on Ubuntu Trusty (14.04), which
-comes with Tmux version 1.8. For later versions of Tmux, things which are
-different are mentioned at appropriate places .  You can check Tmux version
-with &lt;code&gt;tmux -V&lt;/code&gt; command. Please feel free to comment if you find something
-missing or wrong, or know something worth adding.&lt;/p&gt;
+&lt;h2 id=&#34;know-about-your-terminal:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Know about your terminal&lt;/h2&gt;
 
-&lt;h3 id=&#34;tmux-copy-paste-the-defaults:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux copy-paste - the defaults&lt;/h3&gt;
+&lt;p&gt;The default terminal which comes with Mac is pretty limiting. Instead of
+listing the limitations (and workarounds around it), I&amp;rsquo;ll just say that before
+you proceed, please install iTerm 2 and start using that immediately. What I&amp;rsquo;m
+writing below is all for iTerm 2. (Do let me know if you absolutely need Tmux
+copy-paste to work in Terminal, and I&amp;rsquo;ll provide steps for that).&lt;/p&gt;
 
-&lt;p&gt;I&amp;rsquo;m going to explain you the tmux defaults in this section, but don&amp;rsquo;t remember
-any of it! The following methods are slightly involved, so we will soon create
-Tmux shortcuts for them which are easier to remember. More so, they are
-Vim-like, so if you are a Vim user, you&amp;rsquo;ll need to learn even less new
-stuff :)&lt;/p&gt;
+&lt;h2 id=&#34;know-about-copy-buffers:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Know about copy buffers&lt;/h2&gt;
+
+&lt;p&gt;When you do a &lt;code&gt;Command&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt;, the stuff you copy is stored in your computer&amp;rsquo;s
+buffer, called &amp;lsquo;clipboard&amp;rsquo; from where you can paste anywhere by doing a
+&lt;code&gt;Command&lt;/code&gt;+&amp;lsquo;v&amp;rsquo;. Tmux has it&amp;rsquo;s own buffer for coppying, which we&amp;rsquo;ll
+call &amp;lsquo;tmux buffer&amp;rsquo;. Our goal is to understand in a Tmux session how to copy to
+tmux buffer, and also to clipboard.&lt;/p&gt;
+
+&lt;p&gt;You can always copy stuff into clipboard while usin Tmux. &amp;ldquo;Why do I need a Tmux
+buffer then&amp;rdquo;, you might wonder. This is because, in your shell, the text you
+want to select might not fit in your current screen (e.g. output of &lt;code&gt;cat
+/etc/passwd&lt;/code&gt; file). If you copy normally, you will only be able to copy text
+visible on your screen, and not the output which is &amp;lsquo;scrolled up&amp;rsquo; due to a lot
+of output.&lt;/p&gt;
+
+&lt;h2 id=&#34;tmux-copy-paste-the-defaults:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux copy-paste - the defaults&lt;/h2&gt;
+
+&lt;p&gt;Well, the defaults in Mac are horrible. There is simply no way to copy into
+tmux buffer without using any external plugin. BUT you can copy stuff into
+system clipboard by just using your mouse for selecting text.&lt;/p&gt;
+
+&lt;h2 id=&#34;tmux-vim-bindings-for-copying-into-tmux-buffer:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux Vim-bindings for copying into tmux buffer&lt;/h2&gt;
+
+&lt;p&gt;Adding configuration described in this section will give you easier shortcuts
+for copy-pasting in Tmux. Moreover, these shortcuts work very similar to Vim&amp;rsquo;s
+copy-pasting shortcuts!&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Enter &amp;lsquo;copy mode&amp;rsquo;. This is the mode in which you can move the cursor
-anywhere on the screen. Do this by pressing the &amp;lsquo;prefix&amp;rsquo; (&lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;), and
-then pressing &lt;code&gt;[&lt;/code&gt; key. So basically press &lt;code&gt;CTRL&lt;/code&gt; and then &lt;code&gt;j&lt;/code&gt; while holding
-the &lt;code&gt;CTRL&lt;/code&gt; button, then release both keys, and then press &lt;code&gt;[&lt;/code&gt; key. Such
-sequence will be mentioned as &lt;code&gt;CTRL&lt;/code&gt;+&amp;lsquo;b&amp;rsquo;, &lt;code&gt;[&lt;/code&gt; from now on for other such
-sequences too.&lt;/li&gt;
-&lt;li&gt;Now use the arrow keys to go to the start of the text you want to copy, and
-then press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;SPACE&lt;/code&gt;, or &lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;SPACE&lt;/code&gt;. The cursor should now change
-to yellow colour, meaning it has started highlighting.&lt;/li&gt;
-&lt;li&gt;Now using arrow keys, move to the point till where you want to copy, and
-then press &lt;code&gt;ENTER&lt;/code&gt;. Alternatively, you can press &lt;code&gt;ALT&lt;/code&gt; + &lt;code&gt;w&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Now you can paste the copied text by doing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;, &lt;code&gt;]&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&#34;tmux-vim-bindings-for-copy-and-paste:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux Vim-bindings for copy and paste&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Add these lines file by name ~/.tmux.conf.&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;Add these lines in a file by name &lt;code&gt;~/.tmux.conf&lt;/code&gt;.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;bind P paste-buffer
 bind-key -t vi-copy &#39;v&#39; begin-selection
@@ -204,10 +210,11 @@ bind-key -t vi-copy &#39;y&#39; copy-selection
 bind-key -t vi-copy &#39;r&#39; rectangle-toggle
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;Now you can enter copy mode as described above (&lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;[&lt;/code&gt;), and then go
-to start point and press &amp;lsquo;v&amp;rsquo; to start copying. After you have selected text
-you want to copy, you can just press &amp;lsquo;y&amp;rsquo; to copy the text into Tmux&amp;rsquo;s
-buffer. This is exactly the commands you would use in Vim to copy text.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Now you can enter copy mode by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;[&lt;/code&gt;, and then go
+to start point, press &amp;lsquo;v&amp;rsquo; and start copying. After you have selected text
+you want to copy, you can just press &amp;lsquo;y&amp;rsquo; (or the default &amp;lsquo;enter&amp;rsquo; key) to
+copy the text into Tmux&amp;rsquo;s buffer. This is exactly the commands you would use
+in Vim to copy text.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;To paste, press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;P&lt;/code&gt;. Note that it&amp;rsquo;s capital &amp;lsquo;p&amp;rsquo; (i.e.
 &lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;p&lt;/code&gt;). This again is similar to Vim&amp;rsquo;s shortcut &amp;lsquo;p&amp;rsquo; for paste, though
@@ -215,62 +222,184 @@ not exactly similar. You&amp;rsquo;ll realize in your Tmux journey why didn&amp;
 small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Before we move ahead, I want to tell you that Tmux&amp;rsquo;s copy buffer is independent
-of system clipboard (at least on Tmux 1.8. In Tmux 2.0 this seems to be no
-longer the case on El Capitan Mac. I unfortunately don&amp;rsquo;t have an Ubuntu Desktop
-handy). That is, whatever you copied using &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt; command, it&amp;rsquo;ll still be
-pasted when you do a &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;v&lt;/code&gt;, and the stuff you copied in Tmux using Tmux&amp;rsquo;s
-way to copy stuff won&amp;rsquo;t be available by default outside of that Tmux session.
-But you can change that behavior. I&amp;rsquo;ve now started to use Mac, and somehow it
-just works in it, so I don&amp;rsquo;t really know how to make it work in Ubuntu any more
-:(. I &amp;lsquo;guess&amp;rsquo; if you follow steps in &amp;lsquo;Copy from remote server&amp;rsquo;, you&amp;rsquo;ll get it
-working. Do let me know if you are trying it!&lt;/p&gt;
+&lt;h2 id=&#34;copy-from-tmux-buffer-to-system-buffer-clipboard:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Copy from tmux buffer to system buffer (clipboard)&lt;/h2&gt;
 
-&lt;h3 id=&#34;tmux-copy-with-mouse-drag:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux copy with mouse drag!&lt;/h3&gt;
+&lt;p&gt;In newer iTerm2, you need to enable one option in settings to copy a text into
+both tmux buffer and clipboard at the same time. Go to iTerm2 &amp;gt; Preferences &amp;gt;
+&amp;ldquo;General&amp;rdquo; tab, and in the &amp;ldquo;Selection&amp;rdquo; section, check the box which says
+&amp;ldquo;Applications in terminal may access clipboard&amp;rdquo; if it isn&amp;rsquo;t checked. See
+(here)[&lt;a href=&#34;http://apple.stackexchange.com/a/248828&#34;&gt;http://apple.stackexchange.com/a/248828&lt;/a&gt;] for a screenshot.&lt;/p&gt;
 
-&lt;p&gt;You can enable what is called as &amp;lsquo;mouse mode&amp;rsquo;. Using it, you can just select
-text by dragging mouse and making a selection. For doin that, you just need to
-add these lines to your &lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
+&lt;h2 id=&#34;tmux-copy-with-mouse-drag:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
+
+&lt;p&gt;You can enable &amp;lsquo;mouse mode&amp;rsquo;, using which you can copy text into tmux buffer by
+mouse drag. For doing that, you just need to add this line to your
+&lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;set -g mouse on
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
+
+&lt;p&gt;You&amp;rsquo;ll notice that now all your selections will go to tmux buffer, and not
+clipboard buffer. Of course, you can enable copying to system clipboard as
+described in a section above. However, you can notice that you can&amp;rsquo;t double
+click to select a complete word with vi&amp;rsquo;s tmux copy-pasting shortcuts + mouse
+option enabled.&lt;/p&gt;
+
+&lt;p&gt;Just press &lt;code&gt;Option&lt;/code&gt; (Alt) button when copying, and now you can copy as if Tmux
+doesn&amp;rsquo;t exist! :)&lt;/p&gt;
+
+&lt;h2 id=&#34;copy-from-a-remote-server:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Copy from a remote server&lt;/h2&gt;
+
+&lt;p&gt;Now if your remote server is a Linux machine (e.g. an Ubuntu server), then
+getting that remote server&amp;rsquo;s tmux buffer copied into our local Mac&amp;rsquo;s clipboard
+makes for an interesting story! If the iTerm setting to allow applications in
+terminal to access clipboard is enabled, then if you are running a tmux session
+on remote server, and you copy stuff there into the tmux buffer of that system,
+the copied text is already into your local system&amp;rsquo;s clipboard! Amazing! BUT but
+but, this only works if you are connecting to the remote machine directly from
+your terminal, i.e. not from inside a local Tmux session!! If you have a local
+Tmux session, and then you SSH into remote machine, connect to remote Tmux
+session and then try to copy text in the &amp;lsquo;remote&amp;rsquo; Tmux session (i.e. using
+&lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt; twice to send Tmux commands to inner Tmux session), then this won&amp;rsquo;t
+work! (Note that you can always copy in the &amp;lsquo;outer&amp;rsquo; Tmux session, i.e. local
+Tmux session, but as stated previously, you won&amp;rsquo;t be able to copy text which is
+&amp;lsquo;scrolled up&amp;rsquo; in the inner Tmux session.)&lt;/p&gt;
+
+&lt;p&gt;Generally I&amp;rsquo;m satisfied with the limitation mentioned here. In order to get
+full copying from remote session working, you will need to do something more
+involved, like (here)[&lt;a href=&#34;http://superuser.com/a/408374/315134&#34;&gt;http://superuser.com/a/408374/315134&lt;/a&gt;]. Do let me know if
+you need a better explanation of that method (e.g. more details on SSH keys and
+enabling remote option on Mac OS X)&lt;/p&gt;
+
+&lt;h2 id=&#34;other-information:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Other information&lt;/h2&gt;
+
+&lt;p&gt;Done! Don&amp;rsquo;t forget to comment if you know something worth letting everybody
+know! Thank you:)&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Everything you need to know about Tmux copy paste - Ubuntu</title>
+      <link>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/</link>
+      <pubDate>Thu, 16 Jun 2016 10:58:02 IST</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/</guid>
+      <description>
+
+&lt;p&gt;Copying from a Tmux session is something every Tmux user struggled with once.
+I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
+
+&lt;p&gt;I tested everything on Ubuntu 14.04 Trusty Tahr, which runs Tmux version 1.8.
+To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Mac, go
+(here)[&lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/&#34;&gt;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/&lt;/a&gt;].&lt;/p&gt;
+
+&lt;h2 id=&#34;know-about-copy-buffers:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Know about copy buffers&lt;/h2&gt;
+
+&lt;p&gt;When you do a &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt;, the stuff you copy is stored in your computer&amp;rsquo;s
+buffer, called &amp;lsquo;clipboard&amp;rsquo; from where you can paste anywhere by doing a
+&lt;code&gt;CTRL&lt;/code&gt;+&amp;lsquo;v&amp;rsquo;. Tmux has it&amp;rsquo;s own buffer for coppying, which we&amp;rsquo;ll
+call &amp;lsquo;tmux buffer&amp;rsquo;. Our goal is to understand in a Tmux session how to copy to
+tmux buffer, and also to clipboard.&lt;/p&gt;
+
+&lt;p&gt;You can always copy stuff into clipboard while usin Tmux. &amp;ldquo;Why do I need a Tmux
+buffer then&amp;rdquo;, you might wonder. This is because, in your shell, the text you
+want to select might not fit in your current screen (e.g. output of &lt;code&gt;cat
+/etc/passwd&lt;/code&gt; file). If you copy normally, you will only be able to copy text
+visible on your screen, and not the output which is &amp;lsquo;scrolled up&amp;rsquo; due to a lot
+of output.&lt;/p&gt;
+
+&lt;h2 id=&#34;tmux-copy-paste-the-defaults:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Tmux copy-paste - the defaults&lt;/h2&gt;
+
+&lt;p&gt;The defaults are slighly involved, so this section is purely for informational purposes, and shouldn&amp;rsquo;t be memorized. Skipping this section is perfectly okay.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Enter &amp;lsquo;copy mode&amp;rsquo; by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;, &lt;code&gt;[&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Use the arrow keys to go to the position from where you want to start copying. Press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;SPACE&lt;/code&gt; to start copying.&lt;/li&gt;
+&lt;li&gt;Use arrow keys to go to the end of text you want to copy. Press &lt;code&gt;ALT&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; or &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; to copy into Tmux buffer.&lt;/li&gt;
+&lt;li&gt;Press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;, &lt;code&gt;]&lt;/code&gt; to paste in a possibly different Tmux pane/window.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;tmux-vim-bindings-for-copying-into-tmux-buffer:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Tmux Vim-bindings for copying into tmux buffer&lt;/h2&gt;
+
+&lt;p&gt;Adding configuration described in this section will give you easier shortcuts
+for copy-pasting in Tmux. Moreover, these shortcuts work very similar to Vim&amp;rsquo;s
+copy-pasting shortcuts!&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Add these lines in a file by name &lt;code&gt;~/.tmux.conf&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;bind P paste-buffer
+bind-key -t vi-copy &#39;v&#39; begin-selection
+bind-key -t vi-copy &#39;y&#39; copy-selection
+bind-key -t vi-copy &#39;r&#39; rectangle-toggle
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Now you can enter copy mode by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;[&lt;/code&gt;, and then go
+to start point, press &amp;lsquo;v&amp;rsquo; and start copying. After you have selected text
+you want to copy, you can just press &amp;lsquo;y&amp;rsquo; (or the default &amp;lsquo;enter&amp;rsquo; key) to
+copy the text into Tmux&amp;rsquo;s buffer. This is exactly the commands you would use
+in Vim to copy text.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To paste, press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;P&lt;/code&gt;. Note that it&amp;rsquo;s capital &amp;lsquo;p&amp;rsquo; (i.e.
+&lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;p&lt;/code&gt;). This again is similar to Vim&amp;rsquo;s shortcut &amp;lsquo;p&amp;rsquo; for paste, though
+not exactly similar. You&amp;rsquo;ll realize in your Tmux journey why didn&amp;rsquo;t we use a
+small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;copy-from-tmux-buffer-to-system-buffer-clipboard:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Copy from tmux buffer to system buffer (clipboard)&lt;/h2&gt;
+
+&lt;p&gt;For this to happen, you need to install &lt;code&gt;xclip&lt;/code&gt; on your computer. Do it as:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install --assume-yes xclip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After that, you need to add this line in &lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;bind -t vi-copy y copy-pipe &amp;quot;xclip -sel clip -i&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now close all your tmux sessions. From now onwards, whatever you copy in Tmux
+buffer will also land into system clipboard.&lt;/p&gt;
+
+&lt;h2 id=&#34;tmux-copy-with-mouse-drag:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
+
+&lt;p&gt;You can enable &amp;lsquo;mouse mode&amp;rsquo;, using which you can copy text into tmux buffer by
+mouse drag. For doing that, you just need to add this line to your
+&lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;setw -g mode-mouse on
 set -g mouse-select-window on
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Note that this works only with Tmux version 1.8 or earlier. For later versions
-of Tmux, just add this single line:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;set -g mouse on
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h3&gt;
+&lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
 
 &lt;p&gt;You&amp;rsquo;ll notice that now all your selections will go to tmux buffer, and not
-system&amp;rsquo;s buffer (called &amp;lsquo;clipboard&amp;rsquo;). The solution is very simple &amp;ndash; just use
-&lt;code&gt;SHIFT&lt;/code&gt; button (and on Macs, use &lt;code&gt;ALT&lt;/code&gt; button).&lt;/p&gt;
+clipboard buffer. Of course, you can enable copying to system clipboard as
+described in a section above. However, you can notice that you can&amp;rsquo;t double
+click to select a complete word with vi&amp;rsquo;s tmux copy-pasting shortcuts + mouse
+option enabled.&lt;/p&gt;
 
-&lt;p&gt;This is all what you need to know if you are using only your local computer.
-But if you are a developer, there is a chance you might be dealing with remote
-servers over SSH, and might want to copy text in Tmux on a remote server, and
-have it accessible locally. For example you might want to copy an error message
-from remote server and send it over to your colleague over chat from you local
-computer. There is a way to do that too!&lt;/p&gt;
+&lt;p&gt;Just press &lt;code&gt;SHIFT&lt;/code&gt; button when copying, and now you can copy as if Tmux
+doesn&amp;rsquo;t exist! :)&lt;/p&gt;
 
-&lt;h3 id=&#34;copy-from-a-remote-server:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Copy from a remote server&lt;/h3&gt;
+&lt;h2 id=&#34;copy-from-a-remote-server:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Copy from a remote server&lt;/h2&gt;
 
-&lt;p&gt;You will need to install &lt;code&gt;xclip&lt;/code&gt; on the remote server and local computer too.
-On Ubuntu, this can be done by doing &lt;code&gt;sudo apt-get install xclip&lt;/code&gt;. Add this
-line to your &lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;bind -t vi-copy y copy-pipe &amp;quot;xclip -sel clip -i&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Then SSH on the remote server using -X option:&lt;/p&gt;
+&lt;p&gt;Install &lt;code&gt;xclip&lt;/code&gt; on the remote Ubuntu/Linux server, and add the line mentioned
+above (&lt;code&gt;bind -t vi-copy y copy-pipe &amp;quot;xclip -sel clip -i&amp;quot;&lt;/code&gt;) to &lt;code&gt;~/.tmux.conf&lt;/code&gt; on
+that server. Also, pass &lt;code&gt;-X&lt;/code&gt; option when making SSH connection to the server,
+like so:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;ssh -X remoteuser@remotehost
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Now anything you copy on that system using Tmux will come to local system&amp;rsquo;s
-clipboard.&lt;/p&gt;
+&lt;p&gt;And after that everything you copy into remote&amp;rsquo;s Tmux buffer will get copied
+over to local clipboard. Magic!&lt;/p&gt;
+
+&lt;h2 id=&#34;other-information:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Other information&lt;/h2&gt;
 
 &lt;p&gt;Done! Don&amp;rsquo;t forget to comment if you know something worth letting everybody
 know! Thank you:)&lt;/p&gt;
@@ -1321,110 +1450,6 @@ execution&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Done! Cheers!&lt;/p&gt;
-</description>
-    </item>
-    
-    
-    
-    <item>
-      <title>OpenStack Unit Testing Nuggets</title>
-      <link>http://www.rushiagr.com/blog/2014/09/05/openstack-unit-testing-nuggets/</link>
-      <pubDate>Fri, 05 Sep 2014 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
-      <guid>http://www.rushiagr.com/blog/2014/09/05/openstack-unit-testing-nuggets/</guid>
-      <description>
-
-&lt;p&gt;A small post about little things I found out while running unit tests in
-OpenStack.&lt;/p&gt;
-
-&lt;h2 id=&#34;unit-testing-setup:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Unit-testing setup&lt;/h2&gt;
-
-&lt;p&gt;Everybody knows &lt;code&gt;./run_tests.sh&lt;/code&gt; is used to run the unit tests of an OpenStack
-project. But, you require to install dependencies before doing it. And
-installing dependencies might not always succeed. So make sure you install
-these packages before running &lt;code&gt;pip install -r requirements.txt&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get install build-essential libssl-dev libffi-dev \
-    python-dev libxslt1-dev libpq-dev python-mysqldb \
-    libmysqlclient-dev libvirt-dev
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Atleast &lt;code&gt;cinder&lt;/code&gt; and &lt;code&gt;nova&lt;/code&gt; dependencies will get installed properly after
-this.&lt;/p&gt;
-
-&lt;h2 id=&#34;run-tests-frequently-used-commands:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests frequently used commands&lt;/h2&gt;
-
-&lt;p&gt;To force the tests to NOT run in a virtual environment, even if it is present:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;./run_tests.sh -N
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Force a clean rebuild of virtual environment&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;./run_tests.sh -f
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Run only PEP8 checks&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;./run_tests.sh -p
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Run PEP8 checks only on the files which have been changed since last commit&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;./run_tests.sh -8
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Run all tests from a specific file only, e.g. nova/tests/test_utils.py&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Run all tests of only a specific class inside a test file&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils.ResourceFilterTestCase
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Run only a specific test&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils.ResourceFilterTestCase.test_resource_filtering
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;wildcards-while-running-the-tests:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Wildcards while running the tests&lt;/h2&gt;
-
-&lt;p&gt;Frequently you&amp;rsquo;ll find yourself testing only a couple of tests. In such cases,
-a wildcard will save you from typing the whole path of the test. The below
-command will also run &lt;code&gt;test_resource_filtering&lt;/code&gt; test:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.*resource_filt*
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I currently don&amp;rsquo;t know how to make a test work without adding &lt;code&gt;nova.tests&lt;/code&gt;
-before it&lt;/p&gt;
-
-&lt;h2 id=&#34;run-tests-is-not-happy:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests is not happy&lt;/h2&gt;
-
-&lt;p&gt;Sometimes you&amp;rsquo;ll see running &lt;code&gt;./run_tests.sh&lt;/code&gt; can throw a lot of lines of
-ununderstandable gibberish on your screen. In the end it will say &lt;code&gt;testr
-failed&lt;/code&gt;, but it won&amp;rsquo;t give an indication of where it failed and why. I have
-seen that this happens due to only one of the following two reasons:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;em&gt;Syntax error&lt;/em&gt;: There is a syntax error in your code.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;em&gt;Dependencies outdated&lt;/em&gt;: Dependencies in your virtual environment is
-outdated. In such cases, you will need to recreate a virtual environment with
-latest packages. Or better: just update the virtual environment with the latest
-packages using this command:&lt;/p&gt;
-
-&lt;p&gt;./run_tests.sh -u&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;UPDATE: I&amp;rsquo;ve seen that nowadays it doesn&amp;rsquo;t throw a lot of gibberish, but just
-says &amp;lsquo;testr failed&amp;rsquo;, without any error log or stacktrace. This is the same
-situation &amp;ndash; can only happen when there is a syntax error, or if the
-dependencies are outdated.&lt;/p&gt;
-
-&lt;p&gt;That&amp;rsquo;s it for now.&lt;/p&gt;
 </description>
     </item>
     

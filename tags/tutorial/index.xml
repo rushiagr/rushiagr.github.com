@@ -102,51 +102,57 @@ where &amp;lsquo;two&amp;rsquo; is alredy written (from another terminal)&lt;/p&
     
     
     <item>
-      <title>Everything you need to know about Tmux copy pasting</title>
+      <title>Everything you need to know about Tmux copy paste - Mac OS</title>
       <link>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/</link>
       <pubDate>Thu, 16 Jun 2016 10:58:02 IST</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/</guid>
       <description>
 
-&lt;p&gt;Note: It is best if you actually execute steps in this tutorial along with
-reading it&lt;/p&gt;
+&lt;p&gt;Copying from a Tmux session is something every Tmux user struggled with once.
+I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
 
-&lt;p&gt;Estimated reading time: 30 minutes if performing a hands-on. Else 10 minutes.&lt;/p&gt;
+&lt;p&gt;I tested everything on Mac OS X El Capitan, which runs Tmux version 2.1. To
+check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Linux (e.g. Ubuntu) machine, go
+(here)[&lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/&#34;&gt;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/&lt;/a&gt;].&lt;/p&gt;
 
-&lt;p&gt;Note: This Guide is written by running commands on Ubuntu Trusty (14.04), which
-comes with Tmux version 1.8. For later versions of Tmux, things which are
-different are mentioned at appropriate places .  You can check Tmux version
-with &lt;code&gt;tmux -V&lt;/code&gt; command. Please feel free to comment if you find something
-missing or wrong, or know something worth adding.&lt;/p&gt;
+&lt;h2 id=&#34;know-about-your-terminal:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Know about your terminal&lt;/h2&gt;
 
-&lt;h3 id=&#34;tmux-copy-paste-the-defaults:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux copy-paste - the defaults&lt;/h3&gt;
+&lt;p&gt;The default terminal which comes with Mac is pretty limiting. Instead of
+listing the limitations (and workarounds around it), I&amp;rsquo;ll just say that before
+you proceed, please install iTerm 2 and start using that immediately. What I&amp;rsquo;m
+writing below is all for iTerm 2. (Do let me know if you absolutely need Tmux
+copy-paste to work in Terminal, and I&amp;rsquo;ll provide steps for that).&lt;/p&gt;
 
-&lt;p&gt;I&amp;rsquo;m going to explain you the tmux defaults in this section, but don&amp;rsquo;t remember
-any of it! The following methods are slightly involved, so we will soon create
-Tmux shortcuts for them which are easier to remember. More so, they are
-Vim-like, so if you are a Vim user, you&amp;rsquo;ll need to learn even less new
-stuff :)&lt;/p&gt;
+&lt;h2 id=&#34;know-about-copy-buffers:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Know about copy buffers&lt;/h2&gt;
+
+&lt;p&gt;When you do a &lt;code&gt;Command&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt;, the stuff you copy is stored in your computer&amp;rsquo;s
+buffer, called &amp;lsquo;clipboard&amp;rsquo; from where you can paste anywhere by doing a
+&lt;code&gt;Command&lt;/code&gt;+&amp;lsquo;v&amp;rsquo;. Tmux has it&amp;rsquo;s own buffer for coppying, which we&amp;rsquo;ll
+call &amp;lsquo;tmux buffer&amp;rsquo;. Our goal is to understand in a Tmux session how to copy to
+tmux buffer, and also to clipboard.&lt;/p&gt;
+
+&lt;p&gt;You can always copy stuff into clipboard while usin Tmux. &amp;ldquo;Why do I need a Tmux
+buffer then&amp;rdquo;, you might wonder. This is because, in your shell, the text you
+want to select might not fit in your current screen (e.g. output of &lt;code&gt;cat
+/etc/passwd&lt;/code&gt; file). If you copy normally, you will only be able to copy text
+visible on your screen, and not the output which is &amp;lsquo;scrolled up&amp;rsquo; due to a lot
+of output.&lt;/p&gt;
+
+&lt;h2 id=&#34;tmux-copy-paste-the-defaults:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux copy-paste - the defaults&lt;/h2&gt;
+
+&lt;p&gt;Well, the defaults in Mac are horrible. There is simply no way to copy into
+tmux buffer without using any external plugin. BUT you can copy stuff into
+system clipboard by just using your mouse for selecting text.&lt;/p&gt;
+
+&lt;h2 id=&#34;tmux-vim-bindings-for-copying-into-tmux-buffer:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux Vim-bindings for copying into tmux buffer&lt;/h2&gt;
+
+&lt;p&gt;Adding configuration described in this section will give you easier shortcuts
+for copy-pasting in Tmux. Moreover, these shortcuts work very similar to Vim&amp;rsquo;s
+copy-pasting shortcuts!&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Enter &amp;lsquo;copy mode&amp;rsquo;. This is the mode in which you can move the cursor
-anywhere on the screen. Do this by pressing the &amp;lsquo;prefix&amp;rsquo; (&lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;), and
-then pressing &lt;code&gt;[&lt;/code&gt; key. So basically press &lt;code&gt;CTRL&lt;/code&gt; and then &lt;code&gt;j&lt;/code&gt; while holding
-the &lt;code&gt;CTRL&lt;/code&gt; button, then release both keys, and then press &lt;code&gt;[&lt;/code&gt; key. Such
-sequence will be mentioned as &lt;code&gt;CTRL&lt;/code&gt;+&amp;lsquo;b&amp;rsquo;, &lt;code&gt;[&lt;/code&gt; from now on for other such
-sequences too.&lt;/li&gt;
-&lt;li&gt;Now use the arrow keys to go to the start of the text you want to copy, and
-then press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;SPACE&lt;/code&gt;, or &lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;SPACE&lt;/code&gt;. The cursor should now change
-to yellow colour, meaning it has started highlighting.&lt;/li&gt;
-&lt;li&gt;Now using arrow keys, move to the point till where you want to copy, and
-then press &lt;code&gt;ENTER&lt;/code&gt;. Alternatively, you can press &lt;code&gt;ALT&lt;/code&gt; + &lt;code&gt;w&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Now you can paste the copied text by doing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;, &lt;code&gt;]&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&#34;tmux-vim-bindings-for-copy-and-paste:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux Vim-bindings for copy and paste&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Add these lines file by name ~/.tmux.conf.&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;Add these lines in a file by name &lt;code&gt;~/.tmux.conf&lt;/code&gt;.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;bind P paste-buffer
 bind-key -t vi-copy &#39;v&#39; begin-selection
@@ -154,10 +160,11 @@ bind-key -t vi-copy &#39;y&#39; copy-selection
 bind-key -t vi-copy &#39;r&#39; rectangle-toggle
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;Now you can enter copy mode as described above (&lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;[&lt;/code&gt;), and then go
-to start point and press &amp;lsquo;v&amp;rsquo; to start copying. After you have selected text
-you want to copy, you can just press &amp;lsquo;y&amp;rsquo; to copy the text into Tmux&amp;rsquo;s
-buffer. This is exactly the commands you would use in Vim to copy text.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Now you can enter copy mode by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;[&lt;/code&gt;, and then go
+to start point, press &amp;lsquo;v&amp;rsquo; and start copying. After you have selected text
+you want to copy, you can just press &amp;lsquo;y&amp;rsquo; (or the default &amp;lsquo;enter&amp;rsquo; key) to
+copy the text into Tmux&amp;rsquo;s buffer. This is exactly the commands you would use
+in Vim to copy text.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;To paste, press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;P&lt;/code&gt;. Note that it&amp;rsquo;s capital &amp;lsquo;p&amp;rsquo; (i.e.
 &lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;p&lt;/code&gt;). This again is similar to Vim&amp;rsquo;s shortcut &amp;lsquo;p&amp;rsquo; for paste, though
@@ -165,62 +172,184 @@ not exactly similar. You&amp;rsquo;ll realize in your Tmux journey why didn&amp;
 small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Before we move ahead, I want to tell you that Tmux&amp;rsquo;s copy buffer is independent
-of system clipboard (at least on Tmux 1.8. In Tmux 2.0 this seems to be no
-longer the case on El Capitan Mac. I unfortunately don&amp;rsquo;t have an Ubuntu Desktop
-handy). That is, whatever you copied using &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt; command, it&amp;rsquo;ll still be
-pasted when you do a &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;v&lt;/code&gt;, and the stuff you copied in Tmux using Tmux&amp;rsquo;s
-way to copy stuff won&amp;rsquo;t be available by default outside of that Tmux session.
-But you can change that behavior. I&amp;rsquo;ve now started to use Mac, and somehow it
-just works in it, so I don&amp;rsquo;t really know how to make it work in Ubuntu any more
-:(. I &amp;lsquo;guess&amp;rsquo; if you follow steps in &amp;lsquo;Copy from remote server&amp;rsquo;, you&amp;rsquo;ll get it
-working. Do let me know if you are trying it!&lt;/p&gt;
+&lt;h2 id=&#34;copy-from-tmux-buffer-to-system-buffer-clipboard:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Copy from tmux buffer to system buffer (clipboard)&lt;/h2&gt;
 
-&lt;h3 id=&#34;tmux-copy-with-mouse-drag:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux copy with mouse drag!&lt;/h3&gt;
+&lt;p&gt;In newer iTerm2, you need to enable one option in settings to copy a text into
+both tmux buffer and clipboard at the same time. Go to iTerm2 &amp;gt; Preferences &amp;gt;
+&amp;ldquo;General&amp;rdquo; tab, and in the &amp;ldquo;Selection&amp;rdquo; section, check the box which says
+&amp;ldquo;Applications in terminal may access clipboard&amp;rdquo; if it isn&amp;rsquo;t checked. See
+(here)[&lt;a href=&#34;http://apple.stackexchange.com/a/248828&#34;&gt;http://apple.stackexchange.com/a/248828&lt;/a&gt;] for a screenshot.&lt;/p&gt;
 
-&lt;p&gt;You can enable what is called as &amp;lsquo;mouse mode&amp;rsquo;. Using it, you can just select
-text by dragging mouse and making a selection. For doin that, you just need to
-add these lines to your &lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
+&lt;h2 id=&#34;tmux-copy-with-mouse-drag:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
+
+&lt;p&gt;You can enable &amp;lsquo;mouse mode&amp;rsquo;, using which you can copy text into tmux buffer by
+mouse drag. For doing that, you just need to add this line to your
+&lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;set -g mouse on
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
+
+&lt;p&gt;You&amp;rsquo;ll notice that now all your selections will go to tmux buffer, and not
+clipboard buffer. Of course, you can enable copying to system clipboard as
+described in a section above. However, you can notice that you can&amp;rsquo;t double
+click to select a complete word with vi&amp;rsquo;s tmux copy-pasting shortcuts + mouse
+option enabled.&lt;/p&gt;
+
+&lt;p&gt;Just press &lt;code&gt;Option&lt;/code&gt; (Alt) button when copying, and now you can copy as if Tmux
+doesn&amp;rsquo;t exist! :)&lt;/p&gt;
+
+&lt;h2 id=&#34;copy-from-a-remote-server:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Copy from a remote server&lt;/h2&gt;
+
+&lt;p&gt;Now if your remote server is a Linux machine (e.g. an Ubuntu server), then
+getting that remote server&amp;rsquo;s tmux buffer copied into our local Mac&amp;rsquo;s clipboard
+makes for an interesting story! If the iTerm setting to allow applications in
+terminal to access clipboard is enabled, then if you are running a tmux session
+on remote server, and you copy stuff there into the tmux buffer of that system,
+the copied text is already into your local system&amp;rsquo;s clipboard! Amazing! BUT but
+but, this only works if you are connecting to the remote machine directly from
+your terminal, i.e. not from inside a local Tmux session!! If you have a local
+Tmux session, and then you SSH into remote machine, connect to remote Tmux
+session and then try to copy text in the &amp;lsquo;remote&amp;rsquo; Tmux session (i.e. using
+&lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt; twice to send Tmux commands to inner Tmux session), then this won&amp;rsquo;t
+work! (Note that you can always copy in the &amp;lsquo;outer&amp;rsquo; Tmux session, i.e. local
+Tmux session, but as stated previously, you won&amp;rsquo;t be able to copy text which is
+&amp;lsquo;scrolled up&amp;rsquo; in the inner Tmux session.)&lt;/p&gt;
+
+&lt;p&gt;Generally I&amp;rsquo;m satisfied with the limitation mentioned here. In order to get
+full copying from remote session working, you will need to do something more
+involved, like (here)[&lt;a href=&#34;http://superuser.com/a/408374/315134&#34;&gt;http://superuser.com/a/408374/315134&lt;/a&gt;]. Do let me know if
+you need a better explanation of that method (e.g. more details on SSH keys and
+enabling remote option on Mac OS X)&lt;/p&gt;
+
+&lt;h2 id=&#34;other-information:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Other information&lt;/h2&gt;
+
+&lt;p&gt;Done! Don&amp;rsquo;t forget to comment if you know something worth letting everybody
+know! Thank you:)&lt;/p&gt;
+</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Everything you need to know about Tmux copy paste - Ubuntu</title>
+      <link>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/</link>
+      <pubDate>Thu, 16 Jun 2016 10:58:02 IST</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/</guid>
+      <description>
+
+&lt;p&gt;Copying from a Tmux session is something every Tmux user struggled with once.
+I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
+
+&lt;p&gt;I tested everything on Ubuntu 14.04 Trusty Tahr, which runs Tmux version 1.8.
+To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Mac, go
+(here)[&lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/&#34;&gt;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/&lt;/a&gt;].&lt;/p&gt;
+
+&lt;h2 id=&#34;know-about-copy-buffers:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Know about copy buffers&lt;/h2&gt;
+
+&lt;p&gt;When you do a &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt;, the stuff you copy is stored in your computer&amp;rsquo;s
+buffer, called &amp;lsquo;clipboard&amp;rsquo; from where you can paste anywhere by doing a
+&lt;code&gt;CTRL&lt;/code&gt;+&amp;lsquo;v&amp;rsquo;. Tmux has it&amp;rsquo;s own buffer for coppying, which we&amp;rsquo;ll
+call &amp;lsquo;tmux buffer&amp;rsquo;. Our goal is to understand in a Tmux session how to copy to
+tmux buffer, and also to clipboard.&lt;/p&gt;
+
+&lt;p&gt;You can always copy stuff into clipboard while usin Tmux. &amp;ldquo;Why do I need a Tmux
+buffer then&amp;rdquo;, you might wonder. This is because, in your shell, the text you
+want to select might not fit in your current screen (e.g. output of &lt;code&gt;cat
+/etc/passwd&lt;/code&gt; file). If you copy normally, you will only be able to copy text
+visible on your screen, and not the output which is &amp;lsquo;scrolled up&amp;rsquo; due to a lot
+of output.&lt;/p&gt;
+
+&lt;h2 id=&#34;tmux-copy-paste-the-defaults:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Tmux copy-paste - the defaults&lt;/h2&gt;
+
+&lt;p&gt;The defaults are slighly involved, so this section is purely for informational purposes, and shouldn&amp;rsquo;t be memorized. Skipping this section is perfectly okay.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Enter &amp;lsquo;copy mode&amp;rsquo; by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;, &lt;code&gt;[&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Use the arrow keys to go to the position from where you want to start copying. Press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;SPACE&lt;/code&gt; to start copying.&lt;/li&gt;
+&lt;li&gt;Use arrow keys to go to the end of text you want to copy. Press &lt;code&gt;ALT&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; or &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; to copy into Tmux buffer.&lt;/li&gt;
+&lt;li&gt;Press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;, &lt;code&gt;]&lt;/code&gt; to paste in a possibly different Tmux pane/window.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;tmux-vim-bindings-for-copying-into-tmux-buffer:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Tmux Vim-bindings for copying into tmux buffer&lt;/h2&gt;
+
+&lt;p&gt;Adding configuration described in this section will give you easier shortcuts
+for copy-pasting in Tmux. Moreover, these shortcuts work very similar to Vim&amp;rsquo;s
+copy-pasting shortcuts!&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Add these lines in a file by name &lt;code&gt;~/.tmux.conf&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;bind P paste-buffer
+bind-key -t vi-copy &#39;v&#39; begin-selection
+bind-key -t vi-copy &#39;y&#39; copy-selection
+bind-key -t vi-copy &#39;r&#39; rectangle-toggle
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Now you can enter copy mode by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;[&lt;/code&gt;, and then go
+to start point, press &amp;lsquo;v&amp;rsquo; and start copying. After you have selected text
+you want to copy, you can just press &amp;lsquo;y&amp;rsquo; (or the default &amp;lsquo;enter&amp;rsquo; key) to
+copy the text into Tmux&amp;rsquo;s buffer. This is exactly the commands you would use
+in Vim to copy text.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To paste, press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;P&lt;/code&gt;. Note that it&amp;rsquo;s capital &amp;lsquo;p&amp;rsquo; (i.e.
+&lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;p&lt;/code&gt;). This again is similar to Vim&amp;rsquo;s shortcut &amp;lsquo;p&amp;rsquo; for paste, though
+not exactly similar. You&amp;rsquo;ll realize in your Tmux journey why didn&amp;rsquo;t we use a
+small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;copy-from-tmux-buffer-to-system-buffer-clipboard:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Copy from tmux buffer to system buffer (clipboard)&lt;/h2&gt;
+
+&lt;p&gt;For this to happen, you need to install &lt;code&gt;xclip&lt;/code&gt; on your computer. Do it as:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install --assume-yes xclip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After that, you need to add this line in &lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;bind -t vi-copy y copy-pipe &amp;quot;xclip -sel clip -i&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now close all your tmux sessions. From now onwards, whatever you copy in Tmux
+buffer will also land into system clipboard.&lt;/p&gt;
+
+&lt;h2 id=&#34;tmux-copy-with-mouse-drag:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
+
+&lt;p&gt;You can enable &amp;lsquo;mouse mode&amp;rsquo;, using which you can copy text into tmux buffer by
+mouse drag. For doing that, you just need to add this line to your
+&lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;setw -g mode-mouse on
 set -g mouse-select-window on
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Note that this works only with Tmux version 1.8 or earlier. For later versions
-of Tmux, just add this single line:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;set -g mouse on
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h3&gt;
+&lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
 
 &lt;p&gt;You&amp;rsquo;ll notice that now all your selections will go to tmux buffer, and not
-system&amp;rsquo;s buffer (called &amp;lsquo;clipboard&amp;rsquo;). The solution is very simple &amp;ndash; just use
-&lt;code&gt;SHIFT&lt;/code&gt; button (and on Macs, use &lt;code&gt;ALT&lt;/code&gt; button).&lt;/p&gt;
+clipboard buffer. Of course, you can enable copying to system clipboard as
+described in a section above. However, you can notice that you can&amp;rsquo;t double
+click to select a complete word with vi&amp;rsquo;s tmux copy-pasting shortcuts + mouse
+option enabled.&lt;/p&gt;
 
-&lt;p&gt;This is all what you need to know if you are using only your local computer.
-But if you are a developer, there is a chance you might be dealing with remote
-servers over SSH, and might want to copy text in Tmux on a remote server, and
-have it accessible locally. For example you might want to copy an error message
-from remote server and send it over to your colleague over chat from you local
-computer. There is a way to do that too!&lt;/p&gt;
+&lt;p&gt;Just press &lt;code&gt;SHIFT&lt;/code&gt; button when copying, and now you can copy as if Tmux
+doesn&amp;rsquo;t exist! :)&lt;/p&gt;
 
-&lt;h3 id=&#34;copy-from-a-remote-server:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Copy from a remote server&lt;/h3&gt;
+&lt;h2 id=&#34;copy-from-a-remote-server:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Copy from a remote server&lt;/h2&gt;
 
-&lt;p&gt;You will need to install &lt;code&gt;xclip&lt;/code&gt; on the remote server and local computer too.
-On Ubuntu, this can be done by doing &lt;code&gt;sudo apt-get install xclip&lt;/code&gt;. Add this
-line to your &lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;bind -t vi-copy y copy-pipe &amp;quot;xclip -sel clip -i&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Then SSH on the remote server using -X option:&lt;/p&gt;
+&lt;p&gt;Install &lt;code&gt;xclip&lt;/code&gt; on the remote Ubuntu/Linux server, and add the line mentioned
+above (&lt;code&gt;bind -t vi-copy y copy-pipe &amp;quot;xclip -sel clip -i&amp;quot;&lt;/code&gt;) to &lt;code&gt;~/.tmux.conf&lt;/code&gt; on
+that server. Also, pass &lt;code&gt;-X&lt;/code&gt; option when making SSH connection to the server,
+like so:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;ssh -X remoteuser@remotehost
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Now anything you copy on that system using Tmux will come to local system&amp;rsquo;s
-clipboard.&lt;/p&gt;
+&lt;p&gt;And after that everything you copy into remote&amp;rsquo;s Tmux buffer will get copied
+over to local clipboard. Magic!&lt;/p&gt;
+
+&lt;h2 id=&#34;other-information:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Other information&lt;/h2&gt;
 
 &lt;p&gt;Done! Don&amp;rsquo;t forget to comment if you know something worth letting everybody
 know! Thank you:)&lt;/p&gt;
@@ -2429,251 +2558,6 @@ We&amp;rsquo;ll run all the tests in verbose mode. To run all the tests:&lt;/p&g
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;And that ladies and gentlemen, is the end! :)&lt;/p&gt;
-</description>
-    </item>
-    
-    
-    
-    <item>
-      <title>Git(hub) Cheat Sheet</title>
-      <link>http://www.rushiagr.com/blog/2013/03/19/github-cheat-sheet/</link>
-      <pubDate>Tue, 19 Mar 2013 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
-      <guid>http://www.rushiagr.com/blog/2013/03/19/github-cheat-sheet/</guid>
-      <description>
-
-&lt;p&gt;I am posting my github cheat sheet here. I started writing it as soon as I started
-learning Github and Git. So, some of the content here can appear quite naive.
-I will try to keep this blog post as updated as I can, and if you find any
-suggestion, please comment!&lt;/p&gt;
-
-&lt;p&gt;This post is just for a reference of commands. This post will be a bad way to learn
-how git works. A basic understanding of git is assumed.&lt;/p&gt;
-
-&lt;p&gt;##Initial configuration
-Configure user details only for the first time&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git config --global user.name &amp;quot;Rushi Agrawal&amp;quot;
-git config --global user.email &amp;quot;rushi.agr@gmail.com&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To check your git configuration&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git config --list
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;##Branches
-List all branches in the local repo&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git branch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;List all branches including remote-tracking branches&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git branch -r
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;List all branches (including the ones at remote)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git branch -a
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Creating your own branch &lt;code&gt;my_branch&lt;/code&gt;, with content same as your current branch&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git branch my_branch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Switch to the newly created branch&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git checkout my_branch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Execute the above two commands in one line:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git checkout -b my_branch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;to pull a branch &lt;code&gt;only_remote&lt;/code&gt; which exists at github (at remote &lt;code&gt;rushiagr&lt;/code&gt; but not in local repo. (More about &lt;code&gt;git remote update&lt;/code&gt; later)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git remote update
-git checkout -b only_remote rushiagr/only_remote
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;remotes:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Remotes&lt;/h2&gt;
-
-&lt;p&gt;Create a new remote &lt;code&gt;rushiagr&lt;/code&gt; which will track &lt;code&gt;cinder&lt;/code&gt; repository by user &lt;code&gt;rushiagr&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git remote add rushiagr https://github.com/rushiagr/cinder.git
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If this is your personal repo, you can append the username in the remote as shown. After that, every time you push to the origin,
-github will not ask for your username but only password.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git remote add rushiagr https://rushiagr@github.com/rushiagr/cinder.git
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Delete the remote &lt;code&gt;rushiagr&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git remote rm rushiagr
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;List all the remotes&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git remote
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The above command only shows the names of remotes. To also check the links to the remotes:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git remote -v
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now this is very important command.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git remote update
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will contact the git server, and will update the local repository with ALL the content at ALL those remotes. The interesting part is, nothing will actually change. That is, no more new branches (which got created at the server after you last pulled from the server) were created, and the existing branches are also not updated. BUT, all the content goes into the magic &lt;code&gt;.git&lt;/code&gt; directory. After you&amp;rsquo;ve run this command, when you create a branch only existing at remote, the local git repo will not contact the server but will fetch all the contents from within the repository.&lt;/p&gt;
-
-&lt;p&gt;To take a new branch from remote, and create a new branch having contents of that remote branch. (You might need to run &amp;lsquo;git remote update&amp;rsquo;)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git checkout -b stable/folsom origin/stable/folsom
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;push:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Push&lt;/h2&gt;
-
-&lt;p&gt;Pushing this newly created branch to remote &lt;code&gt;rushiagr&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git push rushiagr my_branch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If you want to push the local branch &lt;code&gt;my_branch&lt;/code&gt; with a different name to
-remote, say &lt;code&gt;my_remote_branch&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git push rushiagr my_branch:my_remote_branch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To create an association with the remote (only first time):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git push -u origin my_branch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;or&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git push --set-upstream origin my_branch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;pull:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Pull&lt;/h2&gt;
-
-&lt;p&gt;Git pull is nothing more than a macro that does git fetch and git merge, in
-that order. The common syntax to pull from branch &lt;code&gt;remote_branch&lt;/code&gt; located at remote &lt;code&gt;remote_name&lt;/code&gt; to the current active branch in the local repo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git pull remote_name remote_branch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;oops-i-didn-t-intend-to-do-that:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Oops! I didn&amp;rsquo;t intend to do that!&lt;/h2&gt;
-
-&lt;p&gt;####To undo last commit.
-This will just undo the commit, but will keep changes, so that you can modify the files and commit again&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git reset --soft HEAD^
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;####To not keep the uncommitted changes.
-This command will wipe off all the changes which are not committed. Very useful when you made some changes but dont want to commit it. All the more useful when you &lt;code&gt;pull&lt;/code&gt;ed something but everything became a mess (possibly due to a merge conflict, or pulling to/from a different branch!)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git reset --hard
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;####To delete a branch &lt;code&gt;timepass_testing&lt;/code&gt; from github server&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git push rushiagr --delete timepass_testing
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;(NOT &lt;code&gt;git push rushiagr --delete rushiagr/timepass_testing&lt;/code&gt;)
-####Change author of the last commit&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git commit --amend --author=&amp;quot;Rushi Agrawal &amp;lt;rushi.agr@gmail.com&amp;gt;&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You committed some changes, but then you realised you wanted to add this one line to the commit. In such a case
-just add that one line, and run this command to have this last change incorporated into that previous commit. This command also gives you an option to
-change the commit message.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git commit -a --amend
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;show-me-the-money:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Show me the money&lt;/h2&gt;
-
-&lt;p&gt;To see the patch of the last commit without undoing the last commit&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git show
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To see the changes introduced by any earlier commit with commit id &lt;code&gt;c5bb6d821e10ca8f114fa0b3b0149bc8b7257a92&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git show c5bb6d821e10ca8f114fa0b3b0149bc8b7257a92
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To see the latest changes you made &amp;ndash; the changes which have not been staged to be committed&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git diff
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You can redirect the output from the above three commands to a file, to create corresponding patch file.&lt;/p&gt;
-
-&lt;h2 id=&#34;patching-in-git:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Patching in git&lt;/h2&gt;
-
-&lt;p&gt;Check the status of patch. How many lines changed, etc&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git apply --stat patchfile
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Check if the patch can be applied.
-If no output or no error, patch can be applied safely&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git apply --check patchfile
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Apply patch with signing-off (better way)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git am --signoff &amp;lt; patchfile
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Normal way of applying patch&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git apply patchfile
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;##Miscellaneous&lt;/p&gt;
-
-&lt;p&gt;To pull only specific files from another branch: (here, assuming that we have two branches, &amp;lsquo;test&amp;rsquo;, and &amp;lsquo;master&amp;rsquo;, and currently we are on &amp;lsquo;master&amp;rsquo; branch. If you want to pull ##only &amp;lsquo;testfile.py&amp;rsquo; file from &amp;lsquo;test&amp;rsquo; branch to &amp;lsquo;master&amp;rsquo; branch, do this:)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git checkout test testfile.py1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If your master changed while you were working on your topic_branch, and if you want to merge the master&amp;rsquo;s changes, and also get an option to squash the changes you made on topic_branch:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git checkout master
-git pull origin master
-git checkout topic_branch
-git rebase -i master
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://christoph.ruegg.name/blog/2010/5/5/git-howto-revert-a-commit-already-pushed-to-a-remote-reposit.html&#34;&gt;Undo last commit at the remote repo&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;(you can use git revert, but don’t know how exactly it works)&lt;/p&gt;
-
-&lt;p&gt;Clone a specific branch git repository from github&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git clone -b stable/essex https://github.com/openstack-dev/devstack.git
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://makandracards.com/makandra/527-squash-several-git-commits-into-a-single-commit&#34;&gt;Squash several commits into one single commit&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Checkout a previous commit with SHA commit id cff2580ad7bc16934b72dd9be7463eb090b31d55 from the current branch to a new branch &amp;lsquo;neew&amp;rsquo;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git checkout -b neew cff2580ad7bc16934b72dd9be7463eb090b31d55
-&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
