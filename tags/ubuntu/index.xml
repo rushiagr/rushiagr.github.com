@@ -22,7 +22,7 @@
 I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
 
 &lt;p&gt;I tested everything on Ubuntu 14.04 Trusty Tahr, which runs Tmux version 1.8.
-To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Mac, go
+To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Mac, see
 &lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&#34;know-about-copy-buffers:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Know about copy buffers&lt;/h2&gt;

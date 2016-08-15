@@ -113,7 +113,7 @@ where &amp;lsquo;two&amp;rsquo; is alredy written (from another terminal)&lt;/p&
 I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
 
 &lt;p&gt;I tested everything on Ubuntu 14.04 Trusty Tahr, which runs Tmux version 1.8.
-To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Mac, go
+To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Mac, see
 &lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&#34;know-about-copy-buffers:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Know about copy buffers&lt;/h2&gt;
@@ -239,7 +239,7 @@ know! Thank you:)&lt;/p&gt;
 I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
 
 &lt;p&gt;I tested everything on Mac OS X El Capitan, which runs Tmux version 2.1. To
-check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Linux (e.g. Ubuntu) machine, go
+check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Linux (e.g. Ubuntu) machine, see
 &lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&#34;know-about-your-terminal:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Know about your terminal&lt;/h2&gt;
@@ -254,7 +254,7 @@ copy-paste to work in Terminal, and I&amp;rsquo;ll provide steps for that).&lt;/
 
 &lt;p&gt;When you do a &lt;code&gt;Command&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt;, the stuff you copy is stored in your computer&amp;rsquo;s
 buffer, called &amp;lsquo;clipboard&amp;rsquo; from where you can paste anywhere by doing a
-&lt;code&gt;Command&lt;/code&gt;+&amp;lsquo;v&amp;rsquo;. Tmux has it&amp;rsquo;s own buffer for coppying, which we&amp;rsquo;ll
+&lt;code&gt;Command&lt;/code&gt;+&lt;code&gt;v&lt;/code&gt;. Tmux has it&amp;rsquo;s own buffer for coppying, which we&amp;rsquo;ll
 call &amp;lsquo;tmux buffer&amp;rsquo;. Our goal is to understand in a Tmux session how to copy to
 tmux buffer, and also to clipboard.&lt;/p&gt;
 
