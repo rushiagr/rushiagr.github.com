@@ -114,7 +114,7 @@ I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
 
 &lt;p&gt;I tested everything on Ubuntu 14.04 Trusty Tahr, which runs Tmux version 1.8.
 To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Mac, go
-(here)[&lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/&#34;&gt;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/&lt;/a&gt;].&lt;/p&gt;
+&lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&#34;know-about-copy-buffers:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Know about copy buffers&lt;/h2&gt;
 
@@ -240,7 +240,7 @@ I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
 
 &lt;p&gt;I tested everything on Mac OS X El Capitan, which runs Tmux version 2.1. To
 check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Linux (e.g. Ubuntu) machine, go
-(here)[&lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/&#34;&gt;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/&lt;/a&gt;].&lt;/p&gt;
+&lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&#34;know-about-your-terminal:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Know about your terminal&lt;/h2&gt;
 
@@ -304,7 +304,7 @@ small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt
 both tmux buffer and clipboard at the same time. Go to iTerm2 &amp;gt; Preferences &amp;gt;
 &amp;ldquo;General&amp;rdquo; tab, and in the &amp;ldquo;Selection&amp;rdquo; section, check the box which says
 &amp;ldquo;Applications in terminal may access clipboard&amp;rdquo; if it isn&amp;rsquo;t checked. See
-(here)[&lt;a href=&#34;http://apple.stackexchange.com/a/248828&#34;&gt;http://apple.stackexchange.com/a/248828&lt;/a&gt;] for a screenshot.&lt;/p&gt;
+&lt;a href=&#34;http://apple.stackexchange.com/a/248828&#34;&gt;here&lt;/a&gt; for a screenshot.&lt;/p&gt;
 
 &lt;h2 id=&#34;tmux-copy-with-mouse-drag:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
 
@@ -345,7 +345,7 @@ Tmux session, but as stated previously, you won&amp;rsquo;t be able to copy text
 
 &lt;p&gt;Generally I&amp;rsquo;m satisfied with the limitation mentioned here. In order to get
 full copying from remote session working, you will need to do something more
-involved, like (here)[&lt;a href=&#34;http://superuser.com/a/408374/315134&#34;&gt;http://superuser.com/a/408374/315134&lt;/a&gt;]. Do let me know if
+involved, like &lt;a href=&#34;http://superuser.com/a/408374/315134&#34;&gt;here&lt;/a&gt;. Do let me know if
 you need a better explanation of that method (e.g. more details on SSH keys and
 enabling remote option on Mac OS X)&lt;/p&gt;
 
