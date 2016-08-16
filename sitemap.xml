@@ -3,8 +3,13 @@
   
   <url>
     <loc>http://www.rushiagr.com/</loc>
-    <lastmod>2016-07-20T23:18:24+05:30</lastmod>
+    <lastmod>2016-08-16T17:03:53+05:30</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/blog/2016/08/16/kubernetes-in-30-minutes-with-minikube-on-mac/</loc>
+    <lastmod>2016-08-16T17:03:53+05:30</lastmod>
   </url>
   
   <url>
