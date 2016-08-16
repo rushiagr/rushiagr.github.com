@@ -90,7 +90,7 @@
     
     
 
-<p>Below are steps to create an express setup of kubernetes on your Mac for quick use.</p>
+<p>Below are steps to create an express setup of Kubernetes on your Mac for quick use.</p>
 
 <p>Minikube is a small setup by Kubernetes guys, which will spawn a virtual machine and have a tiny (but fully functional) Kubernetes cluster inside the VM. <code>kubectl</code> (pronounced &lsquo;kube (like &lsquo;tube&rsquo;) control`) is the command line client you&rsquo;ll use to connect to the Kubernetes cluster (which runs inside the VM created by minikube, in case you forgot :) )</p>
 
@@ -144,7 +144,7 @@ sudo mv kubectl /usr/local/bin/
 <pre><code>docker ps
 </code></pre>
 
-<p>If the error is <code>Error response from daemon: client is newer than server (client API version: 1.24, server API version: 1.23)</code>, then we need to install
+<p>If it errors with output <code>Error response from daemon: client is newer than server (client API version: 1.24, server API version: 1.23)</code>, then we need to install
 an older version of docker along with the current docker server installation.</p>
 
 <p>We&rsquo;ll use DVM (docker version manager) for the same, and we need to install DVM
@@ -153,7 +153,7 @@ first for that.</p>
 <pre><code>brew update &amp;&amp; brew install dvm
 </code></pre>
 
-<p>If brew update fails, most of the times re-running <code>brew update</code> again fixes
+<p>If <code>brew update</code> fails, most of the times re-running <code>brew update</code> again fixes
 the problem (else do <code>brew upgrade &amp;&amp; brew update</code> and wait for an hour for it
 to finish depending upon your internet connection).</p>
 
@@ -175,7 +175,7 @@ dvm install
 
 <p>Now if you do <code>dvm ls</code> you&rsquo;ll see that your current docker version is 1.11.1.</p>
 
-<p>Now you can use <code>docker ps</code> to see all your docker containers for kubernetes
+<p>Now you can use <code>docker ps</code> to see all your docker containers for Kubernetes
 running inside minikube.</p>
 
 <p>That&rsquo;s all for this blogpost. I&rsquo;ll write another blog post about how to create your own pods inside this running Kubernetes cluster.</p>
