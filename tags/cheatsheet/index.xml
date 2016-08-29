@@ -1413,7 +1413,7 @@ Around 80 pages long, it covers almost every aspect of basic Puppet. The only pr
 cd devstack/
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;If you do a &lt;code&gt;ls&lt;/code&gt;, you will see &lt;code&gt;stack.sh&lt;/code&gt;, &lt;code&gt;unstack.sh&lt;/code&gt; and &lt;code&gt;rejoin-stack.sh&lt;/code&gt; files in there. These are the most important files.&lt;/p&gt;
+&lt;p&gt;If you do a &lt;code&gt;ls&lt;/code&gt;, you will see &lt;code&gt;stack.sh&lt;/code&gt; and &lt;code&gt;unstack.sh&lt;/code&gt; files in there. These are the most important files.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;r@ra:~/devstack$ ls
 accrc         exercises         HACKING.rst  rejoin-stack.sh  tests
@@ -1429,16 +1429,16 @@ exerciserc    functions-common  README.md    stack.sh
 2. Installs all the dependencies these OpenStack projects have &amp;ndash; both in the form of Ubuntu packages, and also the Python &amp;ldquo;PIP&amp;rdquo; repositories.
 3. Starts all the OpenStack services with a default configuration.&lt;/p&gt;
 
-&lt;p&gt;Bringing down the DevStack-created cloud is easy too &amp;ndash; just invoke the &lt;code&gt;unstack.sh&lt;/code&gt; script, and all the services are down again, freeing up the memory that these services consume. I&amp;rsquo;ll talk about &lt;code&gt;rejoin-stack.sh&lt;/code&gt; in some time. Let&amp;rsquo;s get started before I start writing at lengths again :)&lt;/p&gt;
+&lt;p&gt;Bringing down the DevStack-created cloud is easy too &amp;ndash; just invoke the &lt;code&gt;unstack.sh&lt;/code&gt; script, and all the services are down again, freeing up the memory that these services consume. Let&amp;rsquo;s get started before I start writing at lengths again :)&lt;/p&gt;
 
 &lt;p&gt;Execute the &lt;code&gt;stack.sh&lt;/code&gt; script&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;r@ra:~/devstack$ ./stack.sh 
+&lt;pre&gt;&lt;code&gt;r@ra:~/devstack$ ./stack.sh
 
 ################################################################################
 ENTER A PASSWORD TO USE FOR THE DATABASE.
 ################################################################################
-This value will be written to your localrc file so you don&#39;t have to enter it 
+This value will be written to your localrc file so you don&#39;t have to enter it
 again.  Use only alphanumeric characters.
 If you leave this blank, a random default value will be used.
 Enter a password now:
@@ -1512,13 +1512,9 @@ stack.sh completed in 269 seconds.
 
 &lt;p&gt;Note that this will just kill all the process which were running, for which you were able to see the logs inside screen. &lt;code&gt;unstack.sh&lt;/code&gt; does some cleanups as well along with killing processes.&lt;/p&gt;
 
-&lt;p&gt;If you had previously run &lt;code&gt;./stack.sh&lt;/code&gt;, but have brought down the environment, you can bring it up back by executing the &lt;code&gt;rejoin_stack.sh&lt;/code&gt; script.&lt;/p&gt;
-
 &lt;p&gt;NOTE: DevStack environment doesn&amp;rsquo;t persist across reboots!&lt;/p&gt;
 
 &lt;p&gt;So you need to bring back up the DevStack environment manually everytime you reboot. Here is where using a virtual machine comes handy. You can take a snapshot of the virtual machine, and then go back to it when you want a clean DevStack environment.&lt;/p&gt;
-
-&lt;p&gt;Nonetheless, the best way to reboot is: first execute &lt;code&gt;unstack.sh&lt;/code&gt; to bring down the current running DevStack instance. Then reboot, and when your machine comes up again, run &lt;code&gt;rejoin_stack.sh&lt;/code&gt;. If you don&amp;rsquo;t run &lt;code&gt;unstack.sh&lt;/code&gt;, you will need to execute &lt;code&gt;stack.sh&lt;/code&gt; again to have the environment up.&lt;/p&gt;
 
 &lt;h3 id=&#34;localrc-configurations:98c134cd40c558c50c274d316252e460&#34;&gt;localrc configurations&lt;/h3&gt;
 
@@ -1526,7 +1522,7 @@ stack.sh completed in 269 seconds.
 
 &lt;p&gt;After first successful &lt;code&gt;stack.sh&lt;/code&gt; run, will see that a localrc file gets created with the configuration values you specified while running that script.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;$ cat localrc 
+&lt;pre&gt;&lt;code&gt;$ cat localrc
 DATABASE_PASSWORD=nova
 RABBIT_PASSWORD=nova
 SERVICE_TOKEN=nova
@@ -1536,7 +1532,7 @@ ADMIN_PASSWORD=nova
 
 &lt;p&gt;Sometimes you will forget to unstack, and will reboot the machine. And then you will find that running &lt;code&gt;stack.sh&lt;/code&gt; will again do an &lt;code&gt;apt-get update&lt;/code&gt;, and check for all packages, etc.&lt;/p&gt;
 
-&lt;p&gt;If you specify an option &lt;code&gt;OFFLINE=True&lt;/code&gt; in a file named &lt;code&gt;localrc&lt;/code&gt;, inside the devstack directory, and if after specifying this you run &lt;code&gt;stack.sh&lt;/code&gt;, it will not check anything over the Internet, and will set up DevStack using all the packages and code residing in your machine. Setting up a DevStack using this config option will give you a running cloud in the shortest amount of time (after &lt;code&gt;rejoin_stack.sh&lt;/code&gt;, but you have already forgotten to do &lt;code&gt;unstack.sh&lt;/code&gt;, right :) ).&lt;/p&gt;
+&lt;p&gt;If you specify an option &lt;code&gt;OFFLINE=True&lt;/code&gt; in a file named &lt;code&gt;localrc&lt;/code&gt;, inside the devstack directory, and if after specifying this you run &lt;code&gt;stack.sh&lt;/code&gt;, it will not check anything over the Internet, and will set up DevStack using all the packages and code residing in your machine. Setting up a DevStack using this config option will give you a running cloud in the shortest amount of time).&lt;/p&gt;
 
 &lt;p&gt;Note that &lt;code&gt;stack.sh&lt;/code&gt; will see if the git repositories of the OpenStack projects are present in &lt;code&gt;/opt/stack/&lt;/code&gt; directory. If they are, it will not fetch any latest code into them from Github. But if any of the directory (say, &lt;code&gt;nova&lt;/code&gt;), is absent, it will pull latest code into the newly created &lt;code&gt;nova&lt;/code&gt; directory inside &lt;code&gt;/opt/stack&lt;/code&gt;.&lt;/p&gt;
 

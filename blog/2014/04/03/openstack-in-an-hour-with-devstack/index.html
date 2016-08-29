@@ -113,7 +113,7 @@
 cd devstack/
 </code></pre>
 
-<p>If you do a <code>ls</code>, you will see <code>stack.sh</code>, <code>unstack.sh</code> and <code>rejoin-stack.sh</code> files in there. These are the most important files.</p>
+<p>If you do a <code>ls</code>, you will see <code>stack.sh</code> and <code>unstack.sh</code> files in there. These are the most important files.</p>
 
 <pre><code>r@ra:~/devstack$ ls
 accrc         exercises         HACKING.rst  rejoin-stack.sh  tests
@@ -129,16 +129,16 @@ exerciserc    functions-common  README.md    stack.sh
 2. Installs all the dependencies these OpenStack projects have &ndash; both in the form of Ubuntu packages, and also the Python &ldquo;PIP&rdquo; repositories.
 3. Starts all the OpenStack services with a default configuration.</p>
 
-<p>Bringing down the DevStack-created cloud is easy too &ndash; just invoke the <code>unstack.sh</code> script, and all the services are down again, freeing up the memory that these services consume. I&rsquo;ll talk about <code>rejoin-stack.sh</code> in some time. Let&rsquo;s get started before I start writing at lengths again :)</p>
+<p>Bringing down the DevStack-created cloud is easy too &ndash; just invoke the <code>unstack.sh</code> script, and all the services are down again, freeing up the memory that these services consume. Let&rsquo;s get started before I start writing at lengths again :)</p>
 
 <p>Execute the <code>stack.sh</code> script</p>
 
-<pre><code>r@ra:~/devstack$ ./stack.sh 
+<pre><code>r@ra:~/devstack$ ./stack.sh
 
 ################################################################################
 ENTER A PASSWORD TO USE FOR THE DATABASE.
 ################################################################################
-This value will be written to your localrc file so you don't have to enter it 
+This value will be written to your localrc file so you don't have to enter it
 again.  Use only alphanumeric characters.
 If you leave this blank, a random default value will be used.
 Enter a password now:
@@ -212,13 +212,9 @@ stack.sh completed in 269 seconds.
 
 <p>Note that this will just kill all the process which were running, for which you were able to see the logs inside screen. <code>unstack.sh</code> does some cleanups as well along with killing processes.</p>
 
-<p>If you had previously run <code>./stack.sh</code>, but have brought down the environment, you can bring it up back by executing the <code>rejoin_stack.sh</code> script.</p>
-
 <p>NOTE: DevStack environment doesn&rsquo;t persist across reboots!</p>
 
 <p>So you need to bring back up the DevStack environment manually everytime you reboot. Here is where using a virtual machine comes handy. You can take a snapshot of the virtual machine, and then go back to it when you want a clean DevStack environment.</p>
-
-<p>Nonetheless, the best way to reboot is: first execute <code>unstack.sh</code> to bring down the current running DevStack instance. Then reboot, and when your machine comes up again, run <code>rejoin_stack.sh</code>. If you don&rsquo;t run <code>unstack.sh</code>, you will need to execute <code>stack.sh</code> again to have the environment up.</p>
 
 <h3 id="localrc-configurations:98c134cd40c558c50c274d316252e460">localrc configurations</h3>
 
@@ -226,7 +222,7 @@ stack.sh completed in 269 seconds.
 
 <p>After first successful <code>stack.sh</code> run, will see that a localrc file gets created with the configuration values you specified while running that script.</p>
 
-<pre><code>$ cat localrc 
+<pre><code>$ cat localrc
 DATABASE_PASSWORD=nova
 RABBIT_PASSWORD=nova
 SERVICE_TOKEN=nova
@@ -236,7 +232,7 @@ ADMIN_PASSWORD=nova
 
 <p>Sometimes you will forget to unstack, and will reboot the machine. And then you will find that running <code>stack.sh</code> will again do an <code>apt-get update</code>, and check for all packages, etc.</p>
 
-<p>If you specify an option <code>OFFLINE=True</code> in a file named <code>localrc</code>, inside the devstack directory, and if after specifying this you run <code>stack.sh</code>, it will not check anything over the Internet, and will set up DevStack using all the packages and code residing in your machine. Setting up a DevStack using this config option will give you a running cloud in the shortest amount of time (after <code>rejoin_stack.sh</code>, but you have already forgotten to do <code>unstack.sh</code>, right :) ).</p>
+<p>If you specify an option <code>OFFLINE=True</code> in a file named <code>localrc</code>, inside the devstack directory, and if after specifying this you run <code>stack.sh</code>, it will not check anything over the Internet, and will set up DevStack using all the packages and code residing in your machine. Setting up a DevStack using this config option will give you a running cloud in the shortest amount of time).</p>
 
 <p>Note that <code>stack.sh</code> will see if the git repositories of the OpenStack projects are present in <code>/opt/stack/</code> directory. If they are, it will not fetch any latest code into them from Github. But if any of the directory (say, <code>nova</code>), is absent, it will pull latest code into the newly created <code>nova</code> directory inside <code>/opt/stack</code>.</p>
 
