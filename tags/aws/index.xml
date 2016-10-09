@@ -19,13 +19,13 @@
       <description>
 
 &lt;p&gt;For a user of Amazon Web Services, quickly viewing the dashboard of all
-resources is painful. If you use a web browser, your session won&amp;rsquo;t persist
-for more than a day and you will have to re-authenticate every day. If you use
-AWS CLI, then you might not remember the exact command (was it
+resources is painful. If using a web browser, the session won&amp;rsquo;t persist
+for more than a day and one will have to re-authenticate every day. If using
+AWS CLI, then he/she might not remember the exact command (was it
 &lt;code&gt;aws ec2 describe-key-pair&lt;/code&gt; or &lt;code&gt;aws ec2 describe-keypair&lt;/code&gt; or
-&lt;code&gt;aws ec2 describe-keypairs&lt;/code&gt;?) but even if you do, the output is a JSON. For viewing
-virtual machines, you might not need to see hundreds of lines of details of
-your virtual machiens. Maybe you just wanted to see the IP of the VM so that
+&lt;code&gt;aws ec2 describe-keypairs&lt;/code&gt;?) but even if they do, the output is a not-so-readable JSON. For viewing
+virtual machines, you might not want to see hundreds of lines of detail of
+your virtual machines. Maybe you just wanted to see the IP of the VM so that
 you can SSH into it. And maybe you just wanted to quickly create a virtual
 machine to test something: do you remember all
 the parameters you need to specify for instance creation? And don&amp;rsquo;t forget that
