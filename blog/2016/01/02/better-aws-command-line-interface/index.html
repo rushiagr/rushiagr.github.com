@@ -9,7 +9,7 @@
 
   
 
-  <title> Better AWS Command Line Interface  &middot; rushiagr </title>
+  <title> A different approach to AWS CLI  &middot; rushiagr </title>
 
   
   <link rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
@@ -85,138 +85,86 @@
 
   <div class="content container">
     <div class="post">
-    <h1 class="post-title">Better AWS Command Line Interface</h1>
+    <h1 class="post-title">A different approach to AWS CLI</h1>
     <span class="post-date">Jan 2, 2016</span>
     
     
 
-<p>When I first tried to use the AWS CLIs provided by Amazon, I found them not so
-human-friendly. Sure, maybe they&rsquo;re good for automating stuff, but if you just
-want to view the public IP of a virtual machine, and the CLI throws this on
-your screen for just one VM instance, you&rsquo;re likely not going to be impressed:</p>
+<p>For a user of Amazon Web Services, quickly viewing the dashboard of all
+resources is painful. If you use a web browser, your session won&rsquo;t persist
+for more than a day and you will have to re-authenticate every day. If you use
+AWS CLI, then you might not remember the exact command (&lsquo;was it
+<code>aws ec2 describe-key-pair</code> or <code>aws ec2 describe-keypair</code> or
+<code>aws ec2 describe-keypairs</code>?) but even if you do, the output is a JSON. For viewing
+virtual machines, you might not need to see hundreds of lines of details of
+your virtual machiens. Maybe you just wanted to see the IP of the VM so that
+you can SSH into it. And maybe you just wanted to quickly create a virtual
+machine to test something: do you remember all
+the parameters you need to specify for instance creation? And don&rsquo;t forget that
+you will need to specify the AMI ID of the image, even if you exactly know
+which distribution and version of operating system you want the virtual machine
+to have.</p>
 
-<pre><code>r@rushi:~$ aws ec2 describe-instances
-{
-    &quot;Reservations&quot;: [
-        {
-            &quot;OwnerId&quot;: &quot;123456789012&quot;,
-            &quot;ReservationId&quot;: &quot;r-abcd1234&quot;,
-            &quot;Groups&quot;: [],
-            &quot;Instances&quot;: [
-                {
-                    &quot;Monitoring&quot;: {
-                        &quot;State&quot;: &quot;disabled&quot;
-                    },
-                    &quot;PublicDnsName&quot;: &quot;ec2-52-52-52-52.ap-southeast-1.compute.amazonaws.com&quot;,
-                    &quot;State&quot;: {
-                        &quot;Code&quot;: 16,
-                        &quot;Name&quot;: &quot;running&quot;
-                    },
-                    &quot;EbsOptimized&quot;: false,
-                    &quot;LaunchTime&quot;: &quot;2015-12-31T12:59:59.000Z&quot;,
-                    &quot;PublicIpAddress&quot;: &quot;52.52.52.52&quot;,
-                    &quot;PrivateIpAddress&quot;: &quot;172.31.31.31&quot;,
-                    &quot;ProductCodes&quot;: [],
-                    &quot;VpcId&quot;: &quot;vpc-1234abcd&quot;,
-                    &quot;StateTransitionReason&quot;: &quot;&quot;,
-                    &quot;InstanceId&quot;: &quot;i-1234abcd&quot;,
-                    &quot;ImageId&quot;: &quot;ami-1234abcd&quot;,
-                    &quot;PrivateDnsName&quot;: &quot;ip-172-31-31-31.ap-southeast-1.compute.internal&quot;,
-                    &quot;KeyName&quot;: &quot;mykey&quot;,
-                    &quot;SecurityGroups&quot;: [
-                        {
-                            &quot;GroupName&quot;: &quot;rushi-sg&quot;,
-                            &quot;GroupId&quot;: &quot;sg-abcd1234&quot;
-                        }
-                    ],
-                    &quot;ClientToken&quot;: &quot;&quot;,
-                    &quot;SubnetId&quot;: &quot;subnet-abcd1234&quot;,
-                    &quot;InstanceType&quot;: &quot;t2.micro&quot;,
-                    &quot;NetworkInterfaces&quot;: [
-                        {
-                            &quot;Status&quot;: &quot;in-use&quot;,
-                            &quot;MacAddress&quot;: &quot;06:f3:82:a1:fb:c5&quot;,
-                            &quot;SourceDestCheck&quot;: true,
-                            &quot;VpcId&quot;: &quot;vpc-abcd1234&quot;,
-                            &quot;Description&quot;: &quot;&quot;,
-                            &quot;Association&quot;: {
-                                &quot;PublicIp&quot;: &quot;52.52.52.52&quot;,
-                                &quot;PublicDnsName&quot;: &quot;ec2-52-52-52-52.ap-southeast-1.compute.amazonaws.com&quot;,
-                                &quot;IpOwnerId&quot;: &quot;amazon&quot;
-                            },
-                            &quot;NetworkInterfaceId&quot;: &quot;eni-abcd1234&quot;,
-                            &quot;PrivateIpAddresses&quot;: [
-                                {
-                                    &quot;PrivateDnsName&quot;: &quot;ip-172-31-31-32.ap-southeast-1.compute.internal&quot;,
-                                    &quot;Association&quot;: {
-                                        &quot;PublicIp&quot;: &quot;52.52.52.52&quot;,
-                                        &quot;PublicDnsName&quot;: &quot;ec2-52-52-52-52.ap-southeast-1.compute.amazonaws.com&quot;,
-                                        &quot;IpOwnerId&quot;: &quot;amazon&quot;
-                                    },
-                                    &quot;Primary&quot;: true,
-                                    &quot;PrivateIpAddress&quot;: &quot;172.31.31.31&quot;
-                                }
-                            ],
-                            &quot;PrivateDnsName&quot;: &quot;ip-172-31-31-31.ap-southeast-1.compute.internal&quot;,
-                            &quot;Attachment&quot;: {
-                                &quot;Status&quot;: &quot;attached&quot;,
-                                &quot;DeviceIndex&quot;: 0,
-                                &quot;DeleteOnTermination&quot;: true,
-                                &quot;AttachmentId&quot;: &quot;eni-attach-abcd1234&quot;,
-                                &quot;AttachTime&quot;: &quot;2015-12-31T12:59:59.000Z&quot;
-                            },
-                            &quot;Groups&quot;: [
-                                {
-                                    &quot;GroupName&quot;: &quot;mygroup&quot;,
-                                    &quot;GroupId&quot;: &quot;sg-abcd1234&quot;
-                                }
-                            ],
-                            &quot;SubnetId&quot;: &quot;subnet-abcd1234&quot;,
-                            &quot;OwnerId&quot;: &quot;123456789012&quot;,
-                            &quot;PrivateIpAddress&quot;: &quot;172.31.31.31&quot;
-                        }
-                    ],
-                    &quot;SourceDestCheck&quot;: true,
-                    &quot;Placement&quot;: {
-                        &quot;Tenancy&quot;: &quot;default&quot;,
-                        &quot;GroupName&quot;: &quot;&quot;,
-                        &quot;AvailabilityZone&quot;: &quot;ap-southeast-1a&quot;
-                    },
-                    &quot;Hypervisor&quot;: &quot;xen&quot;,
-                    &quot;BlockDeviceMappings&quot;: [
-                        {
-                            &quot;DeviceName&quot;: &quot;/dev/sda1&quot;,
-                            &quot;Ebs&quot;: {
-                                &quot;Status&quot;: &quot;attached&quot;,
-                                &quot;DeleteOnTermination&quot;: true,
-                                &quot;VolumeId&quot;: &quot;vol-abcd1234&quot;,
-                                &quot;AttachTime&quot;: &quot;2015-12-31T12:59:59.000Z&quot;
-                            }
-                        }
-                    ],
-                    &quot;Architecture&quot;: &quot;x86_64&quot;,
-                    &quot;RootDeviceType&quot;: &quot;ebs&quot;,
-                    &quot;RootDeviceName&quot;: &quot;/dev/sda1&quot;,
-                    &quot;VirtualizationType&quot;: &quot;hvm&quot;,
-                    &quot;Tags&quot;: [
-                        {
-                            &quot;Value&quot;: &quot;rushi some VM&quot;,
-                            &quot;Key&quot;: &quot;Name&quot;
-                        }
-                    ],
-                    &quot;AmiLaunchIndex&quot;: 0
-                }
-            ]
-        },
-    ]
-}
+<p>There is no doubt that AWS CLI is a phenomenal piece of work. It allows you to
+do absolutely everything you can do with Amazon&rsquo;s cloud offering. The
+documentation is thorough and it is great for automation too, as the only
+thing one needs to do is to parse the JSON output. However, it&rsquo;s not as
+human-friendly. It doesn&rsquo;t tell you which options are mandatory and which are
+optional. It doesn&rsquo;t remind you if you forget to specify the keypair for an
+instance which generally results in Google-searching &lsquo;aws cli delete instance&rsquo;
+and creating another instance. The CLI has some inconsistencies too &ndash; creating
+a keypair is <code>aws ec2 create-key-pair</code> but creating a virtual machine is not
+<code>aws ec2 create-instance</code> but <code>aws ec2 run-instances</code>.</p>
+
+<p>To alleviate these pains, I created a simple CLI tool called &ldquo;<a href="http://github.com/rushiagr/aclih">CCH - Cloud CLI
+for Humans</a>&rdquo;. Just typing <code>lsvm</code> prints all
+the virtual machines you have in the cluster. Each command can be run without
+passing a parameter to it. If an operation requires additional parameters and
+you didn&rsquo;t specify it for the first time, it&rsquo;ll ask you to input those
+parameters. For example <code>mkvm</code>, the command to create virtual machines:</p>
+
+<pre><code>r@rushi:~$ mkvm
+Available flavors: t2.micro, t2.nano, ...
+Select flavor ['l' to list]:
 </code></pre>
 
-<p>The only things I&rsquo;m interested in, after creating a VM is to see it&rsquo;s public
-IP, it&rsquo;s flavor, volume size, and instance name. The JSON output which it
-throws on my face makes viewing that basic information much harder.</p>
+<p>Commands for resource creation are short and consistent (<code>mkvm</code> creates virtual
+machines, <code>mkkp</code> creates keypairs, <code>mksg</code> create security groups). No need to
+remember AMI IDs (presently it selects Ubuntu 16.04 64-bit image by default for
+you, but in future you might specify an OS name and OS version). All the
+commands supported so far are:</p>
 
-<p>Fortunately, I am a programmer. So I wrote a simple CLI: <code>lsvm</code>:</p>
+<pre><code>lsvm    - List all virtual machines
+mkvm    - Create a virtual machine
+stpvm   - Stop a virtual machine
+rmvm    - Terminate a virtual machine
+
+lskp    - List all keypairs
+mkkp    - Create keypairs
+rmkp    - Delete a keypair
+
+lssg    - List all security groups (including a detailed view)
+mksg    - Create a security group (including specifying secgroup rules)
+rmsg    - Delete a security group
+</code></pre>
+
+<h2 id="installation:a9c5ded79a164e4b6c02d02a570b1d97">Installation</h2>
+
+<p>I have added the tool to PyPI, so download is easy:</p>
+
+<pre><code>pip install cch
+</code></pre>
+
+<p>Run <code>aws configure</code> if you don&rsquo;t have AWS credentials configured on your
+system. Typically, credentials are kept in <code>~/.aws/credentials</code> file.</p>
+
+<h2 id="sample-usage:a9c5ded79a164e4b6c02d02a570b1d97">Sample usage</h2>
+
+<p>For full list of operations supported so far, see this <a href="https://asciinema.org/a/ektm98481nniu7rldc1ncu5af">asciinema
+screencast</a> I&rsquo;m providing
+examples here for some of the commands.</p>
+
+<p>See help text of a command</p>
 
 <pre><code>r@rushi:~$ lsvm -h
 lsvm [-h] [-s] [&lt;name&gt;]
@@ -225,16 +173,7 @@ lsvm [-h] [-s] [&lt;name&gt;]
     &lt;name&gt;  Only prints VM whose name contains '&lt;name&gt;'
 </code></pre>
 
-<p>Installing the CLI is simple. Just run this command:</p>
-
-<pre><code>sudo sh -c &quot;$(wget -q https://raw.githubusercontent.com/rushiagr/public/master/scripts/simplest-aws-cli.sh -O -)&quot;
-</code></pre>
-
-<p>Ensure that you have internet connection before running this command, and also
-make sure that your computer can run <code>pip</code> commands. Keep your access and
-secret key handy.</p>
-
-<h3 id="list-all-the-vm-instances:a9c5ded79a164e4b6c02d02a570b1d97">List all the VM instances</h3>
+<p>List all virtual machines</p>
 
 <pre><code>r@rushi:~$ lsvm
     ID              Name           Status   Flavor        IP      Vols
@@ -244,15 +183,7 @@ i-abcd1232 rushi vanilla devstack running  t2.large 54.12.123.121  1
 i-abcd1231  rushi dbaas devstack  running m4.xlarge 52.12.123.120  1
 </code></pre>
 
-<p>List all VMs whose name contains word &lsquo;devstack&rsquo;</p>
-
-<pre><code>r@rushi:~$ lsvm
-    ID              Name           Status   Flavor        IP      Vols
-i-abcd1232 rushi vanilla devstack running  t2.large 54.12.123.121  1
-i-abcd1231  rushi dbaas devstack  running m4.xlarge 52.12.123.120  1
-</code></pre>
-
-<p>Show sizes of volumes of instances:</p>
+<p>Also show sizes of volumes of instances:</p>
 
 <pre><code>r@rushi:~$ lsvm  -s
     ID                   Name               Status   Flavor        IP       Vols(GB)
@@ -262,16 +193,19 @@ i-abcd1232      rushi vanilla devstack     running  t2.large 54.12.123.121    [5
 i-abcd1231       rushi dbaas devstack      running m4.xlarge 52.12.123.120    [50]
 </code></pre>
 
-<h3 id="creating-vm-instance:a9c5ded79a164e4b6c02d02a570b1d97">Creating VM instance</h3>
+<p>List all VMs whose name contains word &lsquo;devstack&rsquo;</p>
 
-<p>Creating a VM instance is tough too, with AWS CLI, so I made another command
-<code>mkvm</code> (installed already with the previous script) which is very intuitive for human use. It asks for information in a
-step-by-step manner - exactly the way a human sitting in front of a computer should be
-treated with:</p>
+<pre><code>r@rushi:~$ lsvm devstack
+    ID              Name           Status   Flavor        IP      Vols
+i-abcd1232 rushi vanilla devstack running  t2.large 54.12.123.121  1
+i-abcd1231  rushi dbaas devstack  running m4.xlarge 52.12.123.120  1
+</code></pre>
+
+<p>Create a virtual machine</p>
 
 <pre><code>r@rushi:~$ mkvm
 Only Ubuntu image supported as of now
-Available flavors: ['t1.micro', 'm1.small', 'm1.medium', 'm1.large', 'm1.xlarge', 'm3.medium', 'm3.large', 'm3.xlarge', 'm3.2xlarge', 'm4.large', 'm4.xlarge', 'm4.2xlarge', 'm4.4xlarge', 'm4.10xlarge', 't2.micro', 't2.small', 't2.medium', 't2.large', 'm2.xlarge', 'm2.2xlarge', 'm2.4xlarge', 'cr1.8xlarge', 'i2.xlarge', 'i2.2xlarge', 'i2.4xlarge', 'i2.8xlarge', 'hi1.4xlarge', 'hs1.8xlarge', 'c1.medium', 'c1.xlarge', 'c3.large', 'c3.xlarge', 'c3.2xlarge', 'c3.4xlarge', 'c3.8xlarge', 'c4.large', 'c4.xlarge', 'c4.2xlarge', 'c4.4xlarge', 'c4.8xlarge', 'cc1.4xlarge', 'cc2.8xlarge', 'g2.2xlarge', 'cg1.4xlarge', 'r3.large', 'r3.xlarge', 'r3.2xlarge', 'r3.4xlarge', 'r3.8xlarge', 'd2.xlarge', 'd2.2xlarge', 'd2.4xlarge', 'd2.8xlarge']
+Available flavors: ['t1.micro', 'm1.small', ... ]
 Select flavor ['l' to list]: t2.micro
 Available key pairs: ['rushi-kp-1', 'prod-keypair', 'test-keypair']
 Select keypair: rushi-kp-1
@@ -281,31 +215,7 @@ Enter root volume size in GBs: 8
 r@rushi:~$
 </code></pre>
 
-<h3 id="ending-notes:a9c5ded79a164e4b6c02d02a570b1d97">Ending notes</h3>
-
-<p>The AWS CLI was created maybe to help automation, but they&rsquo;re not quite
-suitable for human use. Here is my attempt to show to the world how the things
-could be made easier for human consumption. I use these commands quite a lot
-when I want to quickly create a VM, or want to get information about already
-created VMs. Logging in into the console is way too slow for my liking.</p>
-
-<p>Just to recap:</p>
-
-<ol>
-<li>The commands are shorter, so you have to type less</li>
-<li>The output is concise - only important information is included</li>
-<li><code>mkvm</code> provides you with information which you&rsquo;ll require while creating the
-instances, e.g. security group names, etc.</li>
-<li>Nowhere do you need to specify (hexadecimal) IDs while creating VMs</li>
-</ol>
-
-<p>I just spent a few hours over the weekend to get this working. So obviously
-the code is going to have rough edges, frowned-upon software practices, and a
-lot of unhandled edge cases. I&rsquo;ll be pretty excited if you want to help wit
-the idea! I&rsquo;ve created a repository at
-<a href="http://github.com/rushiagr/aclih">http://github.com/rushiagr/aclih</a> where
-please feel free to submit pull requests or issues. Interested in writing
-&lsquo;rmvm&rsquo; to delete VM anyone? :)</p>
+<p>Any feedback is welcome. Create a PR or issue, or comment below!</p>
 
 <p>Thank you :)</p>
 
