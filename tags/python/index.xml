@@ -58,9 +58,9 @@ Select flavor [&#39;l&#39; to list]:
 
 &lt;p&gt;Commands for resource creation are short and consistent (&lt;code&gt;mkvm&lt;/code&gt; creates virtual
 machines, &lt;code&gt;mkkp&lt;/code&gt; creates keypairs, &lt;code&gt;mksg&lt;/code&gt; create security groups). No need to
-remember AMI IDs (presently it selects Ubuntu 16.04 64-bit image by default for
-you, but in future you might specify an OS name and OS version). All the
-commands supported so far are:&lt;/p&gt;
+remember AMI IDs (presently it selects Ubuntu 16.04 64-bit image by default,
+but in future you might specify an OS name and OS version). All the commands
+supported so far are:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;lsvm    - List all virtual machines
 mkvm    - Create a virtual machine
