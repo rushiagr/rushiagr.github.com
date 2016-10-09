@@ -93,7 +93,7 @@
 <p>For a user of Amazon Web Services, quickly viewing the dashboard of all
 resources is painful. If you use a web browser, your session won&rsquo;t persist
 for more than a day and you will have to re-authenticate every day. If you use
-AWS CLI, then you might not remember the exact command (&lsquo;was it
+AWS CLI, then you might not remember the exact command (was it
 <code>aws ec2 describe-key-pair</code> or <code>aws ec2 describe-keypair</code> or
 <code>aws ec2 describe-keypairs</code>?) but even if you do, the output is a JSON. For viewing
 virtual machines, you might not need to see hundreds of lines of details of
@@ -116,7 +116,7 @@ and creating another instance. The CLI has some inconsistencies too &ndash; crea
 a keypair is <code>aws ec2 create-key-pair</code> but creating a virtual machine is not
 <code>aws ec2 create-instance</code> but <code>aws ec2 run-instances</code>.</p>
 
-<p>To alleviate these pains, I created a simple CLI tool called &ldquo;<a href="http://github.com/rushiagr/aclih">CCH - Cloud CLI
+<p>To alleviate these pains, I created a simple CLI tool called &ldquo;<a href="http://github.com/rushiagr/cch">CCH - Cloud CLI
 for Humans</a>&rdquo;. Just typing <code>lsvm</code> prints all
 the virtual machines you have in the cluster. Each command can be run without
 passing a parameter to it. If an operation requires additional parameters and
@@ -209,7 +209,7 @@ Available flavors: ['t1.micro', 'm1.small', ... ]
 Select flavor ['l' to list]: t2.micro
 Available key pairs: ['rushi-kp-1', 'prod-keypair', 'test-keypair']
 Select keypair: rushi-kp-1
-Available security groups: ['Rushi SecGroup', 'openToAll', 'Rushi SG', 'Rushi Devstack SG']
+Available security groups: ['Rushi SecGroup', 'openToAll']
 Select security group. None to create new one: Rushi SecGroup
 Enter root volume size in GBs: 8
 r@rushi:~$

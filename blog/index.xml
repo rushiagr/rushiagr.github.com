@@ -654,7 +654,7 @@ file and from a new terminal session things will be ready for you to use :)&lt;/
 &lt;p&gt;For a user of Amazon Web Services, quickly viewing the dashboard of all
 resources is painful. If you use a web browser, your session won&amp;rsquo;t persist
 for more than a day and you will have to re-authenticate every day. If you use
-AWS CLI, then you might not remember the exact command (&amp;lsquo;was it
+AWS CLI, then you might not remember the exact command (was it
 &lt;code&gt;aws ec2 describe-key-pair&lt;/code&gt; or &lt;code&gt;aws ec2 describe-keypair&lt;/code&gt; or
 &lt;code&gt;aws ec2 describe-keypairs&lt;/code&gt;?) but even if you do, the output is a JSON. For viewing
 virtual machines, you might not need to see hundreds of lines of details of
@@ -677,7 +677,7 @@ and creating another instance. The CLI has some inconsistencies too &amp;ndash; 
 a keypair is &lt;code&gt;aws ec2 create-key-pair&lt;/code&gt; but creating a virtual machine is not
 &lt;code&gt;aws ec2 create-instance&lt;/code&gt; but &lt;code&gt;aws ec2 run-instances&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;To alleviate these pains, I created a simple CLI tool called &amp;ldquo;&lt;a href=&#34;http://github.com/rushiagr/aclih&#34;&gt;CCH - Cloud CLI
+&lt;p&gt;To alleviate these pains, I created a simple CLI tool called &amp;ldquo;&lt;a href=&#34;http://github.com/rushiagr/cch&#34;&gt;CCH - Cloud CLI
 for Humans&lt;/a&gt;&amp;rdquo;. Just typing &lt;code&gt;lsvm&lt;/code&gt; prints all
 the virtual machines you have in the cluster. Each command can be run without
 passing a parameter to it. If an operation requires additional parameters and
@@ -770,7 +770,7 @@ Available flavors: [&#39;t1.micro&#39;, &#39;m1.small&#39;, ... ]
 Select flavor [&#39;l&#39; to list]: t2.micro
 Available key pairs: [&#39;rushi-kp-1&#39;, &#39;prod-keypair&#39;, &#39;test-keypair&#39;]
 Select keypair: rushi-kp-1
-Available security groups: [&#39;Rushi SecGroup&#39;, &#39;openToAll&#39;, &#39;Rushi SG&#39;, &#39;Rushi Devstack SG&#39;]
+Available security groups: [&#39;Rushi SecGroup&#39;, &#39;openToAll&#39;]
 Select security group. None to create new one: Rushi SecGroup
 Enter root volume size in GBs: 8
 r@rushi:~$
