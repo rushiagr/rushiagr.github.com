@@ -651,31 +651,28 @@ file and from a new terminal session things will be ready for you to use :)&lt;/
       <guid>http://www.rushiagr.com/blog/2016/01/02/better-aws-command-line-interface/</guid>
       <description>
 
-&lt;p&gt;For a user of Amazon Web Services, quickly viewing the dashboard of all
-resources is painful. If using a web browser, the session won&amp;rsquo;t persist
-for more than a day and one will have to re-authenticate every day. If using
-AWS CLI, then he/she might not remember the exact command (was it
-&lt;code&gt;aws ec2 describe-key-pair&lt;/code&gt; or &lt;code&gt;aws ec2 describe-keypair&lt;/code&gt; or
-&lt;code&gt;aws ec2 describe-keypairs&lt;/code&gt;?) but even if they do, the output is a not-so-readable JSON. For viewing
-virtual machines, you might not want to see hundreds of lines of detail of
-your virtual machines. Maybe you just wanted to see the IP of the VM so that
-you can SSH into it. And maybe you just wanted to quickly create a virtual
-machine to test something: do you remember all
-the parameters you need to specify for instance creation? And don&amp;rsquo;t forget that
-you will need to specify the AMI ID of the image, even if you exactly know
-which distribution and version of operating system you want the virtual machine
-to have.&lt;/p&gt;
+&lt;p&gt;For a user of Amazon Web Services, quickly viewing a dashboard of all resources
+is not straightforward. If using a web browser, the session won&amp;rsquo;t persist for
+more than a day and one will have to re-authenticate every day. If using AWS
+CLI, then he/she might not remember the exact command (was it
+&lt;code&gt;describe-key-pair&lt;/code&gt; or &lt;code&gt;describe-keypair&lt;/code&gt; or &lt;code&gt;describe-keypairs&lt;/code&gt;?) but even if
+they do, the output is a not-so-readable JSON. For viewing virtual machines,
+you might not want to see hundreds of lines of detail.
+Maybe you just wanted to see the IP of the VM so that you can SSH into it. Or
+maybe you just wanted to quickly create a virtual machine to test something: do
+you remember all the parameters you need to specify for instance creation? And
+don&amp;rsquo;t forget that you will need to specify the AMI ID of the image, even if you
+know exactly the operating system name and version.&lt;/p&gt;
 
-&lt;p&gt;There is no doubt that AWS CLI is a phenomenal piece of work. It allows you to
-do absolutely everything you can do with Amazon&amp;rsquo;s cloud offering. The
-documentation is thorough and it is great for automation too, as the only
-thing one needs to do is to parse the JSON output. However, it&amp;rsquo;s not as
+&lt;p&gt;There is no doubt that AWS CLI is an impressive piece of work. It allows you to
+do absolutely everything with their cloud. The
+documentation is thorough. It is great for automation too &amp;ndash; output is easily parse-able JSON. However, it&amp;rsquo;s not as
 human-friendly. It doesn&amp;rsquo;t tell you which options are mandatory and which are
-optional. It doesn&amp;rsquo;t remind you if you forget to specify the keypair for an
-instance which generally results in Google-searching &amp;lsquo;aws cli delete instance&amp;rsquo;
-and creating another instance. The CLI has some inconsistencies too &amp;ndash; creating
-a keypair is &lt;code&gt;aws ec2 create-key-pair&lt;/code&gt; but creating a virtual machine is not
-&lt;code&gt;aws ec2 create-instance&lt;/code&gt; but &lt;code&gt;aws ec2 run-instances&lt;/code&gt;.&lt;/p&gt;
+optional. It doesn&amp;rsquo;t remind you if you forget to specify keypair while creating an
+instance. You end up deleting that instance, then Google-searching &amp;lsquo;aws cli delete instance&amp;rsquo;
+and finally creating another instance. The CLI has some inconsistencies too &amp;ndash; creating
+a keypair is &lt;code&gt;create-key-pair&lt;/code&gt; but creating a virtual machine is not
+&lt;code&gt;create-instance&lt;/code&gt; but &lt;code&gt;run-instances&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;To alleviate these pains, I created a simple CLI tool called &amp;ldquo;&lt;a href=&#34;http://github.com/rushiagr/cch&#34;&gt;CCH - Cloud CLI
 for Humans&lt;/a&gt;&amp;rdquo;. Just typing &lt;code&gt;lsvm&lt;/code&gt; prints all
