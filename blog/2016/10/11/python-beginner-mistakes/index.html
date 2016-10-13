@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  
+
+  <title> Python Beginner Mistakes  &middot; rushiagr </title>
+
+  
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
+      <p class="lead">
+       not your average coder 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://www.rushiagr.com/blog">Posts</a></li>
+      
+        <li><a href="/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+        <li><a href="http://www.rushiagr.com/personal">Personal Blog</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      <a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">Python Beginner Mistakes</h1>
+    <span class="post-date">Oct 11, 2016</span>
+    
+    
+
+<p>I am writing Python code since 5 years, and I have worked with around 5-6
+entry-level Python programmers. There is a pattern I can see in the programming
+practices of such programmers, so I am listing the problems and their solutions
+in this article. I have worked with OpenStack for over three years, which has a
+very high code quality, so I feel I am qualified enough for writing this post.
+My hope is this will be helpful for more entry-level Python programmers.</p>
+
+<p>I&rsquo;ll start with talking about these beginner-programmers first. The people I
+have worked with are not only self-taught Python programmers, but who also
+worked in startups in Bangalore. For self-taught Python programmers, it is
+understandable &ndash; Python is a pretty easy language to pick up and code, so
+there is really no motivation for them to go with best practices right from the
+start, especially when all they can find is a huge list of good programming
+practices and PEP8 conventions to follow. For Python beginners working in
+startups, I am guessing there are not enough senior Python programmers who can
+teach them about required best practices.</p>
+
+<p>In this article I&rsquo;m going to list the bare-minimum of these simple practices
+you should follow. Surprisingly, most of the &lsquo;Beginner Python mistakes to
+avoid&rsquo; articles on the web don&rsquo;t talk about the bad practices I encounter. I
+think they just assume such simple things are taken care of by a programmer,
+my experience tells otherwise.</p>
+
+<p>Note that this is just the beginning. There&rsquo;s a TON of things you should worry
+about, but you&rsquo;ll learn them as you grow. Don&rsquo;t worry :)</p>
+
+<h2 id="indentation-tabs-and-spaces:8154b5222ca703f921511827d57ab3d5">Indentation, tabs and spaces.</h2>
+
+<p>Never use tabs. Only use spaces. Use 4 spaces for a tab, always.</p>
+
+<p>I frequently see codes which use a mix of spaces and tabs, and 2-space and
+4-space indentations all in one file!  If you are coming from a different
+language, or if you already have a notion of, say, 8 spaces for a tab, then it
+might be difficult and seem unnecessary at first. But I am guessing you are
+liking the language and you look forward to writing lots and lots of Python
+code in your lifespan; in such a case, just bear with me for a few weeks and
+it&rsquo;ll come naturally to you, trust me :)</p>
+
+<h2 id="raise-specific-exceptions:8154b5222ca703f921511827d57ab3d5">Raise specific exceptions</h2>
+
+<p>Don&rsquo;t write like this:</p>
+
+<pre><code>try:
+    # do something here
+except Exception as e:
+    # handle exception
+</code></pre>
+
+<p>Catching the parent <code>Exception</code> is bad. If you know what exception the code is
+going to throw, just except that exception. The most common example I have seen
+is when calling <code>get()</code> method on a Django&rsquo;s model. If the object is not
+present, Django throws <code>ObjectDoesNotExists</code> exception. Catch <em>this</em> exception,
+not Exception.</p>
+
+<p>Most often, you do some corrective action in the &lsquo;handling exception&rsquo; part. If
+you are excepting (if there&rsquo;s a word &lsquo;excepting&rsquo;) <code>Exception</code>, then you are
+heading straight into this &lsquo;handling exception&rsquo; section no matter what has
+happened. Your database might be down but the &lsquo;database down&rsquo; exception might
+still be caught and probably silently ignored of you do this.</p>
+
+<h2 id="trailing-whitespaces:8154b5222ca703f921511827d57ab3d5">Trailing whitespaces</h2>
+
+<p>In context of Python, whitespaces means space characters. There should be no
+line in Python code which has spaces at it&rsquo;s end.</p>
+
+<p>You might think why make such a big issue of this. The problem is
+version/source control. You invariably will use a source control system at some
+point of time, for example &lsquo;git&rsquo;. When you commit trailing spaces, it becomes
+difficult to read the diffs (the difference between two commits/checkins).
+Also, removing or adding more spaces might feel okay if you develop a habit of
+leaving around trailing spaces. But when you will start using a source control
+system, this will add unnecessary noise in commits, making code review and
+debugging difficult. Remember, code is read much times than is written or
+modified.</p>
+
+<h2 id="edge-cases-first-shallow-nesting:8154b5222ca703f921511827d57ab3d5">Edge cases first. Shallow nesting.</h2>
+
+<p>Consider two pseudo codes. These are codes for handling a request, but you can
+altogether ignore that fact and it would still make sense:</p>
+
+<p>Pseudo code 1:</p>
+
+<pre><code>if request is post:
+    if parameter 'param1' is specified:
+        if the user can be authenticated:
+            if the user can perform this action:
+                # Execute core business logic here
+            else:
+                return saying 'user cannot perform this action'
+    else:
+        return saying 'parameter param1 is mandatory'
+else:
+    return saying 'any other method apart from POST method is disallowed'
+</code></pre>
+
+<p>Pseudo code 2:</p>
+
+<pre><code>if request is not post:
+    return saying 'any other method apart from POST method is disallowed'
+
+if parameter 'param1' is specified:
+    return saying 'parameter param1 is mandatory'
+
+if the user can be authenticated:
+    return saying 'user cannot be authenticated'
+
+if the user can perform this action:
+    return saying 'user cannot perform this action'
+
+# Execute core business logic here
+</code></pre>
+
+<p>As you can see, the second code is much easier to read. You will also notice
+that the second code doesn&rsquo;t have a lot of nesting, which avoids common
+problems. Can you see that I have not written an &lsquo;else&rsquo; section? If the core
+logic is several dozens of lines long, it becomes difficult to find out which
+<code>else</code> belongs to which <code>if</code> if we write in &lsquo;Pseudo code 1&rsquo; style.</p>
+
+<p>I am sure while starting to write, pseudo code 1 should feel normal. But with
+very minimal effort you can very soon get used to writing code in &lsquo;pseudo code
+2&rsquo; style.</p>
+
+<p>The following are minor, probably opinionated suggestions. These might apply to
+not only Python but any programming language. I feel that these points are
+important enough that you should start a habit of adhering to them right from
+the start. It&rsquo;ll help you in the long run, trust me :)</p>
+
+<h2 id="make-commit-messages-lengthy:8154b5222ca703f921511827d57ab3d5">Make commit messages lengthy</h2>
+
+<p>This is a fairly general trend I see. The commit messages such people generally
+write are just a few words long. Most of the beginners have started using <code>git</code>
+as version control system. In git, such people have gotten used to using <code>git
+commit -m &quot;your commit message here&quot;</code> command. If you use this command, I am
+sure you won&rsquo;t even feel like writing a commit message more than what fits in
+one line :). Do you know that you can just type <code>git commit</code> and it will open
+up an editor (vim or nano) to write the commit message? Start using this way,
+and stop using <code>-m</code> flag directly on command line. It&rsquo;ll help you and your
+colleagues :).</p>
+
+<p>I generally prefer to write a short description in the first line of commit
+message, then leave a blank line, and then write a paragraph after that to
+explain in more detail if required. The first line is the most important. Try
+to describe as much as possible concisely in this single line. But don&rsquo;t ever
+let this line go above 100 characters, preferably 80. See this commit message
+as an example:</p>
+
+<pre><code>Don't allow access to POST /v1/purchases API without authentication
+
+It was revealed during testing that the above mentioned API is accessible
+even when accessed without authentication. This is a security risk. This
+commit fixes it. One 'if' condition added to reject API call if the user is
+not authenticated.
+</code></pre>
+
+<p>You might feel that it&rsquo;s a lot of effort to write such log git commit messages.
+But you can realise it&rsquo;ll not take more than 2 minutes to write this. Much less
+than how much time you spent writing code corresponding to this commit :)</p>
+
+<p>Note that commit messages are important part of documentation, and are
+extremely important for debugging later.</p>
+
+<h2 id="do-only-one-thing-in-a-commit:8154b5222ca703f921511827d57ab3d5">Do only one thing in a commit</h2>
+
+<p>If you are fixing three issues, make sure you create three different commits
+for each one, and never one big commit to include three bug fixes. Even if each
+of these bugfixes are just a couple of lines. If you are doing a feature work,
+then it&rsquo;s okay to put all the feature work in one single commit, but for a
+bugfixes, create a separate commit for each one. As you can see, you should get
+comfortable with the idea that a commit can be as short as one line and as
+large as couple of hundred of lines.  Let go of the feeling that your brain has
+about lines in a commit, that it feels right only when there are 50-100 lines
+in a commit. :)</p>
+
+<p>If you are using git, take use of <code>git add -p</code> to add specific chunks of code
+in git, instead of adding a complete file into git like you&rsquo;re used to, by
+doing <code>git add file1.py</code>. It&rsquo;s a pretty powerful tool. Spend 15 mins to
+understand it and you&rsquo;ll go &lsquo;why didn&rsquo;t I know about this till now!&rsquo;</p>
+
+<p>I am realizing I can actually write &lsquo;Git beginner mistakes&rsquo; as a separate blog
+:). But anyway, continuing..</p>
+
+<h2 id="spaces-after-comma-and-colon:8154b5222ca703f921511827d57ab3d5">Spaces after comma and colon</h2>
+
+<p>Just make this a habit. It improves your code quality.</p>
+
+<p>Example 1 - bad:</p>
+
+<pre><code>def create_user(name=name,height=height,weight=weight):
+    pass
+</code></pre>
+
+<p>Example 2 - good:</p>
+
+<pre><code>def create_user(name=name, height=height, weight=weight):
+    pass
+</code></pre>
+
+<p>Example 3 - bad:</p>
+
+<pre><code>request_dict = {'name':name,'height':height}
+</code></pre>
+
+<p>Example 4 - good:</p>
+
+<pre><code>request_dict = {'name': name, 'height': height}
+</code></pre>
+
+<h2 id="write-a-lot-of-comments-and-docstrings:8154b5222ca703f921511827d57ab3d5">Write a lot of comments and docstrings</h2>
+
+<p>If something is not abvious from the code, you should write a comment about
+it. Also, make a habit of writing docstrings to functions/methods, even if it
+is just a single line. Example:</p>
+
+<pre><code>def create_user(name, height=None, weight=None):
+    '''Create a user entry in database. Returns database object created for user.'''
+    # Logic to create entry into db and return db object
+</code></pre>
+
+<h2 id="write-todos-literally-everywhere:8154b5222ca703f921511827d57ab3d5">Write TODOs literally everywhere</h2>
+
+<p>While writing code, you realize it can be improved, but you don&rsquo;t want to
+improve it right now as it is not that important thing at this moment. What
+should you do? Just create a TODO! I find this a very good compromise for
+smaller tasks, instead of creating an issue in an issue/bug tracker. TODOs can
+be written for improving on docstrings (<code>TODO(rushiagr): add more description
+here</code>), a more optimised version of code (e.g. <code>TODO(rushiagr): can be
+optimised by using list comprehensions instead of the 'for' loop</code>), or a
+refactoring (<code>TODO(rushiagr): create a common method of this thrice-duplicated
+code</code>). The parenteses specify who wrote the TODO, which can be helpful if
+somebody wants to fix the todo but doesn&rsquo;t know who to contact for more
+information. But you can leave this part out too.</p>
+
+<p>I use TODOs so much that I created a Vim abbreviation for it, so that as soon
+as I type <code>#t</code> followed by a space, it auto-completes it to <code># TODO(rushiagr):
+</code>. If you&rsquo;re using Vim, you can do by adding this line to your <code>.vimrc</code>:</p>
+
+<pre><code>:abbreviate #t # TODO(rushiagr):
+</code></pre>
+
+<p>That&rsquo;s all folks! :) Do let me know what you feel about this blog by
+commenting. Do you know something which you too encountered a lot which is not
+present in this article?  Or you disagree with something I wrote?</p>
+
+    
+
+     
+	
+        <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+
+</div>
+</div> 
+
+</body>w
+</html>
