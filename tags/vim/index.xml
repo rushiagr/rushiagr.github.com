@@ -11,11 +11,11 @@
     
     
     <item>
-      <title>Python Beginner Mistakes</title>
-      <link>http://www.rushiagr.com/blog/2016/10/11/python-beginner-mistakes/</link>
+      <title>Python Engineer Beginner Mistakes</title>
+      <link>http://www.rushiagr.com/blog/2016/10/11/python-engineer-beginner-mistakes/</link>
       <pubDate>Tue, 11 Oct 2016 17:59:46 IST</pubDate>
       <author>Rushi Agrawal</author>
-      <guid>http://www.rushiagr.com/blog/2016/10/11/python-beginner-mistakes/</guid>
+      <guid>http://www.rushiagr.com/blog/2016/10/11/python-engineer-beginner-mistakes/</guid>
       <description>
 
 &lt;p&gt;I am writing Python code since 5 years, and I have worked with around 5-6
@@ -44,7 +44,7 @@ my experience tells otherwise.&lt;/p&gt;
 &lt;p&gt;Note that this is just the beginning. There&amp;rsquo;s a TON of things you should worry
 about, but you&amp;rsquo;ll learn them as you grow. Don&amp;rsquo;t worry :)&lt;/p&gt;
 
-&lt;h2 id=&#34;indentation-tabs-and-spaces:8154b5222ca703f921511827d57ab3d5&#34;&gt;Indentation, tabs and spaces.&lt;/h2&gt;
+&lt;h2 id=&#34;indentation-tabs-and-spaces:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Indentation, tabs and spaces.&lt;/h2&gt;
 
 &lt;p&gt;Never use tabs. Only use spaces. Use 4 spaces for a tab, always.&lt;/p&gt;
 
@@ -56,7 +56,7 @@ liking the language and you look forward to writing lots and lots of Python
 code in your lifespan; in such a case, just bear with me for a few weeks and
 it&amp;rsquo;ll come naturally to you, trust me :)&lt;/p&gt;
 
-&lt;h2 id=&#34;raise-specific-exceptions:8154b5222ca703f921511827d57ab3d5&#34;&gt;Raise specific exceptions&lt;/h2&gt;
+&lt;h2 id=&#34;raise-specific-exceptions:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Raise specific exceptions&lt;/h2&gt;
 
 &lt;p&gt;Don&amp;rsquo;t write like this:&lt;/p&gt;
 
@@ -78,7 +78,7 @@ heading straight into this &amp;lsquo;handling exception&amp;rsquo; section no m
 happened. Your database might be down but the &amp;lsquo;database down&amp;rsquo; exception might
 still be caught and probably silently ignored of you do this.&lt;/p&gt;
 
-&lt;h2 id=&#34;trailing-whitespaces:8154b5222ca703f921511827d57ab3d5&#34;&gt;Trailing whitespaces&lt;/h2&gt;
+&lt;h2 id=&#34;trailing-whitespaces:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Trailing whitespaces&lt;/h2&gt;
 
 &lt;p&gt;In context of Python, whitespaces means space characters. There should be no
 line in Python code which has spaces at it&amp;rsquo;s end.&lt;/p&gt;
@@ -93,7 +93,7 @@ system, this will add unnecessary noise in commits, making code review and
 debugging difficult. Remember, code is read much times than is written or
 modified.&lt;/p&gt;
 
-&lt;h2 id=&#34;edge-cases-first-shallow-nesting:8154b5222ca703f921511827d57ab3d5&#34;&gt;Edge cases first. Shallow nesting.&lt;/h2&gt;
+&lt;h2 id=&#34;edge-cases-first-shallow-nesting:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Edge cases first. Shallow nesting.&lt;/h2&gt;
 
 &lt;p&gt;Consider two pseudo codes. These are codes for handling a request, but you can
 altogether ignore that fact and it would still make sense:&lt;/p&gt;
@@ -145,7 +145,7 @@ not only Python but any programming language. I feel that these points are
 important enough that you should start a habit of adhering to them right from
 the start. It&amp;rsquo;ll help you in the long run, trust me :)&lt;/p&gt;
 
-&lt;h2 id=&#34;make-commit-messages-lengthy:8154b5222ca703f921511827d57ab3d5&#34;&gt;Make commit messages lengthy&lt;/h2&gt;
+&lt;h2 id=&#34;make-commit-messages-lengthy:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Make commit messages lengthy&lt;/h2&gt;
 
 &lt;p&gt;This is a fairly general trend I see. The commit messages such people generally
 write are just a few words long. Most of the beginners have started using &lt;code&gt;git&lt;/code&gt;
@@ -179,7 +179,7 @@ than how much time you spent writing code corresponding to this commit :)&lt;/p&
 &lt;p&gt;Note that commit messages are important part of documentation, and are
 extremely important for debugging later.&lt;/p&gt;
 
-&lt;h2 id=&#34;do-only-one-thing-in-a-commit:8154b5222ca703f921511827d57ab3d5&#34;&gt;Do only one thing in a commit&lt;/h2&gt;
+&lt;h2 id=&#34;do-only-one-thing-in-a-commit:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Do only one thing in a commit&lt;/h2&gt;
 
 &lt;p&gt;If you are fixing three issues, make sure you create three different commits
 for each one, and never one big commit to include three bug fixes. Even if each
@@ -199,7 +199,7 @@ understand it and you&amp;rsquo;ll go &amp;lsquo;why didn&amp;rsquo;t I know abo
 &lt;p&gt;I am realizing I can actually write &amp;lsquo;Git beginner mistakes&amp;rsquo; as a separate blog
 :). But anyway, continuing..&lt;/p&gt;
 
-&lt;h2 id=&#34;spaces-after-comma-and-colon:8154b5222ca703f921511827d57ab3d5&#34;&gt;Spaces after comma and colon&lt;/h2&gt;
+&lt;h2 id=&#34;spaces-after-comma-and-colon:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Spaces after comma and colon&lt;/h2&gt;
 
 &lt;p&gt;Just make this a habit. It improves your code quality.&lt;/p&gt;
 
@@ -225,7 +225,7 @@ understand it and you&amp;rsquo;ll go &amp;lsquo;why didn&amp;rsquo;t I know abo
 &lt;pre&gt;&lt;code&gt;request_dict = {&#39;name&#39;: name, &#39;height&#39;: height}
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;write-a-lot-of-comments-and-docstrings:8154b5222ca703f921511827d57ab3d5&#34;&gt;Write a lot of comments and docstrings&lt;/h2&gt;
+&lt;h2 id=&#34;write-a-lot-of-comments-and-docstrings:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Write a lot of comments and docstrings&lt;/h2&gt;
 
 &lt;p&gt;If something is not abvious from the code, you should write a comment about
 it. Also, make a habit of writing docstrings to functions/methods, even if it
@@ -236,7 +236,7 @@ is just a single line. Example:&lt;/p&gt;
     # Logic to create entry into db and return db object
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;write-todos-literally-everywhere:8154b5222ca703f921511827d57ab3d5&#34;&gt;Write TODOs literally everywhere&lt;/h2&gt;
+&lt;h2 id=&#34;write-todos-literally-everywhere:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Write TODOs literally everywhere&lt;/h2&gt;
 
 &lt;p&gt;While writing code, you realize it can be improved, but you don&amp;rsquo;t want to
 improve it right now as it is not that important thing at this moment. What
