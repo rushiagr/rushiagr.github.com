@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  
+
+  <title> Cassandra server in 10 minutes  &middot; rushiagr </title>
+
+  
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
+  <link rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
+      <p class="lead">
+       not your average coder 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://www.rushiagr.com/blog">Posts</a></li>
+      
+        <li><a href="/about/">About </a></li>
+        <li><a href="https://github.com/rushiagr">Code</a></li>
+        <li><a href="http://www.rushiagr.com/personal">Personal Blog</a></li>
+      
+      <br/>
+      
+        
+        
+        
+        
+        
+        
+        
+      
+    </ul>
+      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      <a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+      
+      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    
+  </div>
+</div>
+
+
+  <div class="content container">
+    <div class="post">
+    <h1 class="post-title">Cassandra server in 10 minutes</h1>
+    <span class="post-date">Dec 8, 2016</span>
+    
+    <p>Want to quickly find out how a Cassandra server feels? In this blog post, we&rsquo;ll
+create a single-node Cassandra cluster on an Ubuntu Xenial (16.04) system. It&rsquo;s
+not really a &lsquo;cluster&rsquo;, but you can access the Cassandra shell <code>cqlsh</code> and try
+out all of its commands. Since we are just looking for a quick try-out, we&rsquo;re
+installing one of the latest Cassandra versions &ndash; version 3.7. OK let&rsquo;s get
+started.</p>
+
+<p>Note: Jump straight to the last portion to get all the commands at one place
+without explanation</p>
+
+<p>Let&rsquo;s go to the temporary directory where we&rsquo;ll download Sun&rsquo;s Java. Here I am
+downloading Java&rsquo;s &lsquo;Server JRE&rsquo; file. I have it hosted in Amazon cloud which
+you can use. You can bring your own JRE or JDK file too. Just make sure you
+make appropriate replacements in the command.</p>
+
+<pre><code>cd /tmp
+</code></pre>
+
+<p>Now actually download the JRE file</p>
+
+<pre><code>wget http://eezydb.s3.amazonaws.com/server-jre-8u101-linux-x64.tar.gz
+</code></pre>
+
+<p>Create the directory where you want to expand this compressed file</p>
+
+<pre><code>sudo mkdir -p /usr/lib/jvm
+</code></pre>
+
+<p>Now uncompress it</p>
+
+<pre><code>sudo tar -xzvf server-jre-8u101-linux-x64.tar.gz -C /usr/lib/jvm
+</code></pre>
+
+<p>Now update system&rsquo;s Java pointers and make this Java the preferred Java to be
+used</p>
+
+<pre><code>sudo update-alternatives --install &quot;/usr/bin/java&quot; &quot;java&quot; &quot;/usr/lib/jvm/jdk1.8.0_101/bin/java&quot; 1
+sudo update-alternatives --set java /usr/lib/jvm/jdk1.8.0_101/bin/java
+</code></pre>
+
+<p>You can check our Java is the preferred Java by checking Java version.</p>
+
+<pre><code>java -version
+</code></pre>
+
+<p>The output should say something like <code>java version &quot;1.8.0_101&quot;</code>.</p>
+
+<p>Add Cassandra repositories at appropriate place so that our beloved <code>apt-get</code>
+utility can find the place from where to download Cassandra packages.</p>
+
+<pre><code>echo &quot;deb http://www.apache.org/dist/cassandra/debian 37x main&quot; | sudo tee -a /etc/apt/sources.list
+echo &quot;deb-src http://www.apache.org/dist/cassandra/debian 37x main&quot; | sudo tee -a /etc/apt/sources.list
+</code></pre>
+
+<p>Now add the cryptographic keys at proper places. Don&rsquo;t ask me why do we have to
+do it :)</p>
+
+<pre><code>gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 749D6EEC0353B12C
+sudo apt-key add ~/.gnupg/pubring.gpg
+</code></pre>
+
+<p>Now update repository pointers, and install Cassandra!</p>
+
+<pre><code>sudo apt-get --yes --quiet update
+sudo apt-get install --yes --quiet cassandra
+</code></pre>
+
+<p>Cassandra should be installed and running by now. You can check it by checking
+status of Cassandra service</p>
+
+<pre><code>sudo service cassandra status
+</code></pre>
+
+<p>Press <code>q</code> to exit. I don&rsquo;t know why they make us press <code>q</code>, but anyway..</p>
+
+<p>Cassandra server is running by now. You can check that by checking the status
+of <code>nodetool</code> utility.</p>
+
+<pre><code>sudo nodetool status
+</code></pre>
+
+<p>The state should be <code>UN</code>, i.e. &lsquo;U&rsquo;p and &lsquo;N&rsquo;ormal. If it is not in this state,
+then wait a few seconds and it will be.</p>
+
+<p>There are a few more steps to get the <code>cqlsh</code> command line utility working.
+Let&rsquo;s get them done too.</p>
+
+<p>Install <code>pip</code> utility which will install Python packages. If you already have
+<code>pip</code> utility, no need to execute this step. Note that this is just one of many
+ways to install <code>pip</code>.</p>
+
+<pre><code>sudo apt-get install --yes --quiet python-pip
+</code></pre>
+
+<p>Now install pip package <code>cassandra-driver</code>. You can install it in virtual
+environment also. You can safely ignore the last statement if you have never
+heard the term &lsquo;Python virtual environments&rsquo; before.</p>
+
+<pre><code>sudo pip install cassandra-driver
+</code></pre>
+
+<p>I wish everything worked after this, but it won&rsquo;t. Just set this environment
+variable and then you should be good to log in into <code>cqlsh</code> shell.</p>
+
+<pre><code>export CQLSH_NO_BUNDLED=true
+</code></pre>
+
+<p>Now &lsquo;actually&rsquo; log into <code>cqlsh</code> shell</p>
+
+<pre><code>cqlsh
+</code></pre>
+
+<p>The output should be something like:</p>
+
+<pre><code>ubuntu@hostname:~$ cqlsh
+Connected to Test Cluster at 127.0.0.1:9042.
+[cqlsh 5.0.1 | Cassandra 3.7 | CQL spec 3.4.2 | Native protocol v4]
+Use HELP for help.
+cqlsh&gt;
+</code></pre>
+
+<p>Voila! Note that you need to export <code>CQLSH_NO_BUNDLED=true</code> in every terminal
+shell from where you want to access <code>cqlsh</code>. So if you log out of the system
+and log back in, you need to re-run this command.</p>
+
+<p>Now you can follow any <code>cqlsh</code> tutorial to try out commands to create
+keyspaces, tables, rows, etc.</p>
+
+<p>If you like this, please share! If you have any suggestions, please comment!</p>
+
+<p>Until next time!</p>
+
+    
+
+     
+	
+        <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37074962-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37074962-1');
+    ga('send', 'pageview');
+</script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost") 
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'rushiagr';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
+
+</div>
+</div> 
+
+</body>w
+</html>

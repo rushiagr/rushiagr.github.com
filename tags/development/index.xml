@@ -7,7 +7,149 @@
     <language>en-us</language>
     <author>Rushi Agrawal</author>
     <copyright>2016 Rushi Agrawal</copyright>
-    <updated>Tue, 11 Oct 2016 17:59:46 IST</updated>
+    <updated>Thu, 08 Dec 2016 19:05:21 IST</updated>
+    
+    
+    <item>
+      <title>Cassandra server in 10 minutes</title>
+      <link>http://www.rushiagr.com/blog/2016/12/08/cassandra-server-in-10-minutes/</link>
+      <pubDate>Thu, 08 Dec 2016 19:05:21 IST</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2016/12/08/cassandra-server-in-10-minutes/</guid>
+      <description>&lt;p&gt;Want to quickly find out how a Cassandra server feels? In this blog post, we&amp;rsquo;ll
+create a single-node Cassandra cluster on an Ubuntu Xenial (16.04) system. It&amp;rsquo;s
+not really a &amp;lsquo;cluster&amp;rsquo;, but you can access the Cassandra shell &lt;code&gt;cqlsh&lt;/code&gt; and try
+out all of its commands. Since we are just looking for a quick try-out, we&amp;rsquo;re
+installing one of the latest Cassandra versions &amp;ndash; version 3.7. OK let&amp;rsquo;s get
+started.&lt;/p&gt;
+
+&lt;p&gt;Note: Jump straight to the last portion to get all the commands at one place
+without explanation&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s go to the temporary directory where we&amp;rsquo;ll download Sun&amp;rsquo;s Java. Here I am
+downloading Java&amp;rsquo;s &amp;lsquo;Server JRE&amp;rsquo; file. I have it hosted in Amazon cloud which
+you can use. You can bring your own JRE or JDK file too. Just make sure you
+make appropriate replacements in the command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd /tmp
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now actually download the JRE file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;wget http://eezydb.s3.amazonaws.com/server-jre-8u101-linux-x64.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create the directory where you want to expand this compressed file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo mkdir -p /usr/lib/jvm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now uncompress it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo tar -xzvf server-jre-8u101-linux-x64.tar.gz -C /usr/lib/jvm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now update system&amp;rsquo;s Java pointers and make this Java the preferred Java to be
+used&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo update-alternatives --install &amp;quot;/usr/bin/java&amp;quot; &amp;quot;java&amp;quot; &amp;quot;/usr/lib/jvm/jdk1.8.0_101/bin/java&amp;quot; 1
+sudo update-alternatives --set java /usr/lib/jvm/jdk1.8.0_101/bin/java
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can check our Java is the preferred Java by checking Java version.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;java -version
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The output should say something like &lt;code&gt;java version &amp;quot;1.8.0_101&amp;quot;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Add Cassandra repositories at appropriate place so that our beloved &lt;code&gt;apt-get&lt;/code&gt;
+utility can find the place from where to download Cassandra packages.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;echo &amp;quot;deb http://www.apache.org/dist/cassandra/debian 37x main&amp;quot; | sudo tee -a /etc/apt/sources.list
+echo &amp;quot;deb-src http://www.apache.org/dist/cassandra/debian 37x main&amp;quot; | sudo tee -a /etc/apt/sources.list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now add the cryptographic keys at proper places. Don&amp;rsquo;t ask me why do we have to
+do it :)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 749D6EEC0353B12C
+sudo apt-key add ~/.gnupg/pubring.gpg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now update repository pointers, and install Cassandra!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get --yes --quiet update
+sudo apt-get install --yes --quiet cassandra
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cassandra should be installed and running by now. You can check it by checking
+status of Cassandra service&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo service cassandra status
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Press &lt;code&gt;q&lt;/code&gt; to exit. I don&amp;rsquo;t know why they make us press &lt;code&gt;q&lt;/code&gt;, but anyway..&lt;/p&gt;
+
+&lt;p&gt;Cassandra server is running by now. You can check that by checking the status
+of &lt;code&gt;nodetool&lt;/code&gt; utility.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo nodetool status
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The state should be &lt;code&gt;UN&lt;/code&gt;, i.e. &amp;lsquo;U&amp;rsquo;p and &amp;lsquo;N&amp;rsquo;ormal. If it is not in this state,
+then wait a few seconds and it will be.&lt;/p&gt;
+
+&lt;p&gt;There are a few more steps to get the &lt;code&gt;cqlsh&lt;/code&gt; command line utility working.
+Let&amp;rsquo;s get them done too.&lt;/p&gt;
+
+&lt;p&gt;Install &lt;code&gt;pip&lt;/code&gt; utility which will install Python packages. If you already have
+&lt;code&gt;pip&lt;/code&gt; utility, no need to execute this step. Note that this is just one of many
+ways to install &lt;code&gt;pip&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install --yes --quiet python-pip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now install pip package &lt;code&gt;cassandra-driver&lt;/code&gt;. You can install it in virtual
+environment also. You can safely ignore the last statement if you have never
+heard the term &amp;lsquo;Python virtual environments&amp;rsquo; before.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo pip install cassandra-driver
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I wish everything worked after this, but it won&amp;rsquo;t. Just set this environment
+variable and then you should be good to log in into &lt;code&gt;cqlsh&lt;/code&gt; shell.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export CQLSH_NO_BUNDLED=true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now &amp;lsquo;actually&amp;rsquo; log into &lt;code&gt;cqlsh&lt;/code&gt; shell&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cqlsh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The output should be something like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ubuntu@hostname:~$ cqlsh
+Connected to Test Cluster at 127.0.0.1:9042.
+[cqlsh 5.0.1 | Cassandra 3.7 | CQL spec 3.4.2 | Native protocol v4]
+Use HELP for help.
+cqlsh&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Voila! Note that you need to export &lt;code&gt;CQLSH_NO_BUNDLED=true&lt;/code&gt; in every terminal
+shell from where you want to access &lt;code&gt;cqlsh&lt;/code&gt;. So if you log out of the system
+and log back in, you need to re-run this command.&lt;/p&gt;
+
+&lt;p&gt;Now you can follow any &lt;code&gt;cqlsh&lt;/code&gt; tutorial to try out commands to create
+keyspaces, tables, rows, etc.&lt;/p&gt;
+
+&lt;p&gt;If you like this, please share! If you have any suggestions, please comment!&lt;/p&gt;
+
+&lt;p&gt;Until next time!&lt;/p&gt;
+</description>
+    </item>
+    
     
     
     <item>
@@ -449,13 +591,13 @@ things:&lt;/p&gt;
 &lt;p&gt;Almost all IDEs today have &amp;lsquo;autosave&amp;rsquo; feature. That is, you don&amp;rsquo;t need to
 explicitly save a file. The file is automatically saved as you type, so that
 even if your computer crashes, you don&amp;rsquo;t lose data. This makes me wonder why
-does Vim&amp;rsquo;s default behavior is of using swap files. Swap files are annoying.
+Vim&amp;rsquo;s default behavior is of using swap files. Swap files are annoying.
 I&amp;rsquo;ve seen all Vim developers, including me, struggle with swap files at one
 point in their life.&lt;/p&gt;
 
 &lt;p&gt;There is a Vim plugin for autosaving, and it has saved a lot of my time. I have
 used the plugin such that every time I enter normal mode (after making edits in
-Insert mode), it autosaves file. And, most importantly, I have disabled swap
+Insert mode), it autosaves file. And more importantly, I have disabled swap
 file creation by Vim. It&amp;rsquo;s really that simple folks. You don&amp;rsquo;t really need swap
 files 99.99% of the times.&lt;/p&gt;
 
@@ -518,6 +660,8 @@ opened in both terminals. In one terminal, you add a second line saying
 we have a conflict. This is because we are writing &amp;lsquo;three&amp;rsquo; at line number 2
 where &amp;lsquo;two&amp;rsquo; is alredy written (from another terminal)&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;p&gt;After reading these &amp;lsquo;things to note&amp;rsquo;, you might be thinking if it is really a good idea to autosave. Everybody is entitled to have an opinion. My opinion is that over a longer time period, getting rid of swap files saved me much more headache. I just have to be careful while exiting files.&lt;/p&gt;
 
 &lt;p&gt;I hope this helps. Questions, comments, suggestions, feedback? Comment :)&lt;/p&gt;
 

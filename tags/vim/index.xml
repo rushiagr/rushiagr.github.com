@@ -291,13 +291,13 @@ present in this article?  Or you disagree with something I wrote?&lt;/p&gt;
 &lt;p&gt;Almost all IDEs today have &amp;lsquo;autosave&amp;rsquo; feature. That is, you don&amp;rsquo;t need to
 explicitly save a file. The file is automatically saved as you type, so that
 even if your computer crashes, you don&amp;rsquo;t lose data. This makes me wonder why
-does Vim&amp;rsquo;s default behavior is of using swap files. Swap files are annoying.
+Vim&amp;rsquo;s default behavior is of using swap files. Swap files are annoying.
 I&amp;rsquo;ve seen all Vim developers, including me, struggle with swap files at one
 point in their life.&lt;/p&gt;
 
 &lt;p&gt;There is a Vim plugin for autosaving, and it has saved a lot of my time. I have
 used the plugin such that every time I enter normal mode (after making edits in
-Insert mode), it autosaves file. And, most importantly, I have disabled swap
+Insert mode), it autosaves file. And more importantly, I have disabled swap
 file creation by Vim. It&amp;rsquo;s really that simple folks. You don&amp;rsquo;t really need swap
 files 99.99% of the times.&lt;/p&gt;
 
@@ -360,6 +360,8 @@ opened in both terminals. In one terminal, you add a second line saying
 we have a conflict. This is because we are writing &amp;lsquo;three&amp;rsquo; at line number 2
 where &amp;lsquo;two&amp;rsquo; is alredy written (from another terminal)&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;p&gt;After reading these &amp;lsquo;things to note&amp;rsquo;, you might be thinking if it is really a good idea to autosave. Everybody is entitled to have an opinion. My opinion is that over a longer time period, getting rid of swap files saved me much more headache. I just have to be careful while exiting files.&lt;/p&gt;
 
 &lt;p&gt;I hope this helps. Questions, comments, suggestions, feedback? Comment :)&lt;/p&gt;
 

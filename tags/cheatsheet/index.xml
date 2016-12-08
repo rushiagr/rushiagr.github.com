@@ -7,7 +7,149 @@
     <language>en-us</language>
     <author>Rushi Agrawal</author>
     <copyright>2016 Rushi Agrawal</copyright>
-    <updated>Sun, 10 Jan 2016 00:00:00 &#43;0000</updated>
+    <updated>Thu, 08 Dec 2016 19:05:21 IST</updated>
+    
+    
+    <item>
+      <title>Cassandra server in 10 minutes</title>
+      <link>http://www.rushiagr.com/blog/2016/12/08/cassandra-server-in-10-minutes/</link>
+      <pubDate>Thu, 08 Dec 2016 19:05:21 IST</pubDate>
+      <author>Rushi Agrawal</author>
+      <guid>http://www.rushiagr.com/blog/2016/12/08/cassandra-server-in-10-minutes/</guid>
+      <description>&lt;p&gt;Want to quickly find out how a Cassandra server feels? In this blog post, we&amp;rsquo;ll
+create a single-node Cassandra cluster on an Ubuntu Xenial (16.04) system. It&amp;rsquo;s
+not really a &amp;lsquo;cluster&amp;rsquo;, but you can access the Cassandra shell &lt;code&gt;cqlsh&lt;/code&gt; and try
+out all of its commands. Since we are just looking for a quick try-out, we&amp;rsquo;re
+installing one of the latest Cassandra versions &amp;ndash; version 3.7. OK let&amp;rsquo;s get
+started.&lt;/p&gt;
+
+&lt;p&gt;Note: Jump straight to the last portion to get all the commands at one place
+without explanation&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s go to the temporary directory where we&amp;rsquo;ll download Sun&amp;rsquo;s Java. Here I am
+downloading Java&amp;rsquo;s &amp;lsquo;Server JRE&amp;rsquo; file. I have it hosted in Amazon cloud which
+you can use. You can bring your own JRE or JDK file too. Just make sure you
+make appropriate replacements in the command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd /tmp
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now actually download the JRE file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;wget http://eezydb.s3.amazonaws.com/server-jre-8u101-linux-x64.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create the directory where you want to expand this compressed file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo mkdir -p /usr/lib/jvm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now uncompress it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo tar -xzvf server-jre-8u101-linux-x64.tar.gz -C /usr/lib/jvm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now update system&amp;rsquo;s Java pointers and make this Java the preferred Java to be
+used&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo update-alternatives --install &amp;quot;/usr/bin/java&amp;quot; &amp;quot;java&amp;quot; &amp;quot;/usr/lib/jvm/jdk1.8.0_101/bin/java&amp;quot; 1
+sudo update-alternatives --set java /usr/lib/jvm/jdk1.8.0_101/bin/java
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can check our Java is the preferred Java by checking Java version.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;java -version
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The output should say something like &lt;code&gt;java version &amp;quot;1.8.0_101&amp;quot;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Add Cassandra repositories at appropriate place so that our beloved &lt;code&gt;apt-get&lt;/code&gt;
+utility can find the place from where to download Cassandra packages.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;echo &amp;quot;deb http://www.apache.org/dist/cassandra/debian 37x main&amp;quot; | sudo tee -a /etc/apt/sources.list
+echo &amp;quot;deb-src http://www.apache.org/dist/cassandra/debian 37x main&amp;quot; | sudo tee -a /etc/apt/sources.list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now add the cryptographic keys at proper places. Don&amp;rsquo;t ask me why do we have to
+do it :)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 749D6EEC0353B12C
+sudo apt-key add ~/.gnupg/pubring.gpg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now update repository pointers, and install Cassandra!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get --yes --quiet update
+sudo apt-get install --yes --quiet cassandra
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cassandra should be installed and running by now. You can check it by checking
+status of Cassandra service&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo service cassandra status
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Press &lt;code&gt;q&lt;/code&gt; to exit. I don&amp;rsquo;t know why they make us press &lt;code&gt;q&lt;/code&gt;, but anyway..&lt;/p&gt;
+
+&lt;p&gt;Cassandra server is running by now. You can check that by checking the status
+of &lt;code&gt;nodetool&lt;/code&gt; utility.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo nodetool status
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The state should be &lt;code&gt;UN&lt;/code&gt;, i.e. &amp;lsquo;U&amp;rsquo;p and &amp;lsquo;N&amp;rsquo;ormal. If it is not in this state,
+then wait a few seconds and it will be.&lt;/p&gt;
+
+&lt;p&gt;There are a few more steps to get the &lt;code&gt;cqlsh&lt;/code&gt; command line utility working.
+Let&amp;rsquo;s get them done too.&lt;/p&gt;
+
+&lt;p&gt;Install &lt;code&gt;pip&lt;/code&gt; utility which will install Python packages. If you already have
+&lt;code&gt;pip&lt;/code&gt; utility, no need to execute this step. Note that this is just one of many
+ways to install &lt;code&gt;pip&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install --yes --quiet python-pip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now install pip package &lt;code&gt;cassandra-driver&lt;/code&gt;. You can install it in virtual
+environment also. You can safely ignore the last statement if you have never
+heard the term &amp;lsquo;Python virtual environments&amp;rsquo; before.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo pip install cassandra-driver
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I wish everything worked after this, but it won&amp;rsquo;t. Just set this environment
+variable and then you should be good to log in into &lt;code&gt;cqlsh&lt;/code&gt; shell.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export CQLSH_NO_BUNDLED=true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now &amp;lsquo;actually&amp;rsquo; log into &lt;code&gt;cqlsh&lt;/code&gt; shell&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cqlsh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The output should be something like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ubuntu@hostname:~$ cqlsh
+Connected to Test Cluster at 127.0.0.1:9042.
+[cqlsh 5.0.1 | Cassandra 3.7 | CQL spec 3.4.2 | Native protocol v4]
+Use HELP for help.
+cqlsh&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Voila! Note that you need to export &lt;code&gt;CQLSH_NO_BUNDLED=true&lt;/code&gt; in every terminal
+shell from where you want to access &lt;code&gt;cqlsh&lt;/code&gt;. So if you log out of the system
+and log back in, you need to re-run this command.&lt;/p&gt;
+
+&lt;p&gt;Now you can follow any &lt;code&gt;cqlsh&lt;/code&gt; tutorial to try out commands to create
+keyspaces, tables, rows, etc.&lt;/p&gt;
+
+&lt;p&gt;If you like this, please share! If you have any suggestions, please comment!&lt;/p&gt;
+
+&lt;p&gt;Until next time!&lt;/p&gt;
+</description>
+    </item>
+    
     
     
     <item>
@@ -1791,140 +1933,6 @@ GRANT ALL PRIVILEGES ON * . * TO &#39;rushiagr&#39;@&#39;localhost&#39;
 &lt;p&gt;Comments/suggestions/feedback? Please feel free to comment and I&amp;rsquo;ll make sure I acknowledge them to the fullest.&lt;/p&gt;
 
 &lt;p&gt;Cheers!&lt;/p&gt;
-</description>
-    </item>
-    
-    
-    
-    <item>
-      <title>Installing OpenID plugin for MediaWiki</title>
-      <link>http://www.rushiagr.com/blog/2014/01/12/installing-openid-plugin-for-mediawiki/</link>
-      <pubDate>Sun, 12 Jan 2014 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
-      <guid>http://www.rushiagr.com/blog/2014/01/12/installing-openid-plugin-for-mediawiki/</guid>
-      <description>
-
-&lt;p&gt;This post is about setting up your wiki such that their users access the wiki
-only via an OpenID provider login (e.g. Google or Facebook login). This post assumes
-MediaWiki is already installed.&lt;/p&gt;
-
-&lt;h3 id=&#34;assumptions-prerequisites-and-requirements:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Assumptions, prerequisites and requirements&lt;/h3&gt;
-
-&lt;p&gt;All of what this blogpost says has been tried on an Ubuntu machine, but it
-should work well on other Linux distros too (except for the &lt;code&gt;apt-get&lt;/code&gt; package
-installs, for which you&amp;rsquo;ll need to find alternatives on your favourite distro).&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;$IP&lt;/code&gt; is assumed to be the root of your wiki directory (which in my case is
-&lt;code&gt;/var/www/wikis/&amp;lt;my_wiki&amp;gt;/&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Install all the required packages for the plugin to work&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get install php5-mcrypt php5-gmp
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;installing-the-plugin:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Installing the plugin&lt;/h2&gt;
-
-&lt;p&gt;Get the source code for the extension into &lt;code&gt;$IP/extensions&lt;/code&gt; directory&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;	cd extensions
-	git clone http://gerrit.wikimedia.org/r/p/mediawiki/extensions/OpenID.git 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Check your mediawiki version by going to &lt;code&gt;&amp;lt;your_wiki_URL&amp;gt;/index.php?title=Special:Version&lt;/code&gt;. Say your version is 1.19.x.
-  Check out branch for the same version of OpenID code&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;	git branch -a 
-	git checkout -b stable_REL1_19 origin/REL1_19 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Add this line at the end of LocalSettings.php file&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;require_once &amp;quot;$IP/extensions/OpenID/OpenID.php&amp;quot;; 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now install Auth subdirectory as following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;	cd $IP/extensions/OpenID 
-	git clone http://github.com/openid/php-openid.git 
-	mv php-openid/Auth Auth 
-	rm -r php-openid 
-	cd $IP 
-	php maintenance/update.php --conf LocalSettings.php 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Restart apache server&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;	/etc/init.d/apache2 restart 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;editing-login-required-page:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Editing &amp;lsquo;Login required&amp;rsquo; page.&lt;/h3&gt;
-
-&lt;p&gt;By default, the main page of the wiki is not editable. Generally we would like
-to give some information to a user, e.g. what this wiki is all about, how
-to log into it, which OpenIDs are permitted, etc.&lt;/p&gt;
-
-&lt;p&gt;Now we&amp;rsquo;ll give any registered user the ability to edit the protected pages and the
-&amp;lsquo;interface&amp;rsquo; pages, of which our special login page is a part of. Add these lines
- to &lt;code&gt;$IP/LocalSettings.php&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;	$wgGroupPermissions[&#39;user&#39;][&#39;editprotected&#39;] = true; 
-	$wgGroupPermissions[&#39;user&#39;][&#39;editinterface&#39;] = true; 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now you can edit the &lt;code&gt;&amp;lt;your_wiki_URL&amp;gt;/jiocloud/index.phpmediawiki:loginreqpagetext&lt;/code&gt;
- page which is presented when the user is not logged in.&lt;/p&gt;
-
-&lt;h3 id=&#34;other-settings:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Other settings&lt;/h3&gt;
-
-&lt;p&gt;Below you can see a snip of LocalSettings.php file, which contains many other
-fields which I used to customize my wiki. I allowed only the registered user
-an edit permission (which most of you would also want I guess). Also, I have disabled
-regular login, and made it mandatory users to login via only OpenID, and that too,
-only using their launchpad.net accounts (an issue tracking software from Canonical).&lt;/p&gt;
-
-&lt;p&gt;If you want to get more information regarding these (and more)
-configuration options, see &lt;a href=&#34;http://www.mediawiki.org/wiki/Extension:OpenID&#34; target=&#34;_blank&#34;&gt;this&lt;/a&gt; link.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# Disable reading by anonymous users
-$wgGroupPermissions[&#39;*&#39;][&#39;read&#39;] = false;
-
-# Disable anonymous editing too
-$wgGroupPermissions[&#39;*&#39;][&#39;edit&#39;] = false;
- 
-# But allow them to access the OpenID login page or else there will be no way to log in!
-$wgWhitelistRead = array (&amp;quot;Special:OpenIDLogin&amp;quot;, &amp;quot;Special:OpenIDFinish&amp;quot;, 
-&amp;quot;MediaWiki:Common.css&amp;quot;, &amp;quot;MediaWiki:Common.js&amp;quot;, &amp;quot;MediaWiki:Monobook.css&amp;quot;, 
-&amp;quot;MediaWiki:Monobook.js&amp;quot;, &amp;quot;-&amp;quot;);
- 
-# For registered users, allow editing protected pages
-$wgGroupPermissions[&#39;user&#39;][&#39;editprotected&#39;] = true;
-$wgGroupPermissions[&#39;user&#39;][&#39;editinterface&#39;] = true;
-
-# Only allow OpenIDs for login
-$wgOpenIDLoginOnly = true;
-$wgOpenIDOnly = true;       # a value used with older versions. Optional
-
-# Your wiki web URL
-$wgOpenIDTrustRoot = &amp;quot;http://your.wiki.url.com/&amp;quot;;
-
-# By default, deny all OpenID
-$wgOpenIDConsumerDenyByDefault = true;
-
-# Then allow only launchpad.net OpenID (with and without HTTPS both)
-$wgOpenIDConsumerAllow = array(&amp;quot;@^(https://)?launchpad.net/@&amp;quot;);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;troubleshooting:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Troubleshooting&lt;/h2&gt;
-
-&lt;p&gt;If there are troubles uploading a file via the MediaWiki web interface, go to the wiki directory on the server and chown the &lt;code&gt;images&lt;/code&gt; folder.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo chown -R www-data:www-data images/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Don&amp;rsquo;t forget to comment if you find the information presented here is outdated, or is not working for you.&lt;/p&gt;
-
-&lt;p&gt;Cheers,
-Rushi&lt;/p&gt;
 </description>
     </item>
     
