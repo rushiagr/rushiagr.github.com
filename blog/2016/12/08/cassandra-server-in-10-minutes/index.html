@@ -88,12 +88,15 @@
     <h1 class="post-title">Cassandra server in 10 minutes</h1>
     <span class="post-date">Dec 8, 2016</span>
     
-    <p>Want to quickly find out how a Cassandra server feels? In this blog post, we&rsquo;ll
+    
+
+<p>Want to quickly find out how a Cassandra server feels? In this blog post, we&rsquo;ll
 create a single-node Cassandra cluster on an Ubuntu Xenial (16.04) system. It&rsquo;s
 not really a &lsquo;cluster&rsquo;, but you can access the Cassandra shell <code>cqlsh</code> and try
-out all of its commands. Since we are just looking for a quick try-out, we&rsquo;re
-installing one of the latest Cassandra versions &ndash; version 3.7. OK let&rsquo;s get
-started.</p>
+out all of its commands. Since we are just looking for a quick start, we&rsquo;re
+installing one of the latest Cassandra versions &ndash; version 3.7. Even more, the
+steps here are totally scriptable, so you can just blindly paste the lines and
+it&rsquo;ll work! OK let&rsquo;s get started.</p>
 
 <p>Note: Jump straight to the last portion to get all the commands at one place
 without explanation</p>
@@ -169,8 +172,8 @@ of <code>nodetool</code> utility.</p>
 <pre><code>sudo nodetool status
 </code></pre>
 
-<p>The state should be <code>UN</code>, i.e. &lsquo;U&rsquo;p and &lsquo;N&rsquo;ormal. If it is not in this state,
-then wait a few seconds and it will be.</p>
+<p>The state should be <code>UN</code>, i.e. &lsquo;U&rsquo;p and &lsquo;N&rsquo;ormal. If the output is different,
+then wait a few seconds and try again.</p>
 
 <p>There are a few more steps to get the <code>cqlsh</code> command line utility working.
 Let&rsquo;s get them done too.</p>
@@ -183,7 +186,7 @@ ways to install <code>pip</code>.</p>
 </code></pre>
 
 <p>Now install pip package <code>cassandra-driver</code>. You can install it in virtual
-environment also. You can safely ignore the last statement if you have never
+environment also. You can safely ignore my last sentence if you have never
 heard the term &lsquo;Python virtual environments&rsquo; before.</p>
 
 <pre><code>sudo pip install cassandra-driver
@@ -215,6 +218,27 @@ and log back in, you need to re-run this command.</p>
 
 <p>Now you can follow any <code>cqlsh</code> tutorial to try out commands to create
 keyspaces, tables, rows, etc.</p>
+
+<h3 id="everything-at-one-place:dab26cacb0c5bb6968520a75fe886910">Everything at one place</h3>
+
+<p>You can just paste these lines in a file and run that file as a script, and it&rsquo;ll set everything up for you.</p>
+
+<pre><code>cd /tmp
+wget http://eezydb.s3.amazonaws.com/server-jre-8u101-linux-x64.tar.gz
+sudo mkdir -p /usr/lib/jvm
+sudo tar -xzvf server-jre-8u101-linux-x64.tar.gz -C /usr/lib/jvm
+sudo update-alternatives --install &quot;/usr/bin/java&quot; &quot;java&quot; &quot;/usr/lib/jvm/jdk1.8.0_101/bin/java&quot; 1
+sudo update-alternatives --set java /usr/lib/jvm/jdk1.8.0_101/bin/java
+echo &quot;deb http://www.apache.org/dist/cassandra/debian 37x main&quot; | sudo tee -a /etc/apt/sources.list
+echo &quot;deb-src http://www.apache.org/dist/cassandra/debian 37x main&quot; | sudo tee -a /etc/apt/sources.list
+gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 749D6EEC0353B12C
+sudo apt-key add ~/.gnupg/pubring.gpg
+sudo apt-get --yes --quiet update
+sudo apt-get install --yes --quiet cassandra python-pip
+sudo pip instlal cassandra-driver
+export CQLSH_NO_BUNDLED=true
+cqlsh
+</code></pre>
 
 <p>If you like this, please share! If you have any suggestions, please comment!</p>
 
