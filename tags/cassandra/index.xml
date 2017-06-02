@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/cassandra/</link>
+    <link>http://www.rushiagr.com/tags/cassandra/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2016 Rushi Agrawal</copyright>
-    <updated>Thu, 08 Dec 2016 19:05:21 IST</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -147,7 +147,7 @@ and log back in, you need to re-run this command.&lt;/p&gt;
 &lt;p&gt;Now you can follow any &lt;code&gt;cqlsh&lt;/code&gt; tutorial to try out commands to create
 keyspaces, tables, rows, etc.&lt;/p&gt;
 
-&lt;h3 id=&#34;everything-at-one-place:dab26cacb0c5bb6968520a75fe886910&#34;&gt;Everything at one place&lt;/h3&gt;
+&lt;h3 id=&#34;everything-at-one-place&#34;&gt;Everything at one place&lt;/h3&gt;
 
 &lt;p&gt;You can just paste these lines in a file and run that file as a script, and it&amp;rsquo;ll set everything up for you.&lt;/p&gt;
 
@@ -189,7 +189,7 @@ to multi-region deployment problem of OpenStack cloud. This blog post is not
 to discuss the problem. We are talking about how to have a development
 environment to play around with Keystone working with a dev Cassandra deployment.&lt;/p&gt;
 
-&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set:ac993324848a8aead891c139adf0f8b7&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
+&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
 
 &lt;p&gt;I&amp;rsquo;ve put together all commands into a script which can be found here:&lt;/p&gt;
 
@@ -219,7 +219,7 @@ not tried it. (Let me know if you tried it and it works!)&lt;/p&gt;
 &lt;li&gt;The code for this script is located at &lt;code&gt;https://github.com/rushiagr/keystone/tree/liberty-cassandra&lt;/code&gt;, i.e. on &lt;code&gt;liberty-cassandra&lt;/code&gt; branch. Note that this work is currently based upon Keystone&amp;rsquo;s Liberty code as on first week of June. It might not work directly with latest code as it might require fixing imports which might have become outdated. However, I don&amp;rsquo;t think it&amp;rsquo;s going to take more than an hour to make it work with latest code; just that I don&amp;rsquo;t have enough motivation right now to keep the code updated with &amp;lsquo;latest&amp;rsquo; all the time.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h4 id=&#34;credits:ac993324848a8aead891c139adf0f8b7&#34;&gt;Credits&lt;/h4&gt;
+&lt;h4 id=&#34;credits&#34;&gt;Credits&lt;/h4&gt;
 
 &lt;p&gt;This work was done by the &amp;lsquo;distributed database&amp;rsquo; team of 4 people: Ajaya Agrawal, Rushi Agrawal (me), Vivek Dhayaal and Yogeshwar Shenoy, listed in alphabetical order. And obviously Reliance, for providing us an opportunity to work on this thing.&lt;/p&gt;
 </description>

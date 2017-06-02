@@ -46,7 +46,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
       <p class="lead">
-       not your average coder 
+       yet another tech enthusiast 
       </p>
     </div>
 
@@ -77,7 +77,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -94,13 +94,13 @@
 Although I have used Ubuntu Trusty (14.04) version, it should work with Precise
 (12.04) too, with the latest packages.</p>
 
-<h4 id="prerequisites:929de0ff9dbcd4c871b27335ee5a3706">Prerequisites</h4>
+<h4 id="prerequisites">Prerequisites</h4>
 
 <p>Make sure you have atleast a little idea of what these terms
 mean: iSCSI, LUN, IQN, initiator, target and portal. Google and wikipedia are
 your friends.</p>
 
-<h4 id="a-quick-summary:929de0ff9dbcd4c871b27335ee5a3706">A quick summary:</h4>
+<h4 id="a-quick-summary">A quick summary:</h4>
 
 <p>There are two parts of iSCSI communication - initiator and target. So let&rsquo;s take an example. There is a storage server in your
 company, where you have a &lsquo;drive&rsquo; for your team. The storage server is the
@@ -126,7 +126,7 @@ user.</p>
 <pre><code>apt-get install lvm2 tgt open-iscsi
 </code></pre>
 
-<h4 id="initialize-logical-volume:929de0ff9dbcd4c871b27335ee5a3706">Initialize logical volume</h4>
+<h4 id="initialize-logical-volume">Initialize logical volume</h4>
 
 <p>Create a file of 1GB, create a volume group over it, and then over it, create a
 400MB logical volume, and see if it got created or not</p>
@@ -145,7 +145,7 @@ root@ra:~# lvs
   mylv myvg -wi-a---- 400.00m                                           
 </code></pre>
 
-<h4 id="target-administration:929de0ff9dbcd4c871b27335ee5a3706">Target administration</h4>
+<h4 id="target-administration">Target administration</h4>
 
 <p>Now let&rsquo;s create a target, with target ID 1, and give it an IQN (iSCSI
 Qualified Name) <code>iqn.2001-04.example.com:your.first.iscsi.target</code>:</p>
@@ -245,7 +245,7 @@ Target 1: iqn.2001-04.example.com:your.first.iscsi.target
 3260, the default port, is now open. Note that all our commands so far started with
 <code>tgtadm</code>, i.e., the target administration utility.</p>
 
-<h4 id="initiator-administration:929de0ff9dbcd4c871b27335ee5a3706">Initiator administration</h4>
+<h4 id="initiator-administration">Initiator administration</h4>
 
 <p>Now let&rsquo;s start from the &lsquo;initiator&rsquo; end. We&rsquo;ll behave as if we&rsquo;re a client
 trying to connect to the server &ndash; the target.</p>
@@ -336,7 +336,7 @@ lost+found
 root@ra:~/tempmount# 
 </code></pre>
 
-<h4 id="destruction:929de0ff9dbcd4c871b27335ee5a3706">Destruction</h4>
+<h4 id="destruction">Destruction</h4>
 
 <p>The simplest way to get rid of all the things you&rsquo;ve created is to unmount the
 device, and restart the system.</p>

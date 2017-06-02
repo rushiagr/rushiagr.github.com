@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/cloud/</link>
+    <link>http://www.rushiagr.com/tags/cloud/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2016 Rushi Agrawal</copyright>
-    <updated>Sat, 02 Jan 2016 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -91,7 +91,7 @@ to multi-region deployment problem of OpenStack cloud. This blog post is not
 to discuss the problem. We are talking about how to have a development
 environment to play around with Keystone working with a dev Cassandra deployment.&lt;/p&gt;
 
-&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set:ac993324848a8aead891c139adf0f8b7&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
+&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
 
 &lt;p&gt;I&amp;rsquo;ve put together all commands into a script which can be found here:&lt;/p&gt;
 
@@ -121,7 +121,7 @@ not tried it. (Let me know if you tried it and it works!)&lt;/p&gt;
 &lt;li&gt;The code for this script is located at &lt;code&gt;https://github.com/rushiagr/keystone/tree/liberty-cassandra&lt;/code&gt;, i.e. on &lt;code&gt;liberty-cassandra&lt;/code&gt; branch. Note that this work is currently based upon Keystone&amp;rsquo;s Liberty code as on first week of June. It might not work directly with latest code as it might require fixing imports which might have become outdated. However, I don&amp;rsquo;t think it&amp;rsquo;s going to take more than an hour to make it work with latest code; just that I don&amp;rsquo;t have enough motivation right now to keep the code updated with &amp;lsquo;latest&amp;rsquo; all the time.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h4 id=&#34;credits:ac993324848a8aead891c139adf0f8b7&#34;&gt;Credits&lt;/h4&gt;
+&lt;h4 id=&#34;credits&#34;&gt;Credits&lt;/h4&gt;
 
 &lt;p&gt;This work was done by the &amp;lsquo;distributed database&amp;rsquo; team of 4 people: Ajaya Agrawal, Rushi Agrawal (me), Vivek Dhayaal and Yogeshwar Shenoy, listed in alphabetical order. And obviously Reliance, for providing us an opportunity to work on this thing.&lt;/p&gt;
 </description>
@@ -143,19 +143,19 @@ doc by the author of mod_wsgi module of Apache. This blog post just serves as a 
 is only useful if you have read the original document but it&amp;rsquo;s been too long since you
 read it :)&lt;/p&gt;
 
-&lt;h2 id=&#34;apache-with-mod-wsgi:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Apache with mod_wsgi&lt;/h2&gt;
+&lt;h2 id=&#34;apache-with-mod-wsgi&#34;&gt;Apache with mod_wsgi&lt;/h2&gt;
 
 &lt;p&gt;A Python application can run with multiple processes as well as multiple threads
 with mod_wsgi.&lt;/p&gt;
 
-&lt;h3 id=&#34;prefork-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Prefork multiprocessing module&lt;/h3&gt;
+&lt;h3 id=&#34;prefork-multiprocessing-module&#34;&gt;Prefork multiprocessing module&lt;/h3&gt;
 
 &lt;p&gt;Apache creates multiple processes, and each request is handled by one process.
 A process only handles one request at a time.
 This means, if you have set number of processes to 1, there will be only one
 request handeled at a time overall.&lt;/p&gt;
 
-&lt;h3 id=&#34;worker-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Worker multiprocessing module&lt;/h3&gt;
+&lt;h3 id=&#34;worker-multiprocessing-module&#34;&gt;Worker multiprocessing module&lt;/h3&gt;
 
 &lt;p&gt;Multiple processes, and multiple threads in each processa.
 Even if a process is handling a request, another thread in the same process
@@ -164,7 +164,7 @@ You might need some synchronization primitive to make sure multiple threads
 of same process don&amp;rsquo;t corrupt shared memory (only occurs when shared memory
 is mutated)&lt;/p&gt;
 
-&lt;h3 id=&#34;but-gil:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;But GIL?&lt;/h3&gt;
+&lt;h3 id=&#34;but-gil&#34;&gt;But GIL?&lt;/h3&gt;
 
 &lt;p&gt;Python GIL problem is largely alleviated with mod_wsgi since multiple processes
 can handle requests, and GIL has impact ranging to only one process. One more
@@ -305,7 +305,7 @@ or pressing CTRL + D.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo docker rmi learn/tutorial
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;things-not-covered-in-this-tutorial:49285dca7b53d383ade641738736c634&#34;&gt;Things not covered in this tutorial:&lt;/h4&gt;
+&lt;h4 id=&#34;things-not-covered-in-this-tutorial&#34;&gt;Things not covered in this tutorial:&lt;/h4&gt;
 
 &lt;ol&gt;
 &lt;li&gt;Create your own custom docker images and share with other people:
@@ -329,7 +329,7 @@ or pressing CTRL + D.&lt;/p&gt;
 &lt;p&gt;A small post about little things I found out while running unit tests in
 OpenStack.&lt;/p&gt;
 
-&lt;h2 id=&#34;unit-testing-setup:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Unit-testing setup&lt;/h2&gt;
+&lt;h2 id=&#34;unit-testing-setup&#34;&gt;Unit-testing setup&lt;/h2&gt;
 
 &lt;p&gt;Everybody knows &lt;code&gt;./run_tests.sh&lt;/code&gt; is used to run the unit tests of an OpenStack
 project. But, you require to install dependencies before doing it. And
@@ -344,7 +344,7 @@ these packages before running &lt;code&gt;pip install -r requirements.txt&lt;/co
 &lt;p&gt;Atleast &lt;code&gt;cinder&lt;/code&gt; and &lt;code&gt;nova&lt;/code&gt; dependencies will get installed properly after
 this.&lt;/p&gt;
 
-&lt;h2 id=&#34;run-tests-frequently-used-commands:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests frequently used commands&lt;/h2&gt;
+&lt;h2 id=&#34;run-tests-frequently-used-commands&#34;&gt;run_tests frequently used commands&lt;/h2&gt;
 
 &lt;p&gt;To force the tests to NOT run in a virtual environment, even if it is present:&lt;/p&gt;
 
@@ -381,7 +381,7 @@ this.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils.ResourceFilterTestCase.test_resource_filtering
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;wildcards-while-running-the-tests:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Wildcards while running the tests&lt;/h2&gt;
+&lt;h2 id=&#34;wildcards-while-running-the-tests&#34;&gt;Wildcards while running the tests&lt;/h2&gt;
 
 &lt;p&gt;Frequently you&amp;rsquo;ll find yourself testing only a couple of tests. In such cases,
 a wildcard will save you from typing the whole path of the test. The below
@@ -393,7 +393,7 @@ command will also run &lt;code&gt;test_resource_filtering&lt;/code&gt; test:&lt;
 &lt;p&gt;I currently don&amp;rsquo;t know how to make a test work without adding &lt;code&gt;nova.tests&lt;/code&gt;
 before it&lt;/p&gt;
 
-&lt;h2 id=&#34;run-tests-is-not-happy:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests is not happy&lt;/h2&gt;
+&lt;h2 id=&#34;run-tests-is-not-happy&#34;&gt;run_tests is not happy&lt;/h2&gt;
 
 &lt;p&gt;Sometimes you&amp;rsquo;ll see running &lt;code&gt;./run_tests.sh&lt;/code&gt; can throw a lot of lines of
 ununderstandable gibberish on your screen. In the end it will say &lt;code&gt;testr
@@ -434,13 +434,13 @@ dependencies are outdated.&lt;/p&gt;
 Although I have used Ubuntu Trusty (14.04) version, it should work with Precise
 (12.04) too, with the latest packages.&lt;/p&gt;
 
-&lt;h4 id=&#34;prerequisites:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Prerequisites&lt;/h4&gt;
+&lt;h4 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h4&gt;
 
 &lt;p&gt;Make sure you have atleast a little idea of what these terms
 mean: iSCSI, LUN, IQN, initiator, target and portal. Google and wikipedia are
 your friends.&lt;/p&gt;
 
-&lt;h4 id=&#34;a-quick-summary:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;A quick summary:&lt;/h4&gt;
+&lt;h4 id=&#34;a-quick-summary&#34;&gt;A quick summary:&lt;/h4&gt;
 
 &lt;p&gt;There are two parts of iSCSI communication - initiator and target. So let&amp;rsquo;s take an example. There is a storage server in your
 company, where you have a &amp;lsquo;drive&amp;rsquo; for your team. The storage server is the
@@ -466,7 +466,7 @@ user.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;apt-get install lvm2 tgt open-iscsi
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;initialize-logical-volume:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initialize logical volume&lt;/h4&gt;
+&lt;h4 id=&#34;initialize-logical-volume&#34;&gt;Initialize logical volume&lt;/h4&gt;
 
 &lt;p&gt;Create a file of 1GB, create a volume group over it, and then over it, create a
 400MB logical volume, and see if it got created or not&lt;/p&gt;
@@ -485,7 +485,7 @@ root@ra:~# lvs
   mylv myvg -wi-a---- 400.00m                                           
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;target-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Target administration&lt;/h4&gt;
+&lt;h4 id=&#34;target-administration&#34;&gt;Target administration&lt;/h4&gt;
 
 &lt;p&gt;Now let&amp;rsquo;s create a target, with target ID 1, and give it an IQN (iSCSI
 Qualified Name) &lt;code&gt;iqn.2001-04.example.com:your.first.iscsi.target&lt;/code&gt;:&lt;/p&gt;
@@ -585,7 +585,7 @@ Target 1: iqn.2001-04.example.com:your.first.iscsi.target
 3260, the default port, is now open. Note that all our commands so far started with
 &lt;code&gt;tgtadm&lt;/code&gt;, i.e., the target administration utility.&lt;/p&gt;
 
-&lt;h4 id=&#34;initiator-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initiator administration&lt;/h4&gt;
+&lt;h4 id=&#34;initiator-administration&#34;&gt;Initiator administration&lt;/h4&gt;
 
 &lt;p&gt;Now let&amp;rsquo;s start from the &amp;lsquo;initiator&amp;rsquo; end. We&amp;rsquo;ll behave as if we&amp;rsquo;re a client
 trying to connect to the server &amp;ndash; the target.&lt;/p&gt;
@@ -676,7 +676,7 @@ lost+found
 root@ra:~/tempmount# 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;destruction:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Destruction&lt;/h4&gt;
+&lt;h4 id=&#34;destruction&#34;&gt;Destruction&lt;/h4&gt;
 
 &lt;p&gt;The simplest way to get rid of all the things you&amp;rsquo;ve created is to unmount the
 device, and restart the system.&lt;/p&gt;
@@ -909,12 +909,12 @@ sudo modprobe nbd
       <pubDate>Thu, 16 Jan 2014 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2014/01/16/playing-around-with-cinder-backend/</guid>
-      <description>
-
-&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature &amp;ndash; multi-backends
+      <description>&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature &amp;ndash; multi-backends
 with filter scheduler. So now you can have more than one storage boxes for block storage
 and manage them with one Cinder deployment. Here, I&amp;rsquo;m going to test it out using our
 favourite method &amp;ndash; trying it out on DevStack!&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;DevStack can provide you with two LVM backends to play around with them. But you&amp;rsquo;ll need to restack it.&lt;/p&gt;
 
@@ -964,7 +964,7 @@ volume_group = stack-volumes2
 
 &lt;p&gt;Hmmm. Two volume groups, each of size 10G.&lt;/p&gt;
 
-&lt;h3 id=&#34;case-1-spreading-volumes-across-backends:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 1: Spreading volumes across backends&lt;/h3&gt;
+&lt;h3 id=&#34;case-1-spreading-volumes-across-backends&#34;&gt;Case 1: Spreading volumes across backends&lt;/h3&gt;
 
 &lt;p&gt;Now, lets create a volume and see where it ends up.&lt;/p&gt;
 
@@ -1045,7 +1045,7 @@ rushi@jio:~$ sudo vgs
 
 &lt;p&gt;Neat!&lt;/p&gt;
 
-&lt;h3 id=&#34;case-2-stacking-all-volumes-at-one-backend:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 2 : Stacking all volumes at one backend&lt;/h3&gt;
+&lt;h3 id=&#34;case-2-stacking-all-volumes-at-one-backend&#34;&gt;Case 2 : Stacking all volumes at one backend&lt;/h3&gt;
 
 &lt;p&gt;What if we want to keep all the volumes at only one backend? Cinder allows you to do that too!
 There is a configuration option in cinder.conf, &lt;code&gt;capacity_weight_multiplier&lt;/code&gt;, which allows you to multiply the &amp;lsquo;capacity weight&amp;rsquo; by a number.
@@ -1122,7 +1122,7 @@ rushi@jio:~$ sudo vgs
 
 &lt;p&gt;:)&lt;/p&gt;
 
-&lt;h3 id=&#34;case-3-custom-choice:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 3 : Custom choice&lt;/h3&gt;
+&lt;h3 id=&#34;case-3-custom-choice&#34;&gt;Case 3 : Custom choice&lt;/h3&gt;
 
 &lt;p&gt;What if I have two different backends (maybe one is slower, or costlier, than the other), and my users want to exactly specify how many volumes they want of each &amp;lsquo;type&amp;rsquo; of backends? Here, Cinder&amp;rsquo;s &amp;lsquo;volume types&amp;rsquo; have us covered.&lt;/p&gt;
 
@@ -1278,8 +1278,7 @@ rushi@jio:~$ sudo pvs
 
 &lt;p&gt;Done :)&lt;/p&gt;
 
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+&lt;p&gt;Cheers!&lt;/p&gt;</description>
     </item>
     
     
@@ -1290,9 +1289,9 @@ rushi@jio:~$ sudo pvs
       <pubDate>Wed, 05 Jun 2013 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/</guid>
-      <description>
+      <description>&lt;p&gt;This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.&lt;/p&gt;
 
-&lt;p&gt;This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;In a DevStack environment, all the processes run under something special in Linux, called as a &lt;code&gt;screen&lt;/code&gt;. For now, you can think of a ‘screen’ as a terminal running inside a terminal, with the special property that when you close your current terminal, your ‘screens’ will not actually die, so that you can reconnect to them when you connect to the Linux system through another terminal again! Now that should give you a hint why people use screens :)&lt;/p&gt;
 
@@ -1310,7 +1309,7 @@ rushi@jio:~$ sudo pvs
 
 &lt;p&gt;The way to detach from a screen is &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;D&lt;/code&gt;, that is, first press &lt;code&gt;CTRL+A&lt;/code&gt;, and then press &lt;code&gt;D&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;navigating-across-screens:81565885f4011e665cf1e89d6280caf9&#34;&gt;Navigating across screens&lt;/h2&gt;
+&lt;h2 id=&#34;navigating-across-screens&#34;&gt;Navigating across screens&lt;/h2&gt;
 
 &lt;p&gt;You will see names of all the screens at the bottom of the terminal. The screen on which you currently are bears an asterisk (&lt;code&gt;*&lt;/code&gt;) near its name. To move to the right screen, do a &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;N&lt;/code&gt;. Keep in mind that you are going to use &lt;code&gt;CTRL+A&lt;/code&gt; a lot of times during your adventures with screen. Similar to the command &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;N&lt;/code&gt; to move to the right (“next”) screen, to move to the left screen the command is &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;P&lt;/code&gt;.&lt;/p&gt;
 
@@ -1328,7 +1327,7 @@ rushi@jio:~$ sudo pvs
 
 &lt;p&gt;To come out of this copy mode (so that you can switch to another screen, and do other such stuff), press &lt;code&gt;]&lt;/code&gt; and you are back to normal once again.&lt;/p&gt;
 
-&lt;h2 id=&#34;some-more-generic-screen-commands:81565885f4011e665cf1e89d6280caf9&#34;&gt;Some more ‘generic’ screen commands&lt;/h2&gt;
+&lt;h2 id=&#34;some-more-generic-screen-commands&#34;&gt;Some more ‘generic’ screen commands&lt;/h2&gt;
 
 &lt;p&gt;So that you can start playing around with screens outside OpenStack too&lt;/p&gt;
 
@@ -1359,8 +1358,7 @@ rushi@jio:~$ sudo pvs
 
 &lt;p&gt;Cheers!&lt;/p&gt;
 
-&lt;p&gt;-Rushi Agrawal&lt;/p&gt;
-</description>
+&lt;p&gt;-Rushi Agrawal&lt;/p&gt;</description>
     </item>
     
     
@@ -1371,11 +1369,11 @@ rushi@jio:~$ sudo pvs
       <pubDate>Mon, 27 May 2013 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2013/05/27/cinder-on-devstack-quick-start/</guid>
-      <description>
-
-&lt;p&gt;This blog post covers all the important commands for OpenStack Cinder - The block storage project.
+      <description>&lt;p&gt;This blog post covers all the important commands for OpenStack Cinder - The block storage project.
 Although this guide is written based on DevStack, it will work with actual deployment of OpenStack
 cloud also (except the DevStack/Linux specific bits).&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;All the Cinder operations can be performed via either of these three means:&lt;/p&gt;
 
@@ -1397,7 +1395,7 @@ a relatively new guy to OpenStack, I think an introduction through CLI would mak
 
 &lt;p&gt;Let&amp;rsquo;s start.&lt;/p&gt;
 
-&lt;h3 id=&#34;creation-and-deletion-of-volumes:426b24844d0e63b7c5c25db25682ca23&#34;&gt;Creation and deletion of volumes&lt;/h3&gt;
+&lt;h3 id=&#34;creation-and-deletion-of-volumes&#34;&gt;Creation and deletion of volumes&lt;/h3&gt;
 
 &lt;p&gt;Create a 1-GB cinder volume with no name by running command &lt;code&gt;cinder create 1&lt;/code&gt;.&lt;/p&gt;
 
@@ -1531,7 +1529,7 @@ stack@stlrx300s7-27:/$ sudo pvs
   /dev/loop0 stack-volumes lvm2 a-   5.01g 4.01g
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;volume-snapshots:426b24844d0e63b7c5c25db25682ca23&#34;&gt;Volume snapshots&lt;/h3&gt;
+&lt;h3 id=&#34;volume-snapshots&#34;&gt;Volume snapshots&lt;/h3&gt;
 
 &lt;p&gt;Create the snapshot of volume:&lt;/p&gt;
 
@@ -1584,7 +1582,7 @@ stack@stlrx300s7-27:/$ sudo pvs
 
 &lt;p&gt;Now you will see two volumes when you&amp;rsquo;ll do a &lt;code&gt;cinder list&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;accessing-volumes-from-inside-a-virtual-instance:426b24844d0e63b7c5c25db25682ca23&#34;&gt;Accessing volumes from inside a virtual instance&lt;/h3&gt;
+&lt;h3 id=&#34;accessing-volumes-from-inside-a-virtual-instance&#34;&gt;Accessing volumes from inside a virtual instance&lt;/h3&gt;
 
 &lt;p&gt;You can attach a volume to a VM instance, to provide additional persistent storage to that VM. It
 works just like you attach an external HDD to your computer/laptop. But first, we&amp;rsquo;ll need to create a
@@ -1824,12 +1822,11 @@ stack@stlrx300s7-27:/$ cinder list
 +--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;more-features:426b24844d0e63b7c5c25db25682ca23&#34;&gt;More features&lt;/h3&gt;
+&lt;h3 id=&#34;more-features&#34;&gt;More features&lt;/h3&gt;
 
 &lt;p&gt;(Will update shortly)&lt;/p&gt;
 
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+&lt;p&gt;Cheers!&lt;/p&gt;</description>
     </item>
     
     
@@ -1845,6 +1842,8 @@ stack@stlrx300s7-27:/$ cinder list
 &lt;p&gt;This quick start guide explains setting up Tempest with a DevStack environment
 for Grizzly release. Most of the information here is taken from
 &lt;a href=&#34;http://www.joinfu.com/2012/03/testing-essex-rc1-with-devstack-and-tempest/&#34;&gt;here&lt;/a&gt;, the only difference being this blog post is more recent, and is based on Grizzly.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;Assumptions made are that you understand:
 1. What is a &lt;code&gt;localrc&lt;/code&gt; file in DevStack.
@@ -1975,8 +1974,7 @@ We&amp;rsquo;ll run all the tests in verbose mode. To run all the tests:&lt;/p&g
 &lt;pre&gt;&lt;code&gt;    nosetests -sv tempest.tests.volume.test_volumes_list:VolumeListTest.test_volume_list_with_details
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;And that ladies and gentlemen, is the end! :)&lt;/p&gt;
-</description>
+&lt;p&gt;And that ladies and gentlemen, is the end! :)&lt;/p&gt;</description>
     </item>
     
     

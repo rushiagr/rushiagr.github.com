@@ -46,7 +46,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
       <p class="lead">
-       not your average coder 
+       yet another tech enthusiast 
       </p>
     </div>
 
@@ -77,7 +77,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -88,11 +88,11 @@
     <h1 class="post-title">Cinder on DevStack - Quick Start</h1>
     <span class="post-date">May 27, 2013</span>
     
-    
-
-<p>This blog post covers all the important commands for OpenStack Cinder - The block storage project.
+    <p>This blog post covers all the important commands for OpenStack Cinder - The block storage project.
 Although this guide is written based on DevStack, it will work with actual deployment of OpenStack
 cloud also (except the DevStack/Linux specific bits).</p>
+
+<p></p>
 
 <p>All the Cinder operations can be performed via either of these three means:</p>
 
@@ -114,7 +114,7 @@ a relatively new guy to OpenStack, I think an introduction through CLI would mak
 
 <p>Let&rsquo;s start.</p>
 
-<h3 id="creation-and-deletion-of-volumes:426b24844d0e63b7c5c25db25682ca23">Creation and deletion of volumes</h3>
+<h3 id="creation-and-deletion-of-volumes">Creation and deletion of volumes</h3>
 
 <p>Create a 1-GB cinder volume with no name by running command <code>cinder create 1</code>.</p>
 
@@ -248,7 +248,7 @@ stack@stlrx300s7-27:/$ sudo pvs
   /dev/loop0 stack-volumes lvm2 a-   5.01g 4.01g
 </code></pre>
 
-<h3 id="volume-snapshots:426b24844d0e63b7c5c25db25682ca23">Volume snapshots</h3>
+<h3 id="volume-snapshots">Volume snapshots</h3>
 
 <p>Create the snapshot of volume:</p>
 
@@ -301,7 +301,7 @@ stack@stlrx300s7-27:/$ sudo pvs
 
 <p>Now you will see two volumes when you&rsquo;ll do a <code>cinder list</code>.</p>
 
-<h3 id="accessing-volumes-from-inside-a-virtual-instance:426b24844d0e63b7c5c25db25682ca23">Accessing volumes from inside a virtual instance</h3>
+<h3 id="accessing-volumes-from-inside-a-virtual-instance">Accessing volumes from inside a virtual instance</h3>
 
 <p>You can attach a volume to a VM instance, to provide additional persistent storage to that VM. It
 works just like you attach an external HDD to your computer/laptop. But first, we&rsquo;ll need to create a
@@ -541,12 +541,11 @@ stack@stlrx300s7-27:/$ cinder list
 +--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
 </code></pre>
 
-<h3 id="more-features:426b24844d0e63b7c5c25db25682ca23">More features</h3>
+<h3 id="more-features">More features</h3>
 
 <p>(Will update shortly)</p>
 
 <p>Cheers!</p>
-
     
 
      

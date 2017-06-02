@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/cheatsheet/</link>
+    <link>http://www.rushiagr.com/tags/cheatsheet/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2016 Rushi Agrawal</copyright>
-    <updated>Thu, 08 Dec 2016 19:05:21 IST</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -147,7 +147,7 @@ and log back in, you need to re-run this command.&lt;/p&gt;
 &lt;p&gt;Now you can follow any &lt;code&gt;cqlsh&lt;/code&gt; tutorial to try out commands to create
 keyspaces, tables, rows, etc.&lt;/p&gt;
 
-&lt;h3 id=&#34;everything-at-one-place:dab26cacb0c5bb6968520a75fe886910&#34;&gt;Everything at one place&lt;/h3&gt;
+&lt;h3 id=&#34;everything-at-one-place&#34;&gt;Everything at one place&lt;/h3&gt;
 
 &lt;p&gt;You can just paste these lines in a file and run that file as a script, and it&amp;rsquo;ll set everything up for you.&lt;/p&gt;
 
@@ -237,7 +237,7 @@ attached to.&lt;/p&gt;
 &lt;p&gt;I find this &lt;code&gt;mxd&lt;/code&gt; to be easier to type than both &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;d&lt;/code&gt; and &lt;code&gt;tmux
 detach&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;installation:e0f68b4969c4b0e373b3bdfb560cffb9&#34;&gt;Installation&lt;/h3&gt;
+&lt;h3 id=&#34;installation&#34;&gt;Installation&lt;/h3&gt;
 
 &lt;p&gt;You just need to copy the content in the above referenced link to &lt;code&gt;~/.bashrc&lt;/code&gt;
 file and from a new terminal session things will be ready for you to use :)&lt;/p&gt;
@@ -322,14 +322,14 @@ add public keys to authorized_keys for a user inside that VM.&lt;/p&gt;
       <guid>http://www.rushiagr.com/blog/2015/12/12/better-way-to-view-mysql-tables/</guid>
       <description>
 
-&lt;h3 id=&#34;the-problem:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;The problem&lt;/h3&gt;
+&lt;h3 id=&#34;the-problem&#34;&gt;The problem&lt;/h3&gt;
 
 &lt;p&gt;You are trying to print a MySQL table with a large number of columns, with
 &lt;code&gt;SELECT *&lt;/code&gt; command. You type &lt;code&gt;SELECT * FROM mysql.user LIMIT 1&lt;/code&gt;, and your terminal
 becomes &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-table-with-many-rows-messy.png&#34;&gt;this&lt;/a&gt;.
 If you wanted to view more than one row, you&amp;rsquo;re in a trouble :)&lt;/p&gt;
 
-&lt;h3 id=&#34;the-solution:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;The solution&lt;/h3&gt;
+&lt;h3 id=&#34;the-solution&#34;&gt;The solution&lt;/h3&gt;
 
 &lt;p&gt;Run MySQL with this option:&lt;/p&gt;
 
@@ -348,7 +348,7 @@ alias mysql=&#39;mysql -SFX&#39;
 &lt;p&gt;You can put the above line in your &lt;code&gt;~/.bashrc&lt;/code&gt; file to load this alias
 in every new terminal session.&lt;/p&gt;
 
-&lt;h3 id=&#34;bonus-point-for-vim-users:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;Bonus point for Vim users&lt;/h3&gt;
+&lt;h3 id=&#34;bonus-point-for-vim-users&#34;&gt;Bonus point for Vim users&lt;/h3&gt;
 
 &lt;p&gt;&lt;code&gt;less&lt;/code&gt; allows using keys &lt;code&gt;j&lt;/code&gt; and &lt;code&gt;k&lt;/code&gt; for scrolling down and scrolling up. Unfortunately, you cannot directly use keys &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move sideways using &lt;code&gt;less&lt;/code&gt;. Fortunately, you can map &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move left or right, respectively. Here&amp;rsquo;s how to do that:&lt;/p&gt;
 
@@ -365,7 +365,7 @@ h noaction 10\e)
 
 &lt;p&gt;This will generate a binary file which &lt;code&gt;less&lt;/code&gt; understands. If you now start a new MySQL terminal session (of course with the above said &lt;code&gt;--pages&lt;/code&gt; flag), you can use Vim&amp;rsquo;s &lt;code&gt;HJKL&lt;/code&gt; movements. Here I have specified to move 10 characters to the right if you make one &amp;lsquo;right&amp;rsquo; Vim movement.&lt;/p&gt;
 
-&lt;h3 id=&#34;quick-setup-script:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;Quick setup script&lt;/h3&gt;
+&lt;h3 id=&#34;quick-setup-script&#34;&gt;Quick setup script&lt;/h3&gt;
 
 &lt;p&gt;Don&amp;rsquo;t want to do the above stuff manually? Just run this command and your computer will be set up in a second!&lt;/p&gt;
 
@@ -374,7 +374,7 @@ h noaction 10\e)
 
 &lt;p&gt;Note that changes will take effect from a new shell session (or you can run &lt;code&gt;source ~/.bashrc&lt;/code&gt; if you want things to work in the current session too.&lt;/p&gt;
 
-&lt;h3 id=&#34;more-information:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;More information&lt;/h3&gt;
+&lt;h3 id=&#34;more-information&#34;&gt;More information&lt;/h3&gt;
 
 &lt;p&gt;Find more information at below links:&lt;/p&gt;
 
@@ -483,7 +483,7 @@ to multi-region deployment problem of OpenStack cloud. This blog post is not
 to discuss the problem. We are talking about how to have a development
 environment to play around with Keystone working with a dev Cassandra deployment.&lt;/p&gt;
 
-&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set:ac993324848a8aead891c139adf0f8b7&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
+&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
 
 &lt;p&gt;I&amp;rsquo;ve put together all commands into a script which can be found here:&lt;/p&gt;
 
@@ -513,7 +513,7 @@ not tried it. (Let me know if you tried it and it works!)&lt;/p&gt;
 &lt;li&gt;The code for this script is located at &lt;code&gt;https://github.com/rushiagr/keystone/tree/liberty-cassandra&lt;/code&gt;, i.e. on &lt;code&gt;liberty-cassandra&lt;/code&gt; branch. Note that this work is currently based upon Keystone&amp;rsquo;s Liberty code as on first week of June. It might not work directly with latest code as it might require fixing imports which might have become outdated. However, I don&amp;rsquo;t think it&amp;rsquo;s going to take more than an hour to make it work with latest code; just that I don&amp;rsquo;t have enough motivation right now to keep the code updated with &amp;lsquo;latest&amp;rsquo; all the time.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h4 id=&#34;credits:ac993324848a8aead891c139adf0f8b7&#34;&gt;Credits&lt;/h4&gt;
+&lt;h4 id=&#34;credits&#34;&gt;Credits&lt;/h4&gt;
 
 &lt;p&gt;This work was done by the &amp;lsquo;distributed database&amp;rsquo; team of 4 people: Ajaya Agrawal, Rushi Agrawal (me), Vivek Dhayaal and Yogeshwar Shenoy, listed in alphabetical order. And obviously Reliance, for providing us an opportunity to work on this thing.&lt;/p&gt;
 </description>
@@ -535,19 +535,19 @@ doc by the author of mod_wsgi module of Apache. This blog post just serves as a 
 is only useful if you have read the original document but it&amp;rsquo;s been too long since you
 read it :)&lt;/p&gt;
 
-&lt;h2 id=&#34;apache-with-mod-wsgi:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Apache with mod_wsgi&lt;/h2&gt;
+&lt;h2 id=&#34;apache-with-mod-wsgi&#34;&gt;Apache with mod_wsgi&lt;/h2&gt;
 
 &lt;p&gt;A Python application can run with multiple processes as well as multiple threads
 with mod_wsgi.&lt;/p&gt;
 
-&lt;h3 id=&#34;prefork-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Prefork multiprocessing module&lt;/h3&gt;
+&lt;h3 id=&#34;prefork-multiprocessing-module&#34;&gt;Prefork multiprocessing module&lt;/h3&gt;
 
 &lt;p&gt;Apache creates multiple processes, and each request is handled by one process.
 A process only handles one request at a time.
 This means, if you have set number of processes to 1, there will be only one
 request handeled at a time overall.&lt;/p&gt;
 
-&lt;h3 id=&#34;worker-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Worker multiprocessing module&lt;/h3&gt;
+&lt;h3 id=&#34;worker-multiprocessing-module&#34;&gt;Worker multiprocessing module&lt;/h3&gt;
 
 &lt;p&gt;Multiple processes, and multiple threads in each processa.
 Even if a process is handling a request, another thread in the same process
@@ -556,7 +556,7 @@ You might need some synchronization primitive to make sure multiple threads
 of same process don&amp;rsquo;t corrupt shared memory (only occurs when shared memory
 is mutated)&lt;/p&gt;
 
-&lt;h3 id=&#34;but-gil:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;But GIL?&lt;/h3&gt;
+&lt;h3 id=&#34;but-gil&#34;&gt;But GIL?&lt;/h3&gt;
 
 &lt;p&gt;Python GIL problem is largely alleviated with mod_wsgi since multiple processes
 can handle requests, and GIL has impact ranging to only one process. One more
@@ -697,7 +697,7 @@ or pressing CTRL + D.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo docker rmi learn/tutorial
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;things-not-covered-in-this-tutorial:49285dca7b53d383ade641738736c634&#34;&gt;Things not covered in this tutorial:&lt;/h4&gt;
+&lt;h4 id=&#34;things-not-covered-in-this-tutorial&#34;&gt;Things not covered in this tutorial:&lt;/h4&gt;
 
 &lt;ol&gt;
 &lt;li&gt;Create your own custom docker images and share with other people:
@@ -784,7 +784,7 @@ execution&lt;/p&gt;
 &lt;p&gt;A small post about little things I found out while running unit tests in
 OpenStack.&lt;/p&gt;
 
-&lt;h2 id=&#34;unit-testing-setup:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Unit-testing setup&lt;/h2&gt;
+&lt;h2 id=&#34;unit-testing-setup&#34;&gt;Unit-testing setup&lt;/h2&gt;
 
 &lt;p&gt;Everybody knows &lt;code&gt;./run_tests.sh&lt;/code&gt; is used to run the unit tests of an OpenStack
 project. But, you require to install dependencies before doing it. And
@@ -799,7 +799,7 @@ these packages before running &lt;code&gt;pip install -r requirements.txt&lt;/co
 &lt;p&gt;Atleast &lt;code&gt;cinder&lt;/code&gt; and &lt;code&gt;nova&lt;/code&gt; dependencies will get installed properly after
 this.&lt;/p&gt;
 
-&lt;h2 id=&#34;run-tests-frequently-used-commands:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests frequently used commands&lt;/h2&gt;
+&lt;h2 id=&#34;run-tests-frequently-used-commands&#34;&gt;run_tests frequently used commands&lt;/h2&gt;
 
 &lt;p&gt;To force the tests to NOT run in a virtual environment, even if it is present:&lt;/p&gt;
 
@@ -836,7 +836,7 @@ this.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils.ResourceFilterTestCase.test_resource_filtering
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;wildcards-while-running-the-tests:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Wildcards while running the tests&lt;/h2&gt;
+&lt;h2 id=&#34;wildcards-while-running-the-tests&#34;&gt;Wildcards while running the tests&lt;/h2&gt;
 
 &lt;p&gt;Frequently you&amp;rsquo;ll find yourself testing only a couple of tests. In such cases,
 a wildcard will save you from typing the whole path of the test. The below
@@ -848,7 +848,7 @@ command will also run &lt;code&gt;test_resource_filtering&lt;/code&gt; test:&lt;
 &lt;p&gt;I currently don&amp;rsquo;t know how to make a test work without adding &lt;code&gt;nova.tests&lt;/code&gt;
 before it&lt;/p&gt;
 
-&lt;h2 id=&#34;run-tests-is-not-happy:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests is not happy&lt;/h2&gt;
+&lt;h2 id=&#34;run-tests-is-not-happy&#34;&gt;run_tests is not happy&lt;/h2&gt;
 
 &lt;p&gt;Sometimes you&amp;rsquo;ll see running &lt;code&gt;./run_tests.sh&lt;/code&gt; can throw a lot of lines of
 ununderstandable gibberish on your screen. In the end it will say &lt;code&gt;testr
@@ -889,13 +889,13 @@ dependencies are outdated.&lt;/p&gt;
 Although I have used Ubuntu Trusty (14.04) version, it should work with Precise
 (12.04) too, with the latest packages.&lt;/p&gt;
 
-&lt;h4 id=&#34;prerequisites:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Prerequisites&lt;/h4&gt;
+&lt;h4 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h4&gt;
 
 &lt;p&gt;Make sure you have atleast a little idea of what these terms
 mean: iSCSI, LUN, IQN, initiator, target and portal. Google and wikipedia are
 your friends.&lt;/p&gt;
 
-&lt;h4 id=&#34;a-quick-summary:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;A quick summary:&lt;/h4&gt;
+&lt;h4 id=&#34;a-quick-summary&#34;&gt;A quick summary:&lt;/h4&gt;
 
 &lt;p&gt;There are two parts of iSCSI communication - initiator and target. So let&amp;rsquo;s take an example. There is a storage server in your
 company, where you have a &amp;lsquo;drive&amp;rsquo; for your team. The storage server is the
@@ -921,7 +921,7 @@ user.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;apt-get install lvm2 tgt open-iscsi
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;initialize-logical-volume:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initialize logical volume&lt;/h4&gt;
+&lt;h4 id=&#34;initialize-logical-volume&#34;&gt;Initialize logical volume&lt;/h4&gt;
 
 &lt;p&gt;Create a file of 1GB, create a volume group over it, and then over it, create a
 400MB logical volume, and see if it got created or not&lt;/p&gt;
@@ -940,7 +940,7 @@ root@ra:~# lvs
   mylv myvg -wi-a---- 400.00m                                           
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;target-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Target administration&lt;/h4&gt;
+&lt;h4 id=&#34;target-administration&#34;&gt;Target administration&lt;/h4&gt;
 
 &lt;p&gt;Now let&amp;rsquo;s create a target, with target ID 1, and give it an IQN (iSCSI
 Qualified Name) &lt;code&gt;iqn.2001-04.example.com:your.first.iscsi.target&lt;/code&gt;:&lt;/p&gt;
@@ -1040,7 +1040,7 @@ Target 1: iqn.2001-04.example.com:your.first.iscsi.target
 3260, the default port, is now open. Note that all our commands so far started with
 &lt;code&gt;tgtadm&lt;/code&gt;, i.e., the target administration utility.&lt;/p&gt;
 
-&lt;h4 id=&#34;initiator-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initiator administration&lt;/h4&gt;
+&lt;h4 id=&#34;initiator-administration&#34;&gt;Initiator administration&lt;/h4&gt;
 
 &lt;p&gt;Now let&amp;rsquo;s start from the &amp;lsquo;initiator&amp;rsquo; end. We&amp;rsquo;ll behave as if we&amp;rsquo;re a client
 trying to connect to the server &amp;ndash; the target.&lt;/p&gt;
@@ -1131,7 +1131,7 @@ lost+found
 root@ra:~/tempmount# 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;destruction:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Destruction&lt;/h4&gt;
+&lt;h4 id=&#34;destruction&#34;&gt;Destruction&lt;/h4&gt;
 
 &lt;p&gt;The simplest way to get rid of all the things you&amp;rsquo;ve created is to unmount the
 device, and restart the system.&lt;/p&gt;
@@ -1275,7 +1275,7 @@ debug=2
 
 &lt;!-- more --&gt;
 
-&lt;h2 id=&#34;quick-introduction:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Quick Introduction&lt;/h2&gt;
+&lt;h2 id=&#34;quick-introduction&#34;&gt;Quick Introduction&lt;/h2&gt;
 
 &lt;p&gt;Lets say you want to install and run apache server on one of the machines in your lab. On another, you want to create a new user. On a third machine, you want to install MySQL, and allow access to this machine only from the first server. Seems like a lot of manual work isn&amp;rsquo;t it? The power of Puppet is, you can specify all these tasks in a file, called &amp;lsquo;Puppet manifest&amp;rsquo;, and then execute it. Everything will be set up for you just as you wanted! Now what makes this &amp;lsquo;I care about the end result, not the process&amp;rsquo; approach really powerful is you can &amp;lsquo;apply&amp;rsquo; this manifest over and over again to get the same end result. You can easily modify this manifest file, extend it, and manage it under version control, just like you would with a piece of software. Welcome to the world of IT automation :)&lt;/p&gt;
 
@@ -1283,7 +1283,7 @@ debug=2
 
 &lt;p&gt;There is a whole lot of things you can do with Puppet. Here, we&amp;rsquo;ll just get us started with it. Once you are through this post, you can head over to Puppet Labs&amp;rsquo; documents and tutorials, for more on &amp;ldquo;how&amp;rdquo;s and &amp;ldquo;why&amp;rdquo;s of Puppet.&lt;/p&gt;
 
-&lt;h2 id=&#34;setup:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Setup&lt;/h2&gt;
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
 
 &lt;p&gt;You just require two Ubuntu machines connected to each other. One will be the Puppet &amp;lsquo;master&amp;rsquo; node (the machine which will take care of managing the configuration and state of all the machines in our deployment), the other one &amp;lsquo;slave&amp;rsquo; (which unfortunately is the only actual machine in demo deployment :) ).&lt;/p&gt;
 
@@ -1311,7 +1311,7 @@ debug=2
 192.168.56.130  puppet-master
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;getting-the-hands-dirty-puppet-cli:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Getting the hands dirty &amp;ndash; Puppet CLI&lt;/h2&gt;
+&lt;h2 id=&#34;getting-the-hands-dirty-puppet-cli&#34;&gt;Getting the hands dirty &amp;ndash; Puppet CLI&lt;/h2&gt;
 
 &lt;p&gt;Install &lt;code&gt;puppetmaster&lt;/code&gt; package on the master node&lt;/p&gt;
 
@@ -1416,7 +1416,7 @@ notice: Finished catalog run in 0.47 seconds
 
 &lt;p&gt;where you can choose a domain name of your own choice in place of &lt;code&gt;.rushiagr.com&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;puppet-modules:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet modules&lt;/h2&gt;
+&lt;h2 id=&#34;puppet-modules&#34;&gt;Puppet modules&lt;/h2&gt;
 
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; &lt;code&gt;puppet module&lt;/code&gt; doesn&amp;rsquo;t work on Precise (Ubuntu 12.04). You need to install ruby, and gems, etc. Too much of a hassle. So I&amp;rsquo;ll just post commands here which work for a higher version of Ubuntu.&lt;/p&gt;
 
@@ -1439,7 +1439,7 @@ notice: Finished catalog run in 0.47 seconds
 
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Modules installed via &lt;code&gt;sudo&lt;/code&gt; will be visible when you perform &lt;code&gt;puppet module list&lt;/code&gt; with &lt;code&gt;sudo&lt;/code&gt; only. Same for non-&lt;code&gt;sudo&lt;/code&gt; use.&lt;/p&gt;
 
-&lt;h2 id=&#34;puppet-in-master-client-configuration:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet in master-client configuration&lt;/h2&gt;
+&lt;h2 id=&#34;puppet-in-master-client-configuration&#34;&gt;Puppet in master-client configuration&lt;/h2&gt;
 
 &lt;p&gt;Everything we did so far concerned with a single machine. Let&amp;rsquo;s now introduce another machine &amp;ndash; Puppet agent.&lt;/p&gt;
 
@@ -1554,9 +1554,9 @@ Around 80 pages long, it covers almost every aspect of basic Puppet. The only pr
       <pubDate>Thu, 03 Apr 2014 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2014/04/03/openstack-in-an-hour-with-devstack/</guid>
-      <description>
+      <description>&lt;p&gt;So you found out a cool new technology &amp;ldquo;OpenStack&amp;rdquo; and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; is your friend-in-need. No, don&amp;rsquo;t click that hyperlink just yet :)&lt;/p&gt;
 
-&lt;p&gt;So you found out a cool new technology &amp;ldquo;OpenStack&amp;rdquo; and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; is your friend-in-need. No, don&amp;rsquo;t click that hyperlink just yet :)&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;To put it in a sentence, DevStack is &amp;ldquo;OpenStack in a box&amp;rdquo;. You just need a popular Linux based distribution with 2GB RAM and you&amp;rsquo;re all set to start. DevStack is basically a set of scripts which will install all the important OpenStack services in your computer. For this, it will first download all the essential packages, pull in the OpenStack code from various OpenStack projects, and set everything up for you to try out all of it.&lt;/p&gt;
 
@@ -1566,7 +1566,7 @@ Around 80 pages long, it covers almost every aspect of basic Puppet. The only pr
 
 &lt;p&gt;NOTE: Do not run any of the script as a root user, unless specified otherwise explicitly.&lt;/p&gt;
 
-&lt;h3 id=&#34;getting-started:98c134cd40c558c50c274d316252e460&#34;&gt;Getting started&lt;/h3&gt;
+&lt;h3 id=&#34;getting-started&#34;&gt;Getting started&lt;/h3&gt;
 
 &lt;p&gt;Install git&lt;/p&gt;
 
@@ -1667,7 +1667,7 @@ stack.sh completed in 269 seconds.
 
 &lt;p&gt;Head over to &lt;a href=&#34;http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/&#34;&gt;Linux Screens in DevStack&lt;/a&gt; for more information on how to work with &lt;code&gt;screen&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;housekeeping-and-customizations:98c134cd40c558c50c274d316252e460&#34;&gt;Housekeeping and customizations&lt;/h3&gt;
+&lt;h3 id=&#34;housekeeping-and-customizations&#34;&gt;Housekeeping and customizations&lt;/h3&gt;
 
 &lt;p&gt;In your life as an OpenStack developer, you will be setting up and destroying DevStack instance quite a number of times. So it is good to know how to do that in the most efficient manner.&lt;/p&gt;
 
@@ -1682,7 +1682,7 @@ stack.sh completed in 269 seconds.
 
 &lt;p&gt;So you need to bring back up the DevStack environment manually everytime you reboot. Here is where using a virtual machine comes handy. You can take a snapshot of the virtual machine, and then go back to it when you want a clean DevStack environment.&lt;/p&gt;
 
-&lt;h3 id=&#34;localrc-configurations:98c134cd40c558c50c274d316252e460&#34;&gt;localrc configurations&lt;/h3&gt;
+&lt;h3 id=&#34;localrc-configurations&#34;&gt;localrc configurations&lt;/h3&gt;
 
 &lt;p&gt;&lt;code&gt;localrc&lt;/code&gt; is the file where all the local configurations (local = your local machine) are kept.&lt;/p&gt;
 
@@ -1713,7 +1713,7 @@ ADMIN_PASSWORD=nova
 &lt;pre&gt;&lt;code&gt;HOST_IP=192.168.xxx.xxx
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;developing-code:98c134cd40c558c50c274d316252e460&#34;&gt;Developing code&lt;/h3&gt;
+&lt;h3 id=&#34;developing-code&#34;&gt;Developing code&lt;/h3&gt;
 
 &lt;p&gt;If you want to immediately test out your code by running it inside DevStack, you need to make the changes in the code, and restart the affected services.&lt;/p&gt;
 
@@ -1721,7 +1721,7 @@ ADMIN_PASSWORD=nova
 
 &lt;p&gt;In order to restart, go to the respective screen and press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;C&lt;/code&gt;. Then, press the up arrow once to get the last command which started this screen session, and then press &lt;code&gt;ENTER&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;final-words:98c134cd40c558c50c274d316252e460&#34;&gt;Final words&lt;/h3&gt;
+&lt;h3 id=&#34;final-words&#34;&gt;Final words&lt;/h3&gt;
 
 &lt;p&gt;Note that this guide just gets you started with OpenStack using DevStack. OpenStack, and cloud in general, is not about virtual machines or volumes or networks only. It is a philosophy. It is a complete paradigm shift, and as such, it is impossible to cover all of it by me. Your quest to know more about it has just started. Keep reading more and more about it and I guarantee you you will be fascinated by it&amp;rsquo;s limitless possibilities.&lt;/p&gt;
 
@@ -1730,8 +1730,7 @@ ADMIN_PASSWORD=nova
 &lt;p&gt;Now you can go to the &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; website :)&lt;/p&gt;
 
 &lt;p&gt;Cheers!
-Rushi&lt;/p&gt;
-</description>
+Rushi&lt;/p&gt;</description>
     </item>
     
     
@@ -1783,7 +1782,7 @@ Rushi&lt;/p&gt;
 Enter password: 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;mysql-console:5aec0d683ee8bcb2a598c5a9ce48ebc9&#34;&gt;MySQL console&lt;/h3&gt;
+&lt;h3 id=&#34;mysql-console&#34;&gt;MySQL console&lt;/h3&gt;
 
 &lt;p&gt;List all databases:&lt;/p&gt;
 

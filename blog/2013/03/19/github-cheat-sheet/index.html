@@ -46,7 +46,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
       <p class="lead">
-       not your average coder 
+       yet another tech enthusiast 
       </p>
     </div>
 
@@ -77,7 +77,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -88,15 +88,15 @@
     <h1 class="post-title">Git(hub) Cheat Sheet</h1>
     <span class="post-date">Mar 19, 2013</span>
     
-    
-
-<p>I am posting my github cheat sheet here. I started writing it as soon as I started
+    <p>I am posting my github cheat sheet here. I started writing it as soon as I started
 learning Github and Git. So, some of the content here can appear quite naive.
 I will try to keep this blog post as updated as I can, and if you find any
 suggestion, please comment!</p>
 
 <p>This post is just for a reference of commands. This post will be a bad way to learn
 how git works. A basic understanding of git is assumed.</p>
+
+<p></p>
 
 <p>##Initial configuration
 Configure user details only for the first time</p>
@@ -147,7 +147,7 @@ List all branches in the local repo</p>
 git checkout -b only_remote rushiagr/only_remote
 </code></pre>
 
-<h2 id="remotes:04d9bb0940f5046aa10fc2c8ba66e73a">Remotes</h2>
+<h2 id="remotes">Remotes</h2>
 
 <p>Create a new remote <code>rushiagr</code> which will track <code>cinder</code> repository by user <code>rushiagr</code></p>
 
@@ -187,7 +187,7 @@ github will not ask for your username but only password.</p>
 <pre><code>git checkout -b stable/folsom origin/stable/folsom
 </code></pre>
 
-<h2 id="push:04d9bb0940f5046aa10fc2c8ba66e73a">Push</h2>
+<h2 id="push">Push</h2>
 
 <p>Pushing this newly created branch to remote <code>rushiagr</code></p>
 
@@ -210,7 +210,7 @@ remote, say <code>my_remote_branch</code>:</p>
 <pre><code>git push --set-upstream origin my_branch
 </code></pre>
 
-<h2 id="pull:04d9bb0940f5046aa10fc2c8ba66e73a">Pull</h2>
+<h2 id="pull">Pull</h2>
 
 <p>Git pull is nothing more than a macro that does git fetch and git merge, in
 that order. The common syntax to pull from branch <code>remote_branch</code> located at remote <code>remote_name</code> to the current active branch in the local repo:</p>
@@ -218,7 +218,7 @@ that order. The common syntax to pull from branch <code>remote_branch</code> loc
 <pre><code>git pull remote_name remote_branch
 </code></pre>
 
-<h2 id="oops-i-didn-t-intend-to-do-that:04d9bb0940f5046aa10fc2c8ba66e73a">Oops! I didn&rsquo;t intend to do that!</h2>
+<h2 id="oops-i-didn-t-intend-to-do-that">Oops! I didn&rsquo;t intend to do that!</h2>
 
 <p>####To undo last commit.
 This will just undo the commit, but will keep changes, so that you can modify the files and commit again</p>
@@ -250,7 +250,7 @@ change the commit message.</p>
 <pre><code>git commit -a --amend
 </code></pre>
 
-<h2 id="show-me-the-money:04d9bb0940f5046aa10fc2c8ba66e73a">Show me the money</h2>
+<h2 id="show-me-the-money">Show me the money</h2>
 
 <p>To see the patch of the last commit without undoing the last commit</p>
 
@@ -269,7 +269,7 @@ change the commit message.</p>
 
 <p>You can redirect the output from the above three commands to a file, to create corresponding patch file.</p>
 
-<h2 id="patching-in-git:04d9bb0940f5046aa10fc2c8ba66e73a">Patching in git</h2>
+<h2 id="patching-in-git">Patching in git</h2>
 
 <p>Check the status of patch. How many lines changed, etc</p>
 
@@ -322,7 +322,6 @@ git rebase -i master
 
 <pre><code>git checkout -b neew cff2580ad7bc16934b72dd9be7463eb090b31d55
 </code></pre>
-
     
 
      

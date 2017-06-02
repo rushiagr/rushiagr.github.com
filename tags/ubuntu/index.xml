@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/ubuntu/</link>
+    <link>http://www.rushiagr.com/tags/ubuntu/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2016 Rushi Agrawal</copyright>
-    <updated>Thu, 16 Jun 2016 10:59:02 IST</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -25,7 +25,7 @@ I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
 To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Mac, see
 &lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;know-about-copy-buffers:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Know about copy buffers&lt;/h2&gt;
+&lt;h2 id=&#34;know-about-copy-buffers&#34;&gt;Know about copy buffers&lt;/h2&gt;
 
 &lt;p&gt;When you do a &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt;, the stuff you copy is stored in your computer&amp;rsquo;s
 buffer, called &amp;lsquo;clipboard&amp;rsquo; from where you can paste anywhere by doing a
@@ -40,7 +40,7 @@ want to select might not fit in your current screen (e.g. output of &lt;code&gt;
 visible on your screen, and not the output which is &amp;lsquo;scrolled up&amp;rsquo; due to a lot
 of output.&lt;/p&gt;
 
-&lt;h2 id=&#34;tmux-copy-paste-the-defaults:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Tmux copy-paste - the defaults&lt;/h2&gt;
+&lt;h2 id=&#34;tmux-copy-paste-the-defaults&#34;&gt;Tmux copy-paste - the defaults&lt;/h2&gt;
 
 &lt;p&gt;The defaults are slighly involved, so this section is purely for informational purposes, and shouldn&amp;rsquo;t be memorized. Skipping this section is perfectly okay.&lt;/p&gt;
 
@@ -51,7 +51,7 @@ of output.&lt;/p&gt;
 &lt;li&gt;Press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;, &lt;code&gt;]&lt;/code&gt; to paste in a possibly different Tmux pane/window.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;tmux-vim-bindings-for-copying-into-tmux-buffer:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Tmux Vim-bindings for copying into tmux buffer&lt;/h2&gt;
+&lt;h2 id=&#34;tmux-vim-bindings-for-copying-into-tmux-buffer&#34;&gt;Tmux Vim-bindings for copying into tmux buffer&lt;/h2&gt;
 
 &lt;p&gt;Adding configuration described in this section will give you easier shortcuts
 for copy-pasting in Tmux. Moreover, these shortcuts work very similar to Vim&amp;rsquo;s
@@ -78,7 +78,7 @@ not exactly similar. You&amp;rsquo;ll realize in your Tmux journey why didn&amp;
 small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;copy-from-tmux-buffer-to-system-buffer-clipboard:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Copy from tmux buffer to system buffer (clipboard)&lt;/h2&gt;
+&lt;h2 id=&#34;copy-from-tmux-buffer-to-system-buffer-clipboard&#34;&gt;Copy from tmux buffer to system buffer (clipboard)&lt;/h2&gt;
 
 &lt;p&gt;For this to happen, you need to install &lt;code&gt;xclip&lt;/code&gt; on your computer. Do it as:&lt;/p&gt;
 
@@ -93,7 +93,7 @@ small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt
 &lt;p&gt;Now close all your tmux sessions. From now onwards, whatever you copy in Tmux
 buffer will also land into system clipboard.&lt;/p&gt;
 
-&lt;h2 id=&#34;tmux-copy-with-mouse-drag:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
+&lt;h2 id=&#34;tmux-copy-with-mouse-drag&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
 
 &lt;p&gt;You can enable &amp;lsquo;mouse mode&amp;rsquo;, using which you can copy text into tmux buffer by
 mouse drag. For doing that, you just need to add this line to your
@@ -103,7 +103,7 @@ mouse drag. For doing that, you just need to add this line to your
 set -g mouse-select-window on
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
+&lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
 
 &lt;p&gt;You&amp;rsquo;ll notice that now all your selections will go to tmux buffer, and not
 clipboard buffer. Of course, you can enable copying to system clipboard as
@@ -114,7 +114,7 @@ option enabled.&lt;/p&gt;
 &lt;p&gt;Just press &lt;code&gt;SHIFT&lt;/code&gt; button when copying, and now you can copy as if Tmux
 doesn&amp;rsquo;t exist! :)&lt;/p&gt;
 
-&lt;h2 id=&#34;copy-from-a-remote-server:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Copy from a remote server&lt;/h2&gt;
+&lt;h2 id=&#34;copy-from-a-remote-server&#34;&gt;Copy from a remote server&lt;/h2&gt;
 
 &lt;p&gt;Install &lt;code&gt;xclip&lt;/code&gt; on the remote Ubuntu/Linux server, and add the line mentioned
 above (&lt;code&gt;bind -t vi-copy y copy-pipe &amp;quot;xclip -sel clip -i&amp;quot;&lt;/code&gt;) to &lt;code&gt;~/.tmux.conf&lt;/code&gt; on
@@ -127,7 +127,7 @@ like so:&lt;/p&gt;
 &lt;p&gt;And after that everything you copy into remote&amp;rsquo;s Tmux buffer will get copied
 over to local clipboard. Magic!&lt;/p&gt;
 
-&lt;h2 id=&#34;other-information:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Other information&lt;/h2&gt;
+&lt;h2 id=&#34;other-information&#34;&gt;Other information&lt;/h2&gt;
 
 &lt;p&gt;Done! Don&amp;rsquo;t forget to comment if you know something worth letting everybody
 know! Thank you:)&lt;/p&gt;
@@ -211,13 +211,13 @@ execution&lt;/p&gt;
 Although I have used Ubuntu Trusty (14.04) version, it should work with Precise
 (12.04) too, with the latest packages.&lt;/p&gt;
 
-&lt;h4 id=&#34;prerequisites:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Prerequisites&lt;/h4&gt;
+&lt;h4 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h4&gt;
 
 &lt;p&gt;Make sure you have atleast a little idea of what these terms
 mean: iSCSI, LUN, IQN, initiator, target and portal. Google and wikipedia are
 your friends.&lt;/p&gt;
 
-&lt;h4 id=&#34;a-quick-summary:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;A quick summary:&lt;/h4&gt;
+&lt;h4 id=&#34;a-quick-summary&#34;&gt;A quick summary:&lt;/h4&gt;
 
 &lt;p&gt;There are two parts of iSCSI communication - initiator and target. So let&amp;rsquo;s take an example. There is a storage server in your
 company, where you have a &amp;lsquo;drive&amp;rsquo; for your team. The storage server is the
@@ -243,7 +243,7 @@ user.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;apt-get install lvm2 tgt open-iscsi
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;initialize-logical-volume:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initialize logical volume&lt;/h4&gt;
+&lt;h4 id=&#34;initialize-logical-volume&#34;&gt;Initialize logical volume&lt;/h4&gt;
 
 &lt;p&gt;Create a file of 1GB, create a volume group over it, and then over it, create a
 400MB logical volume, and see if it got created or not&lt;/p&gt;
@@ -262,7 +262,7 @@ root@ra:~# lvs
   mylv myvg -wi-a---- 400.00m                                           
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;target-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Target administration&lt;/h4&gt;
+&lt;h4 id=&#34;target-administration&#34;&gt;Target administration&lt;/h4&gt;
 
 &lt;p&gt;Now let&amp;rsquo;s create a target, with target ID 1, and give it an IQN (iSCSI
 Qualified Name) &lt;code&gt;iqn.2001-04.example.com:your.first.iscsi.target&lt;/code&gt;:&lt;/p&gt;
@@ -362,7 +362,7 @@ Target 1: iqn.2001-04.example.com:your.first.iscsi.target
 3260, the default port, is now open. Note that all our commands so far started with
 &lt;code&gt;tgtadm&lt;/code&gt;, i.e., the target administration utility.&lt;/p&gt;
 
-&lt;h4 id=&#34;initiator-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initiator administration&lt;/h4&gt;
+&lt;h4 id=&#34;initiator-administration&#34;&gt;Initiator administration&lt;/h4&gt;
 
 &lt;p&gt;Now let&amp;rsquo;s start from the &amp;lsquo;initiator&amp;rsquo; end. We&amp;rsquo;ll behave as if we&amp;rsquo;re a client
 trying to connect to the server &amp;ndash; the target.&lt;/p&gt;
@@ -453,7 +453,7 @@ lost+found
 root@ra:~/tempmount# 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;destruction:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Destruction&lt;/h4&gt;
+&lt;h4 id=&#34;destruction&#34;&gt;Destruction&lt;/h4&gt;
 
 &lt;p&gt;The simplest way to get rid of all the things you&amp;rsquo;ve created is to unmount the
 device, and restart the system.&lt;/p&gt;
@@ -478,7 +478,7 @@ device, and restart the system.&lt;/p&gt;
 
 &lt;!-- more --&gt;
 
-&lt;h2 id=&#34;quick-introduction:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Quick Introduction&lt;/h2&gt;
+&lt;h2 id=&#34;quick-introduction&#34;&gt;Quick Introduction&lt;/h2&gt;
 
 &lt;p&gt;Lets say you want to install and run apache server on one of the machines in your lab. On another, you want to create a new user. On a third machine, you want to install MySQL, and allow access to this machine only from the first server. Seems like a lot of manual work isn&amp;rsquo;t it? The power of Puppet is, you can specify all these tasks in a file, called &amp;lsquo;Puppet manifest&amp;rsquo;, and then execute it. Everything will be set up for you just as you wanted! Now what makes this &amp;lsquo;I care about the end result, not the process&amp;rsquo; approach really powerful is you can &amp;lsquo;apply&amp;rsquo; this manifest over and over again to get the same end result. You can easily modify this manifest file, extend it, and manage it under version control, just like you would with a piece of software. Welcome to the world of IT automation :)&lt;/p&gt;
 
@@ -486,7 +486,7 @@ device, and restart the system.&lt;/p&gt;
 
 &lt;p&gt;There is a whole lot of things you can do with Puppet. Here, we&amp;rsquo;ll just get us started with it. Once you are through this post, you can head over to Puppet Labs&amp;rsquo; documents and tutorials, for more on &amp;ldquo;how&amp;rdquo;s and &amp;ldquo;why&amp;rdquo;s of Puppet.&lt;/p&gt;
 
-&lt;h2 id=&#34;setup:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Setup&lt;/h2&gt;
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
 
 &lt;p&gt;You just require two Ubuntu machines connected to each other. One will be the Puppet &amp;lsquo;master&amp;rsquo; node (the machine which will take care of managing the configuration and state of all the machines in our deployment), the other one &amp;lsquo;slave&amp;rsquo; (which unfortunately is the only actual machine in demo deployment :) ).&lt;/p&gt;
 
@@ -514,7 +514,7 @@ device, and restart the system.&lt;/p&gt;
 192.168.56.130  puppet-master
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;getting-the-hands-dirty-puppet-cli:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Getting the hands dirty &amp;ndash; Puppet CLI&lt;/h2&gt;
+&lt;h2 id=&#34;getting-the-hands-dirty-puppet-cli&#34;&gt;Getting the hands dirty &amp;ndash; Puppet CLI&lt;/h2&gt;
 
 &lt;p&gt;Install &lt;code&gt;puppetmaster&lt;/code&gt; package on the master node&lt;/p&gt;
 
@@ -619,7 +619,7 @@ notice: Finished catalog run in 0.47 seconds
 
 &lt;p&gt;where you can choose a domain name of your own choice in place of &lt;code&gt;.rushiagr.com&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;puppet-modules:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet modules&lt;/h2&gt;
+&lt;h2 id=&#34;puppet-modules&#34;&gt;Puppet modules&lt;/h2&gt;
 
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; &lt;code&gt;puppet module&lt;/code&gt; doesn&amp;rsquo;t work on Precise (Ubuntu 12.04). You need to install ruby, and gems, etc. Too much of a hassle. So I&amp;rsquo;ll just post commands here which work for a higher version of Ubuntu.&lt;/p&gt;
 
@@ -642,7 +642,7 @@ notice: Finished catalog run in 0.47 seconds
 
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Modules installed via &lt;code&gt;sudo&lt;/code&gt; will be visible when you perform &lt;code&gt;puppet module list&lt;/code&gt; with &lt;code&gt;sudo&lt;/code&gt; only. Same for non-&lt;code&gt;sudo&lt;/code&gt; use.&lt;/p&gt;
 
-&lt;h2 id=&#34;puppet-in-master-client-configuration:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet in master-client configuration&lt;/h2&gt;
+&lt;h2 id=&#34;puppet-in-master-client-configuration&#34;&gt;Puppet in master-client configuration&lt;/h2&gt;
 
 &lt;p&gt;Everything we did so far concerned with a single machine. Let&amp;rsquo;s now introduce another machine &amp;ndash; Puppet agent.&lt;/p&gt;
 
@@ -757,9 +757,9 @@ Around 80 pages long, it covers almost every aspect of basic Puppet. The only pr
       <pubDate>Thu, 03 Apr 2014 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2014/04/03/openstack-in-an-hour-with-devstack/</guid>
-      <description>
+      <description>&lt;p&gt;So you found out a cool new technology &amp;ldquo;OpenStack&amp;rdquo; and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; is your friend-in-need. No, don&amp;rsquo;t click that hyperlink just yet :)&lt;/p&gt;
 
-&lt;p&gt;So you found out a cool new technology &amp;ldquo;OpenStack&amp;rdquo; and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; is your friend-in-need. No, don&amp;rsquo;t click that hyperlink just yet :)&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;To put it in a sentence, DevStack is &amp;ldquo;OpenStack in a box&amp;rdquo;. You just need a popular Linux based distribution with 2GB RAM and you&amp;rsquo;re all set to start. DevStack is basically a set of scripts which will install all the important OpenStack services in your computer. For this, it will first download all the essential packages, pull in the OpenStack code from various OpenStack projects, and set everything up for you to try out all of it.&lt;/p&gt;
 
@@ -769,7 +769,7 @@ Around 80 pages long, it covers almost every aspect of basic Puppet. The only pr
 
 &lt;p&gt;NOTE: Do not run any of the script as a root user, unless specified otherwise explicitly.&lt;/p&gt;
 
-&lt;h3 id=&#34;getting-started:98c134cd40c558c50c274d316252e460&#34;&gt;Getting started&lt;/h3&gt;
+&lt;h3 id=&#34;getting-started&#34;&gt;Getting started&lt;/h3&gt;
 
 &lt;p&gt;Install git&lt;/p&gt;
 
@@ -870,7 +870,7 @@ stack.sh completed in 269 seconds.
 
 &lt;p&gt;Head over to &lt;a href=&#34;http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/&#34;&gt;Linux Screens in DevStack&lt;/a&gt; for more information on how to work with &lt;code&gt;screen&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;housekeeping-and-customizations:98c134cd40c558c50c274d316252e460&#34;&gt;Housekeeping and customizations&lt;/h3&gt;
+&lt;h3 id=&#34;housekeeping-and-customizations&#34;&gt;Housekeeping and customizations&lt;/h3&gt;
 
 &lt;p&gt;In your life as an OpenStack developer, you will be setting up and destroying DevStack instance quite a number of times. So it is good to know how to do that in the most efficient manner.&lt;/p&gt;
 
@@ -885,7 +885,7 @@ stack.sh completed in 269 seconds.
 
 &lt;p&gt;So you need to bring back up the DevStack environment manually everytime you reboot. Here is where using a virtual machine comes handy. You can take a snapshot of the virtual machine, and then go back to it when you want a clean DevStack environment.&lt;/p&gt;
 
-&lt;h3 id=&#34;localrc-configurations:98c134cd40c558c50c274d316252e460&#34;&gt;localrc configurations&lt;/h3&gt;
+&lt;h3 id=&#34;localrc-configurations&#34;&gt;localrc configurations&lt;/h3&gt;
 
 &lt;p&gt;&lt;code&gt;localrc&lt;/code&gt; is the file where all the local configurations (local = your local machine) are kept.&lt;/p&gt;
 
@@ -916,7 +916,7 @@ ADMIN_PASSWORD=nova
 &lt;pre&gt;&lt;code&gt;HOST_IP=192.168.xxx.xxx
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;developing-code:98c134cd40c558c50c274d316252e460&#34;&gt;Developing code&lt;/h3&gt;
+&lt;h3 id=&#34;developing-code&#34;&gt;Developing code&lt;/h3&gt;
 
 &lt;p&gt;If you want to immediately test out your code by running it inside DevStack, you need to make the changes in the code, and restart the affected services.&lt;/p&gt;
 
@@ -924,7 +924,7 @@ ADMIN_PASSWORD=nova
 
 &lt;p&gt;In order to restart, go to the respective screen and press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;C&lt;/code&gt;. Then, press the up arrow once to get the last command which started this screen session, and then press &lt;code&gt;ENTER&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;final-words:98c134cd40c558c50c274d316252e460&#34;&gt;Final words&lt;/h3&gt;
+&lt;h3 id=&#34;final-words&#34;&gt;Final words&lt;/h3&gt;
 
 &lt;p&gt;Note that this guide just gets you started with OpenStack using DevStack. OpenStack, and cloud in general, is not about virtual machines or volumes or networks only. It is a philosophy. It is a complete paradigm shift, and as such, it is impossible to cover all of it by me. Your quest to know more about it has just started. Keep reading more and more about it and I guarantee you you will be fascinated by it&amp;rsquo;s limitless possibilities.&lt;/p&gt;
 
@@ -933,8 +933,7 @@ ADMIN_PASSWORD=nova
 &lt;p&gt;Now you can go to the &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; website :)&lt;/p&gt;
 
 &lt;p&gt;Cheers!
-Rushi&lt;/p&gt;
-</description>
+Rushi&lt;/p&gt;</description>
     </item>
     
     
@@ -986,7 +985,7 @@ Rushi&lt;/p&gt;
 Enter password: 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;mysql-console:5aec0d683ee8bcb2a598c5a9ce48ebc9&#34;&gt;MySQL console&lt;/h3&gt;
+&lt;h3 id=&#34;mysql-console&#34;&gt;MySQL console&lt;/h3&gt;
 
 &lt;p&gt;List all databases:&lt;/p&gt;
 
@@ -1171,12 +1170,12 @@ GRANT ALL PRIVILEGES ON * . * TO &#39;rushiagr&#39;@&#39;localhost&#39;
       <pubDate>Thu, 16 Jan 2014 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2014/01/16/playing-around-with-cinder-backend/</guid>
-      <description>
-
-&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature &amp;ndash; multi-backends
+      <description>&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature &amp;ndash; multi-backends
 with filter scheduler. So now you can have more than one storage boxes for block storage
 and manage them with one Cinder deployment. Here, I&amp;rsquo;m going to test it out using our
 favourite method &amp;ndash; trying it out on DevStack!&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;DevStack can provide you with two LVM backends to play around with them. But you&amp;rsquo;ll need to restack it.&lt;/p&gt;
 
@@ -1226,7 +1225,7 @@ volume_group = stack-volumes2
 
 &lt;p&gt;Hmmm. Two volume groups, each of size 10G.&lt;/p&gt;
 
-&lt;h3 id=&#34;case-1-spreading-volumes-across-backends:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 1: Spreading volumes across backends&lt;/h3&gt;
+&lt;h3 id=&#34;case-1-spreading-volumes-across-backends&#34;&gt;Case 1: Spreading volumes across backends&lt;/h3&gt;
 
 &lt;p&gt;Now, lets create a volume and see where it ends up.&lt;/p&gt;
 
@@ -1307,7 +1306,7 @@ rushi@jio:~$ sudo vgs
 
 &lt;p&gt;Neat!&lt;/p&gt;
 
-&lt;h3 id=&#34;case-2-stacking-all-volumes-at-one-backend:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 2 : Stacking all volumes at one backend&lt;/h3&gt;
+&lt;h3 id=&#34;case-2-stacking-all-volumes-at-one-backend&#34;&gt;Case 2 : Stacking all volumes at one backend&lt;/h3&gt;
 
 &lt;p&gt;What if we want to keep all the volumes at only one backend? Cinder allows you to do that too!
 There is a configuration option in cinder.conf, &lt;code&gt;capacity_weight_multiplier&lt;/code&gt;, which allows you to multiply the &amp;lsquo;capacity weight&amp;rsquo; by a number.
@@ -1384,7 +1383,7 @@ rushi@jio:~$ sudo vgs
 
 &lt;p&gt;:)&lt;/p&gt;
 
-&lt;h3 id=&#34;case-3-custom-choice:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 3 : Custom choice&lt;/h3&gt;
+&lt;h3 id=&#34;case-3-custom-choice&#34;&gt;Case 3 : Custom choice&lt;/h3&gt;
 
 &lt;p&gt;What if I have two different backends (maybe one is slower, or costlier, than the other), and my users want to exactly specify how many volumes they want of each &amp;lsquo;type&amp;rsquo; of backends? Here, Cinder&amp;rsquo;s &amp;lsquo;volume types&amp;rsquo; have us covered.&lt;/p&gt;
 
@@ -1540,8 +1539,7 @@ rushi@jio:~$ sudo pvs
 
 &lt;p&gt;Done :)&lt;/p&gt;
 
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+&lt;p&gt;Cheers!&lt;/p&gt;</description>
     </item>
     
     
@@ -1580,7 +1578,7 @@ create lots of &amp;lsquo;logical volumes&amp;rsquo;. Even after you&amp;rsquo;v
 
 &lt;p&gt;I hope the basic idea written above is sufficiently clear. Else, head over to this Ubuntu &lt;a href=&#34;https://wiki.ubuntu.com/Lvm&#34; target=&#34;_blank&#34;&gt;wiki&lt;/a&gt; for a slightly more detailed, but still an overview, of LVM. Anyway, I&amp;rsquo;m concentrating more on the demo, so lets move on.&lt;/p&gt;
 
-&lt;h4 id=&#34;hands-on:2d2bf322b35613aefa5a64a06c866c26&#34;&gt;Hands-on&lt;/h4&gt;
+&lt;h4 id=&#34;hands-on&#34;&gt;Hands-on&lt;/h4&gt;
 
 &lt;p&gt;I&amp;rsquo;m demo&amp;rsquo;ing everything on an Ubuntu machine, but it should work on any Linux distro (after you install the LVM2 package)&lt;/p&gt;
 
@@ -1696,13 +1694,13 @@ rushi@jio:~$ rm backing_file_1 backing_file_2
       <pubDate>Sun, 12 Jan 2014 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2014/01/12/installing-openid-plugin-for-mediawiki/</guid>
-      <description>
-
-&lt;p&gt;This post is about setting up your wiki such that their users access the wiki
+      <description>&lt;p&gt;This post is about setting up your wiki such that their users access the wiki
 only via an OpenID provider login (e.g. Google or Facebook login). This post assumes
 MediaWiki is already installed.&lt;/p&gt;
 
-&lt;h3 id=&#34;assumptions-prerequisites-and-requirements:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Assumptions, prerequisites and requirements&lt;/h3&gt;
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;assumptions-prerequisites-and-requirements&#34;&gt;Assumptions, prerequisites and requirements&lt;/h3&gt;
 
 &lt;p&gt;All of what this blogpost says has been tried on an Ubuntu machine, but it
 should work well on other Linux distros too (except for the &lt;code&gt;apt-get&lt;/code&gt; package
@@ -1716,7 +1714,7 @@ installs, for which you&amp;rsquo;ll need to find alternatives on your favourite
 &lt;pre&gt;&lt;code&gt;sudo apt-get install php5-mcrypt php5-gmp
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;installing-the-plugin:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Installing the plugin&lt;/h2&gt;
+&lt;h2 id=&#34;installing-the-plugin&#34;&gt;Installing the plugin&lt;/h2&gt;
 
 &lt;p&gt;Get the source code for the extension into &lt;code&gt;$IP/extensions&lt;/code&gt; directory&lt;/p&gt;
 
@@ -1751,7 +1749,7 @@ installs, for which you&amp;rsquo;ll need to find alternatives on your favourite
 &lt;pre&gt;&lt;code&gt;	/etc/init.d/apache2 restart 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;editing-login-required-page:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Editing &amp;lsquo;Login required&amp;rsquo; page.&lt;/h3&gt;
+&lt;h3 id=&#34;editing-login-required-page&#34;&gt;Editing &amp;lsquo;Login required&amp;rsquo; page.&lt;/h3&gt;
 
 &lt;p&gt;By default, the main page of the wiki is not editable. Generally we would like
 to give some information to a user, e.g. what this wiki is all about, how
@@ -1768,7 +1766,7 @@ to log into it, which OpenIDs are permitted, etc.&lt;/p&gt;
 &lt;p&gt;Now you can edit the &lt;code&gt;&amp;lt;your_wiki_URL&amp;gt;/jiocloud/index.phpmediawiki:loginreqpagetext&lt;/code&gt;
  page which is presented when the user is not logged in.&lt;/p&gt;
 
-&lt;h3 id=&#34;other-settings:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Other settings&lt;/h3&gt;
+&lt;h3 id=&#34;other-settings&#34;&gt;Other settings&lt;/h3&gt;
 
 &lt;p&gt;Below you can see a snip of LocalSettings.php file, which contains many other
 fields which I used to customize my wiki. I allowed only the registered user
@@ -1808,7 +1806,7 @@ $wgOpenIDConsumerDenyByDefault = true;
 $wgOpenIDConsumerAllow = array(&amp;quot;@^(https://)?launchpad.net/@&amp;quot;);
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;troubleshooting:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Troubleshooting&lt;/h2&gt;
+&lt;h2 id=&#34;troubleshooting&#34;&gt;Troubleshooting&lt;/h2&gt;
 
 &lt;p&gt;If there are troubles uploading a file via the MediaWiki web interface, go to the wiki directory on the server and chown the &lt;code&gt;images&lt;/code&gt; folder.&lt;/p&gt;
 
@@ -1818,8 +1816,7 @@ $wgOpenIDConsumerAllow = array(&amp;quot;@^(https://)?launchpad.net/@&amp;quot;)
 &lt;p&gt;Don&amp;rsquo;t forget to comment if you find the information presented here is outdated, or is not working for you.&lt;/p&gt;
 
 &lt;p&gt;Cheers,
-Rushi&lt;/p&gt;
-</description>
+Rushi&lt;/p&gt;</description>
     </item>
     
     

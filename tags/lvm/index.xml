@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/lvm/</link>
+    <link>http://www.rushiagr.com/tags/lvm/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2014 Rushi Agrawal</copyright>
-    <updated>Fri, 05 Sep 2014 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -22,13 +22,13 @@
 Although I have used Ubuntu Trusty (14.04) version, it should work with Precise
 (12.04) too, with the latest packages.&lt;/p&gt;
 
-&lt;h4 id=&#34;prerequisites:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Prerequisites&lt;/h4&gt;
+&lt;h4 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h4&gt;
 
 &lt;p&gt;Make sure you have atleast a little idea of what these terms
 mean: iSCSI, LUN, IQN, initiator, target and portal. Google and wikipedia are
 your friends.&lt;/p&gt;
 
-&lt;h4 id=&#34;a-quick-summary:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;A quick summary:&lt;/h4&gt;
+&lt;h4 id=&#34;a-quick-summary&#34;&gt;A quick summary:&lt;/h4&gt;
 
 &lt;p&gt;There are two parts of iSCSI communication - initiator and target. So let&amp;rsquo;s take an example. There is a storage server in your
 company, where you have a &amp;lsquo;drive&amp;rsquo; for your team. The storage server is the
@@ -54,7 +54,7 @@ user.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;apt-get install lvm2 tgt open-iscsi
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;initialize-logical-volume:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initialize logical volume&lt;/h4&gt;
+&lt;h4 id=&#34;initialize-logical-volume&#34;&gt;Initialize logical volume&lt;/h4&gt;
 
 &lt;p&gt;Create a file of 1GB, create a volume group over it, and then over it, create a
 400MB logical volume, and see if it got created or not&lt;/p&gt;
@@ -73,7 +73,7 @@ root@ra:~# lvs
   mylv myvg -wi-a---- 400.00m                                           
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;target-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Target administration&lt;/h4&gt;
+&lt;h4 id=&#34;target-administration&#34;&gt;Target administration&lt;/h4&gt;
 
 &lt;p&gt;Now let&amp;rsquo;s create a target, with target ID 1, and give it an IQN (iSCSI
 Qualified Name) &lt;code&gt;iqn.2001-04.example.com:your.first.iscsi.target&lt;/code&gt;:&lt;/p&gt;
@@ -173,7 +173,7 @@ Target 1: iqn.2001-04.example.com:your.first.iscsi.target
 3260, the default port, is now open. Note that all our commands so far started with
 &lt;code&gt;tgtadm&lt;/code&gt;, i.e., the target administration utility.&lt;/p&gt;
 
-&lt;h4 id=&#34;initiator-administration:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Initiator administration&lt;/h4&gt;
+&lt;h4 id=&#34;initiator-administration&#34;&gt;Initiator administration&lt;/h4&gt;
 
 &lt;p&gt;Now let&amp;rsquo;s start from the &amp;lsquo;initiator&amp;rsquo; end. We&amp;rsquo;ll behave as if we&amp;rsquo;re a client
 trying to connect to the server &amp;ndash; the target.&lt;/p&gt;
@@ -264,7 +264,7 @@ lost+found
 root@ra:~/tempmount# 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;destruction:929de0ff9dbcd4c871b27335ee5a3706&#34;&gt;Destruction&lt;/h4&gt;
+&lt;h4 id=&#34;destruction&#34;&gt;Destruction&lt;/h4&gt;
 
 &lt;p&gt;The simplest way to get rid of all the things you&amp;rsquo;ve created is to unmount the
 device, and restart the system.&lt;/p&gt;
@@ -311,7 +311,7 @@ create lots of &amp;lsquo;logical volumes&amp;rsquo;. Even after you&amp;rsquo;v
 
 &lt;p&gt;I hope the basic idea written above is sufficiently clear. Else, head over to this Ubuntu &lt;a href=&#34;https://wiki.ubuntu.com/Lvm&#34; target=&#34;_blank&#34;&gt;wiki&lt;/a&gt; for a slightly more detailed, but still an overview, of LVM. Anyway, I&amp;rsquo;m concentrating more on the demo, so lets move on.&lt;/p&gt;
 
-&lt;h4 id=&#34;hands-on:2d2bf322b35613aefa5a64a06c866c26&#34;&gt;Hands-on&lt;/h4&gt;
+&lt;h4 id=&#34;hands-on&#34;&gt;Hands-on&lt;/h4&gt;
 
 &lt;p&gt;I&amp;rsquo;m demo&amp;rsquo;ing everything on an Ubuntu machine, but it should work on any Linux distro (after you install the LVM2 package)&lt;/p&gt;
 

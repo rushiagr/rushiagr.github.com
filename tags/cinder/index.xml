@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/cinder/</link>
+    <link>http://www.rushiagr.com/tags/cinder/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2014 Rushi Agrawal</copyright>
-    <updated>Thu, 16 Jan 2014 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -16,12 +16,12 @@
       <pubDate>Thu, 16 Jan 2014 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2014/01/16/playing-around-with-cinder-backend/</guid>
-      <description>
-
-&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature &amp;ndash; multi-backends
+      <description>&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature &amp;ndash; multi-backends
 with filter scheduler. So now you can have more than one storage boxes for block storage
 and manage them with one Cinder deployment. Here, I&amp;rsquo;m going to test it out using our
 favourite method &amp;ndash; trying it out on DevStack!&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;DevStack can provide you with two LVM backends to play around with them. But you&amp;rsquo;ll need to restack it.&lt;/p&gt;
 
@@ -71,7 +71,7 @@ volume_group = stack-volumes2
 
 &lt;p&gt;Hmmm. Two volume groups, each of size 10G.&lt;/p&gt;
 
-&lt;h3 id=&#34;case-1-spreading-volumes-across-backends:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 1: Spreading volumes across backends&lt;/h3&gt;
+&lt;h3 id=&#34;case-1-spreading-volumes-across-backends&#34;&gt;Case 1: Spreading volumes across backends&lt;/h3&gt;
 
 &lt;p&gt;Now, lets create a volume and see where it ends up.&lt;/p&gt;
 
@@ -152,7 +152,7 @@ rushi@jio:~$ sudo vgs
 
 &lt;p&gt;Neat!&lt;/p&gt;
 
-&lt;h3 id=&#34;case-2-stacking-all-volumes-at-one-backend:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 2 : Stacking all volumes at one backend&lt;/h3&gt;
+&lt;h3 id=&#34;case-2-stacking-all-volumes-at-one-backend&#34;&gt;Case 2 : Stacking all volumes at one backend&lt;/h3&gt;
 
 &lt;p&gt;What if we want to keep all the volumes at only one backend? Cinder allows you to do that too!
 There is a configuration option in cinder.conf, &lt;code&gt;capacity_weight_multiplier&lt;/code&gt;, which allows you to multiply the &amp;lsquo;capacity weight&amp;rsquo; by a number.
@@ -229,7 +229,7 @@ rushi@jio:~$ sudo vgs
 
 &lt;p&gt;:)&lt;/p&gt;
 
-&lt;h3 id=&#34;case-3-custom-choice:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 3 : Custom choice&lt;/h3&gt;
+&lt;h3 id=&#34;case-3-custom-choice&#34;&gt;Case 3 : Custom choice&lt;/h3&gt;
 
 &lt;p&gt;What if I have two different backends (maybe one is slower, or costlier, than the other), and my users want to exactly specify how many volumes they want of each &amp;lsquo;type&amp;rsquo; of backends? Here, Cinder&amp;rsquo;s &amp;lsquo;volume types&amp;rsquo; have us covered.&lt;/p&gt;
 
@@ -385,8 +385,7 @@ rushi@jio:~$ sudo pvs
 
 &lt;p&gt;Done :)&lt;/p&gt;
 
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+&lt;p&gt;Cheers!&lt;/p&gt;</description>
     </item>
     
     
@@ -397,11 +396,11 @@ rushi@jio:~$ sudo pvs
       <pubDate>Mon, 27 May 2013 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2013/05/27/cinder-on-devstack-quick-start/</guid>
-      <description>
-
-&lt;p&gt;This blog post covers all the important commands for OpenStack Cinder - The block storage project.
+      <description>&lt;p&gt;This blog post covers all the important commands for OpenStack Cinder - The block storage project.
 Although this guide is written based on DevStack, it will work with actual deployment of OpenStack
 cloud also (except the DevStack/Linux specific bits).&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;All the Cinder operations can be performed via either of these three means:&lt;/p&gt;
 
@@ -423,7 +422,7 @@ a relatively new guy to OpenStack, I think an introduction through CLI would mak
 
 &lt;p&gt;Let&amp;rsquo;s start.&lt;/p&gt;
 
-&lt;h3 id=&#34;creation-and-deletion-of-volumes:426b24844d0e63b7c5c25db25682ca23&#34;&gt;Creation and deletion of volumes&lt;/h3&gt;
+&lt;h3 id=&#34;creation-and-deletion-of-volumes&#34;&gt;Creation and deletion of volumes&lt;/h3&gt;
 
 &lt;p&gt;Create a 1-GB cinder volume with no name by running command &lt;code&gt;cinder create 1&lt;/code&gt;.&lt;/p&gt;
 
@@ -557,7 +556,7 @@ stack@stlrx300s7-27:/$ sudo pvs
   /dev/loop0 stack-volumes lvm2 a-   5.01g 4.01g
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;volume-snapshots:426b24844d0e63b7c5c25db25682ca23&#34;&gt;Volume snapshots&lt;/h3&gt;
+&lt;h3 id=&#34;volume-snapshots&#34;&gt;Volume snapshots&lt;/h3&gt;
 
 &lt;p&gt;Create the snapshot of volume:&lt;/p&gt;
 
@@ -610,7 +609,7 @@ stack@stlrx300s7-27:/$ sudo pvs
 
 &lt;p&gt;Now you will see two volumes when you&amp;rsquo;ll do a &lt;code&gt;cinder list&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;accessing-volumes-from-inside-a-virtual-instance:426b24844d0e63b7c5c25db25682ca23&#34;&gt;Accessing volumes from inside a virtual instance&lt;/h3&gt;
+&lt;h3 id=&#34;accessing-volumes-from-inside-a-virtual-instance&#34;&gt;Accessing volumes from inside a virtual instance&lt;/h3&gt;
 
 &lt;p&gt;You can attach a volume to a VM instance, to provide additional persistent storage to that VM. It
 works just like you attach an external HDD to your computer/laptop. But first, we&amp;rsquo;ll need to create a
@@ -850,12 +849,11 @@ stack@stlrx300s7-27:/$ cinder list
 +--------------------------------------+-----------+---------------+------+-------------+----------+-------------+
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;more-features:426b24844d0e63b7c5c25db25682ca23&#34;&gt;More features&lt;/h3&gt;
+&lt;h3 id=&#34;more-features&#34;&gt;More features&lt;/h3&gt;
 
 &lt;p&gt;(Will update shortly)&lt;/p&gt;
 
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+&lt;p&gt;Cheers!&lt;/p&gt;</description>
     </item>
     
     

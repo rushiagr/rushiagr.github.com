@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/testing/</link>
+    <link>http://www.rushiagr.com/tags/testing/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2014 Rushi Agrawal</copyright>
-    <updated>Fri, 05 Sep 2014 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -21,7 +21,7 @@
 &lt;p&gt;A small post about little things I found out while running unit tests in
 OpenStack.&lt;/p&gt;
 
-&lt;h2 id=&#34;unit-testing-setup:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Unit-testing setup&lt;/h2&gt;
+&lt;h2 id=&#34;unit-testing-setup&#34;&gt;Unit-testing setup&lt;/h2&gt;
 
 &lt;p&gt;Everybody knows &lt;code&gt;./run_tests.sh&lt;/code&gt; is used to run the unit tests of an OpenStack
 project. But, you require to install dependencies before doing it. And
@@ -36,7 +36,7 @@ these packages before running &lt;code&gt;pip install -r requirements.txt&lt;/co
 &lt;p&gt;Atleast &lt;code&gt;cinder&lt;/code&gt; and &lt;code&gt;nova&lt;/code&gt; dependencies will get installed properly after
 this.&lt;/p&gt;
 
-&lt;h2 id=&#34;run-tests-frequently-used-commands:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests frequently used commands&lt;/h2&gt;
+&lt;h2 id=&#34;run-tests-frequently-used-commands&#34;&gt;run_tests frequently used commands&lt;/h2&gt;
 
 &lt;p&gt;To force the tests to NOT run in a virtual environment, even if it is present:&lt;/p&gt;
 
@@ -73,7 +73,7 @@ this.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;./run_tests.sh nova.tests.test_utils.ResourceFilterTestCase.test_resource_filtering
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;wildcards-while-running-the-tests:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;Wildcards while running the tests&lt;/h2&gt;
+&lt;h2 id=&#34;wildcards-while-running-the-tests&#34;&gt;Wildcards while running the tests&lt;/h2&gt;
 
 &lt;p&gt;Frequently you&amp;rsquo;ll find yourself testing only a couple of tests. In such cases,
 a wildcard will save you from typing the whole path of the test. The below
@@ -85,7 +85,7 @@ command will also run &lt;code&gt;test_resource_filtering&lt;/code&gt; test:&lt;
 &lt;p&gt;I currently don&amp;rsquo;t know how to make a test work without adding &lt;code&gt;nova.tests&lt;/code&gt;
 before it&lt;/p&gt;
 
-&lt;h2 id=&#34;run-tests-is-not-happy:ef0fed5d80bf1672d3195cb4c6973c84&#34;&gt;run_tests is not happy&lt;/h2&gt;
+&lt;h2 id=&#34;run-tests-is-not-happy&#34;&gt;run_tests is not happy&lt;/h2&gt;
 
 &lt;p&gt;Sometimes you&amp;rsquo;ll see running &lt;code&gt;./run_tests.sh&lt;/code&gt; can throw a lot of lines of
 ununderstandable gibberish on your screen. In the end it will say &lt;code&gt;testr
@@ -125,6 +125,8 @@ dependencies are outdated.&lt;/p&gt;
 &lt;p&gt;This quick start guide explains setting up Tempest with a DevStack environment
 for Grizzly release. Most of the information here is taken from
 &lt;a href=&#34;http://www.joinfu.com/2012/03/testing-essex-rc1-with-devstack-and-tempest/&#34;&gt;here&lt;/a&gt;, the only difference being this blog post is more recent, and is based on Grizzly.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;Assumptions made are that you understand:
 1. What is a &lt;code&gt;localrc&lt;/code&gt; file in DevStack.
@@ -255,8 +257,7 @@ We&amp;rsquo;ll run all the tests in verbose mode. To run all the tests:&lt;/p&g
 &lt;pre&gt;&lt;code&gt;    nosetests -sv tempest.tests.volume.test_volumes_list:VolumeListTest.test_volume_list_with_details
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;And that ladies and gentlemen, is the end! :)&lt;/p&gt;
-</description>
+&lt;p&gt;And that ladies and gentlemen, is the end! :)&lt;/p&gt;</description>
     </item>
     
     

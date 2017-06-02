@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/quicstart/</link>
+    <link>http://www.rushiagr.com/tags/quicstart/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2014 Rushi Agrawal</copyright>
-    <updated>Sat, 12 Apr 2014 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -22,7 +22,7 @@
 
 &lt;!-- more --&gt;
 
-&lt;h2 id=&#34;quick-introduction:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Quick Introduction&lt;/h2&gt;
+&lt;h2 id=&#34;quick-introduction&#34;&gt;Quick Introduction&lt;/h2&gt;
 
 &lt;p&gt;Lets say you want to install and run apache server on one of the machines in your lab. On another, you want to create a new user. On a third machine, you want to install MySQL, and allow access to this machine only from the first server. Seems like a lot of manual work isn&amp;rsquo;t it? The power of Puppet is, you can specify all these tasks in a file, called &amp;lsquo;Puppet manifest&amp;rsquo;, and then execute it. Everything will be set up for you just as you wanted! Now what makes this &amp;lsquo;I care about the end result, not the process&amp;rsquo; approach really powerful is you can &amp;lsquo;apply&amp;rsquo; this manifest over and over again to get the same end result. You can easily modify this manifest file, extend it, and manage it under version control, just like you would with a piece of software. Welcome to the world of IT automation :)&lt;/p&gt;
 
@@ -30,7 +30,7 @@
 
 &lt;p&gt;There is a whole lot of things you can do with Puppet. Here, we&amp;rsquo;ll just get us started with it. Once you are through this post, you can head over to Puppet Labs&amp;rsquo; documents and tutorials, for more on &amp;ldquo;how&amp;rdquo;s and &amp;ldquo;why&amp;rdquo;s of Puppet.&lt;/p&gt;
 
-&lt;h2 id=&#34;setup:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Setup&lt;/h2&gt;
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
 
 &lt;p&gt;You just require two Ubuntu machines connected to each other. One will be the Puppet &amp;lsquo;master&amp;rsquo; node (the machine which will take care of managing the configuration and state of all the machines in our deployment), the other one &amp;lsquo;slave&amp;rsquo; (which unfortunately is the only actual machine in demo deployment :) ).&lt;/p&gt;
 
@@ -58,7 +58,7 @@
 192.168.56.130  puppet-master
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;getting-the-hands-dirty-puppet-cli:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Getting the hands dirty &amp;ndash; Puppet CLI&lt;/h2&gt;
+&lt;h2 id=&#34;getting-the-hands-dirty-puppet-cli&#34;&gt;Getting the hands dirty &amp;ndash; Puppet CLI&lt;/h2&gt;
 
 &lt;p&gt;Install &lt;code&gt;puppetmaster&lt;/code&gt; package on the master node&lt;/p&gt;
 
@@ -163,7 +163,7 @@ notice: Finished catalog run in 0.47 seconds
 
 &lt;p&gt;where you can choose a domain name of your own choice in place of &lt;code&gt;.rushiagr.com&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;puppet-modules:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet modules&lt;/h2&gt;
+&lt;h2 id=&#34;puppet-modules&#34;&gt;Puppet modules&lt;/h2&gt;
 
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; &lt;code&gt;puppet module&lt;/code&gt; doesn&amp;rsquo;t work on Precise (Ubuntu 12.04). You need to install ruby, and gems, etc. Too much of a hassle. So I&amp;rsquo;ll just post commands here which work for a higher version of Ubuntu.&lt;/p&gt;
 
@@ -186,7 +186,7 @@ notice: Finished catalog run in 0.47 seconds
 
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Modules installed via &lt;code&gt;sudo&lt;/code&gt; will be visible when you perform &lt;code&gt;puppet module list&lt;/code&gt; with &lt;code&gt;sudo&lt;/code&gt; only. Same for non-&lt;code&gt;sudo&lt;/code&gt; use.&lt;/p&gt;
 
-&lt;h2 id=&#34;puppet-in-master-client-configuration:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet in master-client configuration&lt;/h2&gt;
+&lt;h2 id=&#34;puppet-in-master-client-configuration&#34;&gt;Puppet in master-client configuration&lt;/h2&gt;
 
 &lt;p&gt;Everything we did so far concerned with a single machine. Let&amp;rsquo;s now introduce another machine &amp;ndash; Puppet agent.&lt;/p&gt;
 
@@ -301,12 +301,12 @@ Around 80 pages long, it covers almost every aspect of basic Puppet. The only pr
       <pubDate>Thu, 16 Jan 2014 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2014/01/16/playing-around-with-cinder-backend/</guid>
-      <description>
-
-&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature &amp;ndash; multi-backends
+      <description>&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature &amp;ndash; multi-backends
 with filter scheduler. So now you can have more than one storage boxes for block storage
 and manage them with one Cinder deployment. Here, I&amp;rsquo;m going to test it out using our
 favourite method &amp;ndash; trying it out on DevStack!&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;DevStack can provide you with two LVM backends to play around with them. But you&amp;rsquo;ll need to restack it.&lt;/p&gt;
 
@@ -356,7 +356,7 @@ volume_group = stack-volumes2
 
 &lt;p&gt;Hmmm. Two volume groups, each of size 10G.&lt;/p&gt;
 
-&lt;h3 id=&#34;case-1-spreading-volumes-across-backends:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 1: Spreading volumes across backends&lt;/h3&gt;
+&lt;h3 id=&#34;case-1-spreading-volumes-across-backends&#34;&gt;Case 1: Spreading volumes across backends&lt;/h3&gt;
 
 &lt;p&gt;Now, lets create a volume and see where it ends up.&lt;/p&gt;
 
@@ -437,7 +437,7 @@ rushi@jio:~$ sudo vgs
 
 &lt;p&gt;Neat!&lt;/p&gt;
 
-&lt;h3 id=&#34;case-2-stacking-all-volumes-at-one-backend:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 2 : Stacking all volumes at one backend&lt;/h3&gt;
+&lt;h3 id=&#34;case-2-stacking-all-volumes-at-one-backend&#34;&gt;Case 2 : Stacking all volumes at one backend&lt;/h3&gt;
 
 &lt;p&gt;What if we want to keep all the volumes at only one backend? Cinder allows you to do that too!
 There is a configuration option in cinder.conf, &lt;code&gt;capacity_weight_multiplier&lt;/code&gt;, which allows you to multiply the &amp;lsquo;capacity weight&amp;rsquo; by a number.
@@ -514,7 +514,7 @@ rushi@jio:~$ sudo vgs
 
 &lt;p&gt;:)&lt;/p&gt;
 
-&lt;h3 id=&#34;case-3-custom-choice:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 3 : Custom choice&lt;/h3&gt;
+&lt;h3 id=&#34;case-3-custom-choice&#34;&gt;Case 3 : Custom choice&lt;/h3&gt;
 
 &lt;p&gt;What if I have two different backends (maybe one is slower, or costlier, than the other), and my users want to exactly specify how many volumes they want of each &amp;lsquo;type&amp;rsquo; of backends? Here, Cinder&amp;rsquo;s &amp;lsquo;volume types&amp;rsquo; have us covered.&lt;/p&gt;
 
@@ -670,8 +670,7 @@ rushi@jio:~$ sudo pvs
 
 &lt;p&gt;Done :)&lt;/p&gt;
 
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+&lt;p&gt;Cheers!&lt;/p&gt;</description>
     </item>
     
     

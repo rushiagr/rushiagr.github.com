@@ -48,7 +48,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
       <p class="lead">
-       not your average coder 
+       yet another tech enthusiast 
       </p>
     </div>
 
@@ -79,7 +79,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -102,7 +102,7 @@
     </h1>
     
 
-<h4 id="lumberjack-is-a-go-package-for-writing-logs-to-rolling-files:f79fc90fba0aac2a5e40bef7f53443cb">Lumberjack is a Go package for writing logs to rolling files.</h4>
+<h4 id="lumberjack-is-a-go-package-for-writing-logs-to-rolling-files">Lumberjack is a Go package for writing logs to rolling files.</h4>
 
 <p>Note that this is v2.0 of lumberjack, and should be imported using gopkg.in
 thusly:</p>
@@ -139,7 +139,7 @@ machine will result in improper behavior.</p>
 })
 </code></pre>
 
-<h2 id="type-logger:f79fc90fba0aac2a5e40bef7f53443cb">type Logger</h2>
+<h2 id="type-logger">type Logger</h2>
 
 <pre><code class="language-go">type Logger struct {
     // Filename is the file to write logs to.  Backup log files will be retained
@@ -185,7 +185,7 @@ the current file is closed, renamed, and a new log file created with the
 original name. Thus, the filename you give Logger is always the &ldquo;current&rdquo; log
 file.</p>
 
-<h3 id="cleaning-up-old-log-files:f79fc90fba0aac2a5e40bef7f53443cb">Cleaning Up Old Log Files</h3>
+<h3 id="cleaning-up-old-log-files">Cleaning Up Old Log Files</h3>
 
 <p>Whenever a new logfile gets created, old log files may be deleted.  The most
 recent files according to the encoded timestamp will be retained, up to a
@@ -196,14 +196,14 @@ time, which may differ from the last time that file was written to.</p>
 
 <p>If MaxBackups and MaxAge are both 0, no old log files will be deleted.</p>
 
-<h3 id="func-logger-close:f79fc90fba0aac2a5e40bef7f53443cb">func (*Logger) Close</h3>
+<h3 id="func-logger-close">func (*Logger) Close</h3>
 
 <pre><code class="language-go">func (l *Logger) Close() error
 </code></pre>
 
 <p>Close implements io.Closer, and closes the current logfile.</p>
 
-<h3 id="func-logger-rotate:f79fc90fba0aac2a5e40bef7f53443cb">func (*Logger) Rotate</h3>
+<h3 id="func-logger-rotate">func (*Logger) Rotate</h3>
 
 <pre><code class="language-go">func (l *Logger) Rotate() error
 </code></pre>
@@ -233,7 +233,7 @@ go func() {
 }()
 </code></pre>
 
-<h3 id="func-logger-write:f79fc90fba0aac2a5e40bef7f53443cb">func (*Logger) Write</h3>
+<h3 id="func-logger-write">func (*Logger) Write</h3>
 
 <pre><code class="language-go">func (l *Logger) Write(p []byte) (n int, err error)
 </code></pre>

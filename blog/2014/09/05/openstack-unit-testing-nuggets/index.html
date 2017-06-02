@@ -46,7 +46,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
       <p class="lead">
-       not your average coder 
+       yet another tech enthusiast 
       </p>
     </div>
 
@@ -77,7 +77,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -93,7 +93,7 @@
 <p>A small post about little things I found out while running unit tests in
 OpenStack.</p>
 
-<h2 id="unit-testing-setup:ef0fed5d80bf1672d3195cb4c6973c84">Unit-testing setup</h2>
+<h2 id="unit-testing-setup">Unit-testing setup</h2>
 
 <p>Everybody knows <code>./run_tests.sh</code> is used to run the unit tests of an OpenStack
 project. But, you require to install dependencies before doing it. And
@@ -108,7 +108,7 @@ these packages before running <code>pip install -r requirements.txt</code>:</p>
 <p>Atleast <code>cinder</code> and <code>nova</code> dependencies will get installed properly after
 this.</p>
 
-<h2 id="run-tests-frequently-used-commands:ef0fed5d80bf1672d3195cb4c6973c84">run_tests frequently used commands</h2>
+<h2 id="run-tests-frequently-used-commands">run_tests frequently used commands</h2>
 
 <p>To force the tests to NOT run in a virtual environment, even if it is present:</p>
 
@@ -145,7 +145,7 @@ this.</p>
 <pre><code>./run_tests.sh nova.tests.test_utils.ResourceFilterTestCase.test_resource_filtering
 </code></pre>
 
-<h2 id="wildcards-while-running-the-tests:ef0fed5d80bf1672d3195cb4c6973c84">Wildcards while running the tests</h2>
+<h2 id="wildcards-while-running-the-tests">Wildcards while running the tests</h2>
 
 <p>Frequently you&rsquo;ll find yourself testing only a couple of tests. In such cases,
 a wildcard will save you from typing the whole path of the test. The below
@@ -157,7 +157,7 @@ command will also run <code>test_resource_filtering</code> test:</p>
 <p>I currently don&rsquo;t know how to make a test work without adding <code>nova.tests</code>
 before it</p>
 
-<h2 id="run-tests-is-not-happy:ef0fed5d80bf1672d3195cb4c6973c84">run_tests is not happy</h2>
+<h2 id="run-tests-is-not-happy">run_tests is not happy</h2>
 
 <p>Sometimes you&rsquo;ll see running <code>./run_tests.sh</code> can throw a lot of lines of
 ununderstandable gibberish on your screen. In the end it will say <code>testr

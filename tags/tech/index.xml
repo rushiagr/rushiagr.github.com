@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/tech/</link>
+    <link>http://www.rushiagr.com/tags/tech/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2014 Rushi Agrawal</copyright>
-    <updated>Tue, 05 Aug 2014 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -117,7 +117,7 @@ sudo modprobe nbd
 
 &lt;!-- more --&gt;
 
-&lt;h2 id=&#34;quick-introduction:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Quick Introduction&lt;/h2&gt;
+&lt;h2 id=&#34;quick-introduction&#34;&gt;Quick Introduction&lt;/h2&gt;
 
 &lt;p&gt;Lets say you want to install and run apache server on one of the machines in your lab. On another, you want to create a new user. On a third machine, you want to install MySQL, and allow access to this machine only from the first server. Seems like a lot of manual work isn&amp;rsquo;t it? The power of Puppet is, you can specify all these tasks in a file, called &amp;lsquo;Puppet manifest&amp;rsquo;, and then execute it. Everything will be set up for you just as you wanted! Now what makes this &amp;lsquo;I care about the end result, not the process&amp;rsquo; approach really powerful is you can &amp;lsquo;apply&amp;rsquo; this manifest over and over again to get the same end result. You can easily modify this manifest file, extend it, and manage it under version control, just like you would with a piece of software. Welcome to the world of IT automation :)&lt;/p&gt;
 
@@ -125,7 +125,7 @@ sudo modprobe nbd
 
 &lt;p&gt;There is a whole lot of things you can do with Puppet. Here, we&amp;rsquo;ll just get us started with it. Once you are through this post, you can head over to Puppet Labs&amp;rsquo; documents and tutorials, for more on &amp;ldquo;how&amp;rdquo;s and &amp;ldquo;why&amp;rdquo;s of Puppet.&lt;/p&gt;
 
-&lt;h2 id=&#34;setup:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Setup&lt;/h2&gt;
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
 
 &lt;p&gt;You just require two Ubuntu machines connected to each other. One will be the Puppet &amp;lsquo;master&amp;rsquo; node (the machine which will take care of managing the configuration and state of all the machines in our deployment), the other one &amp;lsquo;slave&amp;rsquo; (which unfortunately is the only actual machine in demo deployment :) ).&lt;/p&gt;
 
@@ -153,7 +153,7 @@ sudo modprobe nbd
 192.168.56.130  puppet-master
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;getting-the-hands-dirty-puppet-cli:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Getting the hands dirty &amp;ndash; Puppet CLI&lt;/h2&gt;
+&lt;h2 id=&#34;getting-the-hands-dirty-puppet-cli&#34;&gt;Getting the hands dirty &amp;ndash; Puppet CLI&lt;/h2&gt;
 
 &lt;p&gt;Install &lt;code&gt;puppetmaster&lt;/code&gt; package on the master node&lt;/p&gt;
 
@@ -258,7 +258,7 @@ notice: Finished catalog run in 0.47 seconds
 
 &lt;p&gt;where you can choose a domain name of your own choice in place of &lt;code&gt;.rushiagr.com&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;puppet-modules:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet modules&lt;/h2&gt;
+&lt;h2 id=&#34;puppet-modules&#34;&gt;Puppet modules&lt;/h2&gt;
 
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; &lt;code&gt;puppet module&lt;/code&gt; doesn&amp;rsquo;t work on Precise (Ubuntu 12.04). You need to install ruby, and gems, etc. Too much of a hassle. So I&amp;rsquo;ll just post commands here which work for a higher version of Ubuntu.&lt;/p&gt;
 
@@ -281,7 +281,7 @@ notice: Finished catalog run in 0.47 seconds
 
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Modules installed via &lt;code&gt;sudo&lt;/code&gt; will be visible when you perform &lt;code&gt;puppet module list&lt;/code&gt; with &lt;code&gt;sudo&lt;/code&gt; only. Same for non-&lt;code&gt;sudo&lt;/code&gt; use.&lt;/p&gt;
 
-&lt;h2 id=&#34;puppet-in-master-client-configuration:3eb4397264d4b1e9ded54ff4b133eea0&#34;&gt;Puppet in master-client configuration&lt;/h2&gt;
+&lt;h2 id=&#34;puppet-in-master-client-configuration&#34;&gt;Puppet in master-client configuration&lt;/h2&gt;
 
 &lt;p&gt;Everything we did so far concerned with a single machine. Let&amp;rsquo;s now introduce another machine &amp;ndash; Puppet agent.&lt;/p&gt;
 
@@ -396,9 +396,9 @@ Around 80 pages long, it covers almost every aspect of basic Puppet. The only pr
       <pubDate>Thu, 03 Apr 2014 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2014/04/03/openstack-in-an-hour-with-devstack/</guid>
-      <description>
+      <description>&lt;p&gt;So you found out a cool new technology &amp;ldquo;OpenStack&amp;rdquo; and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; is your friend-in-need. No, don&amp;rsquo;t click that hyperlink just yet :)&lt;/p&gt;
 
-&lt;p&gt;So you found out a cool new technology &amp;ldquo;OpenStack&amp;rdquo; and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; is your friend-in-need. No, don&amp;rsquo;t click that hyperlink just yet :)&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;To put it in a sentence, DevStack is &amp;ldquo;OpenStack in a box&amp;rdquo;. You just need a popular Linux based distribution with 2GB RAM and you&amp;rsquo;re all set to start. DevStack is basically a set of scripts which will install all the important OpenStack services in your computer. For this, it will first download all the essential packages, pull in the OpenStack code from various OpenStack projects, and set everything up for you to try out all of it.&lt;/p&gt;
 
@@ -408,7 +408,7 @@ Around 80 pages long, it covers almost every aspect of basic Puppet. The only pr
 
 &lt;p&gt;NOTE: Do not run any of the script as a root user, unless specified otherwise explicitly.&lt;/p&gt;
 
-&lt;h3 id=&#34;getting-started:98c134cd40c558c50c274d316252e460&#34;&gt;Getting started&lt;/h3&gt;
+&lt;h3 id=&#34;getting-started&#34;&gt;Getting started&lt;/h3&gt;
 
 &lt;p&gt;Install git&lt;/p&gt;
 
@@ -509,7 +509,7 @@ stack.sh completed in 269 seconds.
 
 &lt;p&gt;Head over to &lt;a href=&#34;http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/&#34;&gt;Linux Screens in DevStack&lt;/a&gt; for more information on how to work with &lt;code&gt;screen&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;housekeeping-and-customizations:98c134cd40c558c50c274d316252e460&#34;&gt;Housekeeping and customizations&lt;/h3&gt;
+&lt;h3 id=&#34;housekeeping-and-customizations&#34;&gt;Housekeeping and customizations&lt;/h3&gt;
 
 &lt;p&gt;In your life as an OpenStack developer, you will be setting up and destroying DevStack instance quite a number of times. So it is good to know how to do that in the most efficient manner.&lt;/p&gt;
 
@@ -524,7 +524,7 @@ stack.sh completed in 269 seconds.
 
 &lt;p&gt;So you need to bring back up the DevStack environment manually everytime you reboot. Here is where using a virtual machine comes handy. You can take a snapshot of the virtual machine, and then go back to it when you want a clean DevStack environment.&lt;/p&gt;
 
-&lt;h3 id=&#34;localrc-configurations:98c134cd40c558c50c274d316252e460&#34;&gt;localrc configurations&lt;/h3&gt;
+&lt;h3 id=&#34;localrc-configurations&#34;&gt;localrc configurations&lt;/h3&gt;
 
 &lt;p&gt;&lt;code&gt;localrc&lt;/code&gt; is the file where all the local configurations (local = your local machine) are kept.&lt;/p&gt;
 
@@ -555,7 +555,7 @@ ADMIN_PASSWORD=nova
 &lt;pre&gt;&lt;code&gt;HOST_IP=192.168.xxx.xxx
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;developing-code:98c134cd40c558c50c274d316252e460&#34;&gt;Developing code&lt;/h3&gt;
+&lt;h3 id=&#34;developing-code&#34;&gt;Developing code&lt;/h3&gt;
 
 &lt;p&gt;If you want to immediately test out your code by running it inside DevStack, you need to make the changes in the code, and restart the affected services.&lt;/p&gt;
 
@@ -563,7 +563,7 @@ ADMIN_PASSWORD=nova
 
 &lt;p&gt;In order to restart, go to the respective screen and press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;C&lt;/code&gt;. Then, press the up arrow once to get the last command which started this screen session, and then press &lt;code&gt;ENTER&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;final-words:98c134cd40c558c50c274d316252e460&#34;&gt;Final words&lt;/h3&gt;
+&lt;h3 id=&#34;final-words&#34;&gt;Final words&lt;/h3&gt;
 
 &lt;p&gt;Note that this guide just gets you started with OpenStack using DevStack. OpenStack, and cloud in general, is not about virtual machines or volumes or networks only. It is a philosophy. It is a complete paradigm shift, and as such, it is impossible to cover all of it by me. Your quest to know more about it has just started. Keep reading more and more about it and I guarantee you you will be fascinated by it&amp;rsquo;s limitless possibilities.&lt;/p&gt;
 
@@ -572,8 +572,7 @@ ADMIN_PASSWORD=nova
 &lt;p&gt;Now you can go to the &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; website :)&lt;/p&gt;
 
 &lt;p&gt;Cheers!
-Rushi&lt;/p&gt;
-</description>
+Rushi&lt;/p&gt;</description>
     </item>
     
     
@@ -625,7 +624,7 @@ Rushi&lt;/p&gt;
 Enter password: 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;mysql-console:5aec0d683ee8bcb2a598c5a9ce48ebc9&#34;&gt;MySQL console&lt;/h3&gt;
+&lt;h3 id=&#34;mysql-console&#34;&gt;MySQL console&lt;/h3&gt;
 
 &lt;p&gt;List all databases:&lt;/p&gt;
 
@@ -810,12 +809,12 @@ GRANT ALL PRIVILEGES ON * . * TO &#39;rushiagr&#39;@&#39;localhost&#39;
       <pubDate>Thu, 16 Jan 2014 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2014/01/16/playing-around-with-cinder-backend/</guid>
-      <description>
-
-&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature &amp;ndash; multi-backends
+      <description>&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature &amp;ndash; multi-backends
 with filter scheduler. So now you can have more than one storage boxes for block storage
 and manage them with one Cinder deployment. Here, I&amp;rsquo;m going to test it out using our
 favourite method &amp;ndash; trying it out on DevStack!&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;DevStack can provide you with two LVM backends to play around with them. But you&amp;rsquo;ll need to restack it.&lt;/p&gt;
 
@@ -865,7 +864,7 @@ volume_group = stack-volumes2
 
 &lt;p&gt;Hmmm. Two volume groups, each of size 10G.&lt;/p&gt;
 
-&lt;h3 id=&#34;case-1-spreading-volumes-across-backends:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 1: Spreading volumes across backends&lt;/h3&gt;
+&lt;h3 id=&#34;case-1-spreading-volumes-across-backends&#34;&gt;Case 1: Spreading volumes across backends&lt;/h3&gt;
 
 &lt;p&gt;Now, lets create a volume and see where it ends up.&lt;/p&gt;
 
@@ -946,7 +945,7 @@ rushi@jio:~$ sudo vgs
 
 &lt;p&gt;Neat!&lt;/p&gt;
 
-&lt;h3 id=&#34;case-2-stacking-all-volumes-at-one-backend:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 2 : Stacking all volumes at one backend&lt;/h3&gt;
+&lt;h3 id=&#34;case-2-stacking-all-volumes-at-one-backend&#34;&gt;Case 2 : Stacking all volumes at one backend&lt;/h3&gt;
 
 &lt;p&gt;What if we want to keep all the volumes at only one backend? Cinder allows you to do that too!
 There is a configuration option in cinder.conf, &lt;code&gt;capacity_weight_multiplier&lt;/code&gt;, which allows you to multiply the &amp;lsquo;capacity weight&amp;rsquo; by a number.
@@ -1023,7 +1022,7 @@ rushi@jio:~$ sudo vgs
 
 &lt;p&gt;:)&lt;/p&gt;
 
-&lt;h3 id=&#34;case-3-custom-choice:e7ca627f9f234e54370b6062eba6e3e5&#34;&gt;Case 3 : Custom choice&lt;/h3&gt;
+&lt;h3 id=&#34;case-3-custom-choice&#34;&gt;Case 3 : Custom choice&lt;/h3&gt;
 
 &lt;p&gt;What if I have two different backends (maybe one is slower, or costlier, than the other), and my users want to exactly specify how many volumes they want of each &amp;lsquo;type&amp;rsquo; of backends? Here, Cinder&amp;rsquo;s &amp;lsquo;volume types&amp;rsquo; have us covered.&lt;/p&gt;
 
@@ -1179,8 +1178,7 @@ rushi@jio:~$ sudo pvs
 
 &lt;p&gt;Done :)&lt;/p&gt;
 
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+&lt;p&gt;Cheers!&lt;/p&gt;</description>
     </item>
     
     
@@ -1219,7 +1217,7 @@ create lots of &amp;lsquo;logical volumes&amp;rsquo;. Even after you&amp;rsquo;v
 
 &lt;p&gt;I hope the basic idea written above is sufficiently clear. Else, head over to this Ubuntu &lt;a href=&#34;https://wiki.ubuntu.com/Lvm&#34; target=&#34;_blank&#34;&gt;wiki&lt;/a&gt; for a slightly more detailed, but still an overview, of LVM. Anyway, I&amp;rsquo;m concentrating more on the demo, so lets move on.&lt;/p&gt;
 
-&lt;h4 id=&#34;hands-on:2d2bf322b35613aefa5a64a06c866c26&#34;&gt;Hands-on&lt;/h4&gt;
+&lt;h4 id=&#34;hands-on&#34;&gt;Hands-on&lt;/h4&gt;
 
 &lt;p&gt;I&amp;rsquo;m demo&amp;rsquo;ing everything on an Ubuntu machine, but it should work on any Linux distro (after you install the LVM2 package)&lt;/p&gt;
 
@@ -1335,13 +1333,13 @@ rushi@jio:~$ rm backing_file_1 backing_file_2
       <pubDate>Sun, 12 Jan 2014 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2014/01/12/installing-openid-plugin-for-mediawiki/</guid>
-      <description>
-
-&lt;p&gt;This post is about setting up your wiki such that their users access the wiki
+      <description>&lt;p&gt;This post is about setting up your wiki such that their users access the wiki
 only via an OpenID provider login (e.g. Google or Facebook login). This post assumes
 MediaWiki is already installed.&lt;/p&gt;
 
-&lt;h3 id=&#34;assumptions-prerequisites-and-requirements:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Assumptions, prerequisites and requirements&lt;/h3&gt;
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;assumptions-prerequisites-and-requirements&#34;&gt;Assumptions, prerequisites and requirements&lt;/h3&gt;
 
 &lt;p&gt;All of what this blogpost says has been tried on an Ubuntu machine, but it
 should work well on other Linux distros too (except for the &lt;code&gt;apt-get&lt;/code&gt; package
@@ -1355,7 +1353,7 @@ installs, for which you&amp;rsquo;ll need to find alternatives on your favourite
 &lt;pre&gt;&lt;code&gt;sudo apt-get install php5-mcrypt php5-gmp
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;installing-the-plugin:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Installing the plugin&lt;/h2&gt;
+&lt;h2 id=&#34;installing-the-plugin&#34;&gt;Installing the plugin&lt;/h2&gt;
 
 &lt;p&gt;Get the source code for the extension into &lt;code&gt;$IP/extensions&lt;/code&gt; directory&lt;/p&gt;
 
@@ -1390,7 +1388,7 @@ installs, for which you&amp;rsquo;ll need to find alternatives on your favourite
 &lt;pre&gt;&lt;code&gt;	/etc/init.d/apache2 restart 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;editing-login-required-page:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Editing &amp;lsquo;Login required&amp;rsquo; page.&lt;/h3&gt;
+&lt;h3 id=&#34;editing-login-required-page&#34;&gt;Editing &amp;lsquo;Login required&amp;rsquo; page.&lt;/h3&gt;
 
 &lt;p&gt;By default, the main page of the wiki is not editable. Generally we would like
 to give some information to a user, e.g. what this wiki is all about, how
@@ -1407,7 +1405,7 @@ to log into it, which OpenIDs are permitted, etc.&lt;/p&gt;
 &lt;p&gt;Now you can edit the &lt;code&gt;&amp;lt;your_wiki_URL&amp;gt;/jiocloud/index.phpmediawiki:loginreqpagetext&lt;/code&gt;
  page which is presented when the user is not logged in.&lt;/p&gt;
 
-&lt;h3 id=&#34;other-settings:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Other settings&lt;/h3&gt;
+&lt;h3 id=&#34;other-settings&#34;&gt;Other settings&lt;/h3&gt;
 
 &lt;p&gt;Below you can see a snip of LocalSettings.php file, which contains many other
 fields which I used to customize my wiki. I allowed only the registered user
@@ -1447,7 +1445,7 @@ $wgOpenIDConsumerDenyByDefault = true;
 $wgOpenIDConsumerAllow = array(&amp;quot;@^(https://)?launchpad.net/@&amp;quot;);
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;troubleshooting:2f6224b9d71ac646e56d4f9ff31b99ea&#34;&gt;Troubleshooting&lt;/h2&gt;
+&lt;h2 id=&#34;troubleshooting&#34;&gt;Troubleshooting&lt;/h2&gt;
 
 &lt;p&gt;If there are troubles uploading a file via the MediaWiki web interface, go to the wiki directory on the server and chown the &lt;code&gt;images&lt;/code&gt; folder.&lt;/p&gt;
 
@@ -1457,8 +1455,7 @@ $wgOpenIDConsumerAllow = array(&amp;quot;@^(https://)?launchpad.net/@&amp;quot;)
 &lt;p&gt;Don&amp;rsquo;t forget to comment if you find the information presented here is outdated, or is not working for you.&lt;/p&gt;
 
 &lt;p&gt;Cheers,
-Rushi&lt;/p&gt;
-</description>
+Rushi&lt;/p&gt;</description>
     </item>
     
     
@@ -1469,9 +1466,9 @@ Rushi&lt;/p&gt;
       <pubDate>Wed, 05 Jun 2013 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/</guid>
-      <description>
+      <description>&lt;p&gt;This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.&lt;/p&gt;
 
-&lt;p&gt;This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;In a DevStack environment, all the processes run under something special in Linux, called as a &lt;code&gt;screen&lt;/code&gt;. For now, you can think of a ‘screen’ as a terminal running inside a terminal, with the special property that when you close your current terminal, your ‘screens’ will not actually die, so that you can reconnect to them when you connect to the Linux system through another terminal again! Now that should give you a hint why people use screens :)&lt;/p&gt;
 
@@ -1489,7 +1486,7 @@ Rushi&lt;/p&gt;
 
 &lt;p&gt;The way to detach from a screen is &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;D&lt;/code&gt;, that is, first press &lt;code&gt;CTRL+A&lt;/code&gt;, and then press &lt;code&gt;D&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;navigating-across-screens:81565885f4011e665cf1e89d6280caf9&#34;&gt;Navigating across screens&lt;/h2&gt;
+&lt;h2 id=&#34;navigating-across-screens&#34;&gt;Navigating across screens&lt;/h2&gt;
 
 &lt;p&gt;You will see names of all the screens at the bottom of the terminal. The screen on which you currently are bears an asterisk (&lt;code&gt;*&lt;/code&gt;) near its name. To move to the right screen, do a &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;N&lt;/code&gt;. Keep in mind that you are going to use &lt;code&gt;CTRL+A&lt;/code&gt; a lot of times during your adventures with screen. Similar to the command &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;N&lt;/code&gt; to move to the right (“next”) screen, to move to the left screen the command is &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;P&lt;/code&gt;.&lt;/p&gt;
 
@@ -1507,7 +1504,7 @@ Rushi&lt;/p&gt;
 
 &lt;p&gt;To come out of this copy mode (so that you can switch to another screen, and do other such stuff), press &lt;code&gt;]&lt;/code&gt; and you are back to normal once again.&lt;/p&gt;
 
-&lt;h2 id=&#34;some-more-generic-screen-commands:81565885f4011e665cf1e89d6280caf9&#34;&gt;Some more ‘generic’ screen commands&lt;/h2&gt;
+&lt;h2 id=&#34;some-more-generic-screen-commands&#34;&gt;Some more ‘generic’ screen commands&lt;/h2&gt;
 
 &lt;p&gt;So that you can start playing around with screens outside OpenStack too&lt;/p&gt;
 
@@ -1538,8 +1535,7 @@ Rushi&lt;/p&gt;
 
 &lt;p&gt;Cheers!&lt;/p&gt;
 
-&lt;p&gt;-Rushi Agrawal&lt;/p&gt;
-</description>
+&lt;p&gt;-Rushi Agrawal&lt;/p&gt;</description>
     </item>
     
     
@@ -1555,6 +1551,8 @@ Rushi&lt;/p&gt;
 &lt;p&gt;This quick start guide explains setting up Tempest with a DevStack environment
 for Grizzly release. Most of the information here is taken from
 &lt;a href=&#34;http://www.joinfu.com/2012/03/testing-essex-rc1-with-devstack-and-tempest/&#34;&gt;here&lt;/a&gt;, the only difference being this blog post is more recent, and is based on Grizzly.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;Assumptions made are that you understand:
 1. What is a &lt;code&gt;localrc&lt;/code&gt; file in DevStack.
@@ -1685,8 +1683,7 @@ We&amp;rsquo;ll run all the tests in verbose mode. To run all the tests:&lt;/p&g
 &lt;pre&gt;&lt;code&gt;    nosetests -sv tempest.tests.volume.test_volumes_list:VolumeListTest.test_volume_list_with_details
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;And that ladies and gentlemen, is the end! :)&lt;/p&gt;
-</description>
+&lt;p&gt;And that ladies and gentlemen, is the end! :)&lt;/p&gt;</description>
     </item>
     
     
@@ -1697,15 +1694,15 @@ We&amp;rsquo;ll run all the tests in verbose mode. To run all the tests:&lt;/p&g
       <pubDate>Tue, 19 Mar 2013 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2013/03/19/github-cheat-sheet/</guid>
-      <description>
-
-&lt;p&gt;I am posting my github cheat sheet here. I started writing it as soon as I started
+      <description>&lt;p&gt;I am posting my github cheat sheet here. I started writing it as soon as I started
 learning Github and Git. So, some of the content here can appear quite naive.
 I will try to keep this blog post as updated as I can, and if you find any
 suggestion, please comment!&lt;/p&gt;
 
 &lt;p&gt;This post is just for a reference of commands. This post will be a bad way to learn
 how git works. A basic understanding of git is assumed.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;##Initial configuration
 Configure user details only for the first time&lt;/p&gt;
@@ -1756,7 +1753,7 @@ List all branches in the local repo&lt;/p&gt;
 git checkout -b only_remote rushiagr/only_remote
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;remotes:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Remotes&lt;/h2&gt;
+&lt;h2 id=&#34;remotes&#34;&gt;Remotes&lt;/h2&gt;
 
 &lt;p&gt;Create a new remote &lt;code&gt;rushiagr&lt;/code&gt; which will track &lt;code&gt;cinder&lt;/code&gt; repository by user &lt;code&gt;rushiagr&lt;/code&gt;&lt;/p&gt;
 
@@ -1796,7 +1793,7 @@ github will not ask for your username but only password.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git checkout -b stable/folsom origin/stable/folsom
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;push:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Push&lt;/h2&gt;
+&lt;h2 id=&#34;push&#34;&gt;Push&lt;/h2&gt;
 
 &lt;p&gt;Pushing this newly created branch to remote &lt;code&gt;rushiagr&lt;/code&gt;&lt;/p&gt;
 
@@ -1819,7 +1816,7 @@ remote, say &lt;code&gt;my_remote_branch&lt;/code&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git push --set-upstream origin my_branch
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;pull:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Pull&lt;/h2&gt;
+&lt;h2 id=&#34;pull&#34;&gt;Pull&lt;/h2&gt;
 
 &lt;p&gt;Git pull is nothing more than a macro that does git fetch and git merge, in
 that order. The common syntax to pull from branch &lt;code&gt;remote_branch&lt;/code&gt; located at remote &lt;code&gt;remote_name&lt;/code&gt; to the current active branch in the local repo:&lt;/p&gt;
@@ -1827,7 +1824,7 @@ that order. The common syntax to pull from branch &lt;code&gt;remote_branch&lt;/
 &lt;pre&gt;&lt;code&gt;git pull remote_name remote_branch
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;oops-i-didn-t-intend-to-do-that:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Oops! I didn&amp;rsquo;t intend to do that!&lt;/h2&gt;
+&lt;h2 id=&#34;oops-i-didn-t-intend-to-do-that&#34;&gt;Oops! I didn&amp;rsquo;t intend to do that!&lt;/h2&gt;
 
 &lt;p&gt;####To undo last commit.
 This will just undo the commit, but will keep changes, so that you can modify the files and commit again&lt;/p&gt;
@@ -1859,7 +1856,7 @@ change the commit message.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git commit -a --amend
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;show-me-the-money:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Show me the money&lt;/h2&gt;
+&lt;h2 id=&#34;show-me-the-money&#34;&gt;Show me the money&lt;/h2&gt;
 
 &lt;p&gt;To see the patch of the last commit without undoing the last commit&lt;/p&gt;
 
@@ -1878,7 +1875,7 @@ change the commit message.&lt;/p&gt;
 
 &lt;p&gt;You can redirect the output from the above three commands to a file, to create corresponding patch file.&lt;/p&gt;
 
-&lt;h2 id=&#34;patching-in-git:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Patching in git&lt;/h2&gt;
+&lt;h2 id=&#34;patching-in-git&#34;&gt;Patching in git&lt;/h2&gt;
 
 &lt;p&gt;Check the status of patch. How many lines changed, etc&lt;/p&gt;
 
@@ -1930,8 +1927,7 @@ git rebase -i master
 &lt;p&gt;Checkout a previous commit with SHA commit id cff2580ad7bc16934b72dd9be7463eb090b31d55 from the current branch to a new branch &amp;lsquo;neew&amp;rsquo;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;git checkout -b neew cff2580ad7bc16934b72dd9be7463eb090b31d55
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     

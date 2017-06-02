@@ -46,7 +46,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
       <p class="lead">
-       not your average coder 
+       yet another tech enthusiast 
       </p>
     </div>
 
@@ -77,7 +77,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -88,9 +88,9 @@
     <h1 class="post-title">Linux Screens in DevStack</h1>
     <span class="post-date">Jun 5, 2013</span>
     
-    
+    <p>This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.</p>
 
-<p>This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.</p>
+<p></p>
 
 <p>In a DevStack environment, all the processes run under something special in Linux, called as a <code>screen</code>. For now, you can think of a ‘screen’ as a terminal running inside a terminal, with the special property that when you close your current terminal, your ‘screens’ will not actually die, so that you can reconnect to them when you connect to the Linux system through another terminal again! Now that should give you a hint why people use screens :)</p>
 
@@ -108,7 +108,7 @@
 
 <p>The way to detach from a screen is <code>CTRL+A</code> <code>D</code>, that is, first press <code>CTRL+A</code>, and then press <code>D</code>.</p>
 
-<h2 id="navigating-across-screens:81565885f4011e665cf1e89d6280caf9">Navigating across screens</h2>
+<h2 id="navigating-across-screens">Navigating across screens</h2>
 
 <p>You will see names of all the screens at the bottom of the terminal. The screen on which you currently are bears an asterisk (<code>*</code>) near its name. To move to the right screen, do a <code>CTRL+A</code> <code>N</code>. Keep in mind that you are going to use <code>CTRL+A</code> a lot of times during your adventures with screen. Similar to the command <code>CTRL+A</code> <code>N</code> to move to the right (“next”) screen, to move to the left screen the command is <code>CTRL+A</code> <code>P</code>.</p>
 
@@ -126,7 +126,7 @@
 
 <p>To come out of this copy mode (so that you can switch to another screen, and do other such stuff), press <code>]</code> and you are back to normal once again.</p>
 
-<h2 id="some-more-generic-screen-commands:81565885f4011e665cf1e89d6280caf9">Some more ‘generic’ screen commands</h2>
+<h2 id="some-more-generic-screen-commands">Some more ‘generic’ screen commands</h2>
 
 <p>So that you can start playing around with screens outside OpenStack too</p>
 
@@ -158,7 +158,6 @@
 <p>Cheers!</p>
 
 <p>-Rushi Agrawal</p>
-
     
 
      

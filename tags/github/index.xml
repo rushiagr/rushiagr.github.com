@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/github/</link>
+    <link>http://www.rushiagr.com/tags/github/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2013 Rushi Agrawal</copyright>
-    <updated>Tue, 19 Mar 2013 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -16,15 +16,15 @@
       <pubDate>Tue, 19 Mar 2013 00:00:00 &#43;0000</pubDate>
       <author>Rushi Agrawal</author>
       <guid>http://www.rushiagr.com/blog/2013/03/19/github-cheat-sheet/</guid>
-      <description>
-
-&lt;p&gt;I am posting my github cheat sheet here. I started writing it as soon as I started
+      <description>&lt;p&gt;I am posting my github cheat sheet here. I started writing it as soon as I started
 learning Github and Git. So, some of the content here can appear quite naive.
 I will try to keep this blog post as updated as I can, and if you find any
 suggestion, please comment!&lt;/p&gt;
 
 &lt;p&gt;This post is just for a reference of commands. This post will be a bad way to learn
 how git works. A basic understanding of git is assumed.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;##Initial configuration
 Configure user details only for the first time&lt;/p&gt;
@@ -75,7 +75,7 @@ List all branches in the local repo&lt;/p&gt;
 git checkout -b only_remote rushiagr/only_remote
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;remotes:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Remotes&lt;/h2&gt;
+&lt;h2 id=&#34;remotes&#34;&gt;Remotes&lt;/h2&gt;
 
 &lt;p&gt;Create a new remote &lt;code&gt;rushiagr&lt;/code&gt; which will track &lt;code&gt;cinder&lt;/code&gt; repository by user &lt;code&gt;rushiagr&lt;/code&gt;&lt;/p&gt;
 
@@ -115,7 +115,7 @@ github will not ask for your username but only password.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git checkout -b stable/folsom origin/stable/folsom
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;push:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Push&lt;/h2&gt;
+&lt;h2 id=&#34;push&#34;&gt;Push&lt;/h2&gt;
 
 &lt;p&gt;Pushing this newly created branch to remote &lt;code&gt;rushiagr&lt;/code&gt;&lt;/p&gt;
 
@@ -138,7 +138,7 @@ remote, say &lt;code&gt;my_remote_branch&lt;/code&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git push --set-upstream origin my_branch
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;pull:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Pull&lt;/h2&gt;
+&lt;h2 id=&#34;pull&#34;&gt;Pull&lt;/h2&gt;
 
 &lt;p&gt;Git pull is nothing more than a macro that does git fetch and git merge, in
 that order. The common syntax to pull from branch &lt;code&gt;remote_branch&lt;/code&gt; located at remote &lt;code&gt;remote_name&lt;/code&gt; to the current active branch in the local repo:&lt;/p&gt;
@@ -146,7 +146,7 @@ that order. The common syntax to pull from branch &lt;code&gt;remote_branch&lt;/
 &lt;pre&gt;&lt;code&gt;git pull remote_name remote_branch
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;oops-i-didn-t-intend-to-do-that:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Oops! I didn&amp;rsquo;t intend to do that!&lt;/h2&gt;
+&lt;h2 id=&#34;oops-i-didn-t-intend-to-do-that&#34;&gt;Oops! I didn&amp;rsquo;t intend to do that!&lt;/h2&gt;
 
 &lt;p&gt;####To undo last commit.
 This will just undo the commit, but will keep changes, so that you can modify the files and commit again&lt;/p&gt;
@@ -178,7 +178,7 @@ change the commit message.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git commit -a --amend
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;show-me-the-money:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Show me the money&lt;/h2&gt;
+&lt;h2 id=&#34;show-me-the-money&#34;&gt;Show me the money&lt;/h2&gt;
 
 &lt;p&gt;To see the patch of the last commit without undoing the last commit&lt;/p&gt;
 
@@ -197,7 +197,7 @@ change the commit message.&lt;/p&gt;
 
 &lt;p&gt;You can redirect the output from the above three commands to a file, to create corresponding patch file.&lt;/p&gt;
 
-&lt;h2 id=&#34;patching-in-git:04d9bb0940f5046aa10fc2c8ba66e73a&#34;&gt;Patching in git&lt;/h2&gt;
+&lt;h2 id=&#34;patching-in-git&#34;&gt;Patching in git&lt;/h2&gt;
 
 &lt;p&gt;Check the status of patch. How many lines changed, etc&lt;/p&gt;
 
@@ -249,8 +249,7 @@ git rebase -i master
 &lt;p&gt;Checkout a previous commit with SHA commit id cff2580ad7bc16934b72dd9be7463eb090b31d55 from the current branch to a new branch &amp;lsquo;neew&amp;rsquo;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;git checkout -b neew cff2580ad7bc16934b72dd9be7463eb090b31d55
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     

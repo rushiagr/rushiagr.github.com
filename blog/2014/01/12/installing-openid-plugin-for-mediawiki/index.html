@@ -46,7 +46,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
       <p class="lead">
-       not your average coder 
+       yet another tech enthusiast 
       </p>
     </div>
 
@@ -77,7 +77,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -88,13 +88,13 @@
     <h1 class="post-title">Installing OpenID plugin for MediaWiki</h1>
     <span class="post-date">Jan 12, 2014</span>
     
-    
-
-<p>This post is about setting up your wiki such that their users access the wiki
+    <p>This post is about setting up your wiki such that their users access the wiki
 only via an OpenID provider login (e.g. Google or Facebook login). This post assumes
 MediaWiki is already installed.</p>
 
-<h3 id="assumptions-prerequisites-and-requirements:2f6224b9d71ac646e56d4f9ff31b99ea">Assumptions, prerequisites and requirements</h3>
+<p></p>
+
+<h3 id="assumptions-prerequisites-and-requirements">Assumptions, prerequisites and requirements</h3>
 
 <p>All of what this blogpost says has been tried on an Ubuntu machine, but it
 should work well on other Linux distros too (except for the <code>apt-get</code> package
@@ -108,7 +108,7 @@ installs, for which you&rsquo;ll need to find alternatives on your favourite dis
 <pre><code>sudo apt-get install php5-mcrypt php5-gmp
 </code></pre>
 
-<h2 id="installing-the-plugin:2f6224b9d71ac646e56d4f9ff31b99ea">Installing the plugin</h2>
+<h2 id="installing-the-plugin">Installing the plugin</h2>
 
 <p>Get the source code for the extension into <code>$IP/extensions</code> directory</p>
 
@@ -143,7 +143,7 @@ installs, for which you&rsquo;ll need to find alternatives on your favourite dis
 <pre><code>	/etc/init.d/apache2 restart 
 </code></pre>
 
-<h3 id="editing-login-required-page:2f6224b9d71ac646e56d4f9ff31b99ea">Editing &lsquo;Login required&rsquo; page.</h3>
+<h3 id="editing-login-required-page">Editing &lsquo;Login required&rsquo; page.</h3>
 
 <p>By default, the main page of the wiki is not editable. Generally we would like
 to give some information to a user, e.g. what this wiki is all about, how
@@ -160,7 +160,7 @@ to log into it, which OpenIDs are permitted, etc.</p>
 <p>Now you can edit the <code>&lt;your_wiki_URL&gt;/jiocloud/index.phpmediawiki:loginreqpagetext</code>
  page which is presented when the user is not logged in.</p>
 
-<h3 id="other-settings:2f6224b9d71ac646e56d4f9ff31b99ea">Other settings</h3>
+<h3 id="other-settings">Other settings</h3>
 
 <p>Below you can see a snip of LocalSettings.php file, which contains many other
 fields which I used to customize my wiki. I allowed only the registered user
@@ -200,7 +200,7 @@ $wgOpenIDConsumerDenyByDefault = true;
 $wgOpenIDConsumerAllow = array(&quot;@^(https://)?launchpad.net/@&quot;);
 </code></pre>
 
-<h2 id="troubleshooting:2f6224b9d71ac646e56d4f9ff31b99ea">Troubleshooting</h2>
+<h2 id="troubleshooting">Troubleshooting</h2>
 
 <p>If there are troubles uploading a file via the MediaWiki web interface, go to the wiki directory on the server and chown the <code>images</code> folder.</p>
 
@@ -211,7 +211,6 @@ $wgOpenIDConsumerAllow = array(&quot;@^(https://)?launchpad.net/@&quot;);
 
 <p>Cheers,
 Rushi</p>
-
     
 
      

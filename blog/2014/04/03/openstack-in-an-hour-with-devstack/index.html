@@ -46,7 +46,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
       <p class="lead">
-       not your average coder 
+       yet another tech enthusiast 
       </p>
     </div>
 
@@ -77,7 +77,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -88,9 +88,9 @@
     <h1 class="post-title">OpenStack in an hour with DevStack</h1>
     <span class="post-date">Apr 3, 2014</span>
     
-    
+    <p>So you found out a cool new technology &ldquo;OpenStack&rdquo; and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. <a href="http://devstack.org">DevStack</a> is your friend-in-need. No, don&rsquo;t click that hyperlink just yet :)</p>
 
-<p>So you found out a cool new technology &ldquo;OpenStack&rdquo; and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. <a href="http://devstack.org">DevStack</a> is your friend-in-need. No, don&rsquo;t click that hyperlink just yet :)</p>
+<p></p>
 
 <p>To put it in a sentence, DevStack is &ldquo;OpenStack in a box&rdquo;. You just need a popular Linux based distribution with 2GB RAM and you&rsquo;re all set to start. DevStack is basically a set of scripts which will install all the important OpenStack services in your computer. For this, it will first download all the essential packages, pull in the OpenStack code from various OpenStack projects, and set everything up for you to try out all of it.</p>
 
@@ -100,7 +100,7 @@
 
 <p>NOTE: Do not run any of the script as a root user, unless specified otherwise explicitly.</p>
 
-<h3 id="getting-started:98c134cd40c558c50c274d316252e460">Getting started</h3>
+<h3 id="getting-started">Getting started</h3>
 
 <p>Install git</p>
 
@@ -201,7 +201,7 @@ stack.sh completed in 269 seconds.
 
 <p>Head over to <a href="http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/">Linux Screens in DevStack</a> for more information on how to work with <code>screen</code>.</p>
 
-<h3 id="housekeeping-and-customizations:98c134cd40c558c50c274d316252e460">Housekeeping and customizations</h3>
+<h3 id="housekeeping-and-customizations">Housekeeping and customizations</h3>
 
 <p>In your life as an OpenStack developer, you will be setting up and destroying DevStack instance quite a number of times. So it is good to know how to do that in the most efficient manner.</p>
 
@@ -216,7 +216,7 @@ stack.sh completed in 269 seconds.
 
 <p>So you need to bring back up the DevStack environment manually everytime you reboot. Here is where using a virtual machine comes handy. You can take a snapshot of the virtual machine, and then go back to it when you want a clean DevStack environment.</p>
 
-<h3 id="localrc-configurations:98c134cd40c558c50c274d316252e460">localrc configurations</h3>
+<h3 id="localrc-configurations">localrc configurations</h3>
 
 <p><code>localrc</code> is the file where all the local configurations (local = your local machine) are kept.</p>
 
@@ -247,7 +247,7 @@ ADMIN_PASSWORD=nova
 <pre><code>HOST_IP=192.168.xxx.xxx
 </code></pre>
 
-<h3 id="developing-code:98c134cd40c558c50c274d316252e460">Developing code</h3>
+<h3 id="developing-code">Developing code</h3>
 
 <p>If you want to immediately test out your code by running it inside DevStack, you need to make the changes in the code, and restart the affected services.</p>
 
@@ -255,7 +255,7 @@ ADMIN_PASSWORD=nova
 
 <p>In order to restart, go to the respective screen and press <code>CTRL</code>+<code>C</code>. Then, press the up arrow once to get the last command which started this screen session, and then press <code>ENTER</code>.</p>
 
-<h3 id="final-words:98c134cd40c558c50c274d316252e460">Final words</h3>
+<h3 id="final-words">Final words</h3>
 
 <p>Note that this guide just gets you started with OpenStack using DevStack. OpenStack, and cloud in general, is not about virtual machines or volumes or networks only. It is a philosophy. It is a complete paradigm shift, and as such, it is impossible to cover all of it by me. Your quest to know more about it has just started. Keep reading more and more about it and I guarantee you you will be fascinated by it&rsquo;s limitless possibilities.</p>
 
@@ -265,7 +265,6 @@ ADMIN_PASSWORD=nova
 
 <p>Cheers!
 Rushi</p>
-
     
 
      

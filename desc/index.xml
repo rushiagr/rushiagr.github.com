@@ -3,7 +3,7 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/desc/</link>
+    <link>http://www.rushiagr.com/desc/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
     <copyright>2014 Rushi Agrawal</copyright>

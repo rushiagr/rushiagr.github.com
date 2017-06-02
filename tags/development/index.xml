@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/development/</link>
+    <link>http://www.rushiagr.com/tags/development/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2016 Rushi Agrawal</copyright>
-    <updated>Thu, 08 Dec 2016 19:05:21 IST</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -147,7 +147,7 @@ and log back in, you need to re-run this command.&lt;/p&gt;
 &lt;p&gt;Now you can follow any &lt;code&gt;cqlsh&lt;/code&gt; tutorial to try out commands to create
 keyspaces, tables, rows, etc.&lt;/p&gt;
 
-&lt;h3 id=&#34;everything-at-one-place:dab26cacb0c5bb6968520a75fe886910&#34;&gt;Everything at one place&lt;/h3&gt;
+&lt;h3 id=&#34;everything-at-one-place&#34;&gt;Everything at one place&lt;/h3&gt;
 
 &lt;p&gt;You can just paste these lines in a file and run that file as a script, and it&amp;rsquo;ll set everything up for you.&lt;/p&gt;
 
@@ -211,7 +211,7 @@ avoid&amp;rsquo; articles on the web don&amp;rsquo;t talk about the bad practice
 think they just assume such simple things are taken care of by a programmer.
 My experience tells otherwise.&lt;/p&gt;
 
-&lt;h2 id=&#34;indentation-tabs-and-spaces:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Indentation, tabs and spaces.&lt;/h2&gt;
+&lt;h2 id=&#34;indentation-tabs-and-spaces&#34;&gt;Indentation, tabs and spaces.&lt;/h2&gt;
 
 &lt;p&gt;Never use tabs. Only use spaces. Use 4 spaces for a tab, always.&lt;/p&gt;
 
@@ -223,7 +223,7 @@ liking the language and you look forward to writing lots and lots of Python
 code in your lifespan; in such a case, just bear with me for a few weeks and
 it&amp;rsquo;ll come naturally to you, trust me :)&lt;/p&gt;
 
-&lt;h2 id=&#34;raise-specific-exceptions:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Raise specific exceptions&lt;/h2&gt;
+&lt;h2 id=&#34;raise-specific-exceptions&#34;&gt;Raise specific exceptions&lt;/h2&gt;
 
 &lt;p&gt;Don&amp;rsquo;t write like this:&lt;/p&gt;
 
@@ -247,7 +247,7 @@ that name) exception
 will also be caught! This might make debugging extremely hard when your app
 grows big or you start getting a lot of users.&lt;/p&gt;
 
-&lt;h2 id=&#34;trailing-whitespaces:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Trailing whitespaces&lt;/h2&gt;
+&lt;h2 id=&#34;trailing-whitespaces&#34;&gt;Trailing whitespaces&lt;/h2&gt;
 
 &lt;p&gt;In context of Python, whitespaces means space characters. There should be no
 line in Python code which has spaces at it&amp;rsquo;s end.&lt;/p&gt;
@@ -262,7 +262,7 @@ system, this will add unnecessary noise in commits, making code review and
 debugging difficult. Remember, code is read much times than is written or
 modified.&lt;/p&gt;
 
-&lt;h2 id=&#34;edge-cases-first-shallow-nesting:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Edge cases first. Shallow nesting.&lt;/h2&gt;
+&lt;h2 id=&#34;edge-cases-first-shallow-nesting&#34;&gt;Edge cases first. Shallow nesting.&lt;/h2&gt;
 
 &lt;p&gt;Consider two pseudo codes. These are codes for handling a request, but you can
 altogether ignore that fact.&lt;/p&gt;
@@ -314,7 +314,7 @@ not only Python but any programming language. I feel that these points are
 important enough that you should start a habit of adhering to them right from
 the start. It&amp;rsquo;ll help you in the long run.&lt;/p&gt;
 
-&lt;h2 id=&#34;make-commit-messages-lengthy:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Make commit messages lengthy&lt;/h2&gt;
+&lt;h2 id=&#34;make-commit-messages-lengthy&#34;&gt;Make commit messages lengthy&lt;/h2&gt;
 
 &lt;p&gt;This is a fairly general trend I see. The commit messages such people generally
 write are just a few words long. Most of the beginners have started using &lt;code&gt;git&lt;/code&gt;
@@ -348,7 +348,7 @@ than how much time you spent writing code corresponding to this commit :)&lt;/p&
 &lt;p&gt;Again, remember that commit messages are important part of documentation, and are
 extremely important for debugging later.&lt;/p&gt;
 
-&lt;h2 id=&#34;do-only-one-thing-in-a-commit:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Do only one thing in a commit&lt;/h2&gt;
+&lt;h2 id=&#34;do-only-one-thing-in-a-commit&#34;&gt;Do only one thing in a commit&lt;/h2&gt;
 
 &lt;p&gt;If you are fixing three issues, make sure you create three different commits
 for each one, and never one big commit to include three bug fixes. Even if each
@@ -368,7 +368,7 @@ understand it and you&amp;rsquo;ll go &amp;lsquo;why didn&amp;rsquo;t I know abo
 &lt;p&gt;I am realizing I can actually write &amp;lsquo;Git beginner mistakes&amp;rsquo; as a separate blog
 :). But anyway, continuing..&lt;/p&gt;
 
-&lt;h2 id=&#34;spaces-after-comma-and-colon:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Spaces after comma and colon&lt;/h2&gt;
+&lt;h2 id=&#34;spaces-after-comma-and-colon&#34;&gt;Spaces after comma and colon&lt;/h2&gt;
 
 &lt;p&gt;Just make this a habit. It improves your code readability.&lt;/p&gt;
 
@@ -394,7 +394,7 @@ understand it and you&amp;rsquo;ll go &amp;lsquo;why didn&amp;rsquo;t I know abo
 &lt;pre&gt;&lt;code&gt;request_dict = {&#39;name&#39;: name, &#39;height&#39;: height}
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;write-a-lot-of-comments-and-docstrings:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Write a lot of comments and docstrings&lt;/h2&gt;
+&lt;h2 id=&#34;write-a-lot-of-comments-and-docstrings&#34;&gt;Write a lot of comments and docstrings&lt;/h2&gt;
 
 &lt;p&gt;If something is not abvious from the code, you should write a comment about
 it. Also, make a habit of writing docstrings to functions/methods, even if it
@@ -405,7 +405,7 @@ is just a single line. Example:&lt;/p&gt;
     # Logic to create entry into db and return db object
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;write-todos-literally-everywhere:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Write TODOs literally everywhere&lt;/h2&gt;
+&lt;h2 id=&#34;write-todos-literally-everywhere&#34;&gt;Write TODOs literally everywhere&lt;/h2&gt;
 
 &lt;p&gt;While writing code, you realize it can be improved, but you don&amp;rsquo;t want to
 improve it right now as it is not that important thing at this moment. What
@@ -426,7 +426,7 @@ as I type &lt;code&gt;#t&lt;/code&gt; followed by a space, it auto-completes it 
 &lt;pre&gt;&lt;code&gt;:abbreviate #t # TODO(rushiagr):
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;parting-words:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Parting words&lt;/h3&gt;
+&lt;h3 id=&#34;parting-words&#34;&gt;Parting words&lt;/h3&gt;
 
 &lt;p&gt;My architect at Reliance used to say this: &amp;lsquo;You should not be able to
 tell by looking at code who wrote that code&amp;rsquo;. What he meant was, one should not
@@ -462,7 +462,7 @@ present in this article?  Or you disagree with something I wrote?&lt;/p&gt;
 brew cask install virtualbox
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;minikube-installation:39ea2a6527702640849009dd678ae0ea&#34;&gt;Minikube Installation&lt;/h2&gt;
+&lt;h2 id=&#34;minikube-installation&#34;&gt;Minikube Installation&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code&gt;curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.7.1/minikube-darwin-amd64
 chmod +x minikube
@@ -482,7 +482,7 @@ all the virtual machine bits will be present in &lt;code&gt;~/.minikube/&lt;/cod
 &lt;pre&gt;&lt;code&gt;minikube status
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;install-kubectl-cli:39ea2a6527702640849009dd678ae0ea&#34;&gt;Install kubectl cli&lt;/h2&gt;
+&lt;h2 id=&#34;install-kubectl-cli&#34;&gt;Install kubectl cli&lt;/h2&gt;
 
 &lt;p&gt;Don&amp;rsquo;t install &lt;code&gt;kubectl&lt;/code&gt; from brew (&lt;code&gt;brew install kubernetes-cli&lt;/code&gt;) as brew contains an older incompatible version of &lt;code&gt;kubectl&lt;/code&gt;.&lt;/p&gt;
 
@@ -625,7 +625,7 @@ Insert mode), it autosaves file. And more importantly, I have disabled swap
 file creation by Vim. It&amp;rsquo;s really that simple folks. You don&amp;rsquo;t really need swap
 files 99.99% of the times.&lt;/p&gt;
 
-&lt;h3 id=&#34;how-to-vim-autosave:c3bd95eae5779c78f8b280be1e967fb5&#34;&gt;How to Vim autosave&lt;/h3&gt;
+&lt;h3 id=&#34;how-to-vim-autosave&#34;&gt;How to Vim autosave&lt;/h3&gt;
 
 &lt;p&gt;Download the plugin, which is present at
 &lt;a href=&#34;https://github.com/907th/vim-auto-save&#34;&gt;https://github.com/907th/vim-auto-save&lt;/a&gt;, and put the plugin file in &lt;code&gt;~/.vim/plugin&lt;/code&gt; directory:&lt;/p&gt;
@@ -655,7 +655,7 @@ let g:auto_save_silent = 1
 set noswapfile
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;things-to-note:c3bd95eae5779c78f8b280be1e967fb5&#34;&gt;Things to note&lt;/h3&gt;
+&lt;h3 id=&#34;things-to-note&#34;&gt;Things to note&lt;/h3&gt;
 
 &lt;p&gt;There are a few things to note when you switch to this &amp;lsquo;autosave, no swap
 files&amp;rsquo; mode:&lt;/p&gt;
@@ -710,7 +710,7 @@ I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
 To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Mac, see
 &lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;know-about-copy-buffers:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Know about copy buffers&lt;/h2&gt;
+&lt;h2 id=&#34;know-about-copy-buffers&#34;&gt;Know about copy buffers&lt;/h2&gt;
 
 &lt;p&gt;When you do a &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt;, the stuff you copy is stored in your computer&amp;rsquo;s
 buffer, called &amp;lsquo;clipboard&amp;rsquo; from where you can paste anywhere by doing a
@@ -725,7 +725,7 @@ want to select might not fit in your current screen (e.g. output of &lt;code&gt;
 visible on your screen, and not the output which is &amp;lsquo;scrolled up&amp;rsquo; due to a lot
 of output.&lt;/p&gt;
 
-&lt;h2 id=&#34;tmux-copy-paste-the-defaults:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Tmux copy-paste - the defaults&lt;/h2&gt;
+&lt;h2 id=&#34;tmux-copy-paste-the-defaults&#34;&gt;Tmux copy-paste - the defaults&lt;/h2&gt;
 
 &lt;p&gt;The defaults are slighly involved, so this section is purely for informational purposes, and shouldn&amp;rsquo;t be memorized. Skipping this section is perfectly okay.&lt;/p&gt;
 
@@ -736,7 +736,7 @@ of output.&lt;/p&gt;
 &lt;li&gt;Press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;, &lt;code&gt;]&lt;/code&gt; to paste in a possibly different Tmux pane/window.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;tmux-vim-bindings-for-copying-into-tmux-buffer:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Tmux Vim-bindings for copying into tmux buffer&lt;/h2&gt;
+&lt;h2 id=&#34;tmux-vim-bindings-for-copying-into-tmux-buffer&#34;&gt;Tmux Vim-bindings for copying into tmux buffer&lt;/h2&gt;
 
 &lt;p&gt;Adding configuration described in this section will give you easier shortcuts
 for copy-pasting in Tmux. Moreover, these shortcuts work very similar to Vim&amp;rsquo;s
@@ -763,7 +763,7 @@ not exactly similar. You&amp;rsquo;ll realize in your Tmux journey why didn&amp;
 small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;copy-from-tmux-buffer-to-system-buffer-clipboard:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Copy from tmux buffer to system buffer (clipboard)&lt;/h2&gt;
+&lt;h2 id=&#34;copy-from-tmux-buffer-to-system-buffer-clipboard&#34;&gt;Copy from tmux buffer to system buffer (clipboard)&lt;/h2&gt;
 
 &lt;p&gt;For this to happen, you need to install &lt;code&gt;xclip&lt;/code&gt; on your computer. Do it as:&lt;/p&gt;
 
@@ -778,7 +778,7 @@ small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt
 &lt;p&gt;Now close all your tmux sessions. From now onwards, whatever you copy in Tmux
 buffer will also land into system clipboard.&lt;/p&gt;
 
-&lt;h2 id=&#34;tmux-copy-with-mouse-drag:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
+&lt;h2 id=&#34;tmux-copy-with-mouse-drag&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
 
 &lt;p&gt;You can enable &amp;lsquo;mouse mode&amp;rsquo;, using which you can copy text into tmux buffer by
 mouse drag. For doing that, you just need to add this line to your
@@ -788,7 +788,7 @@ mouse drag. For doing that, you just need to add this line to your
 set -g mouse-select-window on
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
+&lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
 
 &lt;p&gt;You&amp;rsquo;ll notice that now all your selections will go to tmux buffer, and not
 clipboard buffer. Of course, you can enable copying to system clipboard as
@@ -799,7 +799,7 @@ option enabled.&lt;/p&gt;
 &lt;p&gt;Just press &lt;code&gt;SHIFT&lt;/code&gt; button when copying, and now you can copy as if Tmux
 doesn&amp;rsquo;t exist! :)&lt;/p&gt;
 
-&lt;h2 id=&#34;copy-from-a-remote-server:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Copy from a remote server&lt;/h2&gt;
+&lt;h2 id=&#34;copy-from-a-remote-server&#34;&gt;Copy from a remote server&lt;/h2&gt;
 
 &lt;p&gt;Install &lt;code&gt;xclip&lt;/code&gt; on the remote Ubuntu/Linux server, and add the line mentioned
 above (&lt;code&gt;bind -t vi-copy y copy-pipe &amp;quot;xclip -sel clip -i&amp;quot;&lt;/code&gt;) to &lt;code&gt;~/.tmux.conf&lt;/code&gt; on
@@ -812,7 +812,7 @@ like so:&lt;/p&gt;
 &lt;p&gt;And after that everything you copy into remote&amp;rsquo;s Tmux buffer will get copied
 over to local clipboard. Magic!&lt;/p&gt;
 
-&lt;h2 id=&#34;other-information:f51ef0cd3e0156da5d2e4dc056647b6a&#34;&gt;Other information&lt;/h2&gt;
+&lt;h2 id=&#34;other-information&#34;&gt;Other information&lt;/h2&gt;
 
 &lt;p&gt;Done! Don&amp;rsquo;t forget to comment if you know something worth letting everybody
 know! Thank you:)&lt;/p&gt;
@@ -834,7 +834,7 @@ I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
 
 &lt;p&gt;I tested everything on Mac OS X El Capitan. For Ubuntu/Linux guide, see &lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/&#34;&gt;here&lt;/a&gt;. Mac OS X El Capitan runs Tmux version 2.1. To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;know-about-your-terminal:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Know about your terminal&lt;/h2&gt;
+&lt;h2 id=&#34;know-about-your-terminal&#34;&gt;Know about your terminal&lt;/h2&gt;
 
 &lt;p&gt;The default terminal which comes with Mac is pretty limiting. Instead of
 listing the limitations (and workarounds around it), I&amp;rsquo;ll just say that before
@@ -842,7 +842,7 @@ you proceed, please install iTerm 2 and start using that immediately. What I&amp
 writing below is all for iTerm 2. (Do let me know if you absolutely need Tmux
 copy-paste to work in Terminal, and I&amp;rsquo;ll provide steps for that).&lt;/p&gt;
 
-&lt;h2 id=&#34;know-about-copy-buffers:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Know about copy buffers&lt;/h2&gt;
+&lt;h2 id=&#34;know-about-copy-buffers&#34;&gt;Know about copy buffers&lt;/h2&gt;
 
 &lt;p&gt;When you do a &lt;code&gt;Command&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt;, the stuff you copy is stored in your computer&amp;rsquo;s
 buffer, called &amp;lsquo;clipboard&amp;rsquo; from where you can paste anywhere by doing a
@@ -857,13 +857,13 @@ want to select might not fit in your current screen (e.g. output of &lt;code&gt;
 visible on your screen, and not the output which is &amp;lsquo;scrolled up&amp;rsquo; due to a lot
 of output.&lt;/p&gt;
 
-&lt;h2 id=&#34;tmux-copy-paste-the-defaults:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux copy-paste - the defaults&lt;/h2&gt;
+&lt;h2 id=&#34;tmux-copy-paste-the-defaults&#34;&gt;Tmux copy-paste - the defaults&lt;/h2&gt;
 
 &lt;p&gt;Well, the defaults in Mac are horrible. There is simply no way to copy into
 tmux buffer without using any external plugin. BUT you can copy stuff into
 system clipboard by just using your mouse for selecting text.&lt;/p&gt;
 
-&lt;h2 id=&#34;tmux-vim-bindings-for-copying-into-tmux-buffer:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux Vim-bindings for copying into tmux buffer&lt;/h2&gt;
+&lt;h2 id=&#34;tmux-vim-bindings-for-copying-into-tmux-buffer&#34;&gt;Tmux Vim-bindings for copying into tmux buffer&lt;/h2&gt;
 
 &lt;p&gt;Adding configuration described in this section will give you easier shortcuts
 for copy-pasting in Tmux. Moreover, these shortcuts work very similar to Vim&amp;rsquo;s
@@ -890,7 +890,7 @@ not exactly similar. You&amp;rsquo;ll realize in your Tmux journey why didn&amp;
 small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;copy-from-tmux-buffer-to-system-buffer-clipboard:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Copy from tmux buffer to system buffer (clipboard)&lt;/h2&gt;
+&lt;h2 id=&#34;copy-from-tmux-buffer-to-system-buffer-clipboard&#34;&gt;Copy from tmux buffer to system buffer (clipboard)&lt;/h2&gt;
 
 &lt;p&gt;In newer iTerm2, you need to enable one option in settings to copy a text into
 both tmux buffer and clipboard at the same time. Go to iTerm2 &amp;gt; Preferences &amp;gt;
@@ -898,7 +898,7 @@ both tmux buffer and clipboard at the same time. Go to iTerm2 &amp;gt; Preferenc
 &amp;ldquo;Applications in terminal may access clipboard&amp;rdquo; if it isn&amp;rsquo;t checked. See
 &lt;a href=&#34;http://apple.stackexchange.com/a/248828&#34;&gt;here&lt;/a&gt; for a screenshot.&lt;/p&gt;
 
-&lt;h2 id=&#34;tmux-copy-with-mouse-drag:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
+&lt;h2 id=&#34;tmux-copy-with-mouse-drag&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
 
 &lt;p&gt;You can enable &amp;lsquo;mouse mode&amp;rsquo;, using which you can copy text into tmux buffer by
 mouse drag. For doing that, you just need to add this line to your
@@ -907,7 +907,7 @@ mouse drag. For doing that, you just need to add this line to your
 &lt;pre&gt;&lt;code&gt;set -g mouse on
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
+&lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
 
 &lt;p&gt;You&amp;rsquo;ll notice that now all your selections will go to tmux buffer, and not
 clipboard buffer. Of course, you can enable copying to system clipboard as
@@ -918,7 +918,7 @@ option enabled.&lt;/p&gt;
 &lt;p&gt;Just press &lt;code&gt;Option&lt;/code&gt; (Alt) button when copying, and now you can copy as if Tmux
 doesn&amp;rsquo;t exist! :)&lt;/p&gt;
 
-&lt;h2 id=&#34;copy-from-a-remote-server:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Copy from a remote server&lt;/h2&gt;
+&lt;h2 id=&#34;copy-from-a-remote-server&#34;&gt;Copy from a remote server&lt;/h2&gt;
 
 &lt;p&gt;Now if your remote server is a Linux machine (e.g. an Ubuntu server), then
 getting that remote server&amp;rsquo;s tmux buffer copied into our local Mac&amp;rsquo;s clipboard
@@ -941,7 +941,7 @@ involved, like &lt;a href=&#34;http://superuser.com/a/408374/315134&#34;&gt;here
 you need a better explanation of that method (e.g. more details on SSH keys and
 enabling remote option on Mac OS X)&lt;/p&gt;
 
-&lt;h2 id=&#34;other-information:ecacbb25d54684d6bcfb7679736c5319&#34;&gt;Other information&lt;/h2&gt;
+&lt;h2 id=&#34;other-information&#34;&gt;Other information&lt;/h2&gt;
 
 &lt;p&gt;Done! Don&amp;rsquo;t forget to comment if you know something worth letting everybody
 know! Thank you:)&lt;/p&gt;

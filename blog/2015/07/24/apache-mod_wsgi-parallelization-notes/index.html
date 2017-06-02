@@ -46,7 +46,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
       <p class="lead">
-       not your average coder 
+       yet another tech enthusiast 
       </p>
     </div>
 
@@ -77,7 +77,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -96,19 +96,19 @@ doc by the author of mod_wsgi module of Apache. This blog post just serves as a 
 is only useful if you have read the original document but it&rsquo;s been too long since you
 read it :)</p>
 
-<h2 id="apache-with-mod-wsgi:d8164b9dd960e232cff9349f39ccb12e">Apache with mod_wsgi</h2>
+<h2 id="apache-with-mod-wsgi">Apache with mod_wsgi</h2>
 
 <p>A Python application can run with multiple processes as well as multiple threads
 with mod_wsgi.</p>
 
-<h3 id="prefork-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e">Prefork multiprocessing module</h3>
+<h3 id="prefork-multiprocessing-module">Prefork multiprocessing module</h3>
 
 <p>Apache creates multiple processes, and each request is handled by one process.
 A process only handles one request at a time.
 This means, if you have set number of processes to 1, there will be only one
 request handeled at a time overall.</p>
 
-<h3 id="worker-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e">Worker multiprocessing module</h3>
+<h3 id="worker-multiprocessing-module">Worker multiprocessing module</h3>
 
 <p>Multiple processes, and multiple threads in each processa.
 Even if a process is handling a request, another thread in the same process
@@ -117,7 +117,7 @@ You might need some synchronization primitive to make sure multiple threads
 of same process don&rsquo;t corrupt shared memory (only occurs when shared memory
 is mutated)</p>
 
-<h3 id="but-gil:d8164b9dd960e232cff9349f39ccb12e">But GIL?</h3>
+<h3 id="but-gil">But GIL?</h3>
 
 <p>Python GIL problem is largely alleviated with mod_wsgi since multiple processes
 can handle requests, and GIL has impact ranging to only one process. One more

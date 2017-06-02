@@ -2,12 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.rushiagr.com/</loc>
-    <lastmod>2016-12-08T19:05:21+05:30</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://www.rushiagr.com/blog/2016/12/08/cassandra-server-in-10-minutes/</loc>
     <lastmod>2016-12-08T19:05:21+05:30</lastmod>
   </url>
@@ -200,6 +194,454 @@
   <url>
     <loc>http://www.rushiagr.com/blog/2013/03/19/github-cheat-sheet/</loc>
     <lastmod>2013-03-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/amazon/</loc>
+    <lastmod>2014-08-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/apache/</loc>
+    <lastmod>2015-07-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/apple/</loc>
+    <lastmod>2016-06-16T10:58:02+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/apt/</loc>
+    <lastmod>2015-06-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/automation/</loc>
+    <lastmod>2014-09-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/aws/</loc>
+    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/block-storage/</loc>
+    <lastmod>2013-05-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/blog/</loc>
+    <lastmod>2016-12-08T19:05:21+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/boto/</loc>
+    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/cache/</loc>
+    <lastmod>2015-06-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/cassandra/</loc>
+    <lastmod>2016-12-08T19:05:21+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/cheatsheet/</loc>
+    <lastmod>2016-12-08T19:05:21+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/cinder/</loc>
+    <lastmod>2014-01-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/cli/</loc>
+    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/cloud/</loc>
+    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/code/</loc>
+    <lastmod>2015-06-02T17:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/commandline/</loc>
+    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/containers/</loc>
+    <lastmod>2016-08-16T17:03:53+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/data/</loc>
+    <lastmod>2015-09-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/databases/</loc>
+    <lastmod>2015-09-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/desc/</loc>
+    <lastmod>2014-08-12T11:09:35+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/development/</loc>
+    <lastmod>2016-12-08T19:05:21+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/devops/</loc>
+    <lastmod>2015-07-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/devstack/</loc>
+    <lastmod>2015-09-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/distributed/</loc>
+    <lastmod>2016-12-08T19:05:21+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/django/</loc>
+    <lastmod>2016-10-11T17:59:46+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/docker/</loc>
+    <lastmod>2016-08-16T17:03:53+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/ec2/</loc>
+    <lastmod>2014-08-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/git/</loc>
+    <lastmod>2016-10-11T17:59:46+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/github/</loc>
+    <lastmod>2013-03-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/golang/</loc>
+    <lastmod>2016-08-16T17:03:53+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/series-desc/hugo-101/</loc>
+    <lastmod>2014-08-12T11:09:35+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/iscsi/</loc>
+    <lastmod>2014-09-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/keystone/</loc>
+    <lastmod>2015-09-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/kubernetes/</loc>
+    <lastmod>2016-08-16T17:03:53+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/linux/</loc>
+    <lastmod>2014-01-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/lvm/</loc>
+    <lastmod>2014-09-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/lxc/</loc>
+    <lastmod>2015-06-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/mysql/</loc>
+    <lastmod>2015-12-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/nosql/</loc>
+    <lastmod>2015-09-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/notes/</loc>
+    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/openid/</loc>
+    <lastmod>2014-01-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/openstack/</loc>
+    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/operations/</loc>
+    <lastmod>2015-07-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/orchestration/</loc>
+    <lastmod>2016-08-16T17:03:53+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/packaging/</loc>
+    <lastmod>2015-06-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/productivity/</loc>
+    <lastmod>2016-06-17T11:18:27+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/programming/</loc>
+    <lastmod>2016-10-11T17:59:46+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/puppet/</loc>
+    <lastmod>2014-09-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/python/</loc>
+    <lastmod>2016-10-11T17:59:46+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/quickstart/</loc>
+    <lastmod>2016-06-16T10:59:02+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/quicstart/</loc>
+    <lastmod>2014-04-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/scalability/</loc>
+    <lastmod>2015-09-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/scraper/</loc>
+    <lastmod>2015-09-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/screen/</loc>
+    <lastmod>2013-06-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/series-desc/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/server/</loc>
+    <lastmod>2015-07-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/squid/</loc>
+    <lastmod>2015-06-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/storage/</loc>
+    <lastmod>2014-01-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/systems/</loc>
+    <lastmod>2015-07-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/tech/</loc>
+    <lastmod>2014-08-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/technology/</loc>
+    <lastmod>2015-06-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/tempest/</loc>
+    <lastmod>2013-03-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/terminal/</loc>
+    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/testing/</loc>
+    <lastmod>2014-09-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/tmux/</loc>
+    <lastmod>2016-06-16T10:59:02+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/trick/</loc>
+    <lastmod>2016-07-20T23:18:24+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/tutorial/</loc>
+    <lastmod>2016-06-17T11:18:27+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/ubuntu/</loc>
+    <lastmod>2016-06-16T10:59:02+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/ux/</loc>
+    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/vim/</loc>
+    <lastmod>2016-10-11T17:59:46+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/virtualization/</loc>
+    <lastmod>2015-06-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/tags/vm/</loc>
+    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.rushiagr.com/</loc>
+    <lastmod>2016-12-08T19:05:21+05:30</lastmod>
+    <priority>0</priority>
   </url>
   
 </urlset>

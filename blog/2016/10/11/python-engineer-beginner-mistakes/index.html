@@ -46,7 +46,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
       <p class="lead">
-       not your average coder 
+       yet another tech enthusiast 
       </p>
     </div>
 
@@ -77,7 +77,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -117,7 +117,7 @@ avoid&rsquo; articles on the web don&rsquo;t talk about the bad practices I enco
 think they just assume such simple things are taken care of by a programmer.
 My experience tells otherwise.</p>
 
-<h2 id="indentation-tabs-and-spaces:cd4fddc7a50aaf88948c76b1bce26509">Indentation, tabs and spaces.</h2>
+<h2 id="indentation-tabs-and-spaces">Indentation, tabs and spaces.</h2>
 
 <p>Never use tabs. Only use spaces. Use 4 spaces for a tab, always.</p>
 
@@ -129,7 +129,7 @@ liking the language and you look forward to writing lots and lots of Python
 code in your lifespan; in such a case, just bear with me for a few weeks and
 it&rsquo;ll come naturally to you, trust me :)</p>
 
-<h2 id="raise-specific-exceptions:cd4fddc7a50aaf88948c76b1bce26509">Raise specific exceptions</h2>
+<h2 id="raise-specific-exceptions">Raise specific exceptions</h2>
 
 <p>Don&rsquo;t write like this:</p>
 
@@ -153,7 +153,7 @@ that name) exception
 will also be caught! This might make debugging extremely hard when your app
 grows big or you start getting a lot of users.</p>
 
-<h2 id="trailing-whitespaces:cd4fddc7a50aaf88948c76b1bce26509">Trailing whitespaces</h2>
+<h2 id="trailing-whitespaces">Trailing whitespaces</h2>
 
 <p>In context of Python, whitespaces means space characters. There should be no
 line in Python code which has spaces at it&rsquo;s end.</p>
@@ -168,7 +168,7 @@ system, this will add unnecessary noise in commits, making code review and
 debugging difficult. Remember, code is read much times than is written or
 modified.</p>
 
-<h2 id="edge-cases-first-shallow-nesting:cd4fddc7a50aaf88948c76b1bce26509">Edge cases first. Shallow nesting.</h2>
+<h2 id="edge-cases-first-shallow-nesting">Edge cases first. Shallow nesting.</h2>
 
 <p>Consider two pseudo codes. These are codes for handling a request, but you can
 altogether ignore that fact.</p>
@@ -220,7 +220,7 @@ not only Python but any programming language. I feel that these points are
 important enough that you should start a habit of adhering to them right from
 the start. It&rsquo;ll help you in the long run.</p>
 
-<h2 id="make-commit-messages-lengthy:cd4fddc7a50aaf88948c76b1bce26509">Make commit messages lengthy</h2>
+<h2 id="make-commit-messages-lengthy">Make commit messages lengthy</h2>
 
 <p>This is a fairly general trend I see. The commit messages such people generally
 write are just a few words long. Most of the beginners have started using <code>git</code>
@@ -254,7 +254,7 @@ than how much time you spent writing code corresponding to this commit :)</p>
 <p>Again, remember that commit messages are important part of documentation, and are
 extremely important for debugging later.</p>
 
-<h2 id="do-only-one-thing-in-a-commit:cd4fddc7a50aaf88948c76b1bce26509">Do only one thing in a commit</h2>
+<h2 id="do-only-one-thing-in-a-commit">Do only one thing in a commit</h2>
 
 <p>If you are fixing three issues, make sure you create three different commits
 for each one, and never one big commit to include three bug fixes. Even if each
@@ -274,7 +274,7 @@ understand it and you&rsquo;ll go &lsquo;why didn&rsquo;t I know about this till
 <p>I am realizing I can actually write &lsquo;Git beginner mistakes&rsquo; as a separate blog
 :). But anyway, continuing..</p>
 
-<h2 id="spaces-after-comma-and-colon:cd4fddc7a50aaf88948c76b1bce26509">Spaces after comma and colon</h2>
+<h2 id="spaces-after-comma-and-colon">Spaces after comma and colon</h2>
 
 <p>Just make this a habit. It improves your code readability.</p>
 
@@ -300,7 +300,7 @@ understand it and you&rsquo;ll go &lsquo;why didn&rsquo;t I know about this till
 <pre><code>request_dict = {'name': name, 'height': height}
 </code></pre>
 
-<h2 id="write-a-lot-of-comments-and-docstrings:cd4fddc7a50aaf88948c76b1bce26509">Write a lot of comments and docstrings</h2>
+<h2 id="write-a-lot-of-comments-and-docstrings">Write a lot of comments and docstrings</h2>
 
 <p>If something is not abvious from the code, you should write a comment about
 it. Also, make a habit of writing docstrings to functions/methods, even if it
@@ -311,7 +311,7 @@ is just a single line. Example:</p>
     # Logic to create entry into db and return db object
 </code></pre>
 
-<h2 id="write-todos-literally-everywhere:cd4fddc7a50aaf88948c76b1bce26509">Write TODOs literally everywhere</h2>
+<h2 id="write-todos-literally-everywhere">Write TODOs literally everywhere</h2>
 
 <p>While writing code, you realize it can be improved, but you don&rsquo;t want to
 improve it right now as it is not that important thing at this moment. What
@@ -332,7 +332,7 @@ as I type <code>#t</code> followed by a space, it auto-completes it to <code># T
 <pre><code>:abbreviate #t # TODO(rushiagr):
 </code></pre>
 
-<h3 id="parting-words:cd4fddc7a50aaf88948c76b1bce26509">Parting words</h3>
+<h3 id="parting-words">Parting words</h3>
 
 <p>My architect at Reliance used to say this: &lsquo;You should not be able to
 tell by looking at code who wrote that code&rsquo;. What he meant was, one should not

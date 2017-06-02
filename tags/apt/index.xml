@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/apt/</link>
+    <link>http://www.rushiagr.com/tags/apt/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2015 Rushi Agrawal</copyright>
-    <updated>Fri, 05 Jun 2015 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -22,7 +22,7 @@
 and hence save bandwidth if you want to install those packages again and again.
 Also works if you are already behind a squid proxy.&lt;/p&gt;
 
-&lt;h2 id=&#34;problem-repetitive-download-slow:4536ae7fffd586a321b78960b2283427&#34;&gt;Problem: Repetitive download. Slow.&lt;/h2&gt;
+&lt;h2 id=&#34;problem-repetitive-download-slow&#34;&gt;Problem: Repetitive download. Slow.&lt;/h2&gt;
 
 &lt;p&gt;If you deal with virtual machines a lot, you might know the pain of
 managing packages on each one of them. Every time I had to create a new VM,
@@ -34,7 +34,7 @@ and Ubuntu still doesn&amp;rsquo;t come pre-installed with &lt;code&gt;git&lt;/c
 and some others. This would mean I&amp;rsquo;m downloading the same file over the network
 over and over again. Now there are two ways to deal with this situation&lt;/p&gt;
 
-&lt;h2 id=&#34;solution-1-local-ubuntu-mirror-super-fast-but-unweildy:4536ae7fffd586a321b78960b2283427&#34;&gt;Solution 1: Local Ubuntu mirror - Super fast but unweildy&lt;/h2&gt;
+&lt;h2 id=&#34;solution-1-local-ubuntu-mirror-super-fast-but-unweildy&#34;&gt;Solution 1: Local Ubuntu mirror - Super fast but unweildy&lt;/h2&gt;
 
 &lt;p&gt;The first solution is to download a complete Ubuntu mirror to your computer.
 That is, download ALL Ubuntu packages to your system, and then it is super fast.
@@ -44,7 +44,7 @@ this mirror. If you are trying to update the local mirror every week or so,
 each time it will ask you to download around 5GB of data. And that unfortunately
 is too much for me to download every few days.&lt;/p&gt;
 
-&lt;h2 id=&#34;solution-2-cache-with-squid-proxy-just-about-perfect:4536ae7fffd586a321b78960b2283427&#34;&gt;Solution 2: Cache with Squid proxy - Just about perfect&lt;/h2&gt;
+&lt;h2 id=&#34;solution-2-cache-with-squid-proxy-just-about-perfect&#34;&gt;Solution 2: Cache with Squid proxy - Just about perfect&lt;/h2&gt;
 
 &lt;p&gt;The other alternative is use a local cache, using Squid proxy. It works like
 just another cache: if you want a package of a specific version, Squid will connect
@@ -56,7 +56,7 @@ is miniscule (Bytes) compared to downloading the whole package (MBs)j. If the
 details doesn&amp;rsquo;t match any locally cached packages, the proxy fetches that package
 from internet and responds to the requester.&lt;/p&gt;
 
-&lt;h2 id=&#34;practical:4536ae7fffd586a321b78960b2283427&#34;&gt;Practical!&lt;/h2&gt;
+&lt;h2 id=&#34;practical&#34;&gt;Practical!&lt;/h2&gt;
 
 &lt;p&gt;Enough of theory, let&amp;rsquo;s put theory to some practice :)&lt;/p&gt;
 
@@ -134,7 +134,7 @@ option to the &lt;code&gt;sudo&lt;/code&gt; command&lt;/p&gt;
 
 &lt;p&gt;Sure there are alternative ways of using the proxy, but this is my favourite!&lt;/p&gt;
 
-&lt;h2 id=&#34;i-m-already-behind-a-proxy:4536ae7fffd586a321b78960b2283427&#34;&gt;I&amp;rsquo;m already behind a proxy!&lt;/h2&gt;
+&lt;h2 id=&#34;i-m-already-behind-a-proxy&#34;&gt;I&amp;rsquo;m already behind a proxy!&lt;/h2&gt;
 
 &lt;p&gt;Worry not, add these lines to &lt;code&gt;squid.conf&lt;/code&gt;, restart squid and you&amp;rsquo;re all set for using the
 brand new proxy instead of the old one :)&lt;/p&gt;
@@ -143,7 +143,7 @@ brand new proxy instead of the old one :)&lt;/p&gt;
 never_direct allow all
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;ending-thoughts:4536ae7fffd586a321b78960b2283427&#34;&gt;Ending thoughts&lt;/h2&gt;
+&lt;h2 id=&#34;ending-thoughts&#34;&gt;Ending thoughts&lt;/h2&gt;
 
 &lt;p&gt;You can go to &lt;code&gt;/var/spool/squid3&lt;/code&gt; and run a &lt;code&gt;du -sch&lt;/code&gt; to see the total size
 of cached files. I find it easy sometimes to calculate the total size of

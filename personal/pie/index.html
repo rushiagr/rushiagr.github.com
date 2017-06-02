@@ -48,7 +48,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com/personal">rushiagr</a></h1>
       <p class="lead">
-       not your average joe 
+       yet another human being 
       </p>
     </div>
 
@@ -79,7 +79,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -100,7 +100,7 @@
     </h1>
     
 
-<h4 id="pie-is-a-go-package-that-provides-a-toolkit-for-creating-plugins-for-go-applications:786534216edb3831c5addeda1aa68cd4">Pie is a Go package that provides a toolkit for creating plugins for Go applications.</h4>
+<h4 id="pie-is-a-go-package-that-provides-a-toolkit-for-creating-plugins-for-go-applications">Pie is a Go package that provides a toolkit for creating plugins for Go applications.</h4>
 
 <pre><code>import &quot;github.com/natefinch/pie&quot;
 </code></pre>
@@ -118,7 +118,7 @@ well, you know.</p>
 <p>If you have to explain it to your boss, just say it&rsquo;s an acronym for Plug In
 Executables. <sub>(but it&rsquo;s not, really)</sub></p>
 
-<h2 id="about-pie:786534216edb3831c5addeda1aa68cd4">About Pie</h2>
+<h2 id="about-pie">About Pie</h2>
 
 <p>Plugins using this toolkit and the applications managing those plugins
 communicate via RPC over the plugin application&rsquo;s Stdin and Stdout.</p>
@@ -157,7 +157,7 @@ them, and it&rsquo;ll work correctly.</p>
 used for plugins that consume an API provided by the main process.  To see an
 example of this, look in the examples/consumer folder.</p>
 
-<h2 id="func-newconsumer:786534216edb3831c5addeda1aa68cd4">func NewConsumer</h2>
+<h2 id="func-newconsumer">func NewConsumer</h2>
 
 <pre><code class="language-go">func NewConsumer() *rpc.Client
 </code></pre>
@@ -165,7 +165,7 @@ example of this, look in the examples/consumer folder.</p>
 <p>NewConsumer returns an rpc.Client that will consume an API from the host
 process over this application&rsquo;s Stdin and Stdout using gob encoding.</p>
 
-<h2 id="func-newconsumercodec:786534216edb3831c5addeda1aa68cd4">func NewConsumerCodec</h2>
+<h2 id="func-newconsumercodec">func NewConsumerCodec</h2>
 
 <pre><code class="language-go">func NewConsumerCodec(f func(io.ReadWriteCloser) rpc.ClientCodec) *rpc.Client
 </code></pre>
@@ -174,7 +174,7 @@ process over this application&rsquo;s Stdin and Stdout using gob encoding.</p>
 process over this application&rsquo;s Stdin and Stdout using the ClientCodec
 returned by f.</p>
 
-<h2 id="func-startprovider:786534216edb3831c5addeda1aa68cd4">func StartProvider</h2>
+<h2 id="func-startprovider">func StartProvider</h2>
 
 <pre><code class="language-go">func StartProvider(output io.Writer, path string, args ...string) (*rpc.Client, error)
 </code></pre>
@@ -185,7 +185,7 @@ encoding over the plugin&rsquo;s Stdin and Stdout.  The writer passed to output
 will receive output from the plugin&rsquo;s stderr.  Closing the RPC client
 returned from this function will shut down the plugin application.</p>
 
-<h2 id="func-startprovidercodec:786534216edb3831c5addeda1aa68cd4">func StartProviderCodec</h2>
+<h2 id="func-startprovidercodec">func StartProviderCodec</h2>
 
 <pre><code class="language-go">func StartProviderCodec(
     f func(io.ReadWriteCloser) rpc.ClientCodec,
@@ -202,7 +202,7 @@ writer passed to output will receive output from the plugin&rsquo;s stderr.
 Closing the RPC client returned from this function will shut down the plugin
 application.</p>
 
-<h2 id="type-server:786534216edb3831c5addeda1aa68cd4">type Server</h2>
+<h2 id="type-server">type Server</h2>
 
 <pre><code class="language-go">type Server struct {
     // contains filtered or unexported fields
@@ -212,7 +212,7 @@ application.</p>
 <p>Server is a type that represents an RPC server that serves an API over
 stdin/stdout.</p>
 
-<h3 id="func-newprovider:786534216edb3831c5addeda1aa68cd4">func NewProvider</h3>
+<h3 id="func-newprovider">func NewProvider</h3>
 
 <pre><code class="language-go">func NewProvider() Server
 </code></pre>
@@ -221,7 +221,7 @@ stdin/stdout.</p>
 application&rsquo;s Stdin and Stdout.  This method is intended to be run by the
 plugin application.</p>
 
-<h3 id="func-startconsumer:786534216edb3831c5addeda1aa68cd4">func StartConsumer</h3>
+<h3 id="func-startconsumer">func StartConsumer</h3>
 
 <pre><code class="language-go">func StartConsumer(output io.Writer, path string, args ...string) (Server, error)
 </code></pre>
@@ -231,7 +231,7 @@ and args, writing its stderr to output.  The plugin consumes an API this
 application provides.  The function returns the Server for this host
 application, which should be used to register APIs for the plugin to consume.</p>
 
-<h3 id="func-server-register:786534216edb3831c5addeda1aa68cd4">func (Server) Register</h3>
+<h3 id="func-server-register">func (Server) Register</h3>
 
 <pre><code class="language-go">func (s Server) Register(rcvr interface{}) error
 </code></pre>
@@ -250,7 +250,7 @@ suitable methods. It also logs the error using package log. The client
 accesses each method using a string of the form &ldquo;Type.Method&rdquo;, where Type is
 the receiver&rsquo;s concrete type.</p>
 
-<h3 id="func-server-registername:786534216edb3831c5addeda1aa68cd4">func (Server) RegisterName</h3>
+<h3 id="func-server-registername">func (Server) RegisterName</h3>
 
 <pre><code class="language-go">func (s Server) RegisterName(name string, rcvr interface{}) error
 </code></pre>
@@ -258,7 +258,7 @@ the receiver&rsquo;s concrete type.</p>
 <p>RegisterName is like Register but uses the provided name for the type
 instead of the receiver&rsquo;s concrete type.</p>
 
-<h3 id="func-server-serve:786534216edb3831c5addeda1aa68cd4">func (Server) Serve</h3>
+<h3 id="func-server-serve">func (Server) Serve</h3>
 
 <pre><code class="language-go">func (s Server) Serve()
 </code></pre>
@@ -266,7 +266,7 @@ instead of the receiver&rsquo;s concrete type.</p>
 <p>Serve starts the Server&rsquo;s RPC server, serving via gob encoding.  This call
 will block until the client hangs up.</p>
 
-<h3 id="func-server-servecodec:786534216edb3831c5addeda1aa68cd4">func (Server) ServeCodec</h3>
+<h3 id="func-server-servecodec">func (Server) ServeCodec</h3>
 
 <pre><code class="language-go">func (s Server) ServeCodec(f func(io.ReadWriteCloser) rpc.ServerCodec)
 </code></pre>

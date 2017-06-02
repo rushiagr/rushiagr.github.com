@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/programming/</link>
+    <link>http://www.rushiagr.com/tags/programming/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2016 Rushi Agrawal</copyright>
-    <updated>Tue, 11 Oct 2016 17:59:46 IST</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -45,7 +45,7 @@ avoid&amp;rsquo; articles on the web don&amp;rsquo;t talk about the bad practice
 think they just assume such simple things are taken care of by a programmer.
 My experience tells otherwise.&lt;/p&gt;
 
-&lt;h2 id=&#34;indentation-tabs-and-spaces:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Indentation, tabs and spaces.&lt;/h2&gt;
+&lt;h2 id=&#34;indentation-tabs-and-spaces&#34;&gt;Indentation, tabs and spaces.&lt;/h2&gt;
 
 &lt;p&gt;Never use tabs. Only use spaces. Use 4 spaces for a tab, always.&lt;/p&gt;
 
@@ -57,7 +57,7 @@ liking the language and you look forward to writing lots and lots of Python
 code in your lifespan; in such a case, just bear with me for a few weeks and
 it&amp;rsquo;ll come naturally to you, trust me :)&lt;/p&gt;
 
-&lt;h2 id=&#34;raise-specific-exceptions:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Raise specific exceptions&lt;/h2&gt;
+&lt;h2 id=&#34;raise-specific-exceptions&#34;&gt;Raise specific exceptions&lt;/h2&gt;
 
 &lt;p&gt;Don&amp;rsquo;t write like this:&lt;/p&gt;
 
@@ -81,7 +81,7 @@ that name) exception
 will also be caught! This might make debugging extremely hard when your app
 grows big or you start getting a lot of users.&lt;/p&gt;
 
-&lt;h2 id=&#34;trailing-whitespaces:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Trailing whitespaces&lt;/h2&gt;
+&lt;h2 id=&#34;trailing-whitespaces&#34;&gt;Trailing whitespaces&lt;/h2&gt;
 
 &lt;p&gt;In context of Python, whitespaces means space characters. There should be no
 line in Python code which has spaces at it&amp;rsquo;s end.&lt;/p&gt;
@@ -96,7 +96,7 @@ system, this will add unnecessary noise in commits, making code review and
 debugging difficult. Remember, code is read much times than is written or
 modified.&lt;/p&gt;
 
-&lt;h2 id=&#34;edge-cases-first-shallow-nesting:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Edge cases first. Shallow nesting.&lt;/h2&gt;
+&lt;h2 id=&#34;edge-cases-first-shallow-nesting&#34;&gt;Edge cases first. Shallow nesting.&lt;/h2&gt;
 
 &lt;p&gt;Consider two pseudo codes. These are codes for handling a request, but you can
 altogether ignore that fact.&lt;/p&gt;
@@ -148,7 +148,7 @@ not only Python but any programming language. I feel that these points are
 important enough that you should start a habit of adhering to them right from
 the start. It&amp;rsquo;ll help you in the long run.&lt;/p&gt;
 
-&lt;h2 id=&#34;make-commit-messages-lengthy:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Make commit messages lengthy&lt;/h2&gt;
+&lt;h2 id=&#34;make-commit-messages-lengthy&#34;&gt;Make commit messages lengthy&lt;/h2&gt;
 
 &lt;p&gt;This is a fairly general trend I see. The commit messages such people generally
 write are just a few words long. Most of the beginners have started using &lt;code&gt;git&lt;/code&gt;
@@ -182,7 +182,7 @@ than how much time you spent writing code corresponding to this commit :)&lt;/p&
 &lt;p&gt;Again, remember that commit messages are important part of documentation, and are
 extremely important for debugging later.&lt;/p&gt;
 
-&lt;h2 id=&#34;do-only-one-thing-in-a-commit:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Do only one thing in a commit&lt;/h2&gt;
+&lt;h2 id=&#34;do-only-one-thing-in-a-commit&#34;&gt;Do only one thing in a commit&lt;/h2&gt;
 
 &lt;p&gt;If you are fixing three issues, make sure you create three different commits
 for each one, and never one big commit to include three bug fixes. Even if each
@@ -202,7 +202,7 @@ understand it and you&amp;rsquo;ll go &amp;lsquo;why didn&amp;rsquo;t I know abo
 &lt;p&gt;I am realizing I can actually write &amp;lsquo;Git beginner mistakes&amp;rsquo; as a separate blog
 :). But anyway, continuing..&lt;/p&gt;
 
-&lt;h2 id=&#34;spaces-after-comma-and-colon:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Spaces after comma and colon&lt;/h2&gt;
+&lt;h2 id=&#34;spaces-after-comma-and-colon&#34;&gt;Spaces after comma and colon&lt;/h2&gt;
 
 &lt;p&gt;Just make this a habit. It improves your code readability.&lt;/p&gt;
 
@@ -228,7 +228,7 @@ understand it and you&amp;rsquo;ll go &amp;lsquo;why didn&amp;rsquo;t I know abo
 &lt;pre&gt;&lt;code&gt;request_dict = {&#39;name&#39;: name, &#39;height&#39;: height}
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;write-a-lot-of-comments-and-docstrings:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Write a lot of comments and docstrings&lt;/h2&gt;
+&lt;h2 id=&#34;write-a-lot-of-comments-and-docstrings&#34;&gt;Write a lot of comments and docstrings&lt;/h2&gt;
 
 &lt;p&gt;If something is not abvious from the code, you should write a comment about
 it. Also, make a habit of writing docstrings to functions/methods, even if it
@@ -239,7 +239,7 @@ is just a single line. Example:&lt;/p&gt;
     # Logic to create entry into db and return db object
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;write-todos-literally-everywhere:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Write TODOs literally everywhere&lt;/h2&gt;
+&lt;h2 id=&#34;write-todos-literally-everywhere&#34;&gt;Write TODOs literally everywhere&lt;/h2&gt;
 
 &lt;p&gt;While writing code, you realize it can be improved, but you don&amp;rsquo;t want to
 improve it right now as it is not that important thing at this moment. What
@@ -260,7 +260,7 @@ as I type &lt;code&gt;#t&lt;/code&gt; followed by a space, it auto-completes it 
 &lt;pre&gt;&lt;code&gt;:abbreviate #t # TODO(rushiagr):
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;parting-words:cd4fddc7a50aaf88948c76b1bce26509&#34;&gt;Parting words&lt;/h3&gt;
+&lt;h3 id=&#34;parting-words&#34;&gt;Parting words&lt;/h3&gt;
 
 &lt;p&gt;My architect at Reliance used to say this: &amp;lsquo;You should not be able to
 tell by looking at code who wrote that code&amp;rsquo;. What he meant was, one should not

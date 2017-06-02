@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/boto/</link>
+    <link>http://www.rushiagr.com/tags/boto/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2016 Rushi Agrawal</copyright>
-    <updated>Sat, 02 Jan 2016 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -73,7 +73,7 @@ mksg    - Create a security group (including specifying secgroup rules)
 rmsg    - Delete a security group
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;installation:a9c5ded79a164e4b6c02d02a570b1d97&#34;&gt;Installation&lt;/h2&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
 
 &lt;p&gt;I have added the tool to PyPI, so download is easy:&lt;/p&gt;
 
@@ -83,7 +83,7 @@ rmsg    - Delete a security group
 &lt;p&gt;Run &lt;code&gt;aws configure&lt;/code&gt; if you don&amp;rsquo;t have AWS credentials configured on your
 system. Typically, credentials are kept in &lt;code&gt;~/.aws/credentials&lt;/code&gt; file.&lt;/p&gt;
 
-&lt;h2 id=&#34;sample-usage:a9c5ded79a164e4b6c02d02a570b1d97&#34;&gt;Sample usage&lt;/h2&gt;
+&lt;h2 id=&#34;sample-usage&#34;&gt;Sample usage&lt;/h2&gt;
 
 &lt;p&gt;For full list of operations supported so far, see this &lt;a href=&#34;https://asciinema.org/a/ektm98481nniu7rldc1ncu5af&#34;&gt;asciinema
 screencast&lt;/a&gt; I&amp;rsquo;m providing

@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/cli/</link>
+    <link>http://www.rushiagr.com/tags/cli/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2016 Rushi Agrawal</copyright>
-    <updated>Sat, 02 Jan 2016 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -73,7 +73,7 @@ mksg    - Create a security group (including specifying secgroup rules)
 rmsg    - Delete a security group
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;installation:a9c5ded79a164e4b6c02d02a570b1d97&#34;&gt;Installation&lt;/h2&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
 
 &lt;p&gt;I have added the tool to PyPI, so download is easy:&lt;/p&gt;
 
@@ -83,7 +83,7 @@ rmsg    - Delete a security group
 &lt;p&gt;Run &lt;code&gt;aws configure&lt;/code&gt; if you don&amp;rsquo;t have AWS credentials configured on your
 system. Typically, credentials are kept in &lt;code&gt;~/.aws/credentials&lt;/code&gt; file.&lt;/p&gt;
 
-&lt;h2 id=&#34;sample-usage:a9c5ded79a164e4b6c02d02a570b1d97&#34;&gt;Sample usage&lt;/h2&gt;
+&lt;h2 id=&#34;sample-usage&#34;&gt;Sample usage&lt;/h2&gt;
 
 &lt;p&gt;For full list of operations supported so far, see this &lt;a href=&#34;https://asciinema.org/a/ektm98481nniu7rldc1ncu5af&#34;&gt;asciinema
 screencast&lt;/a&gt; I&amp;rsquo;m providing
@@ -156,14 +156,14 @@ r@rushi:~$
       <guid>http://www.rushiagr.com/blog/2015/12/12/better-way-to-view-mysql-tables/</guid>
       <description>
 
-&lt;h3 id=&#34;the-problem:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;The problem&lt;/h3&gt;
+&lt;h3 id=&#34;the-problem&#34;&gt;The problem&lt;/h3&gt;
 
 &lt;p&gt;You are trying to print a MySQL table with a large number of columns, with
 &lt;code&gt;SELECT *&lt;/code&gt; command. You type &lt;code&gt;SELECT * FROM mysql.user LIMIT 1&lt;/code&gt;, and your terminal
 becomes &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-table-with-many-rows-messy.png&#34;&gt;this&lt;/a&gt;.
 If you wanted to view more than one row, you&amp;rsquo;re in a trouble :)&lt;/p&gt;
 
-&lt;h3 id=&#34;the-solution:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;The solution&lt;/h3&gt;
+&lt;h3 id=&#34;the-solution&#34;&gt;The solution&lt;/h3&gt;
 
 &lt;p&gt;Run MySQL with this option:&lt;/p&gt;
 
@@ -182,7 +182,7 @@ alias mysql=&#39;mysql -SFX&#39;
 &lt;p&gt;You can put the above line in your &lt;code&gt;~/.bashrc&lt;/code&gt; file to load this alias
 in every new terminal session.&lt;/p&gt;
 
-&lt;h3 id=&#34;bonus-point-for-vim-users:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;Bonus point for Vim users&lt;/h3&gt;
+&lt;h3 id=&#34;bonus-point-for-vim-users&#34;&gt;Bonus point for Vim users&lt;/h3&gt;
 
 &lt;p&gt;&lt;code&gt;less&lt;/code&gt; allows using keys &lt;code&gt;j&lt;/code&gt; and &lt;code&gt;k&lt;/code&gt; for scrolling down and scrolling up. Unfortunately, you cannot directly use keys &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move sideways using &lt;code&gt;less&lt;/code&gt;. Fortunately, you can map &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move left or right, respectively. Here&amp;rsquo;s how to do that:&lt;/p&gt;
 
@@ -199,7 +199,7 @@ h noaction 10\e)
 
 &lt;p&gt;This will generate a binary file which &lt;code&gt;less&lt;/code&gt; understands. If you now start a new MySQL terminal session (of course with the above said &lt;code&gt;--pages&lt;/code&gt; flag), you can use Vim&amp;rsquo;s &lt;code&gt;HJKL&lt;/code&gt; movements. Here I have specified to move 10 characters to the right if you make one &amp;lsquo;right&amp;rsquo; Vim movement.&lt;/p&gt;
 
-&lt;h3 id=&#34;quick-setup-script:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;Quick setup script&lt;/h3&gt;
+&lt;h3 id=&#34;quick-setup-script&#34;&gt;Quick setup script&lt;/h3&gt;
 
 &lt;p&gt;Don&amp;rsquo;t want to do the above stuff manually? Just run this command and your computer will be set up in a second!&lt;/p&gt;
 
@@ -208,7 +208,7 @@ h noaction 10\e)
 
 &lt;p&gt;Note that changes will take effect from a new shell session (or you can run &lt;code&gt;source ~/.bashrc&lt;/code&gt; if you want things to work in the current session too.&lt;/p&gt;
 
-&lt;h3 id=&#34;more-information:1a3447b8e3a40d86311532717f0ef6f7&#34;&gt;More information&lt;/h3&gt;
+&lt;h3 id=&#34;more-information&#34;&gt;More information&lt;/h3&gt;
 
 &lt;p&gt;Find more information at below links:&lt;/p&gt;
 

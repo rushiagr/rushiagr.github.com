@@ -46,7 +46,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
       <p class="lead">
-       not your average coder 
+       yet another tech enthusiast 
       </p>
     </div>
 
@@ -77,7 +77,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -94,7 +94,7 @@
 and hence save bandwidth if you want to install those packages again and again.
 Also works if you are already behind a squid proxy.</p>
 
-<h2 id="problem-repetitive-download-slow:4536ae7fffd586a321b78960b2283427">Problem: Repetitive download. Slow.</h2>
+<h2 id="problem-repetitive-download-slow">Problem: Repetitive download. Slow.</h2>
 
 <p>If you deal with virtual machines a lot, you might know the pain of
 managing packages on each one of them. Every time I had to create a new VM,
@@ -106,7 +106,7 @@ and Ubuntu still doesn&rsquo;t come pre-installed with <code>git</code>), <code>
 and some others. This would mean I&rsquo;m downloading the same file over the network
 over and over again. Now there are two ways to deal with this situation</p>
 
-<h2 id="solution-1-local-ubuntu-mirror-super-fast-but-unweildy:4536ae7fffd586a321b78960b2283427">Solution 1: Local Ubuntu mirror - Super fast but unweildy</h2>
+<h2 id="solution-1-local-ubuntu-mirror-super-fast-but-unweildy">Solution 1: Local Ubuntu mirror - Super fast but unweildy</h2>
 
 <p>The first solution is to download a complete Ubuntu mirror to your computer.
 That is, download ALL Ubuntu packages to your system, and then it is super fast.
@@ -116,7 +116,7 @@ this mirror. If you are trying to update the local mirror every week or so,
 each time it will ask you to download around 5GB of data. And that unfortunately
 is too much for me to download every few days.</p>
 
-<h2 id="solution-2-cache-with-squid-proxy-just-about-perfect:4536ae7fffd586a321b78960b2283427">Solution 2: Cache with Squid proxy - Just about perfect</h2>
+<h2 id="solution-2-cache-with-squid-proxy-just-about-perfect">Solution 2: Cache with Squid proxy - Just about perfect</h2>
 
 <p>The other alternative is use a local cache, using Squid proxy. It works like
 just another cache: if you want a package of a specific version, Squid will connect
@@ -128,7 +128,7 @@ is miniscule (Bytes) compared to downloading the whole package (MBs)j. If the
 details doesn&rsquo;t match any locally cached packages, the proxy fetches that package
 from internet and responds to the requester.</p>
 
-<h2 id="practical:4536ae7fffd586a321b78960b2283427">Practical!</h2>
+<h2 id="practical">Practical!</h2>
 
 <p>Enough of theory, let&rsquo;s put theory to some practice :)</p>
 
@@ -206,7 +206,7 @@ option to the <code>sudo</code> command</p>
 
 <p>Sure there are alternative ways of using the proxy, but this is my favourite!</p>
 
-<h2 id="i-m-already-behind-a-proxy:4536ae7fffd586a321b78960b2283427">I&rsquo;m already behind a proxy!</h2>
+<h2 id="i-m-already-behind-a-proxy">I&rsquo;m already behind a proxy!</h2>
 
 <p>Worry not, add these lines to <code>squid.conf</code>, restart squid and you&rsquo;re all set for using the
 brand new proxy instead of the old one :)</p>
@@ -215,7 +215,7 @@ brand new proxy instead of the old one :)</p>
 never_direct allow all
 </code></pre>
 
-<h2 id="ending-thoughts:4536ae7fffd586a321b78960b2283427">Ending thoughts</h2>
+<h2 id="ending-thoughts">Ending thoughts</h2>
 
 <p>You can go to <code>/var/spool/squid3</code> and run a <code>du -sch</code> to see the total size
 of cached files. I find it easy sometimes to calculate the total size of

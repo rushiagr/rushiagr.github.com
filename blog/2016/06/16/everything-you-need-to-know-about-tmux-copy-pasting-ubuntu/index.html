@@ -46,7 +46,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
       <p class="lead">
-       not your average coder 
+       yet another tech enthusiast 
       </p>
     </div>
 
@@ -77,7 +77,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -97,7 +97,7 @@ I&rsquo;m listing out all the stuff I learnt in this blog.</p>
 To check your Tmux version, run <code>tmux -V</code>. If you have a Mac, see
 <a href="http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/">here</a>.</p>
 
-<h2 id="know-about-copy-buffers:f51ef0cd3e0156da5d2e4dc056647b6a">Know about copy buffers</h2>
+<h2 id="know-about-copy-buffers">Know about copy buffers</h2>
 
 <p>When you do a <code>CTRL</code>+<code>c</code>, the stuff you copy is stored in your computer&rsquo;s
 buffer, called &lsquo;clipboard&rsquo; from where you can paste anywhere by doing a
@@ -112,7 +112,7 @@ want to select might not fit in your current screen (e.g. output of <code>cat
 visible on your screen, and not the output which is &lsquo;scrolled up&rsquo; due to a lot
 of output.</p>
 
-<h2 id="tmux-copy-paste-the-defaults:f51ef0cd3e0156da5d2e4dc056647b6a">Tmux copy-paste - the defaults</h2>
+<h2 id="tmux-copy-paste-the-defaults">Tmux copy-paste - the defaults</h2>
 
 <p>The defaults are slighly involved, so this section is purely for informational purposes, and shouldn&rsquo;t be memorized. Skipping this section is perfectly okay.</p>
 
@@ -123,7 +123,7 @@ of output.</p>
 <li>Press <code>CTRL</code>+<code>b</code>, <code>]</code> to paste in a possibly different Tmux pane/window.</li>
 </ol>
 
-<h2 id="tmux-vim-bindings-for-copying-into-tmux-buffer:f51ef0cd3e0156da5d2e4dc056647b6a">Tmux Vim-bindings for copying into tmux buffer</h2>
+<h2 id="tmux-vim-bindings-for-copying-into-tmux-buffer">Tmux Vim-bindings for copying into tmux buffer</h2>
 
 <p>Adding configuration described in this section will give you easier shortcuts
 for copy-pasting in Tmux. Moreover, these shortcuts work very similar to Vim&rsquo;s
@@ -150,7 +150,7 @@ not exactly similar. You&rsquo;ll realize in your Tmux journey why didn&rsquo;t 
 small &lsquo;p&rsquo; instead of a capital &lsquo;P&rsquo; ;)</p></li>
 </ol>
 
-<h2 id="copy-from-tmux-buffer-to-system-buffer-clipboard:f51ef0cd3e0156da5d2e4dc056647b6a">Copy from tmux buffer to system buffer (clipboard)</h2>
+<h2 id="copy-from-tmux-buffer-to-system-buffer-clipboard">Copy from tmux buffer to system buffer (clipboard)</h2>
 
 <p>For this to happen, you need to install <code>xclip</code> on your computer. Do it as:</p>
 
@@ -165,7 +165,7 @@ small &lsquo;p&rsquo; instead of a capital &lsquo;P&rsquo; ;)</p></li>
 <p>Now close all your tmux sessions. From now onwards, whatever you copy in Tmux
 buffer will also land into system clipboard.</p>
 
-<h2 id="tmux-copy-with-mouse-drag:f51ef0cd3e0156da5d2e4dc056647b6a">Tmux copy with mouse drag!</h2>
+<h2 id="tmux-copy-with-mouse-drag">Tmux copy with mouse drag!</h2>
 
 <p>You can enable &lsquo;mouse mode&rsquo;, using which you can copy text into tmux buffer by
 mouse drag. For doing that, you just need to add this line to your
@@ -175,7 +175,7 @@ mouse drag. For doing that, you just need to add this line to your
 set -g mouse-select-window on
 </code></pre>
 
-<h2 id="but-now-i-can-t-do-normal-copy-paste-with-mouse:f51ef0cd3e0156da5d2e4dc056647b6a">But now I can&rsquo;t do normal copy-paste with mouse!</h2>
+<h2 id="but-now-i-can-t-do-normal-copy-paste-with-mouse">But now I can&rsquo;t do normal copy-paste with mouse!</h2>
 
 <p>You&rsquo;ll notice that now all your selections will go to tmux buffer, and not
 clipboard buffer. Of course, you can enable copying to system clipboard as
@@ -186,7 +186,7 @@ option enabled.</p>
 <p>Just press <code>SHIFT</code> button when copying, and now you can copy as if Tmux
 doesn&rsquo;t exist! :)</p>
 
-<h2 id="copy-from-a-remote-server:f51ef0cd3e0156da5d2e4dc056647b6a">Copy from a remote server</h2>
+<h2 id="copy-from-a-remote-server">Copy from a remote server</h2>
 
 <p>Install <code>xclip</code> on the remote Ubuntu/Linux server, and add the line mentioned
 above (<code>bind -t vi-copy y copy-pipe &quot;xclip -sel clip -i&quot;</code>) to <code>~/.tmux.conf</code> on
@@ -199,7 +199,7 @@ like so:</p>
 <p>And after that everything you copy into remote&rsquo;s Tmux buffer will get copied
 over to local clipboard. Magic!</p>
 
-<h2 id="other-information:f51ef0cd3e0156da5d2e4dc056647b6a">Other information</h2>
+<h2 id="other-information">Other information</h2>
 
 <p>Done! Don&rsquo;t forget to comment if you know something worth letting everybody
 know! Thank you:)</p>

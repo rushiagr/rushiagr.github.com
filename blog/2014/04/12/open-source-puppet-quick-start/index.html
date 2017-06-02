@@ -46,7 +46,7 @@
     <div class="sidebar-about">
       <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
       <p class="lead">
-       not your average coder 
+       yet another tech enthusiast 
       </p>
     </div>
 
@@ -77,7 +77,7 @@
       
 
     <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2016 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
+    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
     
   </div>
 </div>
@@ -94,7 +94,7 @@
 
 <!-- more -->
 
-<h2 id="quick-introduction:3eb4397264d4b1e9ded54ff4b133eea0">Quick Introduction</h2>
+<h2 id="quick-introduction">Quick Introduction</h2>
 
 <p>Lets say you want to install and run apache server on one of the machines in your lab. On another, you want to create a new user. On a third machine, you want to install MySQL, and allow access to this machine only from the first server. Seems like a lot of manual work isn&rsquo;t it? The power of Puppet is, you can specify all these tasks in a file, called &lsquo;Puppet manifest&rsquo;, and then execute it. Everything will be set up for you just as you wanted! Now what makes this &lsquo;I care about the end result, not the process&rsquo; approach really powerful is you can &lsquo;apply&rsquo; this manifest over and over again to get the same end result. You can easily modify this manifest file, extend it, and manage it under version control, just like you would with a piece of software. Welcome to the world of IT automation :)</p>
 
@@ -102,7 +102,7 @@
 
 <p>There is a whole lot of things you can do with Puppet. Here, we&rsquo;ll just get us started with it. Once you are through this post, you can head over to Puppet Labs&rsquo; documents and tutorials, for more on &ldquo;how&rdquo;s and &ldquo;why&rdquo;s of Puppet.</p>
 
-<h2 id="setup:3eb4397264d4b1e9ded54ff4b133eea0">Setup</h2>
+<h2 id="setup">Setup</h2>
 
 <p>You just require two Ubuntu machines connected to each other. One will be the Puppet &lsquo;master&rsquo; node (the machine which will take care of managing the configuration and state of all the machines in our deployment), the other one &lsquo;slave&rsquo; (which unfortunately is the only actual machine in demo deployment :) ).</p>
 
@@ -130,7 +130,7 @@
 192.168.56.130  puppet-master
 </code></pre>
 
-<h2 id="getting-the-hands-dirty-puppet-cli:3eb4397264d4b1e9ded54ff4b133eea0">Getting the hands dirty &ndash; Puppet CLI</h2>
+<h2 id="getting-the-hands-dirty-puppet-cli">Getting the hands dirty &ndash; Puppet CLI</h2>
 
 <p>Install <code>puppetmaster</code> package on the master node</p>
 
@@ -235,7 +235,7 @@ notice: Finished catalog run in 0.47 seconds
 
 <p>where you can choose a domain name of your own choice in place of <code>.rushiagr.com</code>.</p>
 
-<h2 id="puppet-modules:3eb4397264d4b1e9ded54ff4b133eea0">Puppet modules</h2>
+<h2 id="puppet-modules">Puppet modules</h2>
 
 <p><strong>Note:</strong> <code>puppet module</code> doesn&rsquo;t work on Precise (Ubuntu 12.04). You need to install ruby, and gems, etc. Too much of a hassle. So I&rsquo;ll just post commands here which work for a higher version of Ubuntu.</p>
 
@@ -258,7 +258,7 @@ notice: Finished catalog run in 0.47 seconds
 
 <p><strong>Note</strong>: Modules installed via <code>sudo</code> will be visible when you perform <code>puppet module list</code> with <code>sudo</code> only. Same for non-<code>sudo</code> use.</p>
 
-<h2 id="puppet-in-master-client-configuration:3eb4397264d4b1e9ded54ff4b133eea0">Puppet in master-client configuration</h2>
+<h2 id="puppet-in-master-client-configuration">Puppet in master-client configuration</h2>
 
 <p>Everything we did so far concerned with a single machine. Let&rsquo;s now introduce another machine &ndash; Puppet agent.</p>
 

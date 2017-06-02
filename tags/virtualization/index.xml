@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/virtualization/</link>
+    <link>http://www.rushiagr.com/tags/virtualization/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2015 Rushi Agrawal</copyright>
-    <updated>Sun, 07 Jun 2015 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -135,7 +135,7 @@ or pressing CTRL + D.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo docker rmi learn/tutorial
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;things-not-covered-in-this-tutorial:49285dca7b53d383ade641738736c634&#34;&gt;Things not covered in this tutorial:&lt;/h4&gt;
+&lt;h4 id=&#34;things-not-covered-in-this-tutorial&#34;&gt;Things not covered in this tutorial:&lt;/h4&gt;
 
 &lt;ol&gt;
 &lt;li&gt;Create your own custom docker images and share with other people:

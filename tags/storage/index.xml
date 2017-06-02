@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/storage/</link>
+    <link>http://www.rushiagr.com/tags/storage/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2014 Rushi Agrawal</copyright>
-    <updated>Tue, 14 Jan 2014 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -44,7 +44,7 @@ create lots of &amp;lsquo;logical volumes&amp;rsquo;. Even after you&amp;rsquo;v
 
 &lt;p&gt;I hope the basic idea written above is sufficiently clear. Else, head over to this Ubuntu &lt;a href=&#34;https://wiki.ubuntu.com/Lvm&#34; target=&#34;_blank&#34;&gt;wiki&lt;/a&gt; for a slightly more detailed, but still an overview, of LVM. Anyway, I&amp;rsquo;m concentrating more on the demo, so lets move on.&lt;/p&gt;
 
-&lt;h4 id=&#34;hands-on:2d2bf322b35613aefa5a64a06c866c26&#34;&gt;Hands-on&lt;/h4&gt;
+&lt;h4 id=&#34;hands-on&#34;&gt;Hands-on&lt;/h4&gt;
 
 &lt;p&gt;I&amp;rsquo;m demo&amp;rsquo;ing everything on an Ubuntu machine, but it should work on any Linux distro (after you install the LVM2 package)&lt;/p&gt;
 

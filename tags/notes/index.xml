@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/notes/</link>
+    <link>http://www.rushiagr.com/tags/notes/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2016 Rushi Agrawal</copyright>
-    <updated>Sun, 10 Jan 2016 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -71,7 +71,7 @@ attached to.&lt;/p&gt;
 &lt;p&gt;I find this &lt;code&gt;mxd&lt;/code&gt; to be easier to type than both &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;d&lt;/code&gt; and &lt;code&gt;tmux
 detach&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;installation:e0f68b4969c4b0e373b3bdfb560cffb9&#34;&gt;Installation&lt;/h3&gt;
+&lt;h3 id=&#34;installation&#34;&gt;Installation&lt;/h3&gt;
 
 &lt;p&gt;You just need to copy the content in the above referenced link to &lt;code&gt;~/.bashrc&lt;/code&gt;
 file and from a new terminal session things will be ready for you to use :)&lt;/p&gt;
@@ -243,7 +243,7 @@ to multi-region deployment problem of OpenStack cloud. This blog post is not
 to discuss the problem. We are talking about how to have a development
 environment to play around with Keystone working with a dev Cassandra deployment.&lt;/p&gt;
 
-&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set:ac993324848a8aead891c139adf0f8b7&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
+&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
 
 &lt;p&gt;I&amp;rsquo;ve put together all commands into a script which can be found here:&lt;/p&gt;
 
@@ -273,7 +273,7 @@ not tried it. (Let me know if you tried it and it works!)&lt;/p&gt;
 &lt;li&gt;The code for this script is located at &lt;code&gt;https://github.com/rushiagr/keystone/tree/liberty-cassandra&lt;/code&gt;, i.e. on &lt;code&gt;liberty-cassandra&lt;/code&gt; branch. Note that this work is currently based upon Keystone&amp;rsquo;s Liberty code as on first week of June. It might not work directly with latest code as it might require fixing imports which might have become outdated. However, I don&amp;rsquo;t think it&amp;rsquo;s going to take more than an hour to make it work with latest code; just that I don&amp;rsquo;t have enough motivation right now to keep the code updated with &amp;lsquo;latest&amp;rsquo; all the time.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h4 id=&#34;credits:ac993324848a8aead891c139adf0f8b7&#34;&gt;Credits&lt;/h4&gt;
+&lt;h4 id=&#34;credits&#34;&gt;Credits&lt;/h4&gt;
 
 &lt;p&gt;This work was done by the &amp;lsquo;distributed database&amp;rsquo; team of 4 people: Ajaya Agrawal, Rushi Agrawal (me), Vivek Dhayaal and Yogeshwar Shenoy, listed in alphabetical order. And obviously Reliance, for providing us an opportunity to work on this thing.&lt;/p&gt;
 </description>
@@ -295,19 +295,19 @@ doc by the author of mod_wsgi module of Apache. This blog post just serves as a 
 is only useful if you have read the original document but it&amp;rsquo;s been too long since you
 read it :)&lt;/p&gt;
 
-&lt;h2 id=&#34;apache-with-mod-wsgi:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Apache with mod_wsgi&lt;/h2&gt;
+&lt;h2 id=&#34;apache-with-mod-wsgi&#34;&gt;Apache with mod_wsgi&lt;/h2&gt;
 
 &lt;p&gt;A Python application can run with multiple processes as well as multiple threads
 with mod_wsgi.&lt;/p&gt;
 
-&lt;h3 id=&#34;prefork-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Prefork multiprocessing module&lt;/h3&gt;
+&lt;h3 id=&#34;prefork-multiprocessing-module&#34;&gt;Prefork multiprocessing module&lt;/h3&gt;
 
 &lt;p&gt;Apache creates multiple processes, and each request is handled by one process.
 A process only handles one request at a time.
 This means, if you have set number of processes to 1, there will be only one
 request handeled at a time overall.&lt;/p&gt;
 
-&lt;h3 id=&#34;worker-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Worker multiprocessing module&lt;/h3&gt;
+&lt;h3 id=&#34;worker-multiprocessing-module&#34;&gt;Worker multiprocessing module&lt;/h3&gt;
 
 &lt;p&gt;Multiple processes, and multiple threads in each processa.
 Even if a process is handling a request, another thread in the same process
@@ -316,7 +316,7 @@ You might need some synchronization primitive to make sure multiple threads
 of same process don&amp;rsquo;t corrupt shared memory (only occurs when shared memory
 is mutated)&lt;/p&gt;
 
-&lt;h3 id=&#34;but-gil:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;But GIL?&lt;/h3&gt;
+&lt;h3 id=&#34;but-gil&#34;&gt;But GIL?&lt;/h3&gt;
 
 &lt;p&gt;Python GIL problem is largely alleviated with mod_wsgi since multiple processes
 can handle requests, and GIL has impact ranging to only one process. One more

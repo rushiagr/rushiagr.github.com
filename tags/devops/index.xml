@@ -3,11 +3,11 @@
   <channel>
       <title>rushiagr</title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/devops/</link>
+    <link>http://www.rushiagr.com/tags/devops/index.xml</link>
     <language>en-us</language>
     <author>Rushi Agrawal</author>
-    <copyright>2015 Rushi Agrawal</copyright>
-    <updated>Fri, 24 Jul 2015 00:00:00 &#43;0000</updated>
+    <copyright>0001 Rushi Agrawal</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     
     <item>
@@ -24,19 +24,19 @@ doc by the author of mod_wsgi module of Apache. This blog post just serves as a 
 is only useful if you have read the original document but it&amp;rsquo;s been too long since you
 read it :)&lt;/p&gt;
 
-&lt;h2 id=&#34;apache-with-mod-wsgi:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Apache with mod_wsgi&lt;/h2&gt;
+&lt;h2 id=&#34;apache-with-mod-wsgi&#34;&gt;Apache with mod_wsgi&lt;/h2&gt;
 
 &lt;p&gt;A Python application can run with multiple processes as well as multiple threads
 with mod_wsgi.&lt;/p&gt;
 
-&lt;h3 id=&#34;prefork-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Prefork multiprocessing module&lt;/h3&gt;
+&lt;h3 id=&#34;prefork-multiprocessing-module&#34;&gt;Prefork multiprocessing module&lt;/h3&gt;
 
 &lt;p&gt;Apache creates multiple processes, and each request is handled by one process.
 A process only handles one request at a time.
 This means, if you have set number of processes to 1, there will be only one
 request handeled at a time overall.&lt;/p&gt;
 
-&lt;h3 id=&#34;worker-multiprocessing-module:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;Worker multiprocessing module&lt;/h3&gt;
+&lt;h3 id=&#34;worker-multiprocessing-module&#34;&gt;Worker multiprocessing module&lt;/h3&gt;
 
 &lt;p&gt;Multiple processes, and multiple threads in each processa.
 Even if a process is handling a request, another thread in the same process
@@ -45,7 +45,7 @@ You might need some synchronization primitive to make sure multiple threads
 of same process don&amp;rsquo;t corrupt shared memory (only occurs when shared memory
 is mutated)&lt;/p&gt;
 
-&lt;h3 id=&#34;but-gil:d8164b9dd960e232cff9349f39ccb12e&#34;&gt;But GIL?&lt;/h3&gt;
+&lt;h3 id=&#34;but-gil&#34;&gt;But GIL?&lt;/h3&gt;
 
 &lt;p&gt;Python GIL problem is largely alleviated with mod_wsgi since multiple processes
 can handle requests, and GIL has impact ranging to only one process. One more
