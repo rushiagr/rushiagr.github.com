@@ -93,7 +93,7 @@
 <p>Copying from a Tmux session is something every Tmux user struggled with once.
 I&rsquo;m listing out all the stuff I learnt in this blog.</p>
 
-<p>I tested everything on Ubuntu 14.04 Trusty Tahr, which runs Tmux version 1.8.
+<p>I tested everything on Ubuntu 14.04 Trusty Tahr, which runs Tmux version 1.8 (I have a few commands included for Tmux version 2+ also)
 To check your Tmux version, run <code>tmux -V</code>. If you have a Mac, see
 <a href="http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/">here</a>.</p>
 
@@ -136,6 +136,13 @@ copy-pasting shortcuts!</p>
 bind-key -t vi-copy 'v' begin-selection
 bind-key -t vi-copy 'y' copy-selection
 bind-key -t vi-copy 'r' rectangle-toggle
+</code></pre>
+
+<p>Note that for a newer tmux version (2.4 and above I think, not sure), the last three lines should be replaced with:</p>
+
+<pre><code>bind-key -T copy-mode-vi v send-keys -X begin-selection
+bind-key -T copy-mode-vi y send-keys -X copy-selection
+bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
 </code></pre></li>
 
 <li><p>Now you can enter copy mode by pressing <code>CTRL</code>+<code>b</code>,<code>[</code>, and then go
@@ -173,6 +180,11 @@ mouse drag. For doing that, you just need to add this line to your
 
 <pre><code>setw -g mode-mouse on
 set -g mouse-select-window on
+</code></pre>
+
+<p>Note that if your tmux version is 2.1 or above, you need to include the following line instead of the above two</p>
+
+<pre><code>set -g mouse on
 </code></pre>
 
 <h2 id="but-now-i-can-t-do-normal-copy-paste-with-mouse">But now I can&rsquo;t do normal copy-paste with mouse!</h2>

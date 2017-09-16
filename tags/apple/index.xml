@@ -65,6 +65,13 @@ copy-pasting shortcuts!&lt;/p&gt;
 bind-key -t vi-copy &#39;v&#39; begin-selection
 bind-key -t vi-copy &#39;y&#39; copy-selection
 bind-key -t vi-copy &#39;r&#39; rectangle-toggle
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that for a newer tmux version (2.4 and above I think, not sure), the last three lines should be replaced with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;bind-key -T copy-mode-vi v send-keys -X begin-selection
+bind-key -T copy-mode-vi y send-keys -X copy-selection
+bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;Now you can enter copy mode by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;[&lt;/code&gt;, and then go

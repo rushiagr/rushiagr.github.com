@@ -21,7 +21,7 @@
 &lt;p&gt;Copying from a Tmux session is something every Tmux user struggled with once.
 I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
 
-&lt;p&gt;I tested everything on Ubuntu 14.04 Trusty Tahr, which runs Tmux version 1.8.
+&lt;p&gt;I tested everything on Ubuntu 14.04 Trusty Tahr, which runs Tmux version 1.8 (I have a few commands included for Tmux version 2+ also)
 To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Mac, see
 &lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
@@ -64,6 +64,13 @@ copy-pasting shortcuts!&lt;/p&gt;
 bind-key -t vi-copy &#39;v&#39; begin-selection
 bind-key -t vi-copy &#39;y&#39; copy-selection
 bind-key -t vi-copy &#39;r&#39; rectangle-toggle
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that for a newer tmux version (2.4 and above I think, not sure), the last three lines should be replaced with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;bind-key -T copy-mode-vi v send-keys -X begin-selection
+bind-key -T copy-mode-vi y send-keys -X copy-selection
+bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;Now you can enter copy mode by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;[&lt;/code&gt;, and then go
@@ -101,6 +108,11 @@ mouse drag. For doing that, you just need to add this line to your
 
 &lt;pre&gt;&lt;code&gt;setw -g mode-mouse on
 set -g mouse-select-window on
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that if your tmux version is 2.1 or above, you need to include the following line instead of the above two&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;set -g mouse on
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
