@@ -1,204 +1,124 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.60.1" />
 
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Linux Screens in DevStack &middot; rushiagr</title>
+  <meta name="description" content="" />
 
   
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
 
-  <title> Linux Screens in DevStack  &middot; rushiagr </title>
-
-  
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
-
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
-  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
-
-  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-  <script>
-    WebFont.load({
-      google: {
-        families: ['Raleway']
-      }
-    });
-  </script>
-
+  
 </head>
 
-<body>
-
-  <div class="sidebar">
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
+      <a href="http://www.rushiagr.com/"><h1>rushiagr</h1></a>
       <p class="lead">
-       yet another tech guy 
+       Yet another tech guy 
       </p>
     </div>
 
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://www.rushiagr.com/">Home</a> </li>
+        <li><a href="/about/"> About </a></li><li><a href="https://github.com/rushiagr/"> Github </a></li><li><a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"> LinkedIn </a></li>
+      </ul>
+    </nav>
 
-
-    <ul class="sidebar-nav">
-      <li><a href="http://www.rushiagr.com/blog">Posts</a></li>
-      
-        <li><a href="/about/">About </a></li>
-        <li><a href="https://github.com/rushiagr">Code</a></li>
-        <li><a href="http://www.rushiagr.com/personal">Personal Blog</a></li>
-      
-      <br/>
-      
-        
-        
-        
-        
-        
-        
-        
-      
-    </ul>
-      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      <a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
-      
-      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
-
-    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
-    
+    <p>&copy; 2019. All rights reserved. </p>
   </div>
-</div>
+</aside>
 
-
-  <div class="content container">
+    <main class="content container">
     <div class="post">
-    <h1 class="post-title">Linux Screens in DevStack</h1>
-    <span class="post-date">Jun 5, 2013</span>
-    
-    <p>This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.</p>
-
-<p></p>
-
+  <h1>Linux Screens in DevStack</h1>
+  <time datetime=2013-06-05T00:00:00Z class="post-date">Wed, Jun 5, 2013</time>
+  <p>This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.</p>
 <p>In a DevStack environment, all the processes run under something special in Linux, called as a <code>screen</code>. For now, you can think of a ‘screen’ as a terminal running inside a terminal, with the special property that when you close your current terminal, your ‘screens’ will not actually die, so that you can reconnect to them when you connect to the Linux system through another terminal again! Now that should give you a hint why people use screens :)</p>
-
 <p>Each screen runs a special ‘service’ of OpenStack. So the logs of each service will go to the respective screen. If you created the DevStack environment as a root user, the process of going to a screen is slightly complicated: You first need to become the <code>stack</code> user if you are currently <code>root</code>, and even before that, you need to run this command in most of the cases:</p>
-
 <pre><code>chown stack:stack `readlink /proc/self/fd/0`
-</code></pre>
-
-<p>Else it will produce this error <code>Cannot open your terminal '/dev/pts/2' - please check.</code> , and then you can proceed to run this command to get to the screens:</p>
-
+</code></pre><p>Else it will produce this error <code>Cannot open your terminal '/dev/pts/2' - please check.</code> , and then you can proceed to run this command to get to the screens:</p>
 <pre><code>screen -x
-</code></pre>
-
-<p>And if you ran the DevStack <code>stack.sh</code> script as a non-root user, you just need to run that last little thingy to see the screens. One more reason why you should run DevStack as a non-root.</p>
-
-<p>The way to detach from a screen is <code>CTRL+A</code> <code>D</code>, that is, first press <code>CTRL+A</code>, and then press <code>D</code>.</p>
-
+</code></pre><p>And if you ran the DevStack <code>stack.sh</code> script as a non-root user, you just need to run that last little thingy to see the screens. One more reason why you should run DevStack as a non-root.</p>
+<p>The way to detach from a screen is <code>CTRL+A` `D</code>, that is, first press <code>CTRL+A</code>, and then press <code>D</code>.</p>
 <h2 id="navigating-across-screens">Navigating across screens</h2>
-
-<p>You will see names of all the screens at the bottom of the terminal. The screen on which you currently are bears an asterisk (<code>*</code>) near its name. To move to the right screen, do a <code>CTRL+A</code> <code>N</code>. Keep in mind that you are going to use <code>CTRL+A</code> a lot of times during your adventures with screen. Similar to the command <code>CTRL+A</code> <code>N</code> to move to the right (“next”) screen, to move to the left screen the command is <code>CTRL+A</code> <code>P</code>.</p>
-
-<p>There is one more way to jump directly to a screen. Lets say you want to directly jump to the fourth screen. You just need to do a <code>CTRL+A</code> <code>4</code>, to go to fourth screen! Wasn’t that easy? But hey! How do I get to the seventeenth screen? Frankly, I don’t know a ‘direct’ way. I do a <code>CTRL+A</code> <code>9</code> once, and <code>CTRL+A</code> <code>N</code> eight more times. :( Alternatively, you can do <code>CTRL+A</code> <code>&quot;</code> to view a list of all running screens, and then you can select a screen by using your arrow keys and finally pressing <code>ENTER</code>.</p>
-
+<p>You will see names of all the screens at the bottom of the terminal. The screen on which you currently are bears an asterisk (<code>*</code>) near its name. To move to the right screen, do a <code>CTRL+A` `N</code>. Keep in mind that you are going to use <code>CTRL+A</code> a lot of times during your adventures with screen. Similar to the command <code>CTRL+A` `N</code> to move to the right (“next”) screen, to move to the left screen the command is <code>CTRL+A` `P</code>.</p>
+<p>There is one more way to jump directly to a screen. Lets say you want to directly jump to the fourth screen. You just need to do a <code>CTRL+A` `4</code>, to go to fourth screen! Wasn’t that easy? But hey! How do I get to the seventeenth screen? Frankly, I don’t know a ‘direct’ way. I do a <code>CTRL+A` `9</code> once, and <code>CTRL+A` `N</code> eight more times. :( Alternatively, you can do <code>CTRL+A` `&quot;</code> to view a list of all running screens, and then you can select a screen by using your arrow keys and finally pressing <code>ENTER</code>.</p>
 <p>Navigating inside a screen</p>
-
 <p>The first and biggest difficulty I faced while tracking an error in the screen logs is the periodic updates in Cinder dumps some lines to the Cinder screens every now and then. So if you have a stack trace of an error on the screen, it will go up and up and up till you can no more see it! Nope, scrolling your mouse up, or pulling the scrollbar up won’t help either (why not try it once :) ).</p>
-
-<p>Within a few days, I thought “Hey, I’ll just reduce the font of the terminal and I’ll be able to see more lines of screen logs on my screen!”. I knew the command to reduce the font size of the terminal font: <code>CTRL</code>+<code>-</code> (just for the sake of completeness, the command to increase font is <code>CTRL</code>+<code>SHIFT</code>+<code>+</code>). That worked pretty okay upto a point. It actually helps to have logs in small font, as the logs will fit in one line on the screen and will look prettier. But what if I come after say a ten-minute break, and see all my logs are too far up to be able to see even by reducing font size?</p>
-
+<p>Within a few days, I thought “Hey, I’ll just reduce the font of the terminal and I’ll be able to see more lines of screen logs on my screen!”. I knew the command to reduce the font size of the terminal font: <code>CTRL`+`-</code> (just for the sake of completeness, the command to increase font is <code>CTRL`+</code>SHIFT<code>+`+</code>). That worked pretty okay upto a point. It actually helps to have logs in small font, as the logs will fit in one line on the screen and will look prettier. But what if I come after say a ten-minute break, and see all my logs are too far up to be able to see even by reducing font size?</p>
 <p>Then I got to know the command which saved a ton of time in my life: The command to actually scroll up and down the screen.</p>
-
-<p>To scroll up, first press <code>CTRL</code>+<code>[</code>. After that, you can use arrow keys to scroll up and down. You can also use <code>page-up</code> and <code>page-down</code> buttons to scroll one complete page up or down. This isn’t all of it. If you are vim user, you will find that the <code>H</code> <code>J</code> <code>K</code> <code>L</code> will work for for <code>left</code>, <code>down</code>, <code>up</code>, and <code>right</code> respectively. And the last and most convenient thing: once you press <code>CTRL</code> <code>[</code>, that is, once you are in ‘copy mode’, you can then use your mouse scroll wheel too to scroll up and down!! Now that is a perfect delight :)</p>
-
+<p>To scroll up, first press <code>CTRL`+`[</code>. After that, you can use arrow keys to scroll up and down. You can also use <code>page-up</code> and <code>page-down</code> buttons to scroll one complete page up or down. This isn’t all of it. If you are vim user, you will find that the <code>H` `J` `K` `L</code> will work for for <code>left</code>, <code>down</code>, <code>up</code>, and <code>right</code> respectively. And the last and most convenient thing: once you press <code>CTRL` `[</code>, that is, once you are in ‘copy mode’, you can then use your mouse scroll wheel too to scroll up and down!! Now that is a perfect delight :)</p>
 <p>To come out of this copy mode (so that you can switch to another screen, and do other such stuff), press <code>]</code> and you are back to normal once again.</p>
-
 <h2 id="some-more-generic-screen-commands">Some more ‘generic’ screen commands</h2>
-
 <p>So that you can start playing around with screens outside OpenStack too</p>
-
 <p>Create a new screen</p>
-
 <pre><code>screen
-</code></pre>
-
-<p>To detach from current screen</p>
-
+</code></pre><p>To detach from current screen</p>
 <pre><code>ctrl+A,D
-</code></pre>
-
-<p>To reattach to an existing screen</p>
-
+</code></pre><p>To reattach to an existing screen</p>
 <pre><code>screen -rd
-</code></pre>
-
-<p>To view all the screens, their states and IDs</p>
-
+</code></pre><p>To view all the screens, their states and IDs</p>
 <pre><code>screen -list
-</code></pre>
-
-<p>To kill a screen with id SCREENID</p>
-
+</code></pre><p>To kill a screen with id SCREENID</p>
 <pre><code>screen -X -S SCREENID kill
-</code></pre>
-
-<p>Cheers!</p>
-
+</code></pre><p>Cheers!</p>
 <p>-Rushi Agrawal</p>
-    
-
-     
-	
-        <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37074962-1']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-37074962-1');
-    ga('send', 'pageview');
-</script>
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-
-(function() {
-    
-    
-    if (window.location.hostname == "localhost") 
-        return;
-
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    var disqus_shortname = 'rushiagr';
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();
-</script>
-<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
-
 </div>
-</div> 
 
-</body>w
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "rushiagr" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-37074962-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
 </html>

@@ -1,260 +1,193 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.60.1" />
 
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Everything you need to know about Tmux copy paste &middot; rushiagr</title>
+  <meta name="description" content="" />
 
   
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
 
-  <title> Everything you need to know about Tmux copy paste  &middot; rushiagr </title>
-
-  
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
-
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
-  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
-
-  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-  <script>
-    WebFont.load({
-      google: {
-        families: ['Raleway']
-      }
-    });
-  </script>
-
+  
 </head>
 
-<body>
-
-  <div class="sidebar">
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
+      <a href="http://www.rushiagr.com/"><h1>rushiagr</h1></a>
       <p class="lead">
-       yet another tech guy 
+       Yet another tech guy 
       </p>
     </div>
 
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://www.rushiagr.com/">Home</a> </li>
+        <li><a href="/about/"> About </a></li><li><a href="https://github.com/rushiagr/"> Github </a></li><li><a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"> LinkedIn </a></li>
+      </ul>
+    </nav>
 
-
-    <ul class="sidebar-nav">
-      <li><a href="http://www.rushiagr.com/blog">Posts</a></li>
-      
-        <li><a href="/about/">About </a></li>
-        <li><a href="https://github.com/rushiagr">Code</a></li>
-        <li><a href="http://www.rushiagr.com/personal">Personal Blog</a></li>
-      
-      <br/>
-      
-        
-        
-        
-        
-        
-        
-        
-      
-    </ul>
-      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      <a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
-      
-      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
-
-    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
-    
+    <p>&copy; 2019. All rights reserved. </p>
   </div>
-</div>
+</aside>
 
-
-  <div class="content container">
+    <main class="content container">
     <div class="post">
-    <h1 class="post-title">Everything you need to know about Tmux copy paste</h1>
-    <span class="post-date">Jun 16, 2016</span>
-    
-    
-
-<p>Copying from a Tmux session is something every Tmux user struggled with once.
-I&rsquo;m listing out all the stuff I learnt in this blog.</p>
-
+  <h1>Everything you need to know about Tmux copy paste</h1>
+  <time datetime=2016-06-16T10:58:02&#43;0530 class="post-date">Thu, Jun 16, 2016</time>
+  <p>Copying from a Tmux session is something every Tmux user struggled with once.
+I'm listing out all the stuff I learnt in this blog.</p>
 <p>I tested everything on Mac OS X El Capitan. For Ubuntu/Linux guide, see <a href="http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/">here</a>. Mac OS X El Capitan runs Tmux version 2.1. To check your Tmux version, run <code>tmux -V</code>.</p>
-
 <h2 id="know-about-your-terminal">Know about your terminal</h2>
-
 <p>The default terminal which comes with Mac is pretty limiting. Instead of
-listing the limitations (and workarounds around it), I&rsquo;ll just say that before
-you proceed, please install iTerm 2 and start using that immediately. What I&rsquo;m
+listing the limitations (and workarounds around it), I'll just say that before
+you proceed, please install iTerm 2 and start using that immediately. What I'm
 writing below is all for iTerm 2. (Do let me know if you absolutely need Tmux
-copy-paste to work in Terminal, and I&rsquo;ll provide steps for that).</p>
-
+copy-paste to work in Terminal, and I'll provide steps for that).</p>
 <h2 id="know-about-copy-buffers">Know about copy buffers</h2>
-
-<p>When you do a <code>Command</code>+<code>c</code>, the stuff you copy is stored in your computer&rsquo;s
+<p>When you do a <code>Command`+`c</code>, the stuff you copy is stored in your computer's
 buffer, called &lsquo;clipboard&rsquo; from where you can paste anywhere by doing a
-<code>Command</code>+<code>v</code>. Tmux has it&rsquo;s own buffer for coppying, which we&rsquo;ll
+<code>Command`+`v</code>. Tmux has it's own buffer for coppying, which we'll
 call &lsquo;tmux buffer&rsquo;. Our goal is to understand in a Tmux session how to copy to
 tmux buffer, and also to clipboard.</p>
-
 <p>You can always copy stuff into clipboard while usin Tmux. &ldquo;Why do I need a Tmux
 buffer then&rdquo;, you might wonder. This is because, in your shell, the text you
-want to select might not fit in your current screen (e.g. output of <code>cat
-/etc/passwd</code> file). If you copy normally, you will only be able to copy text
+want to select might not fit in your current screen (e.g. output of <code>cat /etc/passwd</code> file). If you copy normally, you will only be able to copy text
 visible on your screen, and not the output which is &lsquo;scrolled up&rsquo; due to a lot
 of output.</p>
-
-<h2 id="tmux-copy-paste-the-defaults">Tmux copy-paste - the defaults</h2>
-
+<h2 id="tmux-copypaste--the-defaults">Tmux copy-paste - the defaults</h2>
 <p>Well, the defaults in Mac are horrible. There is simply no way to copy into
 tmux buffer without using any external plugin. BUT you can copy stuff into
 system clipboard by just using your mouse for selecting text.</p>
-
-<h2 id="tmux-vim-bindings-for-copying-into-tmux-buffer">Tmux Vim-bindings for copying into tmux buffer</h2>
-
+<h2 id="tmux-vimbindings-for-copying-into-tmux-buffer">Tmux Vim-bindings for copying into tmux buffer</h2>
 <p>Adding configuration described in this section will give you easier shortcuts
-for copy-pasting in Tmux. Moreover, these shortcuts work very similar to Vim&rsquo;s
+for copy-pasting in Tmux. Moreover, these shortcuts work very similar to Vim's
 copy-pasting shortcuts!</p>
-
 <ol>
-<li><p>Add these lines in a file by name <code>~/.tmux.conf</code>.</p>
-
-<pre><code>bind P paste-buffer
-bind-key -t vi-copy 'v' begin-selection
-bind-key -t vi-copy 'y' copy-selection
-bind-key -t vi-copy 'r' rectangle-toggle
+<li>
+<p>Add these lines in a file by name <code>~/.tmux.conf</code>.</p>
+<pre><code> bind P paste-buffer
+ bind-key -t vi-copy 'v' begin-selection
+ bind-key -t vi-copy 'y' copy-selection
+ bind-key -t vi-copy 'r' rectangle-toggle
 </code></pre>
-
 <p>Note that for a newer tmux version (2.4 and above I think, not sure), the last three lines should be replaced with:</p>
-
-<pre><code>bind-key -T copy-mode-vi v send-keys -X begin-selection
-bind-key -T copy-mode-vi y send-keys -X copy-selection
-bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
-</code></pre></li>
-
-<li><p>Now you can enter copy mode by pressing <code>CTRL</code>+<code>b</code>,<code>[</code>, and then go
+<pre><code> bind-key -T copy-mode-vi v send-keys -X begin-selection
+ bind-key -T copy-mode-vi y send-keys -X copy-selection
+ bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
+</code></pre>
+</li>
+<li>
+<p>Now you can enter copy mode by pressing <code>CTRL`+`b`,`[</code>, and then go
 to start point, press &lsquo;v&rsquo; and start copying. After you have selected text
 you want to copy, you can just press &lsquo;y&rsquo; (or the default &lsquo;enter&rsquo; key) to
-copy the text into Tmux&rsquo;s buffer. This is exactly the commands you would use
-in Vim to copy text.</p></li>
-
-<li><p>To paste, press <code>CTRL</code>+<code>b</code>,<code>P</code>. Note that it&rsquo;s capital &lsquo;p&rsquo; (i.e.
-<code>SHIFT</code>+<code>p</code>). This again is similar to Vim&rsquo;s shortcut &lsquo;p&rsquo; for paste, though
-not exactly similar. You&rsquo;ll realize in your Tmux journey why didn&rsquo;t we use a
-small &lsquo;p&rsquo; instead of a capital &lsquo;P&rsquo; ;)</p></li>
+copy the text into Tmux's buffer. This is exactly the commands you would use
+in Vim to copy text.</p>
+</li>
+<li>
+<p>To paste, press <code>CTRL`+`b`,`P</code>. Note that it's capital &lsquo;p&rsquo; (i.e.
+<code>SHIFT`+`p</code>). This again is similar to Vim's shortcut &lsquo;p&rsquo; for paste, though
+not exactly similar. You'll realize in your Tmux journey why didn't we use a
+small &lsquo;p&rsquo; instead of a capital &lsquo;P&rsquo; ;)</p>
+</li>
 </ol>
-
 <h2 id="copy-from-tmux-buffer-to-system-buffer-clipboard">Copy from tmux buffer to system buffer (clipboard)</h2>
-
 <p>In newer iTerm2, you need to enable one option in settings to copy a text into
 both tmux buffer and clipboard at the same time. Go to iTerm2 &gt; Preferences &gt;
 &ldquo;General&rdquo; tab, and in the &ldquo;Selection&rdquo; section, check the box which says
-&ldquo;Applications in terminal may access clipboard&rdquo; if it isn&rsquo;t checked. See
+&ldquo;Applications in terminal may access clipboard&rdquo; if it isn't checked. See
 <a href="http://apple.stackexchange.com/a/248828">here</a> for a screenshot.</p>
-
 <h2 id="tmux-copy-with-mouse-drag">Tmux copy with mouse drag!</h2>
-
 <p>You can enable &lsquo;mouse mode&rsquo;, using which you can copy text into tmux buffer by
 mouse drag. For doing that, you just need to add this line to your
 <code>~/.tmux.conf</code> file:</p>
-
 <pre><code>set -g mouse on
 </code></pre>
-
-<h2 id="but-now-i-can-t-do-normal-copy-paste-with-mouse">But now I can&rsquo;t do normal copy-paste with mouse!</h2>
-
-<p>You&rsquo;ll notice that now all your selections will go to tmux buffer, and not
+<h2 id="but-now-i-cant-do-normal-copypaste-with-mouse">But now I can't do normal copy-paste with mouse!</h2>
+<p>You'll notice that now all your selections will go to tmux buffer, and not
 clipboard buffer. Of course, you can enable copying to system clipboard as
-described in a section above. However, you can notice that you can&rsquo;t double
-click to select a complete word with vi&rsquo;s tmux copy-pasting shortcuts + mouse
+described in a section above. However, you can notice that you can't double
+click to select a complete word with vi's tmux copy-pasting shortcuts + mouse
 option enabled.</p>
-
 <p>Just press <code>Option</code> (Alt) button when copying, and now you can copy as if Tmux
-doesn&rsquo;t exist! :)</p>
-
+doesn't exist! :)</p>
 <h2 id="copy-from-a-remote-server">Copy from a remote server</h2>
-
 <p>Now if your remote server is a Linux machine (e.g. an Ubuntu server), then
-getting that remote server&rsquo;s tmux buffer copied into our local Mac&rsquo;s clipboard
+getting that remote server's tmux buffer copied into our local Mac's clipboard
 makes for an interesting story! If the iTerm setting to allow applications in
 terminal to access clipboard is enabled, then if you are running a tmux session
 on remote server, and you copy stuff there into the tmux buffer of that system,
-the copied text is already into your local system&rsquo;s clipboard! Amazing! BUT but
+the copied text is already into your local system's clipboard! Amazing! BUT but
 but, this only works if you are connecting to the remote machine directly from
 your terminal, i.e. not from inside a local Tmux session!! If you have a local
 Tmux session, and then you SSH into remote machine, connect to remote Tmux
 session and then try to copy text in the &lsquo;remote&rsquo; Tmux session (i.e. using
-<code>Ctrl</code>+<code>b</code> twice to send Tmux commands to inner Tmux session), then this won&rsquo;t
+<code>Ctrl`+`b</code> twice to send Tmux commands to inner Tmux session), then this won't
 work! (Note that you can always copy in the &lsquo;outer&rsquo; Tmux session, i.e. local
-Tmux session, but as stated previously, you won&rsquo;t be able to copy text which is
+Tmux session, but as stated previously, you won't be able to copy text which is
 &lsquo;scrolled up&rsquo; in the inner Tmux session.)</p>
-
-<p>Generally I&rsquo;m satisfied with the limitation mentioned here. In order to get
+<p>Generally I'm satisfied with the limitation mentioned here. In order to get
 full copying from remote session working, you will need to do something more
 involved, like <a href="http://superuser.com/a/408374/315134">here</a>. Do let me know if
 you need a better explanation of that method (e.g. more details on SSH keys and
 enabling remote option on Mac OS X)</p>
-
 <h2 id="other-information">Other information</h2>
-
-<p>Done! Don&rsquo;t forget to comment if you know something worth letting everybody
+<p>Done! Don't forget to comment if you know something worth letting everybody
 know! Thank you:)</p>
 
-    
-
-     
-	
-        <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37074962-1']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-37074962-1');
-    ga('send', 'pageview');
-</script>
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-
-(function() {
-    
-    
-    if (window.location.hostname == "localhost") 
-        return;
-
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    var disqus_shortname = 'rushiagr';
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();
-</script>
-<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
-
 </div>
-</div> 
 
-</body>w
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "rushiagr" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-37074962-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
 </html>

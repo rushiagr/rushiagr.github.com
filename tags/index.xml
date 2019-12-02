@@ -1,63 +1,628 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>rushiagr</title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <title>Tags on rushiagr</title>
     <link>http://www.rushiagr.com/tags/</link>
+    <description>Recent content in Tags on rushiagr</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Rushi Agrawal</author>
-    <copyright>2012 Rushi Agrawal</copyright>
-    <updated>Sat, 15 Dec 2012 00:00:00 &#43;0000</updated>
+    <copyright>Rushi Agrawal</copyright>
+    <lastBuildDate>Thu, 08 Dec 2016 19:05:21 +0530</lastBuildDate>
+    
+	<atom:link href="http://www.rushiagr.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Testing the new blog</title>
-      <link>http://www.rushiagr.com/blog/2012/12/15/testing-the-new-blog/</link>
-      <pubDate>Sat, 15 Dec 2012 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
-      <guid>http://www.rushiagr.com/blog/2012/12/15/testing-the-new-blog/</guid>
-      <description>
-
-&lt;p&gt;This is a test blog, just to check out some of the basic functionalities of
-MarkDown. Visit the MarkDown source of this blog post &lt;a href=&#34;https://raw.github.com/rushiagr/rushiagr.github.com/source/source/_posts/2012-12-15-testing-the-new-blog.markdown&#34;&gt;here&lt;/a&gt;
-to understand the simplicity with which a post can be written using MarkDown!&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h2 id=&#34;this-is-a-subheading:636b095ce918d91cdf51da5ad4a6cada&#34;&gt;This is a subheading&lt;/h2&gt;
-
-&lt;p&gt;And below is an example of H1 heading in the main text&lt;/p&gt;
-
-&lt;h1 id=&#34;the-heading:636b095ce918d91cdf51da5ad4a6cada&#34;&gt;THE heading&lt;/h1&gt;
-
-&lt;p&gt;And below is sub-subheading&lt;/p&gt;
-
-&lt;h3 id=&#34;the-h3-heading:636b095ce918d91cdf51da5ad4a6cada&#34;&gt;The H3 heading&lt;/h3&gt;
-
-&lt;p&gt;Trying a smaller heading:&lt;/p&gt;
-
-&lt;h4 id=&#34;the-sub-sub-subheading:636b095ce918d91cdf51da5ad4a6cada&#34;&gt;The sub sub subheading&lt;/h4&gt;
-
-&lt;p&gt;Following is a block of syntax-highlighted python code.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def factorial(number):
-    answer = 1
-    for counter in range(1, number+1):
-        answer *= counter
-    return answer
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To write a monospace block, enclose it in backticks. An example would be a directory location: &lt;code&gt;/home/rushi/Desktop/&lt;/code&gt; is where the files on my desktop
-reside.&lt;/p&gt;
-
-&lt;p&gt;Here is an embedded image:&lt;/p&gt;
-
-&lt;p&gt;{% img &lt;a href=&#34;http://rushiagr.github.com/images/bird_32_gray.png&#34;&gt;http://rushiagr.github.com/images/bird_32_gray.png&lt;/a&gt; %}&lt;/p&gt;
-
-&lt;p&gt;Thank you!&lt;/p&gt;
-</description>
+      <title>cassandra</title>
+      <link>http://www.rushiagr.com/tags/cassandra/</link>
+      <pubDate>Thu, 08 Dec 2016 19:05:21 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/cassandra/</guid>
+      <description></description>
     </item>
     
+    <item>
+      <title>cheatsheet</title>
+      <link>http://www.rushiagr.com/tags/cheatsheet/</link>
+      <pubDate>Thu, 08 Dec 2016 19:05:21 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/cheatsheet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Development</title>
+      <link>http://www.rushiagr.com/tags/development/</link>
+      <pubDate>Thu, 08 Dec 2016 19:05:21 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>distributed</title>
+      <link>http://www.rushiagr.com/tags/distributed/</link>
+      <pubDate>Thu, 08 Dec 2016 19:05:21 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/distributed/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>django</title>
+      <link>http://www.rushiagr.com/tags/django/</link>
+      <pubDate>Tue, 11 Oct 2016 17:59:46 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/django/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git</title>
+      <link>http://www.rushiagr.com/tags/git/</link>
+      <pubDate>Tue, 11 Oct 2016 17:59:46 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>programming</title>
+      <link>http://www.rushiagr.com/tags/programming/</link>
+      <pubDate>Tue, 11 Oct 2016 17:59:46 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>http://www.rushiagr.com/tags/python/</link>
+      <pubDate>Tue, 11 Oct 2016 17:59:46 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vim</title>
+      <link>http://www.rushiagr.com/tags/vim/</link>
+      <pubDate>Tue, 11 Oct 2016 17:59:46 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/vim/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>containers</title>
+      <link>http://www.rushiagr.com/tags/containers/</link>
+      <pubDate>Tue, 16 Aug 2016 17:03:53 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/containers/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docker</title>
+      <link>http://www.rushiagr.com/tags/docker/</link>
+      <pubDate>Tue, 16 Aug 2016 17:03:53 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>golang</title>
+      <link>http://www.rushiagr.com/tags/golang/</link>
+      <pubDate>Tue, 16 Aug 2016 17:03:53 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>http://www.rushiagr.com/tags/kubernetes/</link>
+      <pubDate>Tue, 16 Aug 2016 17:03:53 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>orchestration</title>
+      <link>http://www.rushiagr.com/tags/orchestration/</link>
+      <pubDate>Tue, 16 Aug 2016 17:03:53 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/orchestration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>trick</title>
+      <link>http://www.rushiagr.com/tags/trick/</link>
+      <pubDate>Wed, 20 Jul 2016 23:18:24 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/trick/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>productivity</title>
+      <link>http://www.rushiagr.com/tags/productivity/</link>
+      <pubDate>Fri, 17 Jun 2016 11:18:27 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/productivity/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tutorial</title>
+      <link>http://www.rushiagr.com/tags/tutorial/</link>
+      <pubDate>Fri, 17 Jun 2016 11:18:27 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>quickstart</title>
+      <link>http://www.rushiagr.com/tags/quickstart/</link>
+      <pubDate>Thu, 16 Jun 2016 10:59:02 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/quickstart/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tmux</title>
+      <link>http://www.rushiagr.com/tags/tmux/</link>
+      <pubDate>Thu, 16 Jun 2016 10:59:02 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/tmux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ubuntu</title>
+      <link>http://www.rushiagr.com/tags/ubuntu/</link>
+      <pubDate>Thu, 16 Jun 2016 10:59:02 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/ubuntu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>apple</title>
+      <link>http://www.rushiagr.com/tags/apple/</link>
+      <pubDate>Thu, 16 Jun 2016 10:58:02 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/apple/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>notes</title>
+      <link>http://www.rushiagr.com/tags/notes/</link>
+      <pubDate>Sun, 10 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/notes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>aws</title>
+      <link>http://www.rushiagr.com/tags/aws/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/aws/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>boto</title>
+      <link>http://www.rushiagr.com/tags/boto/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/boto/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cli</title>
+      <link>http://www.rushiagr.com/tags/cli/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/cli/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cloud</title>
+      <link>http://www.rushiagr.com/tags/cloud/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/cloud/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>commandline</title>
+      <link>http://www.rushiagr.com/tags/commandline/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/commandline/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>openstack</title>
+      <link>http://www.rushiagr.com/tags/openstack/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/openstack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>terminal</title>
+      <link>http://www.rushiagr.com/tags/terminal/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/terminal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ux</title>
+      <link>http://www.rushiagr.com/tags/ux/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/ux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vm</title>
+      <link>http://www.rushiagr.com/tags/vm/</link>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/vm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mysql</title>
+      <link>http://www.rushiagr.com/tags/mysql/</link>
+      <pubDate>Sat, 12 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data</title>
+      <link>http://www.rushiagr.com/tags/data/</link>
+      <pubDate>Mon, 14 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/data/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scraper</title>
+      <link>http://www.rushiagr.com/tags/scraper/</link>
+      <pubDate>Mon, 14 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/scraper/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>databases</title>
+      <link>http://www.rushiagr.com/tags/databases/</link>
+      <pubDate>Thu, 10 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/databases/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>devstack</title>
+      <link>http://www.rushiagr.com/tags/devstack/</link>
+      <pubDate>Thu, 10 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/devstack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>keystone</title>
+      <link>http://www.rushiagr.com/tags/keystone/</link>
+      <pubDate>Thu, 10 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/keystone/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nosql</title>
+      <link>http://www.rushiagr.com/tags/nosql/</link>
+      <pubDate>Thu, 10 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/nosql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scalability</title>
+      <link>http://www.rushiagr.com/tags/scalability/</link>
+      <pubDate>Thu, 10 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/scalability/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>apache</title>
+      <link>http://www.rushiagr.com/tags/apache/</link>
+      <pubDate>Fri, 24 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/apache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>devops</title>
+      <link>http://www.rushiagr.com/tags/devops/</link>
+      <pubDate>Fri, 24 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>operations</title>
+      <link>http://www.rushiagr.com/tags/operations/</link>
+      <pubDate>Fri, 24 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/operations/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>server</title>
+      <link>http://www.rushiagr.com/tags/server/</link>
+      <pubDate>Fri, 24 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/server/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>systems</title>
+      <link>http://www.rushiagr.com/tags/systems/</link>
+      <pubDate>Fri, 24 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/systems/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lxc</title>
+      <link>http://www.rushiagr.com/tags/lxc/</link>
+      <pubDate>Sun, 07 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/lxc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>technology</title>
+      <link>http://www.rushiagr.com/tags/technology/</link>
+      <pubDate>Sun, 07 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/technology/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>virtualization</title>
+      <link>http://www.rushiagr.com/tags/virtualization/</link>
+      <pubDate>Sun, 07 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/virtualization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>apt</title>
+      <link>http://www.rushiagr.com/tags/apt/</link>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/apt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cache</title>
+      <link>http://www.rushiagr.com/tags/cache/</link>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/cache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>packaging</title>
+      <link>http://www.rushiagr.com/tags/packaging/</link>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/packaging/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>squid</title>
+      <link>http://www.rushiagr.com/tags/squid/</link>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/squid/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>automation</title>
+      <link>http://www.rushiagr.com/tags/automation/</link>
+      <pubDate>Sun, 14 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/automation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>puppet</title>
+      <link>http://www.rushiagr.com/tags/puppet/</link>
+      <pubDate>Sun, 14 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/puppet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iscsi</title>
+      <link>http://www.rushiagr.com/tags/iscsi/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/iscsi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lvm</title>
+      <link>http://www.rushiagr.com/tags/lvm/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/lvm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>testing</title>
+      <link>http://www.rushiagr.com/tags/testing/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/testing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>amazon</title>
+      <link>http://www.rushiagr.com/tags/amazon/</link>
+      <pubDate>Sat, 09 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/amazon/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ec2</title>
+      <link>http://www.rushiagr.com/tags/ec2/</link>
+      <pubDate>Sat, 09 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/ec2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tech</title>
+      <link>http://www.rushiagr.com/tags/tech/</link>
+      <pubDate>Tue, 05 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/tech/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>quicstart</title>
+      <link>http://www.rushiagr.com/tags/quicstart/</link>
+      <pubDate>Sat, 12 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/quicstart/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cinder</title>
+      <link>http://www.rushiagr.com/tags/cinder/</link>
+      <pubDate>Thu, 16 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/cinder/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>http://www.rushiagr.com/tags/linux/</link>
+      <pubDate>Tue, 14 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>storage</title>
+      <link>http://www.rushiagr.com/tags/storage/</link>
+      <pubDate>Tue, 14 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/storage/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>openid</title>
+      <link>http://www.rushiagr.com/tags/openid/</link>
+      <pubDate>Sun, 12 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/openid/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>screen</title>
+      <link>http://www.rushiagr.com/tags/screen/</link>
+      <pubDate>Wed, 05 Jun 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/screen/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>block-storage</title>
+      <link>http://www.rushiagr.com/tags/block-storage/</link>
+      <pubDate>Mon, 27 May 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/block-storage/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tempest</title>
+      <link>http://www.rushiagr.com/tags/tempest/</link>
+      <pubDate>Wed, 20 Mar 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/tempest/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github</title>
+      <link>http://www.rushiagr.com/tags/github/</link>
+      <pubDate>Tue, 19 Mar 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/tags/github/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

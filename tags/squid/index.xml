@@ -1,172 +1,26 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>rushiagr</title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/squid/index.xml</link>
+    <title>squid on rushiagr</title>
+    <link>http://www.rushiagr.com/tags/squid/</link>
+    <description>Recent content in squid on rushiagr</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Rushi Agrawal</author>
-    <copyright>0001 Rushi Agrawal</copyright>
-    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    <copyright>Rushi Agrawal</copyright>
+    <lastBuildDate>Fri, 05 Jun 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://www.rushiagr.com/tags/squid/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Cache APT packages with Squid proxy</title>
       <link>http://www.rushiagr.com/blog/2015/06/05/cache-apt-packages-with-squid-proxy/</link>
-      <pubDate>Fri, 05 Jun 2015 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2015/06/05/cache-apt-packages-with-squid-proxy/</guid>
-      <description>
-
-&lt;p&gt;TL;DR: Know how to install and set up Squid proxy, so that you can cache packages,
-and hence save bandwidth if you want to install those packages again and again.
-Also works if you are already behind a squid proxy.&lt;/p&gt;
-
-&lt;h2 id=&#34;problem-repetitive-download-slow&#34;&gt;Problem: Repetitive download. Slow.&lt;/h2&gt;
-
-&lt;p&gt;If you deal with virtual machines a lot, you might know the pain of
-managing packages on each one of them. Every time I had to create a new VM,
-I would run &lt;code&gt;apt-get update&lt;/code&gt; (to get information about all the latest packages
-available for my Ubuntu system), &lt;code&gt;apt-get dist-upgrade&lt;/code&gt; (to install latest
-versions of all packages already installed), and also install some packages
-not present in stock Ubuntu image, like &lt;code&gt;git&lt;/code&gt; (yes, it&amp;rsquo;s 2015
-and Ubuntu still doesn&amp;rsquo;t come pre-installed with &lt;code&gt;git&lt;/code&gt;), &lt;code&gt;ipython&lt;/code&gt;, &lt;code&gt;bwm-ng&lt;/code&gt;
-and some others. This would mean I&amp;rsquo;m downloading the same file over the network
-over and over again. Now there are two ways to deal with this situation&lt;/p&gt;
-
-&lt;h2 id=&#34;solution-1-local-ubuntu-mirror-super-fast-but-unweildy&#34;&gt;Solution 1: Local Ubuntu mirror - Super fast but unweildy&lt;/h2&gt;
-
-&lt;p&gt;The first solution is to download a complete Ubuntu mirror to your computer.
-That is, download ALL Ubuntu packages to your system, and then it is super fast.
-The first download will be close to 80GBs though. It would have been fine for
-me to download 80GBs, but you&amp;rsquo;ll realize the problem when you want to update
-this mirror. If you are trying to update the local mirror every week or so,
-each time it will ask you to download around 5GB of data. And that unfortunately
-is too much for me to download every few days.&lt;/p&gt;
-
-&lt;h2 id=&#34;solution-2-cache-with-squid-proxy-just-about-perfect&#34;&gt;Solution 2: Cache with Squid proxy - Just about perfect&lt;/h2&gt;
-
-&lt;p&gt;The other alternative is use a local cache, using Squid proxy. It works like
-just another cache: if you want a package of a specific version, Squid will connect
-over the internet to find more details about that file. Once it gets these details,
-it checks if a file (package) matching those details is already present in the local
-cache. If it is locally present, it just sends this local copy to the requester.
-So the total Internet bandwidth utilised is only to get the file details, which
-is miniscule (Bytes) compared to downloading the whole package (MBs)j. If the
-details doesn&amp;rsquo;t match any locally cached packages, the proxy fetches that package
-from internet and responds to the requester.&lt;/p&gt;
-
-&lt;h2 id=&#34;practical&#34;&gt;Practical!&lt;/h2&gt;
-
-&lt;p&gt;Enough of theory, let&amp;rsquo;s put theory to some practice :)&lt;/p&gt;
-
-&lt;p&gt;All of the commands below are run on Ubuntu 14.04 (Trusty).&lt;/p&gt;
-
-&lt;p&gt;Install Squid proxy package.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get install squid
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Configure: replace &lt;code&gt;/etc/squid3/squid.conf&lt;/code&gt; and make it contain these lines.
-You will need root permissions to edit this file&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;acl localhost src 127.0.0.1/32 ::1
-acl to_localhost dst 127.0.0.0/8 0.0.0.0/32 ::1
-acl localnet src 10.0.0.0/8 # RFC1918 possible internal network
-acl localnet src 172.16.0.0/12  # RFC1918 possible internal network
-acl localnet src 192.168.0.0/16 # RFC1918 possible internal network
-acl SSL_ports port 443
-acl Safe_ports port 80      # http
-acl Safe_ports port 21      # ftp
-acl Safe_ports port 443     # https
-acl Safe_ports port 70      # gopher
-acl Safe_ports port 210     # wais
-acl Safe_ports port 1025-65535  # unregistered ports
-acl Safe_ports port 280     # http-mgmt
-acl Safe_ports port 488     # gss-http
-acl Safe_ports port 591     # filemaker
-acl Safe_ports port 777     # multiling http
-acl CONNECT method CONNECT
-http_access allow manager localhost
-http_access deny manager
-http_access deny !Safe_ports
-http_access deny CONNECT !SSL_ports
-http_access allow localnet
-http_access allow localhost
-http_access deny all
-http_port 3128
-maximum_object_size 1024 MB
-cache_dir aufs /var/spool/squid3 5000 24 256
-coredump_dir /var/spool/squid3
-refresh_pattern ^ftp:       1440    20% 10080
-refresh_pattern ^gopher:    1440    0%  1440
-refresh_pattern -i (/cgi-bin/|\?) 0 0%  0
-refresh_pattern (Release|Packages(.gz)*)$      0       20%     2880
-refresh_pattern .       0   20% 4320
-refresh_all_ims on
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You don&amp;rsquo;t need to know or remember what is happening here right now. Just copy
-and paste :)&lt;/p&gt;
-
-&lt;p&gt;Restart the service:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo service squid3 restart
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now squid service is running, and listening on port 3128. You can use any IP
-of your base system which is accessible from your VMs to get packages
-via this cache. I give my base system an IP of &lt;code&gt;192.168.100.1&lt;/code&gt;, so I just
-need to do:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;export http_proxy=http://192.168.100.1:3128/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;to source the proxy environment variable, which we&amp;rsquo;ll use to point the APT system
-to, to fetch packages from. To test if you proxy is working fine locally,
-you can provide &lt;code&gt;127.0.0.1&lt;/code&gt;, your localhost IP instead.&lt;/p&gt;
-
-&lt;p&gt;And after that can start using the cache to download packages by just passing &lt;code&gt;-E&lt;/code&gt;
-option to the &lt;code&gt;sudo&lt;/code&gt; command&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo -E apt-get install &amp;lt;your package&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Sure there are alternative ways of using the proxy, but this is my favourite!&lt;/p&gt;
-
-&lt;h2 id=&#34;i-m-already-behind-a-proxy&#34;&gt;I&amp;rsquo;m already behind a proxy!&lt;/h2&gt;
-
-&lt;p&gt;Worry not, add these lines to &lt;code&gt;squid.conf&lt;/code&gt;, restart squid and you&amp;rsquo;re all set for using the
-brand new proxy instead of the old one :)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cache_peer 10.135.121.138 parent 3128 0 no-query no-digest
-never_direct allow all
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;ending-thoughts&#34;&gt;Ending thoughts&lt;/h2&gt;
-
-&lt;p&gt;You can go to &lt;code&gt;/var/spool/squid3&lt;/code&gt; and run a &lt;code&gt;du -sch&lt;/code&gt; to see the total size
-of cached files. I find it easy sometimes to calculate the total size of
-files this directory holds, to make sure the proxy is working correctly &amp;ndash;
-if you can &amp;lsquo;new&amp;rsquo; packages being downloaded, but the size of this directory
-is not increasing, they&amp;rsquo;re not coming via this proxy, and you need to figure
-out why :)&lt;/p&gt;
-
-&lt;p&gt;One more important thing I should tell is that the configuration file
-we&amp;rsquo;ve used not only caches APT packages, but also any static files
-hosted anywhere on the internet. So if let&amp;rsquo;s say you want to download an
-Ubuntu ISO or some other ISO multiple times in your setup (say, inside VMs),
-you can cache the ISO file as well with our current setup.&lt;/p&gt;
-
-&lt;p&gt;Tell me what is the size your &lt;code&gt;/var/spool/squid3/&lt;/code&gt; directory has
-reached. Mine is at 1GB right now after a year of it&amp;rsquo;s usage.&lt;/p&gt;
-
-&lt;p&gt;Cheers!&lt;/p&gt;
-
-&lt;p&gt;-Rushi&lt;/p&gt;
-</description>
+      <description>TL;DR: Know how to install and set up Squid proxy, so that you can cache packages, and hence save bandwidth if you want to install those packages again and again. Also works if you are already behind a squid proxy.
+Problem: Repetitive download. Slow. If you deal with virtual machines a lot, you might know the pain of managing packages on each one of them. Every time I had to create a new VM, I would run apt-get update (to get information about all the latest packages available for my Ubuntu system), apt-get dist-upgrade (to install latest versions of all packages already installed), and also install some packages not present in stock Ubuntu image, like git (yes, it&#39;s 2015 and Ubuntu still doesn&#39;t come pre-installed with git), ipython, bwm-ng and some others.</description>
     </item>
-    
     
   </channel>
 </rss>

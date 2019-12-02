@@ -1,136 +1,86 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.60.1" />
 
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>iSCSI administration on Ubuntu - Quick Start &middot; rushiagr</title>
+  <meta name="description" content="" />
 
   
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
 
-  <title> iSCSI administration on Ubuntu - Quick Start  &middot; rushiagr </title>
-
-  
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
-
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
-  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
-
-  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-  <script>
-    WebFont.load({
-      google: {
-        families: ['Raleway']
-      }
-    });
-  </script>
-
+  
 </head>
 
-<body>
-
-  <div class="sidebar">
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
+      <a href="http://www.rushiagr.com/"><h1>rushiagr</h1></a>
       <p class="lead">
-       yet another tech guy 
+       Yet another tech guy 
       </p>
     </div>
 
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://www.rushiagr.com/">Home</a> </li>
+        <li><a href="/about/"> About </a></li><li><a href="https://github.com/rushiagr/"> Github </a></li><li><a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"> LinkedIn </a></li>
+      </ul>
+    </nav>
 
-
-    <ul class="sidebar-nav">
-      <li><a href="http://www.rushiagr.com/blog">Posts</a></li>
-      
-        <li><a href="/about/">About </a></li>
-        <li><a href="https://github.com/rushiagr">Code</a></li>
-        <li><a href="http://www.rushiagr.com/personal">Personal Blog</a></li>
-      
-      <br/>
-      
-        
-        
-        
-        
-        
-        
-        
-      
-    </ul>
-      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      <a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
-      
-      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
-
-    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
-    
+    <p>&copy; 2019. All rights reserved. </p>
   </div>
-</div>
+</aside>
 
-
-  <div class="content container">
+    <main class="content container">
     <div class="post">
-    <h1 class="post-title">iSCSI administration on Ubuntu - Quick Start</h1>
-    <span class="post-date">Sep 5, 2014</span>
-    
-    
-
-<p>This post get&rsquo;s you started with iSCSI administration on an Ubuntu machine.
+  <h1>iSCSI administration on Ubuntu - Quick Start</h1>
+  <time datetime=2014-09-05T00:00:00Z class="post-date">Fri, Sep 5, 2014</time>
+  <p>This post get's you started with iSCSI administration on an Ubuntu machine.
 Although I have used Ubuntu Trusty (14.04) version, it should work with Precise
 (12.04) too, with the latest packages.</p>
-
 <h4 id="prerequisites">Prerequisites</h4>
-
 <p>Make sure you have atleast a little idea of what these terms
 mean: iSCSI, LUN, IQN, initiator, target and portal. Google and wikipedia are
 your friends.</p>
-
 <h4 id="a-quick-summary">A quick summary:</h4>
-
-<p>There are two parts of iSCSI communication - initiator and target. So let&rsquo;s take an example. There is a storage server in your
+<p>There are two parts of iSCSI communication - initiator and target. So let's take an example. There is a storage server in your
 company, where you have a &lsquo;drive&rsquo; for your team. The storage server is the
-&lsquo;target&rsquo;, and your laptop, where you&rsquo;ll mount the drive to access it&rsquo;s contents
+&lsquo;target&rsquo;, and your laptop, where you'll mount the drive to access it's contents
 is the &lsquo;initiator&rsquo;. In other words, target is like a &lsquo;server&rsquo; which stores
 data, and allows initiators (think &lsquo;clients&rsquo;) to connect to it.</p>
-
-<p>In this short hands-on introduction, we&rsquo;ll use the same Ubuntu machine as
+<p>In this short hands-on introduction, we'll use the same Ubuntu machine as
 target as well as initiator. We can use a file as the storage behind the
 target, but this post also shows how to use LVM logical volume as the backing
 store for the iSCSI target.</p>
-
-<p>Actually, we&rsquo;ll back the logical volume (LV) with a file, as shown in
+<p>Actually, we'll back the logical volume (LV) with a file, as shown in
 <a href="http://www.rushiagr.com/blog/2014/01/14/quick-start-linux-logical-volume-manager/">this</a>,
-so essentially we&rsquo;re just using &lsquo;file as a backing store for targets&rsquo; but in a
+so essentially we're just using &lsquo;file as a backing store for targets&rsquo; but in a
 roundabout way :)</p>
-
-<p>OK, let&rsquo;s get started. Make sure you execute all the following commands as root
+<p>OK, let's get started. Make sure you execute all the following commands as root
 user.</p>
-
 <p>First install the required dependencies</p>
-
 <pre><code>apt-get install lvm2 tgt open-iscsi
 </code></pre>
-
 <h4 id="initialize-logical-volume">Initialize logical volume</h4>
-
 <p>Create a file of 1GB, create a volume group over it, and then over it, create a
 400MB logical volume, and see if it got created or not</p>
-
 <pre><code>root@ra:~# truncate --size 1G backingfile
 root@ra:~# sudo losetup --find --show backingfile 
 /dev/loop0
@@ -144,17 +94,12 @@ root@ra:~# lvs
   LV   VG   Attr      LSize   Pool Origin Data%  Move Log Copy% Convert
   mylv myvg -wi-a---- 400.00m                                           
 </code></pre>
-
 <h4 id="target-administration">Target administration</h4>
-
-<p>Now let&rsquo;s create a target, with target ID 1, and give it an IQN (iSCSI
+<p>Now let's create a target, with target ID 1, and give it an IQN (iSCSI
 Qualified Name) <code>iqn.2001-04.example.com:your.first.iscsi.target</code>:</p>
-
 <pre><code>tgtadm --lld iscsi --op new --mode target --tid 1 -T iqn.2001-04.example.com:your.first.iscsi.target
 </code></pre>
-
-<p>List the target, see it&rsquo;s properties:</p>
-
+<p>List the target, see it's properties:</p>
 <pre><code>root@ra:~# tgtadm --lld iscsi --op show --mode target
 Target 1: iqn.2001-04.example.com:your.first.iscsi.target
     System information:
@@ -179,24 +124,17 @@ Target 1: iqn.2001-04.example.com:your.first.iscsi.target
     Account information:
     ACL information:
 </code></pre>
-
-<p>You can see there is a LUN, LUN 0 attached to the target. Let&rsquo;s attach our
+<p>You can see there is a LUN, LUN 0 attached to the target. Let's attach our
 logical volume <code>mylv</code> as LUN 1 to the target.</p>
-
 <pre><code>tgtadm --lld iscsi --op new --mode logicalunit --tid 1 --lun 1 -b /dev/myvg/mylv
 </code></pre>
-
-<p>Here, actually you could&rsquo;ve attached a flat file as a LUN to the target. So you
-could&rsquo;ve skipped all the intermediate steps and attached the <code>backingfile</code>
+<p>Here, actually you could've attached a flat file as a LUN to the target. So you
+could've skipped all the intermediate steps and attached the <code>backingfile</code>
 directly to the target like this:</p>
-
 <pre><code>tgtadm --lld iscsi --op new --mode logicalunit --tid 1 --lun 1 -b backingfile
 </code></pre>
-
-<p>A backing file would&rsquo;ve been good enough for this demo, but you know the benefits of logical volume isn&rsquo;t it? :)</p>
-
-<p>Okay, let&rsquo;s see if the LUN got created:</p>
-
+<p>A backing file would've been good enough for this demo, but you know the benefits of logical volume isn't it? :)</p>
+<p>Okay, let's see if the LUN got created:</p>
 <pre><code>root@ra:~# tgtadm --lld iscsi --op show --mode target
 Target 1: iqn.2001-04.example.com:your.first.iscsi.target
     System information:
@@ -235,39 +173,28 @@ Target 1: iqn.2001-04.example.com:your.first.iscsi.target
     Account information:
     ACL information:
 </code></pre>
-
-<p>Now let&rsquo;s allow all initiators to bind to this target:</p>
-
+<p>Now let's allow all initiators to bind to this target:</p>
 <pre><code>tgtadm --lld iscsi --op bind --mode target --tid 1 -I ALL
 </code></pre>
-
-<p>We&rsquo;re done with the &lsquo;target&rsquo; side now. You can check, using <code>netstat</code> that port
+<p>We're done with the &lsquo;target&rsquo; side now. You can check, using <code>netstat</code> that port
 3260, the default port, is now open. Note that all our commands so far started with
 <code>tgtadm</code>, i.e., the target administration utility.</p>
-
 <h4 id="initiator-administration">Initiator administration</h4>
-
-<p>Now let&rsquo;s start from the &lsquo;initiator&rsquo; end. We&rsquo;ll behave as if we&rsquo;re a client
+<p>Now let's start from the &lsquo;initiator&rsquo; end. We'll behave as if we're a client
 trying to connect to the server &ndash; the target.</p>
-
 <p>Discover all the targets on our local machine (<code>127.0.0.1</code>).</p>
-
 <pre><code>root@ra:~# sudo iscsiadm --mode discovery --type sendtargets --portal 127.0.0.1
 127.0.0.1:3260,1 iqn.2001-04.example.com:your.first.iscsi.target
 </code></pre>
-
-<p>From the client perspective, we&rsquo;re now able to see a target. Let&rsquo;s login into
+<p>From the client perspective, we're now able to see a target. Let's login into
 that target</p>
-
 <pre><code>root@ra:~# sudo iscsiadm --mode node --targetname iqn.2001-04.example.com:your.first.iscsi.target --portal 127.0.0.1:3260 --login
 Logging in to [iface: default, target: iqn.2001-04.example.com:your.first.iscsi.target, portal: 127.0.0.1,3260] (multiple)
 Login to [iface: default, target: iqn.2001-04.example.com:your.first.iscsi.target, portal: 127.0.0.1,3260] successful.
 </code></pre>
-
-<p>After logging in, the target will be visible in the client&rsquo;s system as a new
+<p>After logging in, the target will be visible in the client's system as a new
 device. Running a <code>fdisk -l</code> shows that there is a new device <code>/dev/sda</code> is now
 present.</p>
-
 <pre><code>root@ra:~# fdisk -l
 
 Disk /dev/vda: 57.1 GB, 57076908032 bytes
@@ -300,10 +227,8 @@ Disk identifier: 0x00000000
 
 Disk /dev/sda doesn't contain a valid partition table
 </code></pre>
-
 <p>Now we just need to format this device with a filesystem, say EXT4, and then
 mount it at some location to start using it!</p>
-
 <pre><code>root@ra:~# sudo mkfs.ext4 /dev/sda
 mke2fs 1.42.9 (4-Feb-2014)
 /dev/sda is entire device, not just one partition!
@@ -335,57 +260,48 @@ root@ra:~/tempmount# ls
 lost+found
 root@ra:~/tempmount# 
 </code></pre>
-
 <h4 id="destruction">Destruction</h4>
-
-<p>The simplest way to get rid of all the things you&rsquo;ve created is to unmount the
+<p>The simplest way to get rid of all the things you've created is to unmount the
 device, and restart the system.</p>
-
 <p>Aaand done!</p>
-
 <p>Cheers!</p>
 
-    
-
-     
-	
-        <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37074962-1']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-37074962-1');
-    ga('send', 'pageview');
-</script>
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-
-(function() {
-    
-    
-    if (window.location.hostname == "localhost") 
-        return;
-
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    var disqus_shortname = 'rushiagr';
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();
-</script>
-<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
-
 </div>
-</div> 
 
-</body>w
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "rushiagr" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-37074962-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
 </html>

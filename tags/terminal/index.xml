@@ -1,225 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>rushiagr</title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/terminal/index.xml</link>
+    <title>terminal on rushiagr</title>
+    <link>http://www.rushiagr.com/tags/terminal/</link>
+    <description>Recent content in terminal on rushiagr</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Rushi Agrawal</author>
-    <copyright>0001 Rushi Agrawal</copyright>
-    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    <copyright>Rushi Agrawal</copyright>
+    <lastBuildDate>Sat, 02 Jan 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://www.rushiagr.com/tags/terminal/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>A different approach to AWS CLI</title>
       <link>http://www.rushiagr.com/blog/2016/01/02/better-aws-command-line-interface/</link>
-      <pubDate>Sat, 02 Jan 2016 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/01/02/better-aws-command-line-interface/</guid>
-      <description>
-
-&lt;p&gt;For a user of Amazon Web Services, quickly viewing a dashboard of all resources
-is not straightforward. If using a web browser, the session won&amp;rsquo;t persist for
-more than a day and one will have to re-authenticate every day. If using AWS
-CLI, then he/she might not remember the exact command (was it
-&lt;code&gt;describe-key-pair&lt;/code&gt; or &lt;code&gt;describe-keypair&lt;/code&gt; or &lt;code&gt;describe-keypairs&lt;/code&gt;?) but even if
-they do, the output is a not-so-readable JSON. For viewing virtual machines,
-you might not want to see hundreds of lines of detail.
-Maybe you just wanted to see the IP of the VM so that you can SSH into it. Or
-maybe you just wanted to quickly create a virtual machine to test something: do
-you remember all the parameters you need to specify for instance creation? And
-don&amp;rsquo;t forget that you will need to specify the AMI ID of the image, even if you
-know exactly the operating system name and version.&lt;/p&gt;
-
-&lt;p&gt;There is no doubt that AWS CLI is an impressive piece of work. It allows you to
-do absolutely everything with their cloud. The
-documentation is thorough. It is great for automation too &amp;ndash; output is easily parse-able JSON. However, it&amp;rsquo;s not as
-human-friendly. It doesn&amp;rsquo;t tell you which options are mandatory and which are
-optional. It doesn&amp;rsquo;t remind you if you forget to specify keypair while creating an
-instance. You end up deleting that instance, then Google-searching &amp;lsquo;aws cli delete instance&amp;rsquo;
-and finally creating another instance. The CLI has some inconsistencies too &amp;ndash; creating
-a keypair is &lt;code&gt;create-key-pair&lt;/code&gt; but creating a virtual machine is not
-&lt;code&gt;create-instance&lt;/code&gt; but &lt;code&gt;run-instances&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;To alleviate these pains, I created a simple CLI tool called &amp;ldquo;&lt;a href=&#34;http://github.com/rushiagr/cch&#34;&gt;CCH - Cloud CLI
-for Humans&lt;/a&gt;&amp;rdquo;. Just typing &lt;code&gt;lsvm&lt;/code&gt; prints all
-the virtual machines you have in the cluster. Each command can be run without
-passing a parameter to it. If an operation requires additional parameters and
-you didn&amp;rsquo;t specify it for the first time, it&amp;rsquo;ll ask you to input those
-parameters. For example &lt;code&gt;mkvm&lt;/code&gt;, the command to create virtual machines:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ mkvm
-Available flavors: t2.micro, t2.nano, ...
-Select flavor [&#39;l&#39; to list]:
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Commands for resource creation are short and consistent (&lt;code&gt;mkvm&lt;/code&gt; creates virtual
-machines, &lt;code&gt;mkkp&lt;/code&gt; creates keypairs, &lt;code&gt;mksg&lt;/code&gt; create security groups). No need to
-remember AMI IDs (presently it selects Ubuntu 16.04 64-bit image by default,
-but in future you might specify an OS name and OS version). All the commands
-supported so far are:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;lsvm    - List all virtual machines
-mkvm    - Create a virtual machine
-stpvm   - Stop a virtual machine
-rmvm    - Terminate a virtual machine
-
-lskp    - List all keypairs
-mkkp    - Create keypairs
-rmkp    - Delete a keypair
-
-lssg    - List all security groups (including a detailed view)
-mksg    - Create a security group (including specifying secgroup rules)
-rmsg    - Delete a security group
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
-
-&lt;p&gt;I have added the tool to PyPI, so download is easy:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;pip install cch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Run &lt;code&gt;aws configure&lt;/code&gt; if you don&amp;rsquo;t have AWS credentials configured on your
-system. Typically, credentials are kept in &lt;code&gt;~/.aws/credentials&lt;/code&gt; file.&lt;/p&gt;
-
-&lt;h2 id=&#34;sample-usage&#34;&gt;Sample usage&lt;/h2&gt;
-
-&lt;p&gt;For full list of operations supported so far, see this &lt;a href=&#34;https://asciinema.org/a/ektm98481nniu7rldc1ncu5af&#34;&gt;asciinema
-screencast&lt;/a&gt; I&amp;rsquo;m providing
-examples here for some of the commands.&lt;/p&gt;
-
-&lt;p&gt;See help text of a command&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ lsvm -h
-lsvm [-h] [-s] [&amp;lt;name&amp;gt;]
-    -h      Prints helptext and exits
-    -s      Prints sizes of VM disks in GB, starting with root disk
-    &amp;lt;name&amp;gt;  Only prints VM whose name contains &#39;&amp;lt;name&amp;gt;&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;List all virtual machines&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ lsvm
-    ID              Name           Status   Flavor        IP      Vols
-i-abcd1234     rushi dev m/c      running  t2.micro 52.12.123.123  1
-i-abcd1233   rushi pkg builder    running  t2.micro 52.12.123.122  1
-i-abcd1232 rushi vanilla devstack running  t2.large 54.12.123.121  1
-i-abcd1231  rushi dbaas devstack  running m4.xlarge 52.12.123.120  1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Also show sizes of volumes of instances:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ lsvm  -s
-    ID                   Name               Status   Flavor        IP       Vols(GB)
-i-abcd1234          rushi dev m/c          running  t2.micro 52.12.123.123    [8]
-i-abcd1233        rushi pkg builder        running  t2.micro 52.12.123.122    [8]
-i-abcd1232      rushi vanilla devstack     running  t2.large 54.12.123.121    [50]
-i-abcd1231       rushi dbaas devstack      running m4.xlarge 52.12.123.120    [50]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;List all VMs whose name contains word &amp;lsquo;devstack&amp;rsquo;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ lsvm devstack
-    ID              Name           Status   Flavor        IP      Vols
-i-abcd1232 rushi vanilla devstack running  t2.large 54.12.123.121  1
-i-abcd1231  rushi dbaas devstack  running m4.xlarge 52.12.123.120  1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Create a virtual machine&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ mkvm
-Only Ubuntu image supported as of now
-Available flavors: [&#39;t1.micro&#39;, &#39;m1.small&#39;, ... ]
-Select flavor [&#39;l&#39; to list]: t2.micro
-Available key pairs: [&#39;rushi-kp-1&#39;, &#39;prod-keypair&#39;, &#39;test-keypair&#39;]
-Select keypair: rushi-kp-1
-Available security groups: [&#39;Rushi SecGroup&#39;, &#39;openToAll&#39;]
-Select security group. None to create new one: Rushi SecGroup
-Enter root volume size in GBs: 8
-r@rushi:~$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Think this makes sense/no sense? Please write a comment below. Create a PR or issue for CCH development. I should totally think of a better name for the CLI tool :)&lt;/p&gt;
-
-&lt;p&gt;Thank you :)&lt;/p&gt;
-</description>
+      <description>For a user of Amazon Web Services, quickly viewing a dashboard of all resources is not straightforward. If using a web browser, the session won&#39;t persist for more than a day and one will have to re-authenticate every day. If using AWS CLI, then he/she might not remember the exact command (was it describe-key-pair or describe-keypair or describe-keypairs?) but even if they do, the output is a not-so-readable JSON. For viewing virtual machines, you might not want to see hundreds of lines of detail.</description>
     </item>
-    
-    
     
     <item>
       <title>Better way to view MySQL tables</title>
       <link>http://www.rushiagr.com/blog/2015/12/12/better-way-to-view-mysql-tables/</link>
-      <pubDate>Sat, 12 Dec 2015 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Sat, 12 Dec 2015 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2015/12/12/better-way-to-view-mysql-tables/</guid>
-      <description>
-
-&lt;h3 id=&#34;the-problem&#34;&gt;The problem&lt;/h3&gt;
-
-&lt;p&gt;You are trying to print a MySQL table with a large number of columns, with
-&lt;code&gt;SELECT *&lt;/code&gt; command. You type &lt;code&gt;SELECT * FROM mysql.user LIMIT 1&lt;/code&gt;, and your terminal
-becomes &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-table-with-many-rows-messy.png&#34;&gt;this&lt;/a&gt;.
-If you wanted to view more than one row, you&amp;rsquo;re in a trouble :)&lt;/p&gt;
-
-&lt;h3 id=&#34;the-solution&#34;&gt;The solution&lt;/h3&gt;
-
-&lt;p&gt;Run MySQL with this option:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mysql --pager=&amp;quot;less --chop-long-lines --quit-if-one-screen --no-init&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will make your table display only the rows it can in the current screen, something like &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-with-less-pager-neat.png&#34;&gt;this&lt;/a&gt;. You can
-use the arrow keys to move sideways to view the hidden column. Pressing the &amp;lsquo;right&amp;rsquo; arrow key will move half page towards right. Neat, isn&amp;rsquo;t it?&lt;/p&gt;
-
-&lt;p&gt;You can create an alias for mysql:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# Using shorter version of &#39;less&#39; flags mentioned above
-alias mysql=&#39;mysql -SFX&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You can put the above line in your &lt;code&gt;~/.bashrc&lt;/code&gt; file to load this alias
-in every new terminal session.&lt;/p&gt;
-
-&lt;h3 id=&#34;bonus-point-for-vim-users&#34;&gt;Bonus point for Vim users&lt;/h3&gt;
-
-&lt;p&gt;&lt;code&gt;less&lt;/code&gt; allows using keys &lt;code&gt;j&lt;/code&gt; and &lt;code&gt;k&lt;/code&gt; for scrolling down and scrolling up. Unfortunately, you cannot directly use keys &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move sideways using &lt;code&gt;less&lt;/code&gt;. Fortunately, you can map &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move left or right, respectively. Here&amp;rsquo;s how to do that:&lt;/p&gt;
-
-&lt;p&gt;Create a file &lt;code&gt;.lesskey&lt;/code&gt; in your home directory, with the following contents&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;l noaction 10\e)
-h noaction 10\e)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now run this command, to generate &lt;code&gt;~/.less&lt;/code&gt; file.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;lesskey
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will generate a binary file which &lt;code&gt;less&lt;/code&gt; understands. If you now start a new MySQL terminal session (of course with the above said &lt;code&gt;--pages&lt;/code&gt; flag), you can use Vim&amp;rsquo;s &lt;code&gt;HJKL&lt;/code&gt; movements. Here I have specified to move 10 characters to the right if you make one &amp;lsquo;right&amp;rsquo; Vim movement.&lt;/p&gt;
-
-&lt;h3 id=&#34;quick-setup-script&#34;&gt;Quick setup script&lt;/h3&gt;
-
-&lt;p&gt;Don&amp;rsquo;t want to do the above stuff manually? Just run this command and your computer will be set up in a second!&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sh -c &amp;quot;$(wget -q https://raw.githubusercontent.com/rushiagr/public/master/scripts/mysql-pretty-table.sh -O -)&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note that changes will take effect from a new shell session (or you can run &lt;code&gt;source ~/.bashrc&lt;/code&gt; if you want things to work in the current session too.&lt;/p&gt;
-
-&lt;h3 id=&#34;more-information&#34;&gt;More information&lt;/h3&gt;
-
-&lt;p&gt;Find more information at below links:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://unix.stackexchange.com/a/169969/91602&#34;&gt;About mapping &amp;lsquo;h&amp;rsquo; and &amp;lsquo;k&amp;rsquo; to Vim movements in &amp;lsquo;less&amp;rsquo;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/a/6422698/1143173&#34;&gt;About using &amp;lsquo;less&amp;rsquo; as MySQL pager&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+      <description>The problem You are trying to print a MySQL table with a large number of columns, with SELECT * command. You type SELECT * FROM mysql.user LIMIT 1, and your terminal becomes this. If you wanted to view more than one row, you&#39;re in a trouble :)
+The solution Run MySQL with this option:
+mysql --pager=&amp;quot;less --chop-long-lines --quit-if-one-screen --no-init&#39;  This will make your table display only the rows it can in the current screen, something like this.</description>
     </item>
-    
     
   </channel>
 </rss>

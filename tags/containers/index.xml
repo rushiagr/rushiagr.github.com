@@ -1,258 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>rushiagr</title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/containers/index.xml</link>
+    <title>containers on rushiagr</title>
+    <link>http://www.rushiagr.com/tags/containers/</link>
+    <description>Recent content in containers on rushiagr</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Rushi Agrawal</author>
-    <copyright>0001 Rushi Agrawal</copyright>
-    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    <copyright>Rushi Agrawal</copyright>
+    <lastBuildDate>Tue, 16 Aug 2016 17:03:53 +0530</lastBuildDate>
+    
+	<atom:link href="http://www.rushiagr.com/tags/containers/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Kubernetes in 30 minutes with minikube on Mac</title>
       <link>http://www.rushiagr.com/blog/2016/08/16/kubernetes-in-30-minutes-with-minikube-on-mac/</link>
-      <pubDate>Tue, 16 Aug 2016 17:03:53 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Tue, 16 Aug 2016 17:03:53 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/08/16/kubernetes-in-30-minutes-with-minikube-on-mac/</guid>
-      <description>
-
-&lt;p&gt;Below are steps to create an express setup of Kubernetes on your Mac for quick use.&lt;/p&gt;
-
-&lt;p&gt;Minikube is a small setup by Kubernetes guys, which will spawn a virtual machine and have a tiny (but fully functional) Kubernetes cluster inside the VM. &lt;code&gt;kubectl&lt;/code&gt; (pronounced &amp;lsquo;kube (like &amp;lsquo;tube&amp;rsquo;) control`) is the command line client you&amp;rsquo;ll use to connect to the Kubernetes cluster (which runs inside the VM created by minikube, in case you forgot :) )&lt;/p&gt;
-
-&lt;p&gt;Note that you need VirtualBox installed on your system. You can do so by first installing brew cask and then installing virtualbox as outlined in the two lines below, taken from &lt;a href=&#34;https://gist.github.com/jloveland/df1bdec4705220eb5990&#34;&gt;here&lt;/a&gt;. I installed virtualbox from a different source, but the two lines below should work without a problem:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;
-brew cask install virtualbox
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;minikube-installation&#34;&gt;Minikube Installation&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.7.1/minikube-darwin-amd64
-chmod +x minikube
-sudo mv minikube /usr/local/bin/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Start minikube cluster&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;minikube start
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Just for information, config file will be located in &lt;code&gt;~/.kube/&lt;/code&gt; directory, and
-all the virtual machine bits will be present in &lt;code&gt;~/.minikube/&lt;/code&gt; directory.&lt;/p&gt;
-
-&lt;p&gt;Get status of minikube cluster&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;minikube status
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;install-kubectl-cli&#34;&gt;Install kubectl cli&lt;/h2&gt;
-
-&lt;p&gt;Don&amp;rsquo;t install &lt;code&gt;kubectl&lt;/code&gt; from brew (&lt;code&gt;brew install kubernetes-cli&lt;/code&gt;) as brew contains an older incompatible version of &lt;code&gt;kubectl&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;curl -Lo kubectl http://storage.googleapis.com/kubernetes-release/release/v1.3.0/bin/darwin/amd64/kubectl
-chmod +x kubectl
-sudo mv kubectl /usr/local/bin/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;List all pods from all namespaces. It should list two pods, one an &amp;lsquo;addon-manager&amp;rsquo; and another a &amp;lsquo;dashboard&amp;rsquo;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;kubectl get pods --all-namespaces
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Populate environment variables so that docker can connect to minikube VM&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;eval $(minikube docker-env)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now list all running docker containers inside the minikube vm. This might throw error&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker ps
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If it errors with output &lt;code&gt;Error response from daemon: client is newer than server (client API version: 1.24, server API version: 1.23)&lt;/code&gt;, then we need to install
-an older version of docker along with the current docker server installation.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;ll use DVM (docker version manager) for the same, and we need to install DVM
-first for that.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;brew update &amp;amp;&amp;amp; brew install dvm
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If &lt;code&gt;brew update&lt;/code&gt; fails, most of the times re-running &lt;code&gt;brew update&lt;/code&gt; again fixes
-the problem (else do &lt;code&gt;brew upgrade &amp;amp;&amp;amp; brew update&lt;/code&gt; and wait for an hour for it
-to finish depending upon your internet connection).&lt;/p&gt;
-
-&lt;p&gt;Now source the shell script for &lt;code&gt;dvm&lt;/code&gt; command line tool&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[[ -s &amp;quot;$(brew --prefix dvm)/dvm.sh&amp;quot; ]] &amp;amp;&amp;amp; source &amp;quot;$(brew --prefix dvm)/dvm.sh&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;View current docker version&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;dvm ls
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Install older docker version 1.11.1&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;export DOCKER_VERSION=1.11.1
-dvm install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now if you do &lt;code&gt;dvm ls&lt;/code&gt; you&amp;rsquo;ll see that your current docker version is 1.11.1.&lt;/p&gt;
-
-&lt;p&gt;Now you can use &lt;code&gt;docker ps&lt;/code&gt; to see all your docker containers for Kubernetes
-running inside minikube.&lt;/p&gt;
-
-&lt;p&gt;That&amp;rsquo;s all for this blogpost. I&amp;rsquo;ll write another blog post about how to create your own pods inside this running Kubernetes cluster.&lt;/p&gt;
-
-&lt;p&gt;Do let me know if you have comments/suggestions/edits/criticism/feedback.&lt;/p&gt;
-
-&lt;p&gt;Cheers!
-Rushi&lt;/p&gt;
-</description>
+      <description>Below are steps to create an express setup of Kubernetes on your Mac for quick use.
+Minikube is a small setup by Kubernetes guys, which will spawn a virtual machine and have a tiny (but fully functional) Kubernetes cluster inside the VM. kubectl (pronounced &amp;lsquo;kube (like &amp;lsquo;tube&amp;rsquo;) control`) is the command line client you&#39;ll use to connect to the Kubernetes cluster (which runs inside the VM created by minikube, in case you forgot :) )</description>
     </item>
-    
-    
     
     <item>
       <title>Docker quick start notes</title>
       <link>http://www.rushiagr.com/blog/2015/06/07/docker-quick-start-notes/</link>
-      <pubDate>Sun, 07 Jun 2015 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Sun, 07 Jun 2015 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2015/06/07/docker-quick-start-notes/</guid>
-      <description>
-
-&lt;ul&gt;
-&lt;li&gt;Update *: Blog updated to use latest way to install docker.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;After reading about docker and containers, I thought let&amp;rsquo;s try them out.
-Here are my notes. Obviously all of them are taken from Internet. Maybe this
-collection here will help someone start with docker faster than spending time
-searching all over the internet.&lt;/p&gt;
-
-&lt;p&gt;It assumes your base OS is Ubuntu 14.04 Trusty Tahr (when was the last time
-you saw the codename spelled &amp;lsquo;Trusty Tahr&amp;rsquo; and not &amp;lsquo;Trusty&amp;rsquo;? :) ).&lt;/p&gt;
-
-&lt;p&gt;Ensure kernel version is more than 3.10&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;uname -r
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Install docker&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;curl -sSL https://get.docker.com/ | sh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;See docker version&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker version
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Pull an Ubuntu Trusty docker image&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker pull ubuntu:14.04
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Alternatively, you can search for a docker image &amp;lsquo;tutorial&amp;rsquo; in docker&amp;rsquo;s repository&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker search tutorial
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And them pull a docker image &amp;lsquo;tutorial&amp;rsquo; by user &amp;lsquo;learn&amp;rsquo;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker pull learn/tutorial
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;List all docker images present in the system&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker images
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Run a docker image, and execute command &amp;lsquo;echo &amp;ldquo;hello world&amp;rdquo;&amp;rsquo; in the docker
-container created out of that image&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker run ubuntu:14.04 echo &amp;quot;hello world&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Container information is stored in /var/lib/docker&lt;/p&gt;
-
-&lt;p&gt;If you run the above command multiple times, it will create a new container
-each time.&lt;/p&gt;
-
-&lt;p&gt;To know the ID of the last container, run&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker ps -l
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To list all the running containers&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker ps
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note that the above command will not show the container we last run, because
-the container which we ran last time terminated just after it finished
-executing echo command.&lt;/p&gt;
-
-&lt;p&gt;Create a new docker image by name &lt;code&gt;&amp;lt;yourname&amp;gt;/echo&lt;/code&gt; by &amp;lsquo;committing&amp;rsquo; the last
-container which you ran&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker commit &amp;lt;container ID&amp;gt; &amp;lt;yourname&amp;gt;/echo
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now running &lt;code&gt;sudo docker images&lt;/code&gt; will list you two images instead of one&lt;/p&gt;
-
-&lt;p&gt;Now you can run this new docker container like this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker run &amp;lt;yourname&amp;gt;/echo ls -alrth
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If we installed something, or created a file in the old container, it will
-be visible now in this container too.&lt;/p&gt;
-
-&lt;p&gt;Get more information about a docker image or a running container:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker inspect &amp;lt;yourname&amp;gt;/echo
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To push docker image to docker repository&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker push &amp;lt;yourname&amp;gt;/echo
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To download ubuntu Trusty base image if not present locally, and open a shell session into it&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker run -t -i ubuntu:14.04 /bin/bash
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;-i i.e. &amp;ndash;interactive=false, keeps STDIN open even if not attached&lt;/p&gt;
-
-&lt;p&gt;-t i.e. &amp;ndash;tty=false allocates a pseudo tty&lt;/p&gt;
-
-&lt;p&gt;Don&amp;rsquo;t worry what these mean. If you add these options, you&amp;rsquo;ll see that
-you already get logged in into the container shell, and the container
-only dies off once you exit from that session (usually by writing &lt;code&gt;exit&lt;/code&gt;
-or pressing CTRL + D.&lt;/p&gt;
-
-&lt;p&gt;To remove an image:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker rmi learn/tutorial
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;things-not-covered-in-this-tutorial&#34;&gt;Things not covered in this tutorial:&lt;/h4&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Create your own custom docker images and share with other people:
-&lt;a href=&#34;https://docs.docker.com/userguide/dockerimages/&#34;&gt;https://docs.docker.com/userguide/dockerimages/&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+      <description>Update *: Blog updated to use latest way to install docker.  After reading about docker and containers, I thought let&#39;s try them out. Here are my notes. Obviously all of them are taken from Internet. Maybe this collection here will help someone start with docker faster than spending time searching all over the internet.
+It assumes your base OS is Ubuntu 14.04 Trusty Tahr (when was the last time you saw the codename spelled &amp;lsquo;Trusty Tahr&amp;rsquo; and not &amp;lsquo;Trusty&amp;rsquo;?</description>
     </item>
-    
     
   </channel>
 </rss>

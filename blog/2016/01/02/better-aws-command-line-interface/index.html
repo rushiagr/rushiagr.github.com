@@ -1,97 +1,59 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.60.1" />
 
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>A different approach to AWS CLI &middot; rushiagr</title>
+  <meta name="description" content="" />
 
   
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
 
-  <title> A different approach to AWS CLI  &middot; rushiagr </title>
-
-  
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
-
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
-  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
-
-  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-  <script>
-    WebFont.load({
-      google: {
-        families: ['Raleway']
-      }
-    });
-  </script>
-
+  
 </head>
 
-<body>
-
-  <div class="sidebar">
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
+      <a href="http://www.rushiagr.com/"><h1>rushiagr</h1></a>
       <p class="lead">
-       yet another tech guy 
+       Yet another tech guy 
       </p>
     </div>
 
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://www.rushiagr.com/">Home</a> </li>
+        <li><a href="/about/"> About </a></li><li><a href="https://github.com/rushiagr/"> Github </a></li><li><a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"> LinkedIn </a></li>
+      </ul>
+    </nav>
 
-
-    <ul class="sidebar-nav">
-      <li><a href="http://www.rushiagr.com/blog">Posts</a></li>
-      
-        <li><a href="/about/">About </a></li>
-        <li><a href="https://github.com/rushiagr">Code</a></li>
-        <li><a href="http://www.rushiagr.com/personal">Personal Blog</a></li>
-      
-      <br/>
-      
-        
-        
-        
-        
-        
-        
-        
-      
-    </ul>
-      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      <a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
-      
-      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
-
-    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
-    
+    <p>&copy; 2019. All rights reserved. </p>
   </div>
-</div>
+</aside>
 
-
-  <div class="content container">
+    <main class="content container">
     <div class="post">
-    <h1 class="post-title">A different approach to AWS CLI</h1>
-    <span class="post-date">Jan 2, 2016</span>
-    
-    
-
-<p>For a user of Amazon Web Services, quickly viewing a dashboard of all resources
-is not straightforward. If using a web browser, the session won&rsquo;t persist for
+  <h1>A different approach to AWS CLI</h1>
+  <time datetime=2016-01-02T00:00:00Z class="post-date">Sat, Jan 2, 2016</time>
+  <p>For a user of Amazon Web Services, quickly viewing a dashboard of all resources
+is not straightforward. If using a web browser, the session won't persist for
 more than a day and one will have to re-authenticate every day. If using AWS
 CLI, then he/she might not remember the exact command (was it
 <code>describe-key-pair</code> or <code>describe-keypair</code> or <code>describe-keypairs</code>?) but even if
@@ -100,37 +62,32 @@ you might not want to see hundreds of lines of detail.
 Maybe you just wanted to see the IP of the VM so that you can SSH into it. Or
 maybe you just wanted to quickly create a virtual machine to test something: do
 you remember all the parameters you need to specify for instance creation? And
-don&rsquo;t forget that you will need to specify the AMI ID of the image, even if you
+don't forget that you will need to specify the AMI ID of the image, even if you
 know exactly the operating system name and version.</p>
-
 <p>There is no doubt that AWS CLI is an impressive piece of work. It allows you to
 do absolutely everything with their cloud. The
-documentation is thorough. It is great for automation too &ndash; output is easily parse-able JSON. However, it&rsquo;s not as
-human-friendly. It doesn&rsquo;t tell you which options are mandatory and which are
-optional. It doesn&rsquo;t remind you if you forget to specify keypair while creating an
+documentation is thorough. It is great for automation too &ndash; output is easily parse-able JSON. However, it's not as
+human-friendly. It doesn't tell you which options are mandatory and which are
+optional. It doesn't remind you if you forget to specify keypair while creating an
 instance. You end up deleting that instance, then Google-searching &lsquo;aws cli delete instance&rsquo;
 and finally creating another instance. The CLI has some inconsistencies too &ndash; creating
 a keypair is <code>create-key-pair</code> but creating a virtual machine is not
 <code>create-instance</code> but <code>run-instances</code>.</p>
-
 <p>To alleviate these pains, I created a simple CLI tool called &ldquo;<a href="http://github.com/rushiagr/cch">CCH - Cloud CLI
-for Humans</a>&rdquo;. Just typing <code>lsvm</code> prints all
+for Humans</a>&quot;. Just typing <code>lsvm</code> prints all
 the virtual machines you have in the cluster. Each command can be run without
 passing a parameter to it. If an operation requires additional parameters and
-you didn&rsquo;t specify it for the first time, it&rsquo;ll ask you to input those
+you didn't specify it for the first time, it'll ask you to input those
 parameters. For example <code>mkvm</code>, the command to create virtual machines:</p>
-
 <pre><code>r@rushi:~$ mkvm
 Available flavors: t2.micro, t2.nano, ...
 Select flavor ['l' to list]:
 </code></pre>
-
 <p>Commands for resource creation are short and consistent (<code>mkvm</code> creates virtual
 machines, <code>mkkp</code> creates keypairs, <code>mksg</code> create security groups). No need to
 remember AMI IDs (presently it selects Ubuntu 16.04 64-bit image by default,
 but in future you might specify an OS name and OS version). All the commands
 supported so far are:</p>
-
 <pre><code>lsvm    - List all virtual machines
 mkvm    - Create a virtual machine
 stpvm   - Stop a virtual machine
@@ -144,34 +101,24 @@ lssg    - List all security groups (including a detailed view)
 mksg    - Create a security group (including specifying secgroup rules)
 rmsg    - Delete a security group
 </code></pre>
-
 <h2 id="installation">Installation</h2>
-
 <p>I have added the tool to PyPI, so download is easy:</p>
-
 <pre><code>pip install cch
 </code></pre>
-
-<p>Run <code>aws configure</code> if you don&rsquo;t have AWS credentials configured on your
+<p>Run <code>aws configure</code> if you don't have AWS credentials configured on your
 system. Typically, credentials are kept in <code>~/.aws/credentials</code> file.</p>
-
 <h2 id="sample-usage">Sample usage</h2>
-
 <p>For full list of operations supported so far, see this <a href="https://asciinema.org/a/ektm98481nniu7rldc1ncu5af">asciinema
-screencast</a> I&rsquo;m providing
+screencast</a> I'm providing
 examples here for some of the commands.</p>
-
 <p>See help text of a command</p>
-
 <pre><code>r@rushi:~$ lsvm -h
 lsvm [-h] [-s] [&lt;name&gt;]
     -h      Prints helptext and exits
     -s      Prints sizes of VM disks in GB, starting with root disk
     &lt;name&gt;  Only prints VM whose name contains '&lt;name&gt;'
 </code></pre>
-
 <p>List all virtual machines</p>
-
 <pre><code>r@rushi:~$ lsvm
     ID              Name           Status   Flavor        IP      Vols
 i-abcd1234     rushi dev m/c      running  t2.micro 52.12.123.123  1
@@ -179,9 +126,7 @@ i-abcd1233   rushi pkg builder    running  t2.micro 52.12.123.122  1
 i-abcd1232 rushi vanilla devstack running  t2.large 54.12.123.121  1
 i-abcd1231  rushi dbaas devstack  running m4.xlarge 52.12.123.120  1
 </code></pre>
-
 <p>Also show sizes of volumes of instances:</p>
-
 <pre><code>r@rushi:~$ lsvm  -s
     ID                   Name               Status   Flavor        IP       Vols(GB)
 i-abcd1234          rushi dev m/c          running  t2.micro 52.12.123.123    [8]
@@ -189,17 +134,13 @@ i-abcd1233        rushi pkg builder        running  t2.micro 52.12.123.122    [8
 i-abcd1232      rushi vanilla devstack     running  t2.large 54.12.123.121    [50]
 i-abcd1231       rushi dbaas devstack      running m4.xlarge 52.12.123.120    [50]
 </code></pre>
-
 <p>List all VMs whose name contains word &lsquo;devstack&rsquo;</p>
-
 <pre><code>r@rushi:~$ lsvm devstack
     ID              Name           Status   Flavor        IP      Vols
 i-abcd1232 rushi vanilla devstack running  t2.large 54.12.123.121  1
 i-abcd1231  rushi dbaas devstack  running m4.xlarge 52.12.123.120  1
 </code></pre>
-
 <p>Create a virtual machine</p>
-
 <pre><code>r@rushi:~$ mkvm
 Only Ubuntu image supported as of now
 Available flavors: ['t1.micro', 'm1.small', ... ]
@@ -211,52 +152,45 @@ Select security group. None to create new one: Rushi SecGroup
 Enter root volume size in GBs: 8
 r@rushi:~$
 </code></pre>
-
 <p>Think this makes sense/no sense? Please write a comment below. Create a PR or issue for CCH development. I should totally think of a better name for the CLI tool :)</p>
-
 <p>Thank you :)</p>
 
-    
-
-     
-	
-        <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37074962-1']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-37074962-1');
-    ga('send', 'pageview');
-</script>
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-
-(function() {
-    
-    
-    if (window.location.hostname == "localhost") 
-        return;
-
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    var disqus_shortname = 'rushiagr';
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();
-</script>
-<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
-
 </div>
-</div> 
 
-</body>w
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "rushiagr" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-37074962-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
 </html>

@@ -1,371 +1,55 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>rushiagr</title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/devstack/index.xml</link>
+    <title>devstack on rushiagr</title>
+    <link>http://www.rushiagr.com/tags/devstack/</link>
+    <description>Recent content in devstack on rushiagr</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Rushi Agrawal</author>
-    <copyright>0001 Rushi Agrawal</copyright>
-    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    <copyright>Rushi Agrawal</copyright>
+    <lastBuildDate>Thu, 10 Sep 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://www.rushiagr.com/tags/devstack/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>OpenStack Keystone with Cassandra Database in DevStack</title>
       <link>http://www.rushiagr.com/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</link>
-      <pubDate>Thu, 10 Sep 2015 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Thu, 10 Sep 2015 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</guid>
-      <description>
-
-&lt;p&gt;Using Cassandra as backing database for OpenStack Keystone was our solution
-to multi-region deployment problem of OpenStack cloud. This blog post is not
-to discuss the problem. We are talking about how to have a development
-environment to play around with Keystone working with a dev Cassandra deployment.&lt;/p&gt;
-
-&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
-
-&lt;p&gt;I&amp;rsquo;ve put together all commands into a script which can be found here:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;https://raw.githubusercontent.com/rushiagr/keystone-cassandra/master/keystone-cassandra.sh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If you have a fresh Ubuntu VM, just copy this script into that machine and
-execute it. Give it 15-20 mins at least (depending upon your internet connection), and it will set up:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;DevStack with Keystone installed and running with all the data stored in/fetched from local Cassandra installation&lt;/li&gt;
-&lt;li&gt;A Cassandra development cluster (CCM) with 5 nodes and replication factor of 3&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Of course, you will need Internet access inside the VM. Also, give the VM around
-3GB of RAM, else things might not work properly. Actually, if you change the
-Cassandra configuration to one node instead of 5, probably 2 GB will suffice. But I&amp;rsquo;ve
-not tried it. (Let me know if you tried it and it works!)&lt;/p&gt;
-
-&lt;p&gt;Notes:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Remember, this is a dev cluster. It&amp;rsquo;s not supposed to be used in production. Hell, it&amp;rsquo;s not even ready for it.&lt;/li&gt;
-&lt;li&gt;Keystone is running on 127.0.0.1. I&amp;rsquo;ve done this so that it will work on any person&amp;rsquo;s VM&lt;/li&gt;
-&lt;li&gt;I&amp;rsquo;ve tested only on a Ubuntu Trusty VM, on Amazon EC2 m4.large instance which has 8 GB RAM. OpenStack on AWS &amp;ndash; ironic, isn&amp;rsquo;t it? :)&lt;/li&gt;
-&lt;li&gt;I&amp;rsquo;m using Java which comes with Ubuntu&amp;rsquo;s APT packages. In production one is supposed to use Oracle Java as per Cassandra folks.&lt;/li&gt;
-&lt;li&gt;The code for this script is located at &lt;code&gt;https://github.com/rushiagr/keystone/tree/liberty-cassandra&lt;/code&gt;, i.e. on &lt;code&gt;liberty-cassandra&lt;/code&gt; branch. Note that this work is currently based upon Keystone&amp;rsquo;s Liberty code as on first week of June. It might not work directly with latest code as it might require fixing imports which might have become outdated. However, I don&amp;rsquo;t think it&amp;rsquo;s going to take more than an hour to make it work with latest code; just that I don&amp;rsquo;t have enough motivation right now to keep the code updated with &amp;lsquo;latest&amp;rsquo; all the time.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4 id=&#34;credits&#34;&gt;Credits&lt;/h4&gt;
-
-&lt;p&gt;This work was done by the &amp;lsquo;distributed database&amp;rsquo; team of 4 people: Ajaya Agrawal, Rushi Agrawal (me), Vivek Dhayaal and Yogeshwar Shenoy, listed in alphabetical order. And obviously Reliance, for providing us an opportunity to work on this thing.&lt;/p&gt;
-</description>
+      <description>Using Cassandra as backing database for OpenStack Keystone was our solution to multi-region deployment problem of OpenStack cloud. This blog post is not to discuss the problem. We are talking about how to have a development environment to play around with Keystone working with a dev Cassandra deployment.
+&amp;ldquo;Just run this script and you&#39;re all set!&amp;rdquo; I&#39;ve put together all commands into a script which can be found here:
+https://raw.githubusercontent.com/rushiagr/keystone-cassandra/master/keystone-cassandra.sh  If you have a fresh Ubuntu VM, just copy this script into that machine and execute it.</description>
     </item>
-    
-    
     
     <item>
       <title>DevStack behind proxy</title>
       <link>http://www.rushiagr.com/blog/2014/08/05/devstack-behind-proxy/</link>
-      <pubDate>Tue, 05 Aug 2014 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Tue, 05 Aug 2014 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2014/08/05/devstack-behind-proxy/</guid>
-      <description>&lt;p&gt;I have now seen some people struggling to get DevStack working behind proxy. Some, thinking it is a bug in DevStack, have actually posted patches for it too! Here, I&amp;rsquo;ll tell you the simple way to get &lt;code&gt;stack.sh&lt;/code&gt; complete succesfully from behind a proxy.&lt;/p&gt;
-
-&lt;p&gt;By default, &lt;code&gt;devstack&lt;/code&gt; will clone from the &amp;lsquo;actual&amp;rsquo; OpenStack git repositories, residing at &lt;code&gt;git://git.openstack.org&lt;/code&gt;. Some people might face a problem with it, as DevStack uses &lt;code&gt;git&lt;/code&gt; protocol to clone the repo. We&amp;rsquo;ll instead use HTTP which is provided by GitHub mirror  (yes, you heard it right. GitHub is just a &amp;lsquo;mirror&amp;rsquo; for OpenStack code, not the primary repository). For this we&amp;rsquo;ll need to set &lt;code&gt;GIT_BASE&lt;/code&gt; in &lt;code&gt;localrc&lt;/code&gt; as:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;GIT_BASE=http://github.com
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Export http and https proxy variables&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;export http_proxy=&amp;lt;your-http-proxy&amp;gt;
-export https_proxy=&amp;lt;your-https-proxy&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now, you will need to export &lt;code&gt;no_proxy&lt;/code&gt; environment variable. This environment variable should contain localhost, as well as the IP your current machine has got. Say your current machine has IP &lt;code&gt;12.34.56.78&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;export no_proxy=127.0.0.1,12.34.56.78
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;After you have exported these three variables, you&amp;rsquo;re free to run &lt;code&gt;./stack.sh&lt;/code&gt;, and it should finish successfully.&lt;/p&gt;
-
-&lt;p&gt;If you are doing a single-node devstack setup, you don&amp;rsquo;t need to do anything
-else and can stop here. If you are doing a multi-node setup, the services
-running on one node might not communicate properly with services on a different node. In order to
-fix this, do this: go to individual services running inside screens, stop the
-service (by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;C&lt;/code&gt;), unset the proxy environment variables (&lt;code&gt;unset
-http_proxy https_proxy no_proxy&lt;/code&gt;), and restart the service again (by pressing
-up arrow and then pressing &lt;code&gt;Enter&lt;/code&gt;).&lt;/p&gt;
-
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+      <description>I have now seen some people struggling to get DevStack working behind proxy. Some, thinking it is a bug in DevStack, have actually posted patches for it too! Here, I&#39;ll tell you the simple way to get stack.sh complete succesfully from behind a proxy.
+By default, devstack will clone from the &amp;lsquo;actual&amp;rsquo; OpenStack git repositories, residing at git://git.openstack.org. Some people might face a problem with it, as DevStack uses git protocol to clone the repo.</description>
     </item>
-    
-    
     
     <item>
       <title>OpenStack in an hour with DevStack</title>
       <link>http://www.rushiagr.com/blog/2014/04/03/openstack-in-an-hour-with-devstack/</link>
-      <pubDate>Thu, 03 Apr 2014 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Thu, 03 Apr 2014 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2014/04/03/openstack-in-an-hour-with-devstack/</guid>
-      <description>&lt;p&gt;So you found out a cool new technology &amp;ldquo;OpenStack&amp;rdquo; and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; is your friend-in-need. No, don&amp;rsquo;t click that hyperlink just yet :)&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;To put it in a sentence, DevStack is &amp;ldquo;OpenStack in a box&amp;rdquo;. You just need a popular Linux based distribution with 2GB RAM and you&amp;rsquo;re all set to start. DevStack is basically a set of scripts which will install all the important OpenStack services in your computer. For this, it will first download all the essential packages, pull in the OpenStack code from various OpenStack projects, and set everything up for you to try out all of it.&lt;/p&gt;
-
-&lt;p&gt;NOTE: DO NOT set up DevStack for production clouds.&lt;/p&gt;
-
-&lt;p&gt;Here, in this tutorial, I&amp;rsquo;ll be setting up DevStack in a 64-bit Ubuntu 12.04 virtual machine. All your virtual machine needs to have is an Internet connection, and 2GB RAM.&lt;/p&gt;
-
-&lt;p&gt;NOTE: Do not run any of the script as a root user, unless specified otherwise explicitly.&lt;/p&gt;
-
-&lt;h3 id=&#34;getting-started&#34;&gt;Getting started&lt;/h3&gt;
-
-&lt;p&gt;Install git&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get install git
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Clone the DevStack repository into your computer and &lt;code&gt;cd&lt;/code&gt; into it. This is the code which will set up the cloud for you.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git clone http://github.com/openstack-dev/devstack
-cd devstack/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If you do a &lt;code&gt;ls&lt;/code&gt;, you will see &lt;code&gt;stack.sh&lt;/code&gt; and &lt;code&gt;unstack.sh&lt;/code&gt; files in there. These are the most important files.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@ra:~/devstack$ ls
-accrc         exercises         HACKING.rst  rejoin-stack.sh  tests
-AUTHORS       exercise.sh       lib          run_tests.sh     tools
-clean.sh      extras.d          LICENSE      samples          unstack.sh
-driver_certs  files             localrc      stackrc
-eucarc        functions         openrc       stack-screenrc
-exerciserc    functions-common  README.md    stack.sh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;File &lt;code&gt;stack.sh&lt;/code&gt; is the most important of them all. Running this script will:
-1. Pull OpenStack code from all of it&amp;rsquo;s important projects&amp;rsquo; repositories and put them in &lt;code&gt;/opt/stack&lt;/code&gt; directory. TODO: say that this directory is configurable.
-2. Installs all the dependencies these OpenStack projects have &amp;ndash; both in the form of Ubuntu packages, and also the Python &amp;ldquo;PIP&amp;rdquo; repositories.
-3. Starts all the OpenStack services with a default configuration.&lt;/p&gt;
-
-&lt;p&gt;Bringing down the DevStack-created cloud is easy too &amp;ndash; just invoke the &lt;code&gt;unstack.sh&lt;/code&gt; script, and all the services are down again, freeing up the memory that these services consume. Let&amp;rsquo;s get started before I start writing at lengths again :)&lt;/p&gt;
-
-&lt;p&gt;Execute the &lt;code&gt;stack.sh&lt;/code&gt; script&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@ra:~/devstack$ ./stack.sh
-
-################################################################################
-ENTER A PASSWORD TO USE FOR THE DATABASE.
-################################################################################
-This value will be written to your localrc file so you don&#39;t have to enter it
-again.  Use only alphanumeric characters.
-If you leave this blank, a random default value will be used.
-Enter a password now:
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You need to add the MySQL database password here. Don&amp;rsquo;t worry if you have not installed MySQL on this system. Just provide a password here and this script will install MySQL and use this password there.&lt;/p&gt;
-
-&lt;p&gt;As you can see, MySQL is where all the important data is stored by different OpenStack components. You can peep into the database later if you want to see what data is stored, etc.&lt;/p&gt;
-
-&lt;p&gt;Also, note the first line after the heading. If the &lt;code&gt;stack.sh&lt;/code&gt; script finishes successfully, all the inputs you specify (this, and four more after this) will be written to a file named as &lt;code&gt;localrc&lt;/code&gt;. All the local configuration setting pertaining to the DevStack environment will go in this file. I&amp;rsquo;ll provide you with details of all of them very soon. Have patience :)&lt;/p&gt;
-
-&lt;p&gt;For the other four prompts, enter &amp;lsquo;nova&amp;rsquo;. Just use &amp;lsquo;nova&amp;rsquo; for this MySQL prompt too if it is not installed yet.&lt;/p&gt;
-
-&lt;p&gt;You will see that the script now starts spewing a lot of output on our screen. It is downloading all the required code, packages, dependencies, etc, and setting everything up for us &amp;ndash; databases, services, network, configurations, message queues. Pretty much everything. For the first time, the script might take about 30-minutes, but it again depends upon the speed of your Internet connection, and the processing speed of your virtual machine. From the next time, it can provide you with a cloud in less than 10 minutes!&lt;/p&gt;
-
-&lt;p&gt;If the script ends with something like this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;+ merge_config_group /home/r/devstack/local.conf post-extra
-+ local localfile=/home/r/devstack/local.conf
-+ shift
-+ local matchgroups=post-extra
-+ [[ -r /home/r/devstack/local.conf ]]
-+ return 0
-+ [[ -x /home/r/devstack/local.sh ]]
-+ service_check
-+ local service
-+ local failures
-+ SCREEN_NAME=stack
-+ SERVICE_DIR=/opt/stack/status
-+ [[ ! -d /opt/stack/status/stack ]]
-++ ls &#39;/opt/stack/status/stack/*.failure&#39;
-++ /bin/true
-+ failures=
-+ &#39;[&#39; -n &#39;&#39; &#39;]&#39;
-+ set +o xtrace
-
-
-
-Horizon is now available at http://10.0.2.15/
-Keystone is serving at http://10.0.2.15:5000/v2.0/
-Examples on using novaclient command line is in exercise.sh
-The default users are: admin and demo
-The password: nova
-This is your host ip: 10.0.2.15
-stack.sh completed in 269 seconds.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;That means your machine is now home to a Cloud! :)&lt;/p&gt;
-
-&lt;p&gt;Here, &lt;code&gt;10.0.2.15&lt;/code&gt; is the IP of my first network interface. Don&amp;rsquo;t worry about that for now.&lt;/p&gt;
-
-&lt;p&gt;So now you can head over to my blog &lt;a href=&#34;http://www.rushiagr.com/blog/2013/05/27/cinder-on-devstack-quick-start/&#34;&gt;Cinder on DevStack - Quick Start&lt;/a&gt; to get started with creating volumes (persistent storage in cloud) with Cinder &amp;ndash; OpenStack&amp;rsquo;s block-storage project. In that guide, you will also be creating a virtual machine, so it will be a good start to OpenStack. But let&amp;rsquo;s get back in our current scope.&lt;/p&gt;
-
-&lt;p&gt;You can type the host IP provided by the script into your browser, to access the dashboard &amp;lsquo;Horizon&amp;rsquo;. Log into it using username &amp;lsquo;admin&amp;rsquo;, or &amp;lsquo;demo&amp;rsquo; and password &amp;lsquo;nova&amp;rsquo;. (For simplicity&amp;rsquo;s sake, lets just assume there are two users who are allowed to access this cloud &amp;ndash; one has all the administrative privilages, and the other one is just a normal user).&lt;/p&gt;
-
-&lt;p&gt;You can view all the process logs inside screen, by typing:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;screen -x
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Head over to &lt;a href=&#34;http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/&#34;&gt;Linux Screens in DevStack&lt;/a&gt; for more information on how to work with &lt;code&gt;screen&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;housekeeping-and-customizations&#34;&gt;Housekeeping and customizations&lt;/h3&gt;
-
-&lt;p&gt;In your life as an OpenStack developer, you will be setting up and destroying DevStack instance quite a number of times. So it is good to know how to do that in the most efficient manner.&lt;/p&gt;
-
-&lt;p&gt;Just like &lt;code&gt;stack.sh&lt;/code&gt; script is used to set up DevStack, &lt;code&gt;unstack.sh&lt;/code&gt; is used to destroy the DevStack setup. Running it will kill all the services, BUT it will not delete any of the code. If you want to bring down all the services manually, just do a:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo killall screen
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note that this will just kill all the process which were running, for which you were able to see the logs inside screen. &lt;code&gt;unstack.sh&lt;/code&gt; does some cleanups as well along with killing processes.&lt;/p&gt;
-
-&lt;p&gt;NOTE: DevStack environment doesn&amp;rsquo;t persist across reboots!&lt;/p&gt;
-
-&lt;p&gt;So you need to bring back up the DevStack environment manually everytime you reboot. Here is where using a virtual machine comes handy. You can take a snapshot of the virtual machine, and then go back to it when you want a clean DevStack environment.&lt;/p&gt;
-
-&lt;h3 id=&#34;localrc-configurations&#34;&gt;localrc configurations&lt;/h3&gt;
-
-&lt;p&gt;&lt;code&gt;localrc&lt;/code&gt; is the file where all the local configurations (local = your local machine) are kept.&lt;/p&gt;
-
-&lt;p&gt;After first successful &lt;code&gt;stack.sh&lt;/code&gt; run, will see that a localrc file gets created with the configuration values you specified while running that script.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ cat localrc
-DATABASE_PASSWORD=nova
-RABBIT_PASSWORD=nova
-SERVICE_TOKEN=nova
-SERVICE_PASSWORD=nova
-ADMIN_PASSWORD=nova
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Sometimes you will forget to unstack, and will reboot the machine. And then you will find that running &lt;code&gt;stack.sh&lt;/code&gt; will again do an &lt;code&gt;apt-get update&lt;/code&gt;, and check for all packages, etc.&lt;/p&gt;
-
-&lt;p&gt;If you specify an option &lt;code&gt;OFFLINE=True&lt;/code&gt; in a file named &lt;code&gt;localrc&lt;/code&gt;, inside the devstack directory, and if after specifying this you run &lt;code&gt;stack.sh&lt;/code&gt;, it will not check anything over the Internet, and will set up DevStack using all the packages and code residing in your machine. Setting up a DevStack using this config option will give you a running cloud in the shortest amount of time).&lt;/p&gt;
-
-&lt;p&gt;Note that &lt;code&gt;stack.sh&lt;/code&gt; will see if the git repositories of the OpenStack projects are present in &lt;code&gt;/opt/stack/&lt;/code&gt; directory. If they are, it will not fetch any latest code into them from Github. But if any of the directory (say, &lt;code&gt;nova&lt;/code&gt;), is absent, it will pull latest code into the newly created &lt;code&gt;nova&lt;/code&gt; directory inside &lt;code&gt;/opt/stack&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;What if you want to get the latest code into all the OpenStack repositories inside &lt;code&gt;/opt/stack&lt;/code&gt;? Just specify a &lt;code&gt;RECLONE=yes&lt;/code&gt; parameter in localrc, and rerun &lt;code&gt;./stack.sh&lt;/code&gt;. This comes particularly handy when you are developing new code.&lt;/p&gt;
-
-&lt;p&gt;NOTE: Keep in mind that while developing code, you need to &lt;strong&gt;commit your local changes&lt;/strong&gt; in, say, &lt;code&gt;/opt/stack/nova&lt;/code&gt; repository, before you restack (re-run &lt;code&gt;stack.sh&lt;/code&gt;) with &lt;code&gt;RECLONE=yes&lt;/code&gt; option, as otherwise, the changes will be wiped off. Save yourself from a rude shock. You have been warned.&lt;/p&gt;
-
-&lt;p&gt;Configuration options &lt;code&gt;RECLONE=yes&lt;/code&gt; and &lt;code&gt;OFFLINE=True&lt;/code&gt; are complementary, and hence, use only one of them at a time in &lt;code&gt;localrc&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;If you have more than one interfaces, you can specify which one to use for external IP using this configuration:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;HOST_IP=192.168.xxx.xxx
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;developing-code&#34;&gt;Developing code&lt;/h3&gt;
-
-&lt;p&gt;If you want to immediately test out your code by running it inside DevStack, you need to make the changes in the code, and restart the affected services.&lt;/p&gt;
-
-&lt;p&gt;For example, let us say you are making code changes in &lt;code&gt;nova&lt;/code&gt;. Just after you are done making the changes, go to the screen, and restart all the services which start with &amp;ldquo;n-&amp;rdquo;. If you are very sure that only one of the Nova service is affected, just restart that. Or if you don&amp;rsquo;t know which one to restart, it is safe to restart all of them.&lt;/p&gt;
-
-&lt;p&gt;In order to restart, go to the respective screen and press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;C&lt;/code&gt;. Then, press the up arrow once to get the last command which started this screen session, and then press &lt;code&gt;ENTER&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;final-words&#34;&gt;Final words&lt;/h3&gt;
-
-&lt;p&gt;Note that this guide just gets you started with OpenStack using DevStack. OpenStack, and cloud in general, is not about virtual machines or volumes or networks only. It is a philosophy. It is a complete paradigm shift, and as such, it is impossible to cover all of it by me. Your quest to know more about it has just started. Keep reading more and more about it and I guarantee you you will be fascinated by it&amp;rsquo;s limitless possibilities.&lt;/p&gt;
-
-&lt;p&gt;This post is written keeping in mind that it will be consumed by a newbie to OpenStack development. If you are one of the one benefitting from this guide, I would love it if you can provide me with suggestions to improve this post, and any feedback you have about it.&lt;/p&gt;
-
-&lt;p&gt;Now you can go to the &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; website :)&lt;/p&gt;
-
-&lt;p&gt;Cheers!
-Rushi&lt;/p&gt;</description>
+      <description>&lt;p&gt;So you found out a cool new technology &amp;ldquo;OpenStack&amp;rdquo; and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; is your friend-in-need. No, don&#39;t click that hyperlink just yet :)&lt;/p&gt;</description>
     </item>
-    
-    
     
     <item>
       <title>Linux Screens in DevStack</title>
       <link>http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/</link>
-      <pubDate>Wed, 05 Jun 2013 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Wed, 05 Jun 2013 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/</guid>
-      <description>&lt;p&gt;This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;In a DevStack environment, all the processes run under something special in Linux, called as a &lt;code&gt;screen&lt;/code&gt;. For now, you can think of a ‘screen’ as a terminal running inside a terminal, with the special property that when you close your current terminal, your ‘screens’ will not actually die, so that you can reconnect to them when you connect to the Linux system through another terminal again! Now that should give you a hint why people use screens :)&lt;/p&gt;
-
-&lt;p&gt;Each screen runs a special ‘service’ of OpenStack. So the logs of each service will go to the respective screen. If you created the DevStack environment as a root user, the process of going to a screen is slightly complicated: You first need to become the &lt;code&gt;stack&lt;/code&gt; user if you are currently &lt;code&gt;root&lt;/code&gt;, and even before that, you need to run this command in most of the cases:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;chown stack:stack `readlink /proc/self/fd/0`
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Else it will produce this error &lt;code&gt;Cannot open your terminal &#39;/dev/pts/2&#39; - please check.&lt;/code&gt; , and then you can proceed to run this command to get to the screens:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;screen -x
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And if you ran the DevStack &lt;code&gt;stack.sh&lt;/code&gt; script as a non-root user, you just need to run that last little thingy to see the screens. One more reason why you should run DevStack as a non-root.&lt;/p&gt;
-
-&lt;p&gt;The way to detach from a screen is &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;D&lt;/code&gt;, that is, first press &lt;code&gt;CTRL+A&lt;/code&gt;, and then press &lt;code&gt;D&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;navigating-across-screens&#34;&gt;Navigating across screens&lt;/h2&gt;
-
-&lt;p&gt;You will see names of all the screens at the bottom of the terminal. The screen on which you currently are bears an asterisk (&lt;code&gt;*&lt;/code&gt;) near its name. To move to the right screen, do a &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;N&lt;/code&gt;. Keep in mind that you are going to use &lt;code&gt;CTRL+A&lt;/code&gt; a lot of times during your adventures with screen. Similar to the command &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;N&lt;/code&gt; to move to the right (“next”) screen, to move to the left screen the command is &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;P&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;There is one more way to jump directly to a screen. Lets say you want to directly jump to the fourth screen. You just need to do a &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;4&lt;/code&gt;, to go to fourth screen! Wasn’t that easy? But hey! How do I get to the seventeenth screen? Frankly, I don’t know a ‘direct’ way. I do a &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;9&lt;/code&gt; once, and &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;N&lt;/code&gt; eight more times. :( Alternatively, you can do &lt;code&gt;CTRL+A&lt;/code&gt; &lt;code&gt;&amp;quot;&lt;/code&gt; to view a list of all running screens, and then you can select a screen by using your arrow keys and finally pressing &lt;code&gt;ENTER&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Navigating inside a screen&lt;/p&gt;
-
-&lt;p&gt;The first and biggest difficulty I faced while tracking an error in the screen logs is the periodic updates in Cinder dumps some lines to the Cinder screens every now and then. So if you have a stack trace of an error on the screen, it will go up and up and up till you can no more see it! Nope, scrolling your mouse up, or pulling the scrollbar up won’t help either (why not try it once :) ).&lt;/p&gt;
-
-&lt;p&gt;Within a few days, I thought “Hey, I’ll just reduce the font of the terminal and I’ll be able to see more lines of screen logs on my screen!”. I knew the command to reduce the font size of the terminal font: &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;-&lt;/code&gt; (just for the sake of completeness, the command to increase font is &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;+&lt;/code&gt;). That worked pretty okay upto a point. It actually helps to have logs in small font, as the logs will fit in one line on the screen and will look prettier. But what if I come after say a ten-minute break, and see all my logs are too far up to be able to see even by reducing font size?&lt;/p&gt;
-
-&lt;p&gt;Then I got to know the command which saved a ton of time in my life: The command to actually scroll up and down the screen.&lt;/p&gt;
-
-&lt;p&gt;To scroll up, first press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;[&lt;/code&gt;. After that, you can use arrow keys to scroll up and down. You can also use &lt;code&gt;page-up&lt;/code&gt; and &lt;code&gt;page-down&lt;/code&gt; buttons to scroll one complete page up or down. This isn’t all of it. If you are vim user, you will find that the &lt;code&gt;H&lt;/code&gt; &lt;code&gt;J&lt;/code&gt; &lt;code&gt;K&lt;/code&gt; &lt;code&gt;L&lt;/code&gt; will work for for &lt;code&gt;left&lt;/code&gt;, &lt;code&gt;down&lt;/code&gt;, &lt;code&gt;up&lt;/code&gt;, and &lt;code&gt;right&lt;/code&gt; respectively. And the last and most convenient thing: once you press &lt;code&gt;CTRL&lt;/code&gt; &lt;code&gt;[&lt;/code&gt;, that is, once you are in ‘copy mode’, you can then use your mouse scroll wheel too to scroll up and down!! Now that is a perfect delight :)&lt;/p&gt;
-
-&lt;p&gt;To come out of this copy mode (so that you can switch to another screen, and do other such stuff), press &lt;code&gt;]&lt;/code&gt; and you are back to normal once again.&lt;/p&gt;
-
-&lt;h2 id=&#34;some-more-generic-screen-commands&#34;&gt;Some more ‘generic’ screen commands&lt;/h2&gt;
-
-&lt;p&gt;So that you can start playing around with screens outside OpenStack too&lt;/p&gt;
-
-&lt;p&gt;Create a new screen&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;screen
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To detach from current screen&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ctrl+A,D
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To reattach to an existing screen&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;screen -rd
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To view all the screens, their states and IDs&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;screen -list
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To kill a screen with id SCREENID&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;screen -X -S SCREENID kill
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Cheers!&lt;/p&gt;
-
-&lt;p&gt;-Rushi Agrawal&lt;/p&gt;</description>
+      <description>&lt;p&gt;This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.&lt;/p&gt;</description>
     </item>
-    
     
   </channel>
 </rss>

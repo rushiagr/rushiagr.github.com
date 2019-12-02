@@ -1,95 +1,26 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>rushiagr</title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/scraper/index.xml</link>
+    <title>scraper on rushiagr</title>
+    <link>http://www.rushiagr.com/tags/scraper/</link>
+    <description>Recent content in scraper on rushiagr</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Rushi Agrawal</author>
-    <copyright>0001 Rushi Agrawal</copyright>
-    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    <copyright>Rushi Agrawal</copyright>
+    <lastBuildDate>Mon, 14 Sep 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://www.rushiagr.com/tags/scraper/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Quick JustDial scraper</title>
       <link>http://www.rushiagr.com/blog/2015/09/14/quick-justdial-scraper/</link>
-      <pubDate>Mon, 14 Sep 2015 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Mon, 14 Sep 2015 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2015/09/14/quick-justdial-scraper/</guid>
-      <description>&lt;p&gt;So my friend asked me to scrape data from JustDial and give it to him in an excel sheet.
-I thought let&amp;rsquo;s give it a try. He needed
-name of firm, address and phone number of any JustDial URL he wants to scrape. After effectively
-around 4 hours of work, the below script was created.&lt;/p&gt;
-
-&lt;p&gt;Note that the script is dirty. You need to edit the jd_url to search any other URL. Also,
-the looping will go on forever, so you have to keep checking the file size of generated
-&amp;lsquo;data.csv&amp;rsquo; file, and when you&amp;rsquo;re sure it&amp;rsquo;s not increasing any more, kill the script by
-pressing CTRL+C. This script works as of today. Tomorrow it might not. Also, excuse
-stray comments/bad formatting of code. I&amp;rsquo;m not sure I want to clean it right now :)&lt;/p&gt;
-
-&lt;p&gt;Feel free to use/modify it the way you want.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# PIP requirements: requests, beautifulsoup4
-import requests
-from bs4 import BeautifulSoup
-import json
-import csv
-
-jd_url = &amp;quot;http://www.justdial.com/Bangalore/Car-Hire-%3Cnear%3E-Shanthinagar&amp;quot;
-
-# Split http/https prefix if any
-# TODO: work on URLs which dont&#39; have the CT part in URL
-jd_url = jd_url.split(&#39;http://www.justdial.com/&#39;)[-1].split(&#39;https://www.justdial.com/&#39;)[-1]
-city, search, cat_id = &#39;&#39;, &#39;&#39;, &#39;&#39;
-split_vals = jd_url.split(&#39;/&#39;)
-if len(split_vals) == 3:
-    city, search, cat_id = jd_url.split(&#39;/&#39;)
-    cat_id = cat_id.split(&#39;-&#39;)[-1]
-elif len(split_vals) == 2:
-    city, search = jd_url.split(&#39;/&#39;)
-search = search.replace(&#39;-&#39;, &#39;+&#39;)
-
-
-with open(&#39;data.csv&#39;, &#39;w&#39;) as f:
-    #writer = csv.writer(f, delimiter=&#39;,&#39;, quoting=csv.QUOTE_ALL, lineterminator=&#39;\n&#39;)
-
-    page = 1
-    while True:
-        print &#39;page&#39;, page
-        resp = requests.get(&#39;http://www.justdial.com&#39;+&#39;/functions/ajxsearch.php?national_search=0&amp;amp;act=pagination&amp;amp;city={0}&amp;amp;search={1}&amp;amp;where=&amp;amp;catid={2}&amp;amp;psearch=&amp;amp;prid=&amp;amp;page={3}&#39;.format(city, search, cat_id, page))
-        markup = resp.json()[&#39;markup&#39;].replace(&#39;\/&#39;, &#39;/&#39;)
-        soup = BeautifulSoup(markup, &#39;html.parser&#39;)
-
-
-        for thing in soup.find_all(&#39;section&#39;):
-            csv_list = []
-            if thing.get(&#39;class&#39;)==[u&#39;jcar&#39;]:
-                # Company name
-                for a_tag in thing.find_all(&#39;a&#39;):
-                    if a_tag.get(&#39;onclick&#39;)==&amp;quot;_ct(&#39;clntnm&#39;, &#39;lspg&#39;);&amp;quot;:
-                        csv_list.append(a_tag.get(&#39;title&#39;))
-
-                # Address
-                for span_tag in thing.find_all(&#39;span&#39;):
-                    if span_tag.get(&#39;class&#39;)==[u&#39;mrehover&#39;, u&#39;dn&#39;]:
-                        csv_list.append(span_tag.get_text().strip())
-
-                # Phone number
-                for a_tag in thing.find_all(&#39;a&#39;):
-                    if a_tag.get(&#39;href&#39;).startswith(&#39;tel:&#39;):
-                        csv_list.append(a_tag.get(&#39;href&#39;).split(&#39;:&#39;)[-1])
-
-
-                csv_list = [&#39;&amp;quot;&#39;+item+&#39;&amp;quot;&#39; for item in csv_list]
-                writeline = &#39;,&#39;.join(csv_list)+&#39;\n&#39;
-                f.write(&#39;,&#39;.join(csv_list)+&#39;\n&#39;)
-        page+=1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+      <description>So my friend asked me to scrape data from JustDial and give it to him in an excel sheet. I thought let&#39;s give it a try. He needed name of firm, address and phone number of any JustDial URL he wants to scrape. After effectively around 4 hours of work, the below script was created.
+Note that the script is dirty. You need to edit the jd_url to search any other URL.</description>
     </item>
-    
     
   </channel>
 </rss>

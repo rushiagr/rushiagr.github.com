@@ -1,1517 +1,376 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>rushiagr</title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/index.xml</link>
+    <title>rushiagr</title>
+    <link>http://www.rushiagr.com/</link>
+    <description>Recent content on rushiagr</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Rushi Agrawal</author>
-    <copyright>2016 Rushi Agrawal</copyright>
-    <updated>Thu, 08 Dec 2016 19:05:21 IST</updated>
+    <copyright>Rushi Agrawal</copyright>
+    <lastBuildDate>Thu, 08 Dec 2016 19:05:21 +0530</lastBuildDate>
+    
+	<atom:link href="http://www.rushiagr.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Cassandra server in 10 minutes</title>
       <link>http://www.rushiagr.com/blog/2016/12/08/cassandra-server-in-10-minutes/</link>
-      <pubDate>Thu, 08 Dec 2016 19:05:21 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Thu, 08 Dec 2016 19:05:21 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/12/08/cassandra-server-in-10-minutes/</guid>
-      <description>
-
-&lt;p&gt;Want to quickly find out how a Cassandra server feels? In this blog post, we&amp;rsquo;ll
-create a single-node Cassandra cluster on an Ubuntu Xenial (16.04) system. It&amp;rsquo;s
-not really a &amp;lsquo;cluster&amp;rsquo;, but you can access the Cassandra shell &lt;code&gt;cqlsh&lt;/code&gt; and try
-out all of its commands. Since we are just looking for a quick start, we&amp;rsquo;re
-installing one of the latest Cassandra versions &amp;ndash; version 3.7. Even more, the
-steps here are totally scriptable, so you can just blindly paste the lines and
-it&amp;rsquo;ll work! OK let&amp;rsquo;s get started.&lt;/p&gt;
-
-&lt;p&gt;Note: Jump straight to the last portion to get all the commands at one place
-without explanation&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s go to the temporary directory where we&amp;rsquo;ll download Sun&amp;rsquo;s Java. Here I am
-downloading Java&amp;rsquo;s &amp;lsquo;Server JRE&amp;rsquo; file. I have it hosted in Amazon cloud which
-you can use. You can bring your own JRE or JDK file too. Just make sure you
-make appropriate replacements in the command.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cd /tmp
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now actually download the JRE file&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;wget http://eezydb.s3.amazonaws.com/server-jre-8u101-linux-x64.tar.gz
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Create the directory where you want to expand this compressed file&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo mkdir -p /usr/lib/jvm
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now uncompress it&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo tar -xzvf server-jre-8u101-linux-x64.tar.gz -C /usr/lib/jvm
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now update system&amp;rsquo;s Java pointers and make this Java the preferred Java to be
-used&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo update-alternatives --install &amp;quot;/usr/bin/java&amp;quot; &amp;quot;java&amp;quot; &amp;quot;/usr/lib/jvm/jdk1.8.0_101/bin/java&amp;quot; 1
-sudo update-alternatives --set java /usr/lib/jvm/jdk1.8.0_101/bin/java
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You can check our Java is the preferred Java by checking Java version.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;java -version
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The output should say something like &lt;code&gt;java version &amp;quot;1.8.0_101&amp;quot;&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Add Cassandra repositories at appropriate place so that our beloved &lt;code&gt;apt-get&lt;/code&gt;
-utility can find the place from where to download Cassandra packages.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;echo &amp;quot;deb http://www.apache.org/dist/cassandra/debian 37x main&amp;quot; | sudo tee -a /etc/apt/sources.list
-echo &amp;quot;deb-src http://www.apache.org/dist/cassandra/debian 37x main&amp;quot; | sudo tee -a /etc/apt/sources.list
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now add the cryptographic keys at proper places. Don&amp;rsquo;t ask me why do we have to
-do it :)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 749D6EEC0353B12C
-sudo apt-key add ~/.gnupg/pubring.gpg
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now update repository pointers, and install Cassandra!&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get --yes --quiet update
-sudo apt-get install --yes --quiet cassandra
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Cassandra should be installed and running by now. You can check it by checking
-status of Cassandra service&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo service cassandra status
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Press &lt;code&gt;q&lt;/code&gt; to exit. I don&amp;rsquo;t know why they make us press &lt;code&gt;q&lt;/code&gt;, but anyway..&lt;/p&gt;
-
-&lt;p&gt;Cassandra server is running by now. You can check that by checking the status
-of &lt;code&gt;nodetool&lt;/code&gt; utility.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo nodetool status
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The state should be &lt;code&gt;UN&lt;/code&gt;, i.e. &amp;lsquo;U&amp;rsquo;p and &amp;lsquo;N&amp;rsquo;ormal. If the output is different,
-then wait a few seconds and try again.&lt;/p&gt;
-
-&lt;p&gt;There are a few more steps to get the &lt;code&gt;cqlsh&lt;/code&gt; command line utility working.
-Let&amp;rsquo;s get them done too.&lt;/p&gt;
-
-&lt;p&gt;Install &lt;code&gt;pip&lt;/code&gt; utility which will install Python packages. If you already have
-&lt;code&gt;pip&lt;/code&gt; utility, no need to execute this step. Note that this is just one of many
-ways to install &lt;code&gt;pip&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get install --yes --quiet python-pip
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now install pip package &lt;code&gt;cassandra-driver&lt;/code&gt;. You can install it in virtual
-environment also. You can safely ignore my last sentence if you have never
-heard the term &amp;lsquo;Python virtual environments&amp;rsquo; before.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo pip install cassandra-driver
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I wish everything worked after this, but it won&amp;rsquo;t. Just set this environment
-variable and then you should be good to log in into &lt;code&gt;cqlsh&lt;/code&gt; shell.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;export CQLSH_NO_BUNDLED=true
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now &amp;lsquo;actually&amp;rsquo; log into &lt;code&gt;cqlsh&lt;/code&gt; shell&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cqlsh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The output should be something like:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ubuntu@hostname:~$ cqlsh
-Connected to Test Cluster at 127.0.0.1:9042.
-[cqlsh 5.0.1 | Cassandra 3.7 | CQL spec 3.4.2 | Native protocol v4]
-Use HELP for help.
-cqlsh&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Voila! Note that you need to export &lt;code&gt;CQLSH_NO_BUNDLED=true&lt;/code&gt; in every terminal
-shell from where you want to access &lt;code&gt;cqlsh&lt;/code&gt;. So if you log out of the system
-and log back in, you need to re-run this command.&lt;/p&gt;
-
-&lt;p&gt;Now you can follow any &lt;code&gt;cqlsh&lt;/code&gt; tutorial to try out commands to create
-keyspaces, tables, rows, etc.&lt;/p&gt;
-
-&lt;h3 id=&#34;everything-at-one-place&#34;&gt;Everything at one place&lt;/h3&gt;
-
-&lt;p&gt;You can just paste these lines in a file and run that file as a script, and it&amp;rsquo;ll set everything up for you.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cd /tmp
-wget http://eezydb.s3.amazonaws.com/server-jre-8u101-linux-x64.tar.gz
-sudo mkdir -p /usr/lib/jvm
-sudo tar -xzvf server-jre-8u101-linux-x64.tar.gz -C /usr/lib/jvm
-sudo update-alternatives --install &amp;quot;/usr/bin/java&amp;quot; &amp;quot;java&amp;quot; &amp;quot;/usr/lib/jvm/jdk1.8.0_101/bin/java&amp;quot; 1
-sudo update-alternatives --set java /usr/lib/jvm/jdk1.8.0_101/bin/java
-echo &amp;quot;deb http://www.apache.org/dist/cassandra/debian 37x main&amp;quot; | sudo tee -a /etc/apt/sources.list
-echo &amp;quot;deb-src http://www.apache.org/dist/cassandra/debian 37x main&amp;quot; | sudo tee -a /etc/apt/sources.list
-gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 749D6EEC0353B12C
-sudo apt-key add ~/.gnupg/pubring.gpg
-sudo apt-get --yes --quiet update
-sudo apt-get install --yes --quiet cassandra python-pip
-sudo pip instlal cassandra-driver
-export CQLSH_NO_BUNDLED=true
-cqlsh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If you like this, please share! If you have any suggestions, please comment!&lt;/p&gt;
-
-&lt;p&gt;Until next time!&lt;/p&gt;
-</description>
+      <description>Want to quickly find out how a Cassandra server feels? In this blog post, we&#39;ll create a single-node Cassandra cluster on an Ubuntu Xenial (16.04) system. It&#39;s not really a &amp;lsquo;cluster&amp;rsquo;, but you can access the Cassandra shell cqlsh and try out all of its commands. Since we are just looking for a quick start, we&#39;re installing one of the latest Cassandra versions &amp;ndash; version 3.7. Even more, the steps here are totally scriptable, so you can just blindly paste the lines and it&#39;ll work!</description>
     </item>
-    
-    
     
     <item>
       <title>Python Engineer Beginner Mistakes</title>
       <link>http://www.rushiagr.com/blog/2016/10/11/python-engineer-beginner-mistakes/</link>
-      <pubDate>Tue, 11 Oct 2016 17:59:46 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Tue, 11 Oct 2016 17:59:46 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/10/11/python-engineer-beginner-mistakes/</guid>
-      <description>
-
-&lt;p&gt;I am writing Python code since 5 years, and I have worked with around 5-6
-entry-level Python programmers. There is a pattern I can see in their programming
-practices. My hope is by reading this article there will be lesser such
-mistakes.&lt;/p&gt;
-
-&lt;p&gt;I have worked on OpenStack for over three years, which is written in Python
-and has a very high code quality, so I feel I am qualified enough to write this
-post.&lt;/p&gt;
-
-&lt;p&gt;I&amp;rsquo;ll start with talking about these beginner-programmers first. Some of the
-people I have worked with are self-taught programmers but majority of them are
-junior developers working in startups in Bangalore. For self-taught Python
-programmers, such mistakes are understandable &amp;ndash; Python is a pretty easy
-language to pick up and code, so they don&amp;rsquo;t really have a motivation to go with
-best practices right from the start. Even if they googled &amp;lsquo;Python best
-programming practices&amp;rsquo;, they will find a really big list of practices without
-any indication about which ones are the most important and absolutely must be
-followed right from the start.  For Python beginners working in startups, I am
-guessing there are not enough senior Python programmers who can teach them the
-required best practices.&lt;/p&gt;
-
-&lt;p&gt;In this article I&amp;rsquo;m going to list the bare-minimum of these simple practices
-you should follow. Surprisingly, most of the &amp;lsquo;Beginner Python mistakes to
-avoid&amp;rsquo; articles on the web don&amp;rsquo;t talk about the bad practices I encounter. I
-think they just assume such simple things are taken care of by a programmer.
-My experience tells otherwise.&lt;/p&gt;
-
-&lt;h2 id=&#34;indentation-tabs-and-spaces&#34;&gt;Indentation, tabs and spaces.&lt;/h2&gt;
-
-&lt;p&gt;Never use tabs. Only use spaces. Use 4 spaces for a tab, always.&lt;/p&gt;
-
-&lt;p&gt;I frequently see codes which use a mix of spaces and tabs, and mix of 2-space and
-4-space indentations all in one file!  If you are coming from a different
-language, or if you already have a notion of, say, 8 spaces for a tab, then it
-might be difficult and seem unnecessary at first. But I am guessing you are
-liking the language and you look forward to writing lots and lots of Python
-code in your lifespan; in such a case, just bear with me for a few weeks and
-it&amp;rsquo;ll come naturally to you, trust me :)&lt;/p&gt;
-
-&lt;h2 id=&#34;raise-specific-exceptions&#34;&gt;Raise specific exceptions&lt;/h2&gt;
-
-&lt;p&gt;Don&amp;rsquo;t write like this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;try:
-    # do something here
-except Exception as e:
-    # handle exception
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Catching the parent &lt;code&gt;Exception&lt;/code&gt; is bad. If you know what exception the code is
-going to throw, just &lt;code&gt;except&lt;/code&gt; that specific exception. The most common example I have seen
-is when calling &lt;code&gt;get()&lt;/code&gt; method on a Django&amp;rsquo;s model. If the object is not
-present, Django throws &lt;code&gt;ObjectDoesNotExists&lt;/code&gt; exception. Catch &lt;em&gt;this&lt;/em&gt; exception,
-not Exception.&lt;/p&gt;
-
-&lt;p&gt;Most often, you do some corrective action in the &amp;lsquo;handling exception&amp;rsquo; part. If
-you are excepting (if there&amp;rsquo;s a word &amp;lsquo;excepting&amp;rsquo;) &lt;code&gt;Exception&lt;/code&gt;, then you are
-heading straight into this &amp;lsquo;handling exception&amp;rsquo; section no matter what
-exception occurred. If your database is down, the &amp;lsquo;DatabaseIsDown&amp;rsquo; (I made up
-that name) exception
-will also be caught! This might make debugging extremely hard when your app
-grows big or you start getting a lot of users.&lt;/p&gt;
-
-&lt;h2 id=&#34;trailing-whitespaces&#34;&gt;Trailing whitespaces&lt;/h2&gt;
-
-&lt;p&gt;In context of Python, whitespaces means space characters. There should be no
-line in Python code which has spaces at it&amp;rsquo;s end.&lt;/p&gt;
-
-&lt;p&gt;You might think why make such a big issue of this. The problem is
-version/source control. You invariably will use a source control system at some
-point of time, for example &amp;lsquo;git&amp;rsquo;. When you commit trailing spaces, it becomes
-difficult to read the diffs (the difference between two commits/checkins).
-Also, removing or adding more spaces might feel okay if you develop a habit of
-leaving around trailing spaces. But when you will start using a source control
-system, this will add unnecessary noise in commits, making code review and
-debugging difficult. Remember, code is read much times than is written or
-modified.&lt;/p&gt;
-
-&lt;h2 id=&#34;edge-cases-first-shallow-nesting&#34;&gt;Edge cases first. Shallow nesting.&lt;/h2&gt;
-
-&lt;p&gt;Consider two pseudo codes. These are codes for handling a request, but you can
-altogether ignore that fact.&lt;/p&gt;
-
-&lt;p&gt;Pseudo code 1:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;if request is post:
-    if parameter &#39;param1&#39; is specified:
-        if the user can be authenticated:
-            if the user can perform this action:
-                # Execute core business logic here
-            else:
-                return saying &#39;user cannot perform this action&#39;
-    else:
-        return saying &#39;parameter param1 is mandatory&#39;
-else:
-    return saying &#39;any other method apart from POST method is disallowed&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Pseudo code 2:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;if request is not post:
-    return saying &#39;any other method apart from POST method is disallowed&#39;
-
-if parameter &#39;param1&#39; is specified:
-    return saying &#39;parameter param1 is mandatory&#39;
-
-if the user can be authenticated:
-    return saying &#39;user cannot be authenticated&#39;
-
-if the user can perform this action:
-    return saying &#39;user cannot perform this action&#39;
-
-# Execute core business logic here
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;As you can see, the second code is much easier to read. You will also notice
-that the second code doesn&amp;rsquo;t have a lot of nesting, which avoids common
-problems. Can you see that I have not written one &amp;lsquo;else&amp;rsquo; section? If the core
-logic is several dozens of lines long, it becomes difficult to find out which
-&lt;code&gt;else&lt;/code&gt; belongs to which &lt;code&gt;if&lt;/code&gt; if we write in &amp;lsquo;Pseudo code 1&amp;rsquo; style.&lt;/p&gt;
-
-&lt;p&gt;I am sure while starting to write, pseudo code 1 should feel normal. But with
-very minimal effort you can very soon get used to writing code in &amp;lsquo;pseudo code
-2&amp;rsquo; style.&lt;/p&gt;
-
-&lt;p&gt;The suggestions mentioned below are minor, probably opinionated ones. These might apply to
-not only Python but any programming language. I feel that these points are
-important enough that you should start a habit of adhering to them right from
-the start. It&amp;rsquo;ll help you in the long run.&lt;/p&gt;
-
-&lt;h2 id=&#34;make-commit-messages-lengthy&#34;&gt;Make commit messages lengthy&lt;/h2&gt;
-
-&lt;p&gt;This is a fairly general trend I see. The commit messages such people generally
-write are just a few words long. Most of the beginners have started using &lt;code&gt;git&lt;/code&gt;
-as version control system. In git, such people have gotten used to using &lt;code&gt;git
-commit -m &amp;quot;your commit message here&amp;quot;&lt;/code&gt; command. If you use this command, I am
-sure you won&amp;rsquo;t even feel like writing a commit message more than what fits in
-one line :). Do you know that you can just type &lt;code&gt;git commit&lt;/code&gt; and it will open
-up an editor (vim or nano) to write the commit message? Start using this
-and stop using &lt;code&gt;-m&lt;/code&gt; flag directly on command line. Your colleagues and your
-future self will be thankful to you :).&lt;/p&gt;
-
-&lt;p&gt;I generally prefer writing a short description in the first line of commit
-message, then leave a blank line, and then write a paragraph after that to
-explain in more detail if required. The first line is the most important. Try
-to describe as much as possible concisely in this single line. But don&amp;rsquo;t ever
-let this line go above 100 characters, preferably 80. See this commit message
-as an example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Don&#39;t allow access to POST /v1/purchases API without authentication
-
-It was revealed during testing that the above mentioned API is accessible
-even when accessed without authentication. This is a security risk. This
-commit fixes it. One &#39;if&#39; condition added to reject API call if the user is
-not authenticated.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You might feel that it&amp;rsquo;s a lot of effort to write such log git commit messages.
-But you can realise it&amp;rsquo;ll not take more than 2 minutes to write this. Much less
-than how much time you spent writing code corresponding to this commit :)&lt;/p&gt;
-
-&lt;p&gt;Again, remember that commit messages are important part of documentation, and are
-extremely important for debugging later.&lt;/p&gt;
-
-&lt;h2 id=&#34;do-only-one-thing-in-a-commit&#34;&gt;Do only one thing in a commit&lt;/h2&gt;
-
-&lt;p&gt;If you are fixing three issues, make sure you create three different commits
-for each one, and never one big commit to include three bug fixes. Even if each
-of these bugfixes are just a couple of lines. If you are doing a feature work,
-then it&amp;rsquo;s okay to put all the feature work in one single commit, but for a
-bugfixes, create a separate commit for each one. As you can see, you should get
-comfortable with the idea that a commit can be as short as one line and as
-large as couple of hundred of lines.  Let go of the feeling which your brain has
-about number of lines in a commit, that it feels right only when there are about 50-100 lines
-in a commit. :)&lt;/p&gt;
-
-&lt;p&gt;If you are using git, take use of &lt;code&gt;git add -p&lt;/code&gt; to add specific chunks of code
-in git, instead of adding a complete file into git like you&amp;rsquo;re used to, by
-doing &lt;code&gt;git add file1.py&lt;/code&gt;. It&amp;rsquo;s a pretty powerful tool. Spend 15 mins to
-understand it and you&amp;rsquo;ll go &amp;lsquo;why didn&amp;rsquo;t I know about this till now!&amp;rsquo;&lt;/p&gt;
-
-&lt;p&gt;I am realizing I can actually write &amp;lsquo;Git beginner mistakes&amp;rsquo; as a separate blog
-:). But anyway, continuing..&lt;/p&gt;
-
-&lt;h2 id=&#34;spaces-after-comma-and-colon&#34;&gt;Spaces after comma and colon&lt;/h2&gt;
-
-&lt;p&gt;Just make this a habit. It improves your code readability.&lt;/p&gt;
-
-&lt;p&gt;Example 1 - bad:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def create_user(name=name,height=height,weight=weight):
-    pass
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Example 2 - good:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def create_user(name=name, height=height, weight=weight):
-    pass
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Example 3 - bad:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;request_dict={&#39;name&#39;:name,&#39;height&#39;:height}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Example 4 - good:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;request_dict = {&#39;name&#39;: name, &#39;height&#39;: height}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;write-a-lot-of-comments-and-docstrings&#34;&gt;Write a lot of comments and docstrings&lt;/h2&gt;
-
-&lt;p&gt;If something is not abvious from the code, you should write a comment about
-it. Also, make a habit of writing docstrings to functions/methods, even if it
-is just a single line. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def create_user(name, height=None, weight=None):
-    &#39;&#39;&#39;Create a user entry in database. Returns database object created for user.&#39;&#39;&#39;
-    # Logic to create entry into db and return db object
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;write-todos-literally-everywhere&#34;&gt;Write TODOs literally everywhere&lt;/h2&gt;
-
-&lt;p&gt;While writing code, you realize it can be improved, but you don&amp;rsquo;t want to
-improve it right now as it is not that important thing at this moment. What
-should you do? Just create a TODO! I find this a very good compromise for
-smaller tasks, instead of creating an issue in an issue/bug tracker. TODOs can
-be written for improving on docstrings (TODO(rushiagr): add more description
-here), a more optimised version of code (e.g. TODO(rushiagr): can be
-optimised by using list comprehensions instead of the &amp;lsquo;for&amp;rsquo; loop), or a
-refactoring (TODO(rushiagr): create a common method of this thrice-duplicated
-code). The parenteses specify who wrote the TODO, which can be helpful if
-somebody wants to fix the TODO but doesn&amp;rsquo;t know who to contact for more
-information. But you can leave this part out too.&lt;/p&gt;
-
-&lt;p&gt;I use TODOs so much that I created a Vim abbreviation for it, so that as soon
-as I type &lt;code&gt;#t&lt;/code&gt; followed by a space, it auto-completes it to &lt;code&gt;# TODO(rushiagr):
-&lt;/code&gt;. If you&amp;rsquo;re using Vim, you can do by adding this line to your &lt;code&gt;.vimrc&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;:abbreviate #t # TODO(rushiagr):
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;parting-words&#34;&gt;Parting words&lt;/h3&gt;
-
-&lt;p&gt;My architect at Reliance used to say this: &amp;lsquo;You should not be able to
-tell by looking at code who wrote that code&amp;rsquo;. What he meant was, one should not
-be able to introduce his/her specific style of writing code into code base. Code
-should be written using a convention generally accepted by the whole of the
-team. It might not completely include everything of the best-practices of that
-language, but your team should decide what programming practices can&amp;rsquo;t be
-compromised.&lt;/p&gt;
-
-&lt;p&gt;That&amp;rsquo;s all folks! :) Do let me know what you feel about this blog by
-commenting. Do you know something which you too encountered a lot which is not
-present in this article?  Or you disagree with something I wrote?&lt;/p&gt;
-</description>
+      <description>I am writing Python code since 5 years, and I have worked with around 5-6 entry-level Python programmers. There is a pattern I can see in their programming practices. My hope is by reading this article there will be lesser such mistakes.
+I have worked on OpenStack for over three years, which is written in Python and has a very high code quality, so I feel I am qualified enough to write this post.</description>
     </item>
-    
-    
     
     <item>
       <title>Kubernetes in 30 minutes with minikube on Mac</title>
       <link>http://www.rushiagr.com/blog/2016/08/16/kubernetes-in-30-minutes-with-minikube-on-mac/</link>
-      <pubDate>Tue, 16 Aug 2016 17:03:53 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Tue, 16 Aug 2016 17:03:53 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/08/16/kubernetes-in-30-minutes-with-minikube-on-mac/</guid>
-      <description>
-
-&lt;p&gt;Below are steps to create an express setup of Kubernetes on your Mac for quick use.&lt;/p&gt;
-
-&lt;p&gt;Minikube is a small setup by Kubernetes guys, which will spawn a virtual machine and have a tiny (but fully functional) Kubernetes cluster inside the VM. &lt;code&gt;kubectl&lt;/code&gt; (pronounced &amp;lsquo;kube (like &amp;lsquo;tube&amp;rsquo;) control`) is the command line client you&amp;rsquo;ll use to connect to the Kubernetes cluster (which runs inside the VM created by minikube, in case you forgot :) )&lt;/p&gt;
-
-&lt;p&gt;Note that you need VirtualBox installed on your system. You can do so by first installing brew cask and then installing virtualbox as outlined in the two lines below, taken from &lt;a href=&#34;https://gist.github.com/jloveland/df1bdec4705220eb5990&#34;&gt;here&lt;/a&gt;. I installed virtualbox from a different source, but the two lines below should work without a problem:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;
-brew cask install virtualbox
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;minikube-installation&#34;&gt;Minikube Installation&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.7.1/minikube-darwin-amd64
-chmod +x minikube
-sudo mv minikube /usr/local/bin/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Start minikube cluster&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;minikube start
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Just for information, config file will be located in &lt;code&gt;~/.kube/&lt;/code&gt; directory, and
-all the virtual machine bits will be present in &lt;code&gt;~/.minikube/&lt;/code&gt; directory.&lt;/p&gt;
-
-&lt;p&gt;Get status of minikube cluster&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;minikube status
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;install-kubectl-cli&#34;&gt;Install kubectl cli&lt;/h2&gt;
-
-&lt;p&gt;Don&amp;rsquo;t install &lt;code&gt;kubectl&lt;/code&gt; from brew (&lt;code&gt;brew install kubernetes-cli&lt;/code&gt;) as brew contains an older incompatible version of &lt;code&gt;kubectl&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;curl -Lo kubectl http://storage.googleapis.com/kubernetes-release/release/v1.3.0/bin/darwin/amd64/kubectl
-chmod +x kubectl
-sudo mv kubectl /usr/local/bin/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;List all pods from all namespaces. It should list two pods, one an &amp;lsquo;addon-manager&amp;rsquo; and another a &amp;lsquo;dashboard&amp;rsquo;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;kubectl get pods --all-namespaces
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Populate environment variables so that docker can connect to minikube VM&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;eval $(minikube docker-env)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now list all running docker containers inside the minikube vm. This might throw error&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker ps
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If it errors with output &lt;code&gt;Error response from daemon: client is newer than server (client API version: 1.24, server API version: 1.23)&lt;/code&gt;, then we need to install
-an older version of docker along with the current docker server installation.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;ll use DVM (docker version manager) for the same, and we need to install DVM
-first for that.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;brew update &amp;amp;&amp;amp; brew install dvm
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If &lt;code&gt;brew update&lt;/code&gt; fails, most of the times re-running &lt;code&gt;brew update&lt;/code&gt; again fixes
-the problem (else do &lt;code&gt;brew upgrade &amp;amp;&amp;amp; brew update&lt;/code&gt; and wait for an hour for it
-to finish depending upon your internet connection).&lt;/p&gt;
-
-&lt;p&gt;Now source the shell script for &lt;code&gt;dvm&lt;/code&gt; command line tool&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[[ -s &amp;quot;$(brew --prefix dvm)/dvm.sh&amp;quot; ]] &amp;amp;&amp;amp; source &amp;quot;$(brew --prefix dvm)/dvm.sh&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;View current docker version&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;dvm ls
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Install older docker version 1.11.1&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;export DOCKER_VERSION=1.11.1
-dvm install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now if you do &lt;code&gt;dvm ls&lt;/code&gt; you&amp;rsquo;ll see that your current docker version is 1.11.1.&lt;/p&gt;
-
-&lt;p&gt;Now you can use &lt;code&gt;docker ps&lt;/code&gt; to see all your docker containers for Kubernetes
-running inside minikube.&lt;/p&gt;
-
-&lt;p&gt;That&amp;rsquo;s all for this blogpost. I&amp;rsquo;ll write another blog post about how to create your own pods inside this running Kubernetes cluster.&lt;/p&gt;
-
-&lt;p&gt;Do let me know if you have comments/suggestions/edits/criticism/feedback.&lt;/p&gt;
-
-&lt;p&gt;Cheers!
-Rushi&lt;/p&gt;
-</description>
+      <description>Below are steps to create an express setup of Kubernetes on your Mac for quick use.
+Minikube is a small setup by Kubernetes guys, which will spawn a virtual machine and have a tiny (but fully functional) Kubernetes cluster inside the VM. kubectl (pronounced &amp;lsquo;kube (like &amp;lsquo;tube&amp;rsquo;) control`) is the command line client you&#39;ll use to connect to the Kubernetes cluster (which runs inside the VM created by minikube, in case you forgot :) )</description>
     </item>
-    
-    
     
     <item>
       <title>Make Vagrant Synced folders on Ubuntu Xenial guest work on Mac</title>
       <link>http://www.rushiagr.com/blog/2016/07/20/vagrant-shared-folder-in-mac-xenial-guest/</link>
-      <pubDate>Wed, 20 Jul 2016 23:18:24 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Wed, 20 Jul 2016 23:18:24 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/07/20/vagrant-shared-folder-in-mac-xenial-guest/</guid>
-      <description>&lt;p&gt;Today I installed latest Vagrant, version 1.8.5. I was waiting for a newer
-release because 1.8.1 and previous versions don&amp;rsquo;t work well with host-only
-networks for Ubuntu Xenial (16.04) guests on my Mac running El Capitan. But I
-faced another issue now:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mount: unknown filesystem type &#39;vboxsf&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This is while specifying a synced folder in my &lt;code&gt;Vagrantfile&lt;/code&gt; with this line:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;config.vm.synced_folder(&amp;quot;/Users/apple/src/myutils&amp;quot;, &amp;quot;/home/ubuntu/myutils&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;where &lt;a href=&#34;https://github.com/rushiagr/myutils&#34;&gt;myutils&lt;/a&gt; is where I keep all my
-commandline shortcuts, tricks, and other shortcut-ish stuff. I Googled but
-couldn&amp;rsquo;t find an article which described a way to fix this in one go, hence
-this blog post :)&lt;/p&gt;
-
-&lt;p&gt;The actual answer is pretty simple. Just install the &amp;lsquo;vbguest&amp;rsquo; plugin.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;vagrant plugin install vagrant-vbguest
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Of course I&amp;rsquo;m assuming you&amp;rsquo;re running Vagrant with VirtualBox :)&lt;/p&gt;
-
-&lt;p&gt;After that just shut down the VM (&lt;code&gt;vagrant halt &amp;lt;vmname&amp;gt;&lt;/code&gt;), and start it again
-(&lt;code&gt;vagrant up &amp;lt;vmname&amp;gt;&lt;/code&gt;), and everything should work as expected. I noticed two
-things:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Vagrant tries to install guest additions inside the VM by doing some
-&lt;code&gt;apt-get&lt;/code&gt; stuff. Don&amp;rsquo;t worry about it and let it finish.&lt;/li&gt;
-&lt;li&gt;Note that unlike Ubuntu Trusty (14.04), my hostname on Ubuntu Xenial is
-&lt;code&gt;ubuntu&lt;/code&gt; and not &lt;code&gt;vagrant&lt;/code&gt;, so change the &lt;code&gt;synced_folder&lt;/code&gt; line in your
-&lt;code&gt;Vagrantfile&lt;/code&gt; accordingly.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Cheers!&lt;/p&gt;
-
-&lt;p&gt;-Rushi&lt;/p&gt;
-</description>
+      <description>Today I installed latest Vagrant, version 1.8.5. I was waiting for a newer release because 1.8.1 and previous versions don&#39;t work well with host-only networks for Ubuntu Xenial (16.04) guests on my Mac running El Capitan. But I faced another issue now:
+mount: unknown filesystem type &#39;vboxsf&#39;  This is while specifying a synced folder in my Vagrantfile with this line:
+config.vm.synced_folder(&amp;quot;/Users/apple/src/myutils&amp;quot;, &amp;quot;/home/ubuntu/myutils&amp;quot;)  where myutils is where I keep all my commandline shortcuts, tricks, and other shortcut-ish stuff.</description>
     </item>
-    
-    
     
     <item>
       <title>You dont need Vim swap files. And how to get rid of them</title>
       <link>http://www.rushiagr.com/blog/2016/06/17/you-dont-need-vim-swap-files-and-how-to-get-rid-of-them/</link>
-      <pubDate>Fri, 17 Jun 2016 11:18:27 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Fri, 17 Jun 2016 11:18:27 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/06/17/you-dont-need-vim-swap-files-and-how-to-get-rid-of-them/</guid>
-      <description>
-
-&lt;p&gt;Estimated reading time: 5 minutes.&lt;/p&gt;
-
-&lt;p&gt;Almost all IDEs today have &amp;lsquo;autosave&amp;rsquo; feature. That is, you don&amp;rsquo;t need to
-explicitly save a file. The file is automatically saved as you type, so that
-even if your computer crashes, you don&amp;rsquo;t lose data. This makes me wonder why
-Vim&amp;rsquo;s default behavior is of using swap files. Swap files are annoying.
-I&amp;rsquo;ve seen all Vim developers, including me, struggle with swap files at one
-point in their life.&lt;/p&gt;
-
-&lt;p&gt;There is a Vim plugin for autosaving, and it has saved a lot of my time. I have
-used the plugin such that every time I enter normal mode (after making edits in
-Insert mode), it autosaves file. And more importantly, I have disabled swap
-file creation by Vim. It&amp;rsquo;s really that simple folks. You don&amp;rsquo;t really need swap
-files 99.99% of the times.&lt;/p&gt;
-
-&lt;h3 id=&#34;how-to-vim-autosave&#34;&gt;How to Vim autosave&lt;/h3&gt;
-
-&lt;p&gt;Download the plugin, which is present at
-&lt;a href=&#34;https://github.com/907th/vim-auto-save&#34;&gt;https://github.com/907th/vim-auto-save&lt;/a&gt;, and put the plugin file in &lt;code&gt;~/.vim/plugin&lt;/code&gt; directory:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mkdir -p ~/.vim/plugin
-cd ~/.vim/plugin
-wget https://raw.githubusercontent.com/907th/vim-auto-save/master/plugin/AutoSave.vim
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now open the &lt;code&gt;~/.vimrc&lt;/code&gt; file and add these lines. Comments are
-self-explanatory.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# Enable autosave plugin
-let g:auto_save = 1
-
-# Only save in Normal mode periodically. If the value is changed to &#39;1&#39;,
-# then changes are saved when you are in Insert mode too, as you type, but
-# I would say prefer not save in Insert mode
-let g:auto_save_in_insert_mode = 0
-
-# Silently autosave. If you disable this option by changing value to &#39;0&#39;,
-# then in the vim status, it will display &amp;quot;(AutoSaved at &amp;lt;current time&amp;gt;)&amp;quot; all
-# the time, which might get annoying
-let g:auto_save_silent = 1
-
-# And now turn Vim swapfile off
-set noswapfile
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;things-to-note&#34;&gt;Things to note&lt;/h3&gt;
-
-&lt;p&gt;There are a few things to note when you switch to this &amp;lsquo;autosave, no swap
-files&amp;rsquo; mode:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;You can&amp;rsquo;t just do a &lt;code&gt;:q!&lt;/code&gt; to discard unsaved changes.  Autosave already has
-saved your changes! So the only real way to discard your changes is to undo
-all the changes you&amp;rsquo;ve made (&lt;code&gt;u&lt;/code&gt; key) and then exit the file.&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Earlier, you can&amp;rsquo;t modify a Vim file which is already open in another
-terminal. Now too Vim will throw a warning message. The difference is how
-you&amp;rsquo;re notified of it. Previously, even before opening the file Vim will say
-that a swap file exists. But now, Vim will allow you to open the file, and
-start editing it too. Only when you come out of Insert mode, AND you are
-making a conflicting change, will it say:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;WARNING: The file has been changed since reading it!!!
-Do you really want to write to it (y/n)?
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A conflicting change basically means you are making edits at a place where
-edits are already made in another terminal where that same file is open.
-For example, the file initially had &amp;lsquo;one&amp;rsquo; written on first line when it&amp;rsquo;s
-opened in both terminals. In one terminal, you add a second line saying
-&amp;lsquo;two&amp;rsquo;, and in another terminal when you add the second line saying &amp;lsquo;three&amp;rsquo;,
-we have a conflict. This is because we are writing &amp;lsquo;three&amp;rsquo; at line number 2
-where &amp;lsquo;two&amp;rsquo; is alredy written (from another terminal)&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;After reading these &amp;lsquo;things to note&amp;rsquo;, you might be thinking if it is really a good idea to autosave. Everybody is entitled to have an opinion. My opinion is that over a longer time period, getting rid of swap files saved me much more headache. I just have to be careful while exiting files.&lt;/p&gt;
-
-&lt;p&gt;I hope this helps. Questions, comments, suggestions, feedback? Comment :)&lt;/p&gt;
-
-&lt;p&gt;Thank you.&lt;/p&gt;
-</description>
+      <description>Estimated reading time: 5 minutes.
+Almost all IDEs today have &amp;lsquo;autosave&amp;rsquo; feature. That is, you don&#39;t need to explicitly save a file. The file is automatically saved as you type, so that even if your computer crashes, you don&#39;t lose data. This makes me wonder why Vim&#39;s default behavior is of using swap files. Swap files are annoying. I&#39;ve seen all Vim developers, including me, struggle with swap files at one point in their life.</description>
     </item>
-    
-    
     
     <item>
       <title>Everything you need to know about Tmux copy paste - Ubuntu</title>
       <link>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/</link>
-      <pubDate>Thu, 16 Jun 2016 10:59:02 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Thu, 16 Jun 2016 10:59:02 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/</guid>
-      <description>
-
-&lt;p&gt;Copying from a Tmux session is something every Tmux user struggled with once.
-I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
-
-&lt;p&gt;I tested everything on Ubuntu 14.04 Trusty Tahr, which runs Tmux version 1.8 (I have a few commands included for Tmux version 2+ also)
-To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;. If you have a Mac, see
-&lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;know-about-copy-buffers&#34;&gt;Know about copy buffers&lt;/h2&gt;
-
-&lt;p&gt;When you do a &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt;, the stuff you copy is stored in your computer&amp;rsquo;s
-buffer, called &amp;lsquo;clipboard&amp;rsquo; from where you can paste anywhere by doing a
-&lt;code&gt;CTRL&lt;/code&gt;+&amp;lsquo;v&amp;rsquo;. Tmux has it&amp;rsquo;s own buffer for coppying, which we&amp;rsquo;ll
-call &amp;lsquo;tmux buffer&amp;rsquo;. Our goal is to understand in a Tmux session how to copy to
-tmux buffer, and also to clipboard.&lt;/p&gt;
-
-&lt;p&gt;You can always copy stuff into clipboard while usin Tmux. &amp;ldquo;Why do I need a Tmux
-buffer then&amp;rdquo;, you might wonder. This is because, in your shell, the text you
-want to select might not fit in your current screen (e.g. output of &lt;code&gt;cat
-/etc/passwd&lt;/code&gt; file). If you copy normally, you will only be able to copy text
-visible on your screen, and not the output which is &amp;lsquo;scrolled up&amp;rsquo; due to a lot
-of output.&lt;/p&gt;
-
-&lt;h2 id=&#34;tmux-copy-paste-the-defaults&#34;&gt;Tmux copy-paste - the defaults&lt;/h2&gt;
-
-&lt;p&gt;The defaults are slighly involved, so this section is purely for informational purposes, and shouldn&amp;rsquo;t be memorized. Skipping this section is perfectly okay.&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Enter &amp;lsquo;copy mode&amp;rsquo; by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;, &lt;code&gt;[&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Use the arrow keys to go to the position from where you want to start copying. Press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;SPACE&lt;/code&gt; to start copying.&lt;/li&gt;
-&lt;li&gt;Use arrow keys to go to the end of text you want to copy. Press &lt;code&gt;ALT&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; or &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;w&lt;/code&gt; to copy into Tmux buffer.&lt;/li&gt;
-&lt;li&gt;Press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;, &lt;code&gt;]&lt;/code&gt; to paste in a possibly different Tmux pane/window.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;tmux-vim-bindings-for-copying-into-tmux-buffer&#34;&gt;Tmux Vim-bindings for copying into tmux buffer&lt;/h2&gt;
-
-&lt;p&gt;Adding configuration described in this section will give you easier shortcuts
-for copy-pasting in Tmux. Moreover, these shortcuts work very similar to Vim&amp;rsquo;s
-copy-pasting shortcuts!&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Add these lines in a file by name &lt;code&gt;~/.tmux.conf&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;bind P paste-buffer
-bind-key -t vi-copy &#39;v&#39; begin-selection
-bind-key -t vi-copy &#39;y&#39; copy-selection
-bind-key -t vi-copy &#39;r&#39; rectangle-toggle
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note that for a newer tmux version (2.4 and above I think, not sure), the last three lines should be replaced with:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;bind-key -T copy-mode-vi v send-keys -X begin-selection
-bind-key -T copy-mode-vi y send-keys -X copy-selection
-bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Now you can enter copy mode by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;[&lt;/code&gt;, and then go
-to start point, press &amp;lsquo;v&amp;rsquo; and start copying. After you have selected text
-you want to copy, you can just press &amp;lsquo;y&amp;rsquo; (or the default &amp;lsquo;enter&amp;rsquo; key) to
-copy the text into Tmux&amp;rsquo;s buffer. This is exactly the commands you would use
-in Vim to copy text.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;To paste, press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;P&lt;/code&gt;. Note that it&amp;rsquo;s capital &amp;lsquo;p&amp;rsquo; (i.e.
-&lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;p&lt;/code&gt;). This again is similar to Vim&amp;rsquo;s shortcut &amp;lsquo;p&amp;rsquo; for paste, though
-not exactly similar. You&amp;rsquo;ll realize in your Tmux journey why didn&amp;rsquo;t we use a
-small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;copy-from-tmux-buffer-to-system-buffer-clipboard&#34;&gt;Copy from tmux buffer to system buffer (clipboard)&lt;/h2&gt;
-
-&lt;p&gt;For this to happen, you need to install &lt;code&gt;xclip&lt;/code&gt; on your computer. Do it as:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get install --assume-yes xclip
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;After that, you need to add this line in &lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;bind -t vi-copy y copy-pipe &amp;quot;xclip -sel clip -i&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now close all your tmux sessions. From now onwards, whatever you copy in Tmux
-buffer will also land into system clipboard.&lt;/p&gt;
-
-&lt;h2 id=&#34;tmux-copy-with-mouse-drag&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
-
-&lt;p&gt;You can enable &amp;lsquo;mouse mode&amp;rsquo;, using which you can copy text into tmux buffer by
-mouse drag. For doing that, you just need to add this line to your
-&lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;setw -g mode-mouse on
-set -g mouse-select-window on
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note that if your tmux version is 2.1 or above, you need to include the following line instead of the above two&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;set -g mouse on
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
-
-&lt;p&gt;You&amp;rsquo;ll notice that now all your selections will go to tmux buffer, and not
-clipboard buffer. Of course, you can enable copying to system clipboard as
-described in a section above. However, you can notice that you can&amp;rsquo;t double
-click to select a complete word with vi&amp;rsquo;s tmux copy-pasting shortcuts + mouse
-option enabled.&lt;/p&gt;
-
-&lt;p&gt;Just press &lt;code&gt;SHIFT&lt;/code&gt; button when copying, and now you can copy as if Tmux
-doesn&amp;rsquo;t exist! :)&lt;/p&gt;
-
-&lt;h2 id=&#34;copy-from-a-remote-server&#34;&gt;Copy from a remote server&lt;/h2&gt;
-
-&lt;p&gt;Install &lt;code&gt;xclip&lt;/code&gt; on the remote Ubuntu/Linux server, and add the line mentioned
-above (&lt;code&gt;bind -t vi-copy y copy-pipe &amp;quot;xclip -sel clip -i&amp;quot;&lt;/code&gt;) to &lt;code&gt;~/.tmux.conf&lt;/code&gt; on
-that server. Also, pass &lt;code&gt;-X&lt;/code&gt; option when making SSH connection to the server,
-like so:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ssh -X remoteuser@remotehost
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And after that everything you copy into remote&amp;rsquo;s Tmux buffer will get copied
-over to local clipboard. Magic!&lt;/p&gt;
-
-&lt;h2 id=&#34;other-information&#34;&gt;Other information&lt;/h2&gt;
-
-&lt;p&gt;Done! Don&amp;rsquo;t forget to comment if you know something worth letting everybody
-know! Thank you:)&lt;/p&gt;
-</description>
+      <description>Copying from a Tmux session is something every Tmux user struggled with once. I&#39;m listing out all the stuff I learnt in this blog.
+I tested everything on Ubuntu 14.04 Trusty Tahr, which runs Tmux version 1.8 (I have a few commands included for Tmux version 2+ also) To check your Tmux version, run tmux -V. If you have a Mac, see here.
+Know about copy buffers When you do a CTRL`+`c, the stuff you copy is stored in your computer&#39;s buffer, called &amp;lsquo;clipboard&amp;rsquo; from where you can paste anywhere by doing a CTRL+&#39;v&amp;rsquo;.</description>
     </item>
-    
-    
     
     <item>
       <title>Everything you need to know about Tmux copy paste</title>
       <link>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/</link>
-      <pubDate>Thu, 16 Jun 2016 10:58:02 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Thu, 16 Jun 2016 10:58:02 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/</guid>
-      <description>
-
-&lt;p&gt;Copying from a Tmux session is something every Tmux user struggled with once.
-I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
-
-&lt;p&gt;I tested everything on Mac OS X El Capitan. For Ubuntu/Linux guide, see &lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/&#34;&gt;here&lt;/a&gt;. Mac OS X El Capitan runs Tmux version 2.1. To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;know-about-your-terminal&#34;&gt;Know about your terminal&lt;/h2&gt;
-
-&lt;p&gt;The default terminal which comes with Mac is pretty limiting. Instead of
-listing the limitations (and workarounds around it), I&amp;rsquo;ll just say that before
-you proceed, please install iTerm 2 and start using that immediately. What I&amp;rsquo;m
-writing below is all for iTerm 2. (Do let me know if you absolutely need Tmux
-copy-paste to work in Terminal, and I&amp;rsquo;ll provide steps for that).&lt;/p&gt;
-
-&lt;h2 id=&#34;know-about-copy-buffers&#34;&gt;Know about copy buffers&lt;/h2&gt;
-
-&lt;p&gt;When you do a &lt;code&gt;Command&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt;, the stuff you copy is stored in your computer&amp;rsquo;s
-buffer, called &amp;lsquo;clipboard&amp;rsquo; from where you can paste anywhere by doing a
-&lt;code&gt;Command&lt;/code&gt;+&lt;code&gt;v&lt;/code&gt;. Tmux has it&amp;rsquo;s own buffer for coppying, which we&amp;rsquo;ll
-call &amp;lsquo;tmux buffer&amp;rsquo;. Our goal is to understand in a Tmux session how to copy to
-tmux buffer, and also to clipboard.&lt;/p&gt;
-
-&lt;p&gt;You can always copy stuff into clipboard while usin Tmux. &amp;ldquo;Why do I need a Tmux
-buffer then&amp;rdquo;, you might wonder. This is because, in your shell, the text you
-want to select might not fit in your current screen (e.g. output of &lt;code&gt;cat
-/etc/passwd&lt;/code&gt; file). If you copy normally, you will only be able to copy text
-visible on your screen, and not the output which is &amp;lsquo;scrolled up&amp;rsquo; due to a lot
-of output.&lt;/p&gt;
-
-&lt;h2 id=&#34;tmux-copy-paste-the-defaults&#34;&gt;Tmux copy-paste - the defaults&lt;/h2&gt;
-
-&lt;p&gt;Well, the defaults in Mac are horrible. There is simply no way to copy into
-tmux buffer without using any external plugin. BUT you can copy stuff into
-system clipboard by just using your mouse for selecting text.&lt;/p&gt;
-
-&lt;h2 id=&#34;tmux-vim-bindings-for-copying-into-tmux-buffer&#34;&gt;Tmux Vim-bindings for copying into tmux buffer&lt;/h2&gt;
-
-&lt;p&gt;Adding configuration described in this section will give you easier shortcuts
-for copy-pasting in Tmux. Moreover, these shortcuts work very similar to Vim&amp;rsquo;s
-copy-pasting shortcuts!&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Add these lines in a file by name &lt;code&gt;~/.tmux.conf&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;bind P paste-buffer
-bind-key -t vi-copy &#39;v&#39; begin-selection
-bind-key -t vi-copy &#39;y&#39; copy-selection
-bind-key -t vi-copy &#39;r&#39; rectangle-toggle
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note that for a newer tmux version (2.4 and above I think, not sure), the last three lines should be replaced with:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;bind-key -T copy-mode-vi v send-keys -X begin-selection
-bind-key -T copy-mode-vi y send-keys -X copy-selection
-bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Now you can enter copy mode by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;[&lt;/code&gt;, and then go
-to start point, press &amp;lsquo;v&amp;rsquo; and start copying. After you have selected text
-you want to copy, you can just press &amp;lsquo;y&amp;rsquo; (or the default &amp;lsquo;enter&amp;rsquo; key) to
-copy the text into Tmux&amp;rsquo;s buffer. This is exactly the commands you would use
-in Vim to copy text.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;To paste, press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;P&lt;/code&gt;. Note that it&amp;rsquo;s capital &amp;lsquo;p&amp;rsquo; (i.e.
-&lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;p&lt;/code&gt;). This again is similar to Vim&amp;rsquo;s shortcut &amp;lsquo;p&amp;rsquo; for paste, though
-not exactly similar. You&amp;rsquo;ll realize in your Tmux journey why didn&amp;rsquo;t we use a
-small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;copy-from-tmux-buffer-to-system-buffer-clipboard&#34;&gt;Copy from tmux buffer to system buffer (clipboard)&lt;/h2&gt;
-
-&lt;p&gt;In newer iTerm2, you need to enable one option in settings to copy a text into
-both tmux buffer and clipboard at the same time. Go to iTerm2 &amp;gt; Preferences &amp;gt;
-&amp;ldquo;General&amp;rdquo; tab, and in the &amp;ldquo;Selection&amp;rdquo; section, check the box which says
-&amp;ldquo;Applications in terminal may access clipboard&amp;rdquo; if it isn&amp;rsquo;t checked. See
-&lt;a href=&#34;http://apple.stackexchange.com/a/248828&#34;&gt;here&lt;/a&gt; for a screenshot.&lt;/p&gt;
-
-&lt;h2 id=&#34;tmux-copy-with-mouse-drag&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
-
-&lt;p&gt;You can enable &amp;lsquo;mouse mode&amp;rsquo;, using which you can copy text into tmux buffer by
-mouse drag. For doing that, you just need to add this line to your
-&lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;set -g mouse on
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
-
-&lt;p&gt;You&amp;rsquo;ll notice that now all your selections will go to tmux buffer, and not
-clipboard buffer. Of course, you can enable copying to system clipboard as
-described in a section above. However, you can notice that you can&amp;rsquo;t double
-click to select a complete word with vi&amp;rsquo;s tmux copy-pasting shortcuts + mouse
-option enabled.&lt;/p&gt;
-
-&lt;p&gt;Just press &lt;code&gt;Option&lt;/code&gt; (Alt) button when copying, and now you can copy as if Tmux
-doesn&amp;rsquo;t exist! :)&lt;/p&gt;
-
-&lt;h2 id=&#34;copy-from-a-remote-server&#34;&gt;Copy from a remote server&lt;/h2&gt;
-
-&lt;p&gt;Now if your remote server is a Linux machine (e.g. an Ubuntu server), then
-getting that remote server&amp;rsquo;s tmux buffer copied into our local Mac&amp;rsquo;s clipboard
-makes for an interesting story! If the iTerm setting to allow applications in
-terminal to access clipboard is enabled, then if you are running a tmux session
-on remote server, and you copy stuff there into the tmux buffer of that system,
-the copied text is already into your local system&amp;rsquo;s clipboard! Amazing! BUT but
-but, this only works if you are connecting to the remote machine directly from
-your terminal, i.e. not from inside a local Tmux session!! If you have a local
-Tmux session, and then you SSH into remote machine, connect to remote Tmux
-session and then try to copy text in the &amp;lsquo;remote&amp;rsquo; Tmux session (i.e. using
-&lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt; twice to send Tmux commands to inner Tmux session), then this won&amp;rsquo;t
-work! (Note that you can always copy in the &amp;lsquo;outer&amp;rsquo; Tmux session, i.e. local
-Tmux session, but as stated previously, you won&amp;rsquo;t be able to copy text which is
-&amp;lsquo;scrolled up&amp;rsquo; in the inner Tmux session.)&lt;/p&gt;
-
-&lt;p&gt;Generally I&amp;rsquo;m satisfied with the limitation mentioned here. In order to get
-full copying from remote session working, you will need to do something more
-involved, like &lt;a href=&#34;http://superuser.com/a/408374/315134&#34;&gt;here&lt;/a&gt;. Do let me know if
-you need a better explanation of that method (e.g. more details on SSH keys and
-enabling remote option on Mac OS X)&lt;/p&gt;
-
-&lt;h2 id=&#34;other-information&#34;&gt;Other information&lt;/h2&gt;
-
-&lt;p&gt;Done! Don&amp;rsquo;t forget to comment if you know something worth letting everybody
-know! Thank you:)&lt;/p&gt;
-</description>
+      <description>Copying from a Tmux session is something every Tmux user struggled with once. I&#39;m listing out all the stuff I learnt in this blog.
+I tested everything on Mac OS X El Capitan. For Ubuntu/Linux guide, see here. Mac OS X El Capitan runs Tmux version 2.1. To check your Tmux version, run tmux -V.
+Know about your terminal The default terminal which comes with Mac is pretty limiting. Instead of listing the limitations (and workarounds around it), I&#39;ll just say that before you proceed, please install iTerm 2 and start using that immediately.</description>
     </item>
-    
-    
     
     <item>
       <title>Moving from Pelican to Hugo</title>
       <link>http://www.rushiagr.com/blog/2016/01/24/moving-from-pelican-to-hugo/</link>
-      <pubDate>Sun, 24 Jan 2016 21:19:26 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Sun, 24 Jan 2016 21:19:26 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/01/24/moving-from-pelican-to-hugo/</guid>
-      <description>&lt;p&gt;I was looking for a better theme for my blog which is based on
-&lt;a href=&#34;http://blog.getpelican.com/&#34;&gt;Pelican&lt;/a&gt; static site generator in Python, but then I happened to look at
-&lt;a href=&#34;http://npf.io&#34;&gt;this&lt;/a&gt; blog written in Hugo - a Go counterpart of Pelican. The
-thing which caught my eye was the &lt;a href=&#34;http://npf.io/blog/&#34;&gt;posts&lt;/a&gt; page, which is
-exactly how I wanted my first page to be. I&amp;rsquo;ve always wanted something like
-Paul Graham&amp;rsquo;s &lt;a href=&#34;http://paulgraham.com/articles.html&#34;&gt;essays&lt;/a&gt; page, but couldn&amp;rsquo;t
-find anything close to it until I found this site. After some thought, I
-decided to make the move. This move has no effect on my love for Python
-language. It&amp;rsquo;s just laziness trumping drudgery :)&lt;/p&gt;
-
-&lt;p&gt;The good thing about static site generators is all of them support markdown &amp;ndash;
-the markup language in which my Pelican blog was written. Althought the syntax
-of Hugo was different, I could scribble up a &lt;a href=&#34;https://github.com/rushiagr/public/blob/master/scripts/pelican-to-hugo.py&#34;&gt;small Python
-script&lt;/a&gt;
-to convert Pelican&amp;rsquo;s way of writing blog metadata to Hugo&amp;rsquo;s.&lt;/p&gt;
-
-&lt;p&gt;Since I didn&amp;rsquo;t want readers who saved my blog links as bookmarks to suffer, I
-had to manually make sure that the URLs of blog posts are not changed. Hugo by
-default uses the markdown file name as the URL name. Pelican by default
-converts blog post title to a slug and uses that slug in the URL. This has
-helped me have markdown file names in lexicographical order (first one named as
-&lt;code&gt;a-my-first-blog.md&lt;/code&gt;, second one &lt;code&gt;b-sequel-of-first-article.md&lt;/code&gt;, and so
-on) for chronological viewing. But now I have to either change the file names,
-or write a &lt;code&gt;slug&lt;/code&gt; entry to each blog post&amp;rsquo;s metadata. I figured out the earlier one
-would be less time consuming, and did just that.&lt;/p&gt;
-
-&lt;p&gt;One problem I faced was, the site-generation script was throwing an error.
-Googling and stackoverflowing told me that it&amp;rsquo;s due to Hugo version
-incompatibility. When Nate Finch, the original author of
-&lt;a href=&#34;http://npf.io&#34;&gt;npf.io&lt;/a&gt; generated his site, he must have used an older version
-of Hugo. But I had only the latest Hugo binary, built from source. Within some
-time I was able to figure out the problem and
-&lt;a href=&#34;https://github.com/rushiagr/npf/commit/712506d460dbeb7cb80757d9d4f533f75983968d&#34;&gt;fixed&lt;/a&gt; them, and then submitted
-&lt;a href=&#34;https://github.com/natefinch/npf/pull/5&#34;&gt;pull request&lt;/a&gt; for the same too. Open
-source for the win :)&lt;/p&gt;
-
-&lt;p&gt;I also realized than whenever I create a new blog post using &lt;code&gt;hugo new
-&amp;lt;filename&amp;gt;.md&lt;/code&gt;, it would create another entry on the left sidebar, and not as a
-blog post inside the &amp;lsquo;posts&amp;rsquo; page. The workaround was easy here too: just move
-the markdown file to &lt;code&gt;blog&lt;/code&gt; directory, and change a few variables as I&amp;rsquo;ve now
-written in &lt;a href=&#34;https://github.com/rushiagr/npf#create-a-new-post&#34;&gt;readme&lt;/a&gt;, and
-it works as expected. I should probably write a shell function to do all of
-these steps in one go :)&lt;/p&gt;
-
-&lt;p&gt;I had to ensure that I remove all files generated by Pelican, as otherwise one
-blog entry was going to the older-Pelican themed page when clicked on its link.
-This and a
-&lt;a href=&#34;https://github.com/rushiagr/npf/commit/384283276cd960e494f97df9de46fda2f7f58383&#34;&gt;few&lt;/a&gt;
-tweaks later, I had my shiny blog ready :)&lt;/p&gt;
-</description>
+      <description>I was looking for a better theme for my blog which is based on Pelican static site generator in Python, but then I happened to look at this blog written in Hugo - a Go counterpart of Pelican. The thing which caught my eye was the posts page, which is exactly how I wanted my first page to be. I&#39;ve always wanted something like Paul Graham&#39;s essays page, but couldn&#39;t find anything close to it until I found this site.</description>
     </item>
     
-    
-    
-    
+    <item>
+      <title>About</title>
+      <link>http://www.rushiagr.com/about/</link>
+      <pubDate>Sun, 24 Jan 2016 18:21:46 +0530</pubDate>
+      
+      <guid>http://www.rushiagr.com/about/</guid>
+      <description>Hello! I am Rushi Agrawal.
+I work as a software engineer at Amazon.
+I graduated from IIT Hyderabad in 2012 with a Bachelors degree in Computer Science and Engineering. Before that, I did my schooling from my hometown Shegaon near Nagpur.
+Contact me via email at rushi.agr@gmail.com, or via phone at +91 99-4518-4519.
+Thank you for your time.</description>
+    </item>
     
     <item>
       <title>Tmux session shortcuts</title>
       <link>http://www.rushiagr.com/blog/2016/01/10/tmux-session-shortcuts/</link>
-      <pubDate>Sun, 10 Jan 2016 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Sun, 10 Jan 2016 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/01/10/tmux-session-shortcuts/</guid>
-      <description>
-
-&lt;p&gt;Tmux is awesome. But the session management commands are way too long for my
-liking. Listing all sessions is &lt;code&gt;tmux list-sessions&lt;/code&gt;, attaching to a session
-&lt;code&gt;mysession&lt;/code&gt; is &lt;code&gt;tmux attach -t mysession&lt;/code&gt;, etc.&lt;/p&gt;
-
-&lt;p&gt;So I created a few functions and aliases, which can be found
-&lt;a href=&#34;https://github.com/rushiagr/myutils/blob/master/aliases/tmux.sh&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The general idea is, all commands start with &lt;code&gt;mx&lt;/code&gt;, which is basically a
-shortcut for &amp;lsquo;tMuX&amp;rsquo;. So &lt;code&gt;mxl&lt;/code&gt; is to &amp;lsquo;l&amp;rsquo;ist tmux sessions, &lt;code&gt;mxa&lt;/code&gt; is to &amp;lsquo;a&amp;rsquo;ttach
-to a tmux session, etc.&lt;/p&gt;
-
-&lt;p&gt;List all running tmux sessions&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ mxl
-0: 4 windows (created Sun Jan 10 17:14:11 2016) [89x23] (attached)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You can see one tmux session. Let&amp;rsquo;s create another tmux session with name
-&lt;code&gt;dev&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mx dev
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;List all sessions now&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ mxl
-0: 4 windows (created Sun Jan 10 17:14:11 2016) [89x23] (attached)
-dev: 1 windows (created Sun Jan 10 17:59:30 2016) [89x23] (attached)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To attach to session with name &lt;code&gt;dev&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mxa dev
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You can also omit session name, and it will attach to the last session you
-attached to.&lt;/p&gt;
-
-&lt;p&gt;If there was no session with name &lt;code&gt;dev2&lt;/code&gt;, and you type this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mxa dev2
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It will automatically create a session for you and attach you to it.&lt;/p&gt;
-
-&lt;p&gt;To detach:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mxd
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I find this &lt;code&gt;mxd&lt;/code&gt; to be easier to type than both &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;d&lt;/code&gt; and &lt;code&gt;tmux
-detach&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;installation&#34;&gt;Installation&lt;/h3&gt;
-
-&lt;p&gt;You just need to copy the content in the above referenced link to &lt;code&gt;~/.bashrc&lt;/code&gt;
-file and from a new terminal session things will be ready for you to use :)&lt;/p&gt;
-</description>
+      <description>Tmux is awesome. But the session management commands are way too long for my liking. Listing all sessions is tmux list-sessions, attaching to a session mysession is tmux attach -t mysession, etc.
+So I created a few functions and aliases, which can be found here.
+The general idea is, all commands start with mx, which is basically a shortcut for &amp;lsquo;tMuX&amp;rsquo;. So mxl is to &amp;lsquo;l&#39;ist tmux sessions, mxa is to &amp;lsquo;a&#39;ttach to a tmux session, etc.</description>
     </item>
-    
-    
     
     <item>
       <title>A different approach to AWS CLI</title>
       <link>http://www.rushiagr.com/blog/2016/01/02/better-aws-command-line-interface/</link>
-      <pubDate>Sat, 02 Jan 2016 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/01/02/better-aws-command-line-interface/</guid>
-      <description>
-
-&lt;p&gt;For a user of Amazon Web Services, quickly viewing a dashboard of all resources
-is not straightforward. If using a web browser, the session won&amp;rsquo;t persist for
-more than a day and one will have to re-authenticate every day. If using AWS
-CLI, then he/she might not remember the exact command (was it
-&lt;code&gt;describe-key-pair&lt;/code&gt; or &lt;code&gt;describe-keypair&lt;/code&gt; or &lt;code&gt;describe-keypairs&lt;/code&gt;?) but even if
-they do, the output is a not-so-readable JSON. For viewing virtual machines,
-you might not want to see hundreds of lines of detail.
-Maybe you just wanted to see the IP of the VM so that you can SSH into it. Or
-maybe you just wanted to quickly create a virtual machine to test something: do
-you remember all the parameters you need to specify for instance creation? And
-don&amp;rsquo;t forget that you will need to specify the AMI ID of the image, even if you
-know exactly the operating system name and version.&lt;/p&gt;
-
-&lt;p&gt;There is no doubt that AWS CLI is an impressive piece of work. It allows you to
-do absolutely everything with their cloud. The
-documentation is thorough. It is great for automation too &amp;ndash; output is easily parse-able JSON. However, it&amp;rsquo;s not as
-human-friendly. It doesn&amp;rsquo;t tell you which options are mandatory and which are
-optional. It doesn&amp;rsquo;t remind you if you forget to specify keypair while creating an
-instance. You end up deleting that instance, then Google-searching &amp;lsquo;aws cli delete instance&amp;rsquo;
-and finally creating another instance. The CLI has some inconsistencies too &amp;ndash; creating
-a keypair is &lt;code&gt;create-key-pair&lt;/code&gt; but creating a virtual machine is not
-&lt;code&gt;create-instance&lt;/code&gt; but &lt;code&gt;run-instances&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;To alleviate these pains, I created a simple CLI tool called &amp;ldquo;&lt;a href=&#34;http://github.com/rushiagr/cch&#34;&gt;CCH - Cloud CLI
-for Humans&lt;/a&gt;&amp;rdquo;. Just typing &lt;code&gt;lsvm&lt;/code&gt; prints all
-the virtual machines you have in the cluster. Each command can be run without
-passing a parameter to it. If an operation requires additional parameters and
-you didn&amp;rsquo;t specify it for the first time, it&amp;rsquo;ll ask you to input those
-parameters. For example &lt;code&gt;mkvm&lt;/code&gt;, the command to create virtual machines:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ mkvm
-Available flavors: t2.micro, t2.nano, ...
-Select flavor [&#39;l&#39; to list]:
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Commands for resource creation are short and consistent (&lt;code&gt;mkvm&lt;/code&gt; creates virtual
-machines, &lt;code&gt;mkkp&lt;/code&gt; creates keypairs, &lt;code&gt;mksg&lt;/code&gt; create security groups). No need to
-remember AMI IDs (presently it selects Ubuntu 16.04 64-bit image by default,
-but in future you might specify an OS name and OS version). All the commands
-supported so far are:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;lsvm    - List all virtual machines
-mkvm    - Create a virtual machine
-stpvm   - Stop a virtual machine
-rmvm    - Terminate a virtual machine
-
-lskp    - List all keypairs
-mkkp    - Create keypairs
-rmkp    - Delete a keypair
-
-lssg    - List all security groups (including a detailed view)
-mksg    - Create a security group (including specifying secgroup rules)
-rmsg    - Delete a security group
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
-
-&lt;p&gt;I have added the tool to PyPI, so download is easy:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;pip install cch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Run &lt;code&gt;aws configure&lt;/code&gt; if you don&amp;rsquo;t have AWS credentials configured on your
-system. Typically, credentials are kept in &lt;code&gt;~/.aws/credentials&lt;/code&gt; file.&lt;/p&gt;
-
-&lt;h2 id=&#34;sample-usage&#34;&gt;Sample usage&lt;/h2&gt;
-
-&lt;p&gt;For full list of operations supported so far, see this &lt;a href=&#34;https://asciinema.org/a/ektm98481nniu7rldc1ncu5af&#34;&gt;asciinema
-screencast&lt;/a&gt; I&amp;rsquo;m providing
-examples here for some of the commands.&lt;/p&gt;
-
-&lt;p&gt;See help text of a command&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ lsvm -h
-lsvm [-h] [-s] [&amp;lt;name&amp;gt;]
-    -h      Prints helptext and exits
-    -s      Prints sizes of VM disks in GB, starting with root disk
-    &amp;lt;name&amp;gt;  Only prints VM whose name contains &#39;&amp;lt;name&amp;gt;&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;List all virtual machines&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ lsvm
-    ID              Name           Status   Flavor        IP      Vols
-i-abcd1234     rushi dev m/c      running  t2.micro 52.12.123.123  1
-i-abcd1233   rushi pkg builder    running  t2.micro 52.12.123.122  1
-i-abcd1232 rushi vanilla devstack running  t2.large 54.12.123.121  1
-i-abcd1231  rushi dbaas devstack  running m4.xlarge 52.12.123.120  1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Also show sizes of volumes of instances:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ lsvm  -s
-    ID                   Name               Status   Flavor        IP       Vols(GB)
-i-abcd1234          rushi dev m/c          running  t2.micro 52.12.123.123    [8]
-i-abcd1233        rushi pkg builder        running  t2.micro 52.12.123.122    [8]
-i-abcd1232      rushi vanilla devstack     running  t2.large 54.12.123.121    [50]
-i-abcd1231       rushi dbaas devstack      running m4.xlarge 52.12.123.120    [50]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;List all VMs whose name contains word &amp;lsquo;devstack&amp;rsquo;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ lsvm devstack
-    ID              Name           Status   Flavor        IP      Vols
-i-abcd1232 rushi vanilla devstack running  t2.large 54.12.123.121  1
-i-abcd1231  rushi dbaas devstack  running m4.xlarge 52.12.123.120  1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Create a virtual machine&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;r@rushi:~$ mkvm
-Only Ubuntu image supported as of now
-Available flavors: [&#39;t1.micro&#39;, &#39;m1.small&#39;, ... ]
-Select flavor [&#39;l&#39; to list]: t2.micro
-Available key pairs: [&#39;rushi-kp-1&#39;, &#39;prod-keypair&#39;, &#39;test-keypair&#39;]
-Select keypair: rushi-kp-1
-Available security groups: [&#39;Rushi SecGroup&#39;, &#39;openToAll&#39;]
-Select security group. None to create new one: Rushi SecGroup
-Enter root volume size in GBs: 8
-r@rushi:~$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Think this makes sense/no sense? Please write a comment below. Create a PR or issue for CCH development. I should totally think of a better name for the CLI tool :)&lt;/p&gt;
-
-&lt;p&gt;Thank you :)&lt;/p&gt;
-</description>
+      <description>For a user of Amazon Web Services, quickly viewing a dashboard of all resources is not straightforward. If using a web browser, the session won&#39;t persist for more than a day and one will have to re-authenticate every day. If using AWS CLI, then he/she might not remember the exact command (was it describe-key-pair or describe-keypair or describe-keypairs?) but even if they do, the output is a not-so-readable JSON. For viewing virtual machines, you might not want to see hundreds of lines of detail.</description>
     </item>
-    
-    
     
     <item>
       <title>Build VM Images using Diskimage-builder</title>
       <link>http://www.rushiagr.com/blog/2016/01/02/build-vm-image-using-diskimage-builder/</link>
-      <pubDate>Sat, 02 Jan 2016 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Sat, 02 Jan 2016 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/01/02/build-vm-image-using-diskimage-builder/</guid>
-      <description>&lt;p&gt;OpenStack has this nice tool &lt;a href=&#34;https://github.com/openstack/diskimage-builder&#34;&gt;diskimage-builder&lt;/a&gt;to create virtual machine images without the need
-of a cloud. These vm images can then be uploaded to cloud (e.g. in Glance for
-OpenStack cloud), and they become immediately usable. You can also create VMs in
-virtualbox from these images (though I don&amp;rsquo;t remember exact steps to make the
-image work with VirtualBox. Do let me know if you get the VM working with
-VirtualBox/Vagrant)&lt;/p&gt;
-
-&lt;p&gt;Here I&amp;rsquo;ll describe ways to create a bare cloud-uploadable Ubuntu image. I will
-also provide information as to how to build an image which will have some
-packages pre-installed in them. Note that the commands here will create only
-one image file as opposed to three &amp;ndash; one each for ramdisk, kernel and machine image.&lt;/p&gt;
-
-&lt;p&gt;Prerequisites&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get install qemu-utils
-git clone http://github.com/openstack/diskimage-builder
-cd diskimage-builder
-sudo pip install -r requirements.txt
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;All the binaries are in bin filder. You can go in the &lt;code&gt;bin\&lt;/code&gt; directory to
-execute diskimage-builder commands, or add that directory to your &lt;code&gt;$PATH&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Create bare Ubuntu image, which you can directly upload to a cloud e.g.
-OpenStack.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;disk-image-create -a amd64 -o ubuntu-amd64 vm ubuntu
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Image generated will be of name &lt;code&gt;ubuntu-amd64.qcow2&lt;/code&gt;. Such an image will be for
-same OS version as your host Ubuntu version. If you want
-to build an image against a different OS version, specify
-&lt;code&gt;DIB_RELEASE=&amp;lt;releasename&amp;gt;&lt;/code&gt; as a prefix to the command.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;DIB_RELEASE=trusty disk-image-create -a amd64 -o ubuntu-amd64 vm ubuntu
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Create an Ubuntu VM image which you can boot via KVM or VirtualBox/Vagrant.
-You will need to manually
-add public keys to authorized_keys for a user inside that VM.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;disk-image-create -o base -a amd64 vm base ubuntu cloud-init-nocloud
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Create an image with &lt;code&gt;mysql-server&lt;/code&gt; and &lt;code&gt;tmux&lt;/code&gt; package (and their dependencies) installed inside the image:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;disk-image-create -a amd64 -o ubuntu-amd64 -p mysql-server,tmux vm ubuntu
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;How to upload image to glance:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;glance image-create --name dib-ubuntu --disk-format=qcow2 --container-format=bare &amp;lt; img/ubuntu-amd64.qcow2
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Where &lt;code&gt;ubuntu-amd64.qcow2&lt;/code&gt; is the image to upload.&lt;/p&gt;
-
-&lt;p&gt;Thanks!&lt;/p&gt;
-</description>
+      <description>OpenStack has this nice tool diskimage-builderto create virtual machine images without the need of a cloud. These vm images can then be uploaded to cloud (e.g. in Glance for OpenStack cloud), and they become immediately usable. You can also create VMs in virtualbox from these images (though I don&#39;t remember exact steps to make the image work with VirtualBox. Do let me know if you get the VM working with VirtualBox/Vagrant)</description>
     </item>
-    
-    
     
     <item>
       <title>Better way to view MySQL tables</title>
       <link>http://www.rushiagr.com/blog/2015/12/12/better-way-to-view-mysql-tables/</link>
-      <pubDate>Sat, 12 Dec 2015 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Sat, 12 Dec 2015 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2015/12/12/better-way-to-view-mysql-tables/</guid>
-      <description>
-
-&lt;h3 id=&#34;the-problem&#34;&gt;The problem&lt;/h3&gt;
-
-&lt;p&gt;You are trying to print a MySQL table with a large number of columns, with
-&lt;code&gt;SELECT *&lt;/code&gt; command. You type &lt;code&gt;SELECT * FROM mysql.user LIMIT 1&lt;/code&gt;, and your terminal
-becomes &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-table-with-many-rows-messy.png&#34;&gt;this&lt;/a&gt;.
-If you wanted to view more than one row, you&amp;rsquo;re in a trouble :)&lt;/p&gt;
-
-&lt;h3 id=&#34;the-solution&#34;&gt;The solution&lt;/h3&gt;
-
-&lt;p&gt;Run MySQL with this option:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mysql --pager=&amp;quot;less --chop-long-lines --quit-if-one-screen --no-init&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will make your table display only the rows it can in the current screen, something like &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-with-less-pager-neat.png&#34;&gt;this&lt;/a&gt;. You can
-use the arrow keys to move sideways to view the hidden column. Pressing the &amp;lsquo;right&amp;rsquo; arrow key will move half page towards right. Neat, isn&amp;rsquo;t it?&lt;/p&gt;
-
-&lt;p&gt;You can create an alias for mysql:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# Using shorter version of &#39;less&#39; flags mentioned above
-alias mysql=&#39;mysql -SFX&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You can put the above line in your &lt;code&gt;~/.bashrc&lt;/code&gt; file to load this alias
-in every new terminal session.&lt;/p&gt;
-
-&lt;h3 id=&#34;bonus-point-for-vim-users&#34;&gt;Bonus point for Vim users&lt;/h3&gt;
-
-&lt;p&gt;&lt;code&gt;less&lt;/code&gt; allows using keys &lt;code&gt;j&lt;/code&gt; and &lt;code&gt;k&lt;/code&gt; for scrolling down and scrolling up. Unfortunately, you cannot directly use keys &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move sideways using &lt;code&gt;less&lt;/code&gt;. Fortunately, you can map &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move left or right, respectively. Here&amp;rsquo;s how to do that:&lt;/p&gt;
-
-&lt;p&gt;Create a file &lt;code&gt;.lesskey&lt;/code&gt; in your home directory, with the following contents&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;l noaction 10\e)
-h noaction 10\e)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now run this command, to generate &lt;code&gt;~/.less&lt;/code&gt; file.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;lesskey
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will generate a binary file which &lt;code&gt;less&lt;/code&gt; understands. If you now start a new MySQL terminal session (of course with the above said &lt;code&gt;--pages&lt;/code&gt; flag), you can use Vim&amp;rsquo;s &lt;code&gt;HJKL&lt;/code&gt; movements. Here I have specified to move 10 characters to the right if you make one &amp;lsquo;right&amp;rsquo; Vim movement.&lt;/p&gt;
-
-&lt;h3 id=&#34;quick-setup-script&#34;&gt;Quick setup script&lt;/h3&gt;
-
-&lt;p&gt;Don&amp;rsquo;t want to do the above stuff manually? Just run this command and your computer will be set up in a second!&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sh -c &amp;quot;$(wget -q https://raw.githubusercontent.com/rushiagr/public/master/scripts/mysql-pretty-table.sh -O -)&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note that changes will take effect from a new shell session (or you can run &lt;code&gt;source ~/.bashrc&lt;/code&gt; if you want things to work in the current session too.&lt;/p&gt;
-
-&lt;h3 id=&#34;more-information&#34;&gt;More information&lt;/h3&gt;
-
-&lt;p&gt;Find more information at below links:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://unix.stackexchange.com/a/169969/91602&#34;&gt;About mapping &amp;lsquo;h&amp;rsquo; and &amp;lsquo;k&amp;rsquo; to Vim movements in &amp;lsquo;less&amp;rsquo;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/a/6422698/1143173&#34;&gt;About using &amp;lsquo;less&amp;rsquo; as MySQL pager&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+      <description>The problem You are trying to print a MySQL table with a large number of columns, with SELECT * command. You type SELECT * FROM mysql.user LIMIT 1, and your terminal becomes this. If you wanted to view more than one row, you&#39;re in a trouble :)
+The solution Run MySQL with this option:
+mysql --pager=&amp;quot;less --chop-long-lines --quit-if-one-screen --no-init&#39;  This will make your table display only the rows it can in the current screen, something like this.</description>
     </item>
-    
-    
     
     <item>
       <title>Quick JustDial scraper</title>
       <link>http://www.rushiagr.com/blog/2015/09/14/quick-justdial-scraper/</link>
-      <pubDate>Mon, 14 Sep 2015 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Mon, 14 Sep 2015 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2015/09/14/quick-justdial-scraper/</guid>
-      <description>&lt;p&gt;So my friend asked me to scrape data from JustDial and give it to him in an excel sheet.
-I thought let&amp;rsquo;s give it a try. He needed
-name of firm, address and phone number of any JustDial URL he wants to scrape. After effectively
-around 4 hours of work, the below script was created.&lt;/p&gt;
-
-&lt;p&gt;Note that the script is dirty. You need to edit the jd_url to search any other URL. Also,
-the looping will go on forever, so you have to keep checking the file size of generated
-&amp;lsquo;data.csv&amp;rsquo; file, and when you&amp;rsquo;re sure it&amp;rsquo;s not increasing any more, kill the script by
-pressing CTRL+C. This script works as of today. Tomorrow it might not. Also, excuse
-stray comments/bad formatting of code. I&amp;rsquo;m not sure I want to clean it right now :)&lt;/p&gt;
-
-&lt;p&gt;Feel free to use/modify it the way you want.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# PIP requirements: requests, beautifulsoup4
-import requests
-from bs4 import BeautifulSoup
-import json
-import csv
-
-jd_url = &amp;quot;http://www.justdial.com/Bangalore/Car-Hire-%3Cnear%3E-Shanthinagar&amp;quot;
-
-# Split http/https prefix if any
-# TODO: work on URLs which dont&#39; have the CT part in URL
-jd_url = jd_url.split(&#39;http://www.justdial.com/&#39;)[-1].split(&#39;https://www.justdial.com/&#39;)[-1]
-city, search, cat_id = &#39;&#39;, &#39;&#39;, &#39;&#39;
-split_vals = jd_url.split(&#39;/&#39;)
-if len(split_vals) == 3:
-    city, search, cat_id = jd_url.split(&#39;/&#39;)
-    cat_id = cat_id.split(&#39;-&#39;)[-1]
-elif len(split_vals) == 2:
-    city, search = jd_url.split(&#39;/&#39;)
-search = search.replace(&#39;-&#39;, &#39;+&#39;)
-
-
-with open(&#39;data.csv&#39;, &#39;w&#39;) as f:
-    #writer = csv.writer(f, delimiter=&#39;,&#39;, quoting=csv.QUOTE_ALL, lineterminator=&#39;\n&#39;)
-
-    page = 1
-    while True:
-        print &#39;page&#39;, page
-        resp = requests.get(&#39;http://www.justdial.com&#39;+&#39;/functions/ajxsearch.php?national_search=0&amp;amp;act=pagination&amp;amp;city={0}&amp;amp;search={1}&amp;amp;where=&amp;amp;catid={2}&amp;amp;psearch=&amp;amp;prid=&amp;amp;page={3}&#39;.format(city, search, cat_id, page))
-        markup = resp.json()[&#39;markup&#39;].replace(&#39;\/&#39;, &#39;/&#39;)
-        soup = BeautifulSoup(markup, &#39;html.parser&#39;)
-
-
-        for thing in soup.find_all(&#39;section&#39;):
-            csv_list = []
-            if thing.get(&#39;class&#39;)==[u&#39;jcar&#39;]:
-                # Company name
-                for a_tag in thing.find_all(&#39;a&#39;):
-                    if a_tag.get(&#39;onclick&#39;)==&amp;quot;_ct(&#39;clntnm&#39;, &#39;lspg&#39;);&amp;quot;:
-                        csv_list.append(a_tag.get(&#39;title&#39;))
-
-                # Address
-                for span_tag in thing.find_all(&#39;span&#39;):
-                    if span_tag.get(&#39;class&#39;)==[u&#39;mrehover&#39;, u&#39;dn&#39;]:
-                        csv_list.append(span_tag.get_text().strip())
-
-                # Phone number
-                for a_tag in thing.find_all(&#39;a&#39;):
-                    if a_tag.get(&#39;href&#39;).startswith(&#39;tel:&#39;):
-                        csv_list.append(a_tag.get(&#39;href&#39;).split(&#39;:&#39;)[-1])
-
-
-                csv_list = [&#39;&amp;quot;&#39;+item+&#39;&amp;quot;&#39; for item in csv_list]
-                writeline = &#39;,&#39;.join(csv_list)+&#39;\n&#39;
-                f.write(&#39;,&#39;.join(csv_list)+&#39;\n&#39;)
-        page+=1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+      <description>So my friend asked me to scrape data from JustDial and give it to him in an excel sheet. I thought let&#39;s give it a try. He needed name of firm, address and phone number of any JustDial URL he wants to scrape. After effectively around 4 hours of work, the below script was created.
+Note that the script is dirty. You need to edit the jd_url to search any other URL.</description>
     </item>
-    
-    
     
     <item>
       <title>OpenStack Keystone with Cassandra Database in DevStack</title>
       <link>http://www.rushiagr.com/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</link>
-      <pubDate>Thu, 10 Sep 2015 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Thu, 10 Sep 2015 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2015/09/10/openstack-keystone-with-cassandra-database-in-devstack/</guid>
-      <description>
-
-&lt;p&gt;Using Cassandra as backing database for OpenStack Keystone was our solution
-to multi-region deployment problem of OpenStack cloud. This blog post is not
-to discuss the problem. We are talking about how to have a development
-environment to play around with Keystone working with a dev Cassandra deployment.&lt;/p&gt;
-
-&lt;h4 id=&#34;just-run-this-script-and-you-re-all-set&#34;&gt;&amp;ldquo;Just run this script and you&amp;rsquo;re all set!&amp;rdquo;&lt;/h4&gt;
-
-&lt;p&gt;I&amp;rsquo;ve put together all commands into a script which can be found here:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;https://raw.githubusercontent.com/rushiagr/keystone-cassandra/master/keystone-cassandra.sh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If you have a fresh Ubuntu VM, just copy this script into that machine and
-execute it. Give it 15-20 mins at least (depending upon your internet connection), and it will set up:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;DevStack with Keystone installed and running with all the data stored in/fetched from local Cassandra installation&lt;/li&gt;
-&lt;li&gt;A Cassandra development cluster (CCM) with 5 nodes and replication factor of 3&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Of course, you will need Internet access inside the VM. Also, give the VM around
-3GB of RAM, else things might not work properly. Actually, if you change the
-Cassandra configuration to one node instead of 5, probably 2 GB will suffice. But I&amp;rsquo;ve
-not tried it. (Let me know if you tried it and it works!)&lt;/p&gt;
-
-&lt;p&gt;Notes:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Remember, this is a dev cluster. It&amp;rsquo;s not supposed to be used in production. Hell, it&amp;rsquo;s not even ready for it.&lt;/li&gt;
-&lt;li&gt;Keystone is running on 127.0.0.1. I&amp;rsquo;ve done this so that it will work on any person&amp;rsquo;s VM&lt;/li&gt;
-&lt;li&gt;I&amp;rsquo;ve tested only on a Ubuntu Trusty VM, on Amazon EC2 m4.large instance which has 8 GB RAM. OpenStack on AWS &amp;ndash; ironic, isn&amp;rsquo;t it? :)&lt;/li&gt;
-&lt;li&gt;I&amp;rsquo;m using Java which comes with Ubuntu&amp;rsquo;s APT packages. In production one is supposed to use Oracle Java as per Cassandra folks.&lt;/li&gt;
-&lt;li&gt;The code for this script is located at &lt;code&gt;https://github.com/rushiagr/keystone/tree/liberty-cassandra&lt;/code&gt;, i.e. on &lt;code&gt;liberty-cassandra&lt;/code&gt; branch. Note that this work is currently based upon Keystone&amp;rsquo;s Liberty code as on first week of June. It might not work directly with latest code as it might require fixing imports which might have become outdated. However, I don&amp;rsquo;t think it&amp;rsquo;s going to take more than an hour to make it work with latest code; just that I don&amp;rsquo;t have enough motivation right now to keep the code updated with &amp;lsquo;latest&amp;rsquo; all the time.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4 id=&#34;credits&#34;&gt;Credits&lt;/h4&gt;
-
-&lt;p&gt;This work was done by the &amp;lsquo;distributed database&amp;rsquo; team of 4 people: Ajaya Agrawal, Rushi Agrawal (me), Vivek Dhayaal and Yogeshwar Shenoy, listed in alphabetical order. And obviously Reliance, for providing us an opportunity to work on this thing.&lt;/p&gt;
-</description>
+      <description>Using Cassandra as backing database for OpenStack Keystone was our solution to multi-region deployment problem of OpenStack cloud. This blog post is not to discuss the problem. We are talking about how to have a development environment to play around with Keystone working with a dev Cassandra deployment.
+&amp;ldquo;Just run this script and you&#39;re all set!&amp;rdquo; I&#39;ve put together all commands into a script which can be found here:
+https://raw.githubusercontent.com/rushiagr/keystone-cassandra/master/keystone-cassandra.sh  If you have a fresh Ubuntu VM, just copy this script into that machine and execute it.</description>
     </item>
     
+    <item>
+      <title>Apache mod_wsgi parallelization notes</title>
+      <link>http://www.rushiagr.com/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</link>
+      <pubDate>Fri, 24 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2015/07/24/apache-mod_wsgi-parallelization-notes/</guid>
+      <description>This is my notes on &amp;lsquo;Processes and Threading&amp;rsquo; doc by the author of mod_wsgi module of Apache. This blog post just serves as a &amp;lsquo;quick refresher&amp;rsquo;, and is only useful if you have read the original document but it&#39;s been too long since you read it :)
+Apache with mod_wsgi A Python application can run with multiple processes as well as multiple threads with mod_wsgi.
+Prefork multiprocessing module Apache creates multiple processes, and each request is handled by one process.</description>
+    </item>
+    
+    <item>
+      <title>Docker quick start notes</title>
+      <link>http://www.rushiagr.com/blog/2015/06/07/docker-quick-start-notes/</link>
+      <pubDate>Sun, 07 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2015/06/07/docker-quick-start-notes/</guid>
+      <description>Update *: Blog updated to use latest way to install docker.  After reading about docker and containers, I thought let&#39;s try them out. Here are my notes. Obviously all of them are taken from Internet. Maybe this collection here will help someone start with docker faster than spending time searching all over the internet.
+It assumes your base OS is Ubuntu 14.04 Trusty Tahr (when was the last time you saw the codename spelled &amp;lsquo;Trusty Tahr&amp;rsquo; and not &amp;lsquo;Trusty&amp;rsquo;?</description>
+    </item>
+    
+    <item>
+      <title>Cache APT packages with Squid proxy</title>
+      <link>http://www.rushiagr.com/blog/2015/06/05/cache-apt-packages-with-squid-proxy/</link>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2015/06/05/cache-apt-packages-with-squid-proxy/</guid>
+      <description>TL;DR: Know how to install and set up Squid proxy, so that you can cache packages, and hence save bandwidth if you want to install those packages again and again. Also works if you are already behind a squid proxy.
+Problem: Repetitive download. Slow. If you deal with virtual machines a lot, you might know the pain of managing packages on each one of them. Every time I had to create a new VM, I would run apt-get update (to get information about all the latest packages available for my Ubuntu system), apt-get dist-upgrade (to install latest versions of all packages already installed), and also install some packages not present in stock Ubuntu image, like git (yes, it&#39;s 2015 and Ubuntu still doesn&#39;t come pre-installed with git), ipython, bwm-ng and some others.</description>
+    </item>
+    
+    <item>
+      <title>Puppet installation from modules</title>
+      <link>http://www.rushiagr.com/blog/2014/09/14/puppet-installation-from-modules/</link>
+      <pubDate>Sun, 14 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2014/09/14/puppet-installation-from-modules/</guid>
+      <description>A quick example of how to use Puppet to install and manage MySQL. We&#39;ll download required Puppet modules from their git repositories.
+Again, everything is tried on Ubuntu (14.04).
+Make sure hostname -f shows your FQDN. Then install puppet
+sudo apt-get install puppet  We&#39;ll use git submodules to manage different git repositories. But first, create our own repository
+mkdir puppet-mysql cd puppet-mysql git init  Install Puppet modules stdlib and mysql into directory modules as git submodules.</description>
+    </item>
+    
+    <item>
+      <title>iSCSI administration on Ubuntu - Quick Start</title>
+      <link>http://www.rushiagr.com/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2014/09/05/iscsi-administration-on-ubuntu-quick-start/</guid>
+      <description>This post get&#39;s you started with iSCSI administration on an Ubuntu machine. Although I have used Ubuntu Trusty (14.04) version, it should work with Precise (12.04) too, with the latest packages.
+Prerequisites Make sure you have atleast a little idea of what these terms mean: iSCSI, LUN, IQN, initiator, target and portal. Google and wikipedia are your friends.
+A quick summary: There are two parts of iSCSI communication - initiator and target.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Unit Testing Nuggets</title>
+      <link>http://www.rushiagr.com/blog/2014/09/05/openstack-unit-testing-nuggets/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2014/09/05/openstack-unit-testing-nuggets/</guid>
+      <description>A small post about little things I found out while running unit tests in OpenStack.
+Unit-testing setup Everybody knows ./run_tests.sh is used to run the unit tests of an OpenStack project. But, you require to install dependencies before doing it. And installing dependencies might not always succeed. So make sure you install these packages before running pip install -r requirements.txt:
+sudo apt-get install build-essential libssl-dev libffi-dev \ python-dev libxslt1-dev libpq-dev python-mysqldb \ libmysqlclient-dev libvirt-dev  Atleast cinder and nova dependencies will get installed properly after this.</description>
+    </item>
+    
+    <item>
+      <title>Amazon EC2 API with OpenStack - Developer Quick Start</title>
+      <link>http://www.rushiagr.com/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/</link>
+      <pubDate>Sat, 09 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2014/08/09/amazon-ec2-api-with-openstack-developer-quick-start/</guid>
+      <description>OpenStack has support for EC2 API, that is, you can fire Amazon&#39;s API against an OpenStack cloud and it will still work. This article gets you started with using them locally against DevStack. It is more of a starter guide to a novice.
+Fire a DevStack with it&#39;s default settings. See this post for more information on it.
+git clone http://github.com/openstack-dev/devstack cd devstack/ ./stack.sh  Source openrc
+source openrc  View all EC2 credentials available for the current user (here, demo user in demo tenant)</description>
+    </item>
+    
+    <item>
+      <title>DevStack behind proxy</title>
+      <link>http://www.rushiagr.com/blog/2014/08/05/devstack-behind-proxy/</link>
+      <pubDate>Tue, 05 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2014/08/05/devstack-behind-proxy/</guid>
+      <description>I have now seen some people struggling to get DevStack working behind proxy. Some, thinking it is a bug in DevStack, have actually posted patches for it too! Here, I&#39;ll tell you the simple way to get stack.sh complete succesfully from behind a proxy.
+By default, devstack will clone from the &amp;lsquo;actual&amp;rsquo; OpenStack git repositories, residing at git://git.openstack.org. Some people might face a problem with it, as DevStack uses git protocol to clone the repo.</description>
+    </item>
+    
+    <item>
+      <title>Mounting QCOW2 images</title>
+      <link>http://www.rushiagr.com/blog/2014/08/02/qcow2-mount/</link>
+      <pubDate>Sat, 02 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2014/08/02/qcow2-mount/</guid>
+      <description>Isn&#39;t it fun that even before you start a VM out of an image, you can add files to that image, see and edit the directory and file structure of that VM?
+I wanted to boot a VM out of a disk-image, but how will I know out of the 256 available IPs for that VM, which one actually got assigned? I tried vnc console, but the connection was terribly flaky.</description>
+    </item>
+    
+    <item>
+      <title>Open Source Puppet - Quick Start</title>
+      <link>http://www.rushiagr.com/blog/2014/04/12/open-source-puppet-quick-start/</link>
+      <pubDate>Sat, 12 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2014/04/12/open-source-puppet-quick-start/</guid>
+      <description>This post aims to be your quickest guide to get started with Puppet. We&#39;ll be using the open source version of Puppet. An hour of spare time and two Ubuntu machines (physical or virtual doesn&#39;t matter) is all that is needed.
+Quick Introduction Lets say you want to install and run apache server on one of the machines in your lab. On another, you want to create a new user. On a third machine, you want to install MySQL, and allow access to this machine only from the first server.</description>
+    </item>
+    
+    <item>
+      <title>OpenStack in an hour with DevStack</title>
+      <link>http://www.rushiagr.com/blog/2014/04/03/openstack-in-an-hour-with-devstack/</link>
+      <pubDate>Thu, 03 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2014/04/03/openstack-in-an-hour-with-devstack/</guid>
+      <description>&lt;p&gt;So you found out a cool new technology &amp;ldquo;OpenStack&amp;rdquo; and want to try it real quick? Or probably you are hired in a company for your Python skills and now you are supposed to work on OpenStack in the shortest possible time? Fear not, it is not that hard to get started. &lt;a href=&#34;http://devstack.org&#34;&gt;DevStack&lt;/a&gt; is your friend-in-need. No, don&#39;t click that hyperlink just yet :)&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>MySQL Cheat Sheet</title>
+      <link>http://www.rushiagr.com/blog/2014/03/31/mysql-cheat-sheet/</link>
+      <pubDate>Mon, 31 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2014/03/31/mysql-cheat-sheet/</guid>
+      <description>Databases are so important, yet almost all the time I need to work with it, I find that I have already forgotten all the syntax! So here I am writing down a quick cheat sheet to get me up and running when I&#39;m waking up from slumber. I hope this will help atleast one other guy on this planet.
+I use mostly Ubuntu, so some of the commands might be Ubuntu specific.</description>
+    </item>
+    
+    <item>
+      <title>Playing around with Cinder multi-backend</title>
+      <link>http://www.rushiagr.com/blog/2014/01/16/playing-around-with-cinder-backend/</link>
+      <pubDate>Thu, 16 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2014/01/16/playing-around-with-cinder-backend/</guid>
+      <description>&lt;p&gt;With Grizzly release, Cinder got equipped with another major feature &amp;ndash; multi-backends
+with filter scheduler. So now you can have more than one storage boxes for block storage
+and manage them with one Cinder deployment. Here, I&#39;m going to test it out using our
+favourite method &amp;ndash; trying it out on DevStack!&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Quick Start: Linux Logical Volume Manager</title>
+      <link>http://www.rushiagr.com/blog/2014/01/14/quick-start-linux-logical-volume-manager/</link>
+      <pubDate>Tue, 14 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2014/01/14/quick-start-linux-logical-volume-manager/</guid>
+      <description>While installing the latest Ubuntu OS on your computer, you will see that you can install the OS using LVM (Logical Volume Manager) utility. Ever wonder what is it? LVM (Logical Volume Manager) is that fantastic utility for storage administration. It provide the users with abilities which were not possible with raw disks. The storage is now &amp;lsquo;virtualized&amp;rsquo;. You can now easily create, move and extend volumes (for now, think of it as disk partitions) without bothering about data corruption.</description>
+    </item>
+    
+    <item>
+      <title>Installing OpenID plugin for MediaWiki</title>
+      <link>http://www.rushiagr.com/blog/2014/01/12/installing-openid-plugin-for-mediawiki/</link>
+      <pubDate>Sun, 12 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2014/01/12/installing-openid-plugin-for-mediawiki/</guid>
+      <description>&lt;p&gt;This post is about setting up your wiki such that their users access the wiki
+only via an OpenID provider login (e.g. Google or Facebook login). This post assumes
+MediaWiki is already installed.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Linux Screens in DevStack</title>
+      <link>http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/</link>
+      <pubDate>Wed, 05 Jun 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2013/06/05/linux-screens-in-devstack/</guid>
+      <description>&lt;p&gt;This blog article explains handling screens within OpenStack running as a DevStack setup. Some useful generic screen commands are also provided at the end.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Cinder on DevStack - Quick Start</title>
+      <link>http://www.rushiagr.com/blog/2013/05/27/cinder-on-devstack-quick-start/</link>
+      <pubDate>Mon, 27 May 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2013/05/27/cinder-on-devstack-quick-start/</guid>
+      <description>&lt;p&gt;This blog post covers all the important commands for OpenStack Cinder - The block storage project.
+Although this guide is written based on DevStack, it will work with actual deployment of OpenStack
+cloud also (except the DevStack/Linux specific bits).&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>OpenStack Tempest quick start with DevStack</title>
+      <link>http://www.rushiagr.com/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/</link>
+      <pubDate>Wed, 20 Mar 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2013/03/20/openstack-tempest-quick-start-with-devstack/</guid>
+      <description>&lt;p&gt;UPDATE(April 2014): Now when you set up DevStack, Tempest is automatically set up for you.&lt;/p&gt;
+&lt;p&gt;This quick start guide explains setting up Tempest with a DevStack environment
+for Grizzly release. Most of the information here is taken from
+&lt;a href=&#34;http://www.joinfu.com/2012/03/testing-essex-rc1-with-devstack-and-tempest/&#34;&gt;here&lt;/a&gt;, the only difference being this blog post is more recent, and is based on Grizzly.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Git(hub) Cheat Sheet</title>
+      <link>http://www.rushiagr.com/blog/2013/03/19/github-cheat-sheet/</link>
+      <pubDate>Tue, 19 Mar 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.rushiagr.com/blog/2013/03/19/github-cheat-sheet/</guid>
+      <description>&lt;p&gt;I am posting my github cheat sheet here. I started writing it as soon as I started
+learning Github and Git. So, some of the content here can appear quite naive.
+I will try to keep this blog post as updated as I can, and if you find any
+suggestion, please comment!&lt;/p&gt;
+&lt;p&gt;This post is just for a reference of commands. This post will be a bad way to learn
+how git works. A basic understanding of git is assumed.&lt;/p&gt;</description>
+    </item>
     
   </channel>
 </rss>

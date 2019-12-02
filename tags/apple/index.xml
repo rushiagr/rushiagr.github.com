@@ -1,149 +1,27 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>rushiagr</title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/apple/index.xml</link>
+    <title>apple on rushiagr</title>
+    <link>http://www.rushiagr.com/tags/apple/</link>
+    <description>Recent content in apple on rushiagr</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Rushi Agrawal</author>
-    <copyright>0001 Rushi Agrawal</copyright>
-    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    <copyright>Rushi Agrawal</copyright>
+    <lastBuildDate>Thu, 16 Jun 2016 10:58:02 +0530</lastBuildDate>
+    
+	<atom:link href="http://www.rushiagr.com/tags/apple/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Everything you need to know about Tmux copy paste</title>
       <link>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/</link>
-      <pubDate>Thu, 16 Jun 2016 10:58:02 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Thu, 16 Jun 2016 10:58:02 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting/</guid>
-      <description>
-
-&lt;p&gt;Copying from a Tmux session is something every Tmux user struggled with once.
-I&amp;rsquo;m listing out all the stuff I learnt in this blog.&lt;/p&gt;
-
-&lt;p&gt;I tested everything on Mac OS X El Capitan. For Ubuntu/Linux guide, see &lt;a href=&#34;http://www.rushiagr.com/blog/2016/06/16/everything-you-need-to-know-about-tmux-copy-pasting-ubuntu/&#34;&gt;here&lt;/a&gt;. Mac OS X El Capitan runs Tmux version 2.1. To check your Tmux version, run &lt;code&gt;tmux -V&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;know-about-your-terminal&#34;&gt;Know about your terminal&lt;/h2&gt;
-
-&lt;p&gt;The default terminal which comes with Mac is pretty limiting. Instead of
-listing the limitations (and workarounds around it), I&amp;rsquo;ll just say that before
-you proceed, please install iTerm 2 and start using that immediately. What I&amp;rsquo;m
-writing below is all for iTerm 2. (Do let me know if you absolutely need Tmux
-copy-paste to work in Terminal, and I&amp;rsquo;ll provide steps for that).&lt;/p&gt;
-
-&lt;h2 id=&#34;know-about-copy-buffers&#34;&gt;Know about copy buffers&lt;/h2&gt;
-
-&lt;p&gt;When you do a &lt;code&gt;Command&lt;/code&gt;+&lt;code&gt;c&lt;/code&gt;, the stuff you copy is stored in your computer&amp;rsquo;s
-buffer, called &amp;lsquo;clipboard&amp;rsquo; from where you can paste anywhere by doing a
-&lt;code&gt;Command&lt;/code&gt;+&lt;code&gt;v&lt;/code&gt;. Tmux has it&amp;rsquo;s own buffer for coppying, which we&amp;rsquo;ll
-call &amp;lsquo;tmux buffer&amp;rsquo;. Our goal is to understand in a Tmux session how to copy to
-tmux buffer, and also to clipboard.&lt;/p&gt;
-
-&lt;p&gt;You can always copy stuff into clipboard while usin Tmux. &amp;ldquo;Why do I need a Tmux
-buffer then&amp;rdquo;, you might wonder. This is because, in your shell, the text you
-want to select might not fit in your current screen (e.g. output of &lt;code&gt;cat
-/etc/passwd&lt;/code&gt; file). If you copy normally, you will only be able to copy text
-visible on your screen, and not the output which is &amp;lsquo;scrolled up&amp;rsquo; due to a lot
-of output.&lt;/p&gt;
-
-&lt;h2 id=&#34;tmux-copy-paste-the-defaults&#34;&gt;Tmux copy-paste - the defaults&lt;/h2&gt;
-
-&lt;p&gt;Well, the defaults in Mac are horrible. There is simply no way to copy into
-tmux buffer without using any external plugin. BUT you can copy stuff into
-system clipboard by just using your mouse for selecting text.&lt;/p&gt;
-
-&lt;h2 id=&#34;tmux-vim-bindings-for-copying-into-tmux-buffer&#34;&gt;Tmux Vim-bindings for copying into tmux buffer&lt;/h2&gt;
-
-&lt;p&gt;Adding configuration described in this section will give you easier shortcuts
-for copy-pasting in Tmux. Moreover, these shortcuts work very similar to Vim&amp;rsquo;s
-copy-pasting shortcuts!&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Add these lines in a file by name &lt;code&gt;~/.tmux.conf&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;bind P paste-buffer
-bind-key -t vi-copy &#39;v&#39; begin-selection
-bind-key -t vi-copy &#39;y&#39; copy-selection
-bind-key -t vi-copy &#39;r&#39; rectangle-toggle
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note that for a newer tmux version (2.4 and above I think, not sure), the last three lines should be replaced with:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;bind-key -T copy-mode-vi v send-keys -X begin-selection
-bind-key -T copy-mode-vi y send-keys -X copy-selection
-bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Now you can enter copy mode by pressing &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;[&lt;/code&gt;, and then go
-to start point, press &amp;lsquo;v&amp;rsquo; and start copying. After you have selected text
-you want to copy, you can just press &amp;lsquo;y&amp;rsquo; (or the default &amp;lsquo;enter&amp;rsquo; key) to
-copy the text into Tmux&amp;rsquo;s buffer. This is exactly the commands you would use
-in Vim to copy text.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;To paste, press &lt;code&gt;CTRL&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt;,&lt;code&gt;P&lt;/code&gt;. Note that it&amp;rsquo;s capital &amp;lsquo;p&amp;rsquo; (i.e.
-&lt;code&gt;SHIFT&lt;/code&gt;+&lt;code&gt;p&lt;/code&gt;). This again is similar to Vim&amp;rsquo;s shortcut &amp;lsquo;p&amp;rsquo; for paste, though
-not exactly similar. You&amp;rsquo;ll realize in your Tmux journey why didn&amp;rsquo;t we use a
-small &amp;lsquo;p&amp;rsquo; instead of a capital &amp;lsquo;P&amp;rsquo; ;)&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;copy-from-tmux-buffer-to-system-buffer-clipboard&#34;&gt;Copy from tmux buffer to system buffer (clipboard)&lt;/h2&gt;
-
-&lt;p&gt;In newer iTerm2, you need to enable one option in settings to copy a text into
-both tmux buffer and clipboard at the same time. Go to iTerm2 &amp;gt; Preferences &amp;gt;
-&amp;ldquo;General&amp;rdquo; tab, and in the &amp;ldquo;Selection&amp;rdquo; section, check the box which says
-&amp;ldquo;Applications in terminal may access clipboard&amp;rdquo; if it isn&amp;rsquo;t checked. See
-&lt;a href=&#34;http://apple.stackexchange.com/a/248828&#34;&gt;here&lt;/a&gt; for a screenshot.&lt;/p&gt;
-
-&lt;h2 id=&#34;tmux-copy-with-mouse-drag&#34;&gt;Tmux copy with mouse drag!&lt;/h2&gt;
-
-&lt;p&gt;You can enable &amp;lsquo;mouse mode&amp;rsquo;, using which you can copy text into tmux buffer by
-mouse drag. For doing that, you just need to add this line to your
-&lt;code&gt;~/.tmux.conf&lt;/code&gt; file:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;set -g mouse on
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;but-now-i-can-t-do-normal-copy-paste-with-mouse&#34;&gt;But now I can&amp;rsquo;t do normal copy-paste with mouse!&lt;/h2&gt;
-
-&lt;p&gt;You&amp;rsquo;ll notice that now all your selections will go to tmux buffer, and not
-clipboard buffer. Of course, you can enable copying to system clipboard as
-described in a section above. However, you can notice that you can&amp;rsquo;t double
-click to select a complete word with vi&amp;rsquo;s tmux copy-pasting shortcuts + mouse
-option enabled.&lt;/p&gt;
-
-&lt;p&gt;Just press &lt;code&gt;Option&lt;/code&gt; (Alt) button when copying, and now you can copy as if Tmux
-doesn&amp;rsquo;t exist! :)&lt;/p&gt;
-
-&lt;h2 id=&#34;copy-from-a-remote-server&#34;&gt;Copy from a remote server&lt;/h2&gt;
-
-&lt;p&gt;Now if your remote server is a Linux machine (e.g. an Ubuntu server), then
-getting that remote server&amp;rsquo;s tmux buffer copied into our local Mac&amp;rsquo;s clipboard
-makes for an interesting story! If the iTerm setting to allow applications in
-terminal to access clipboard is enabled, then if you are running a tmux session
-on remote server, and you copy stuff there into the tmux buffer of that system,
-the copied text is already into your local system&amp;rsquo;s clipboard! Amazing! BUT but
-but, this only works if you are connecting to the remote machine directly from
-your terminal, i.e. not from inside a local Tmux session!! If you have a local
-Tmux session, and then you SSH into remote machine, connect to remote Tmux
-session and then try to copy text in the &amp;lsquo;remote&amp;rsquo; Tmux session (i.e. using
-&lt;code&gt;Ctrl&lt;/code&gt;+&lt;code&gt;b&lt;/code&gt; twice to send Tmux commands to inner Tmux session), then this won&amp;rsquo;t
-work! (Note that you can always copy in the &amp;lsquo;outer&amp;rsquo; Tmux session, i.e. local
-Tmux session, but as stated previously, you won&amp;rsquo;t be able to copy text which is
-&amp;lsquo;scrolled up&amp;rsquo; in the inner Tmux session.)&lt;/p&gt;
-
-&lt;p&gt;Generally I&amp;rsquo;m satisfied with the limitation mentioned here. In order to get
-full copying from remote session working, you will need to do something more
-involved, like &lt;a href=&#34;http://superuser.com/a/408374/315134&#34;&gt;here&lt;/a&gt;. Do let me know if
-you need a better explanation of that method (e.g. more details on SSH keys and
-enabling remote option on Mac OS X)&lt;/p&gt;
-
-&lt;h2 id=&#34;other-information&#34;&gt;Other information&lt;/h2&gt;
-
-&lt;p&gt;Done! Don&amp;rsquo;t forget to comment if you know something worth letting everybody
-know! Thank you:)&lt;/p&gt;
-</description>
+      <description>Copying from a Tmux session is something every Tmux user struggled with once. I&#39;m listing out all the stuff I learnt in this blog.
+I tested everything on Mac OS X El Capitan. For Ubuntu/Linux guide, see here. Mac OS X El Capitan runs Tmux version 2.1. To check your Tmux version, run tmux -V.
+Know about your terminal The default terminal which comes with Mac is pretty limiting. Instead of listing the limitations (and workarounds around it), I&#39;ll just say that before you proceed, please install iTerm 2 and start using that immediately.</description>
     </item>
-    
     
   </channel>
 </rss>

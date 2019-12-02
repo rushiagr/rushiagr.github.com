@@ -1,64 +1,27 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>rushiagr</title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/trick/index.xml</link>
+    <title>trick on rushiagr</title>
+    <link>http://www.rushiagr.com/tags/trick/</link>
+    <description>Recent content in trick on rushiagr</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Rushi Agrawal</author>
-    <copyright>0001 Rushi Agrawal</copyright>
-    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    <copyright>Rushi Agrawal</copyright>
+    <lastBuildDate>Wed, 20 Jul 2016 23:18:24 +0530</lastBuildDate>
+    
+	<atom:link href="http://www.rushiagr.com/tags/trick/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Make Vagrant Synced folders on Ubuntu Xenial guest work on Mac</title>
       <link>http://www.rushiagr.com/blog/2016/07/20/vagrant-shared-folder-in-mac-xenial-guest/</link>
-      <pubDate>Wed, 20 Jul 2016 23:18:24 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Wed, 20 Jul 2016 23:18:24 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/07/20/vagrant-shared-folder-in-mac-xenial-guest/</guid>
-      <description>&lt;p&gt;Today I installed latest Vagrant, version 1.8.5. I was waiting for a newer
-release because 1.8.1 and previous versions don&amp;rsquo;t work well with host-only
-networks for Ubuntu Xenial (16.04) guests on my Mac running El Capitan. But I
-faced another issue now:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mount: unknown filesystem type &#39;vboxsf&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This is while specifying a synced folder in my &lt;code&gt;Vagrantfile&lt;/code&gt; with this line:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;config.vm.synced_folder(&amp;quot;/Users/apple/src/myutils&amp;quot;, &amp;quot;/home/ubuntu/myutils&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;where &lt;a href=&#34;https://github.com/rushiagr/myutils&#34;&gt;myutils&lt;/a&gt; is where I keep all my
-commandline shortcuts, tricks, and other shortcut-ish stuff. I Googled but
-couldn&amp;rsquo;t find an article which described a way to fix this in one go, hence
-this blog post :)&lt;/p&gt;
-
-&lt;p&gt;The actual answer is pretty simple. Just install the &amp;lsquo;vbguest&amp;rsquo; plugin.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;vagrant plugin install vagrant-vbguest
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Of course I&amp;rsquo;m assuming you&amp;rsquo;re running Vagrant with VirtualBox :)&lt;/p&gt;
-
-&lt;p&gt;After that just shut down the VM (&lt;code&gt;vagrant halt &amp;lt;vmname&amp;gt;&lt;/code&gt;), and start it again
-(&lt;code&gt;vagrant up &amp;lt;vmname&amp;gt;&lt;/code&gt;), and everything should work as expected. I noticed two
-things:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Vagrant tries to install guest additions inside the VM by doing some
-&lt;code&gt;apt-get&lt;/code&gt; stuff. Don&amp;rsquo;t worry about it and let it finish.&lt;/li&gt;
-&lt;li&gt;Note that unlike Ubuntu Trusty (14.04), my hostname on Ubuntu Xenial is
-&lt;code&gt;ubuntu&lt;/code&gt; and not &lt;code&gt;vagrant&lt;/code&gt;, so change the &lt;code&gt;synced_folder&lt;/code&gt; line in your
-&lt;code&gt;Vagrantfile&lt;/code&gt; accordingly.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Cheers!&lt;/p&gt;
-
-&lt;p&gt;-Rushi&lt;/p&gt;
-</description>
+      <description>Today I installed latest Vagrant, version 1.8.5. I was waiting for a newer release because 1.8.1 and previous versions don&#39;t work well with host-only networks for Ubuntu Xenial (16.04) guests on my Mac running El Capitan. But I faced another issue now:
+mount: unknown filesystem type &#39;vboxsf&#39;  This is while specifying a synced folder in my Vagrantfile with this line:
+config.vm.synced_folder(&amp;quot;/Users/apple/src/myutils&amp;quot;, &amp;quot;/home/ubuntu/myutils&amp;quot;)  where myutils is where I keep all my commandline shortcuts, tricks, and other shortcut-ish stuff.</description>
     </item>
-    
     
   </channel>
 </rss>

@@ -1,231 +1,154 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.60.1" />
 
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Kubernetes in 30 minutes with minikube on Mac &middot; rushiagr</title>
+  <meta name="description" content="" />
 
   
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
 
-  <title> Kubernetes in 30 minutes with minikube on Mac  &middot; rushiagr </title>
-
-  
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
-
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
-  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
-
-  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-  <script>
-    WebFont.load({
-      google: {
-        families: ['Raleway']
-      }
-    });
-  </script>
-
+  
 </head>
 
-<body>
-
-  <div class="sidebar">
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
+      <a href="http://www.rushiagr.com/"><h1>rushiagr</h1></a>
       <p class="lead">
-       yet another tech guy 
+       Yet another tech guy 
       </p>
     </div>
 
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://www.rushiagr.com/">Home</a> </li>
+        <li><a href="/about/"> About </a></li><li><a href="https://github.com/rushiagr/"> Github </a></li><li><a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"> LinkedIn </a></li>
+      </ul>
+    </nav>
 
-
-    <ul class="sidebar-nav">
-      <li><a href="http://www.rushiagr.com/blog">Posts</a></li>
-      
-        <li><a href="/about/">About </a></li>
-        <li><a href="https://github.com/rushiagr">Code</a></li>
-        <li><a href="http://www.rushiagr.com/personal">Personal Blog</a></li>
-      
-      <br/>
-      
-        
-        
-        
-        
-        
-        
-        
-      
-    </ul>
-      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      <a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
-      
-      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
-
-    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
-    
+    <p>&copy; 2019. All rights reserved. </p>
   </div>
-</div>
+</aside>
 
-
-  <div class="content container">
+    <main class="content container">
     <div class="post">
-    <h1 class="post-title">Kubernetes in 30 minutes with minikube on Mac</h1>
-    <span class="post-date">Aug 16, 2016</span>
-    
-    
-
-<p>Below are steps to create an express setup of Kubernetes on your Mac for quick use.</p>
-
-<p>Minikube is a small setup by Kubernetes guys, which will spawn a virtual machine and have a tiny (but fully functional) Kubernetes cluster inside the VM. <code>kubectl</code> (pronounced &lsquo;kube (like &lsquo;tube&rsquo;) control`) is the command line client you&rsquo;ll use to connect to the Kubernetes cluster (which runs inside the VM created by minikube, in case you forgot :) )</p>
-
+  <h1>Kubernetes in 30 minutes with minikube on Mac</h1>
+  <time datetime=2016-08-16T17:03:53&#43;0530 class="post-date">Tue, Aug 16, 2016</time>
+  <p>Below are steps to create an express setup of Kubernetes on your Mac for quick use.</p>
+<p>Minikube is a small setup by Kubernetes guys, which will spawn a virtual machine and have a tiny (but fully functional) Kubernetes cluster inside the VM. <code>kubectl</code> (pronounced &lsquo;kube (like &lsquo;tube&rsquo;) control`) is the command line client you'll use to connect to the Kubernetes cluster (which runs inside the VM created by minikube, in case you forgot :) )</p>
 <p>Note that you need VirtualBox installed on your system. You can do so by first installing brew cask and then installing virtualbox as outlined in the two lines below, taken from <a href="https://gist.github.com/jloveland/df1bdec4705220eb5990">here</a>. I installed virtualbox from a different source, but the two lines below should work without a problem:</p>
-
 <pre><code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
 brew cask install virtualbox
 </code></pre>
-
 <h2 id="minikube-installation">Minikube Installation</h2>
-
 <pre><code>curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.7.1/minikube-darwin-amd64
 chmod +x minikube
 sudo mv minikube /usr/local/bin/
 </code></pre>
-
 <p>Start minikube cluster</p>
-
 <pre><code>minikube start
 </code></pre>
-
 <p>Just for information, config file will be located in <code>~/.kube/</code> directory, and
 all the virtual machine bits will be present in <code>~/.minikube/</code> directory.</p>
-
 <p>Get status of minikube cluster</p>
-
 <pre><code>minikube status
 </code></pre>
-
 <h2 id="install-kubectl-cli">Install kubectl cli</h2>
-
-<p>Don&rsquo;t install <code>kubectl</code> from brew (<code>brew install kubernetes-cli</code>) as brew contains an older incompatible version of <code>kubectl</code>.</p>
-
+<p>Don't install <code>kubectl</code> from brew (<code>brew install kubernetes-cli</code>) as brew contains an older incompatible version of <code>kubectl</code>.</p>
 <pre><code>curl -Lo kubectl http://storage.googleapis.com/kubernetes-release/release/v1.3.0/bin/darwin/amd64/kubectl
 chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
 </code></pre>
-
 <p>List all pods from all namespaces. It should list two pods, one an &lsquo;addon-manager&rsquo; and another a &lsquo;dashboard&rsquo;</p>
-
 <pre><code>kubectl get pods --all-namespaces
 </code></pre>
-
 <p>Populate environment variables so that docker can connect to minikube VM</p>
-
 <pre><code>eval $(minikube docker-env)
 </code></pre>
-
 <p>Now list all running docker containers inside the minikube vm. This might throw error</p>
-
 <pre><code>docker ps
 </code></pre>
-
 <p>If it errors with output <code>Error response from daemon: client is newer than server (client API version: 1.24, server API version: 1.23)</code>, then we need to install
 an older version of docker along with the current docker server installation.</p>
-
-<p>We&rsquo;ll use DVM (docker version manager) for the same, and we need to install DVM
+<p>We'll use DVM (docker version manager) for the same, and we need to install DVM
 first for that.</p>
-
 <pre><code>brew update &amp;&amp; brew install dvm
 </code></pre>
-
 <p>If <code>brew update</code> fails, most of the times re-running <code>brew update</code> again fixes
 the problem (else do <code>brew upgrade &amp;&amp; brew update</code> and wait for an hour for it
 to finish depending upon your internet connection).</p>
-
 <p>Now source the shell script for <code>dvm</code> command line tool</p>
-
 <pre><code>[[ -s &quot;$(brew --prefix dvm)/dvm.sh&quot; ]] &amp;&amp; source &quot;$(brew --prefix dvm)/dvm.sh&quot;
 </code></pre>
-
 <p>View current docker version</p>
-
 <pre><code>dvm ls
 </code></pre>
-
 <p>Install older docker version 1.11.1</p>
-
 <pre><code>export DOCKER_VERSION=1.11.1
 dvm install
 </code></pre>
-
-<p>Now if you do <code>dvm ls</code> you&rsquo;ll see that your current docker version is 1.11.1.</p>
-
+<p>Now if you do <code>dvm ls</code> you'll see that your current docker version is 1.11.1.</p>
 <p>Now you can use <code>docker ps</code> to see all your docker containers for Kubernetes
 running inside minikube.</p>
-
-<p>That&rsquo;s all for this blogpost. I&rsquo;ll write another blog post about how to create your own pods inside this running Kubernetes cluster.</p>
-
+<p>That's all for this blogpost. I'll write another blog post about how to create your own pods inside this running Kubernetes cluster.</p>
 <p>Do let me know if you have comments/suggestions/edits/criticism/feedback.</p>
-
 <p>Cheers!
 Rushi</p>
 
-    
-
-     
-	
-        <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37074962-1']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-37074962-1');
-    ga('send', 'pageview');
-</script>
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-
-(function() {
-    
-    
-    if (window.location.hostname == "localhost") 
-        return;
-
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    var disqus_shortname = 'rushiagr';
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();
-</script>
-<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
-
 </div>
-</div> 
 
-</body>w
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "rushiagr" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-37074962-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
 </html>

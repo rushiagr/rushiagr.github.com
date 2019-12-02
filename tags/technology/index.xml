@@ -1,151 +1,26 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>rushiagr</title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/technology/index.xml</link>
+    <title>technology on rushiagr</title>
+    <link>http://www.rushiagr.com/tags/technology/</link>
+    <description>Recent content in technology on rushiagr</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Rushi Agrawal</author>
-    <copyright>0001 Rushi Agrawal</copyright>
-    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    <copyright>Rushi Agrawal</copyright>
+    <lastBuildDate>Sun, 07 Jun 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://www.rushiagr.com/tags/technology/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Docker quick start notes</title>
       <link>http://www.rushiagr.com/blog/2015/06/07/docker-quick-start-notes/</link>
-      <pubDate>Sun, 07 Jun 2015 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Sun, 07 Jun 2015 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2015/06/07/docker-quick-start-notes/</guid>
-      <description>
-
-&lt;ul&gt;
-&lt;li&gt;Update *: Blog updated to use latest way to install docker.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;After reading about docker and containers, I thought let&amp;rsquo;s try them out.
-Here are my notes. Obviously all of them are taken from Internet. Maybe this
-collection here will help someone start with docker faster than spending time
-searching all over the internet.&lt;/p&gt;
-
-&lt;p&gt;It assumes your base OS is Ubuntu 14.04 Trusty Tahr (when was the last time
-you saw the codename spelled &amp;lsquo;Trusty Tahr&amp;rsquo; and not &amp;lsquo;Trusty&amp;rsquo;? :) ).&lt;/p&gt;
-
-&lt;p&gt;Ensure kernel version is more than 3.10&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;uname -r
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Install docker&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;curl -sSL https://get.docker.com/ | sh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;See docker version&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker version
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Pull an Ubuntu Trusty docker image&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker pull ubuntu:14.04
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Alternatively, you can search for a docker image &amp;lsquo;tutorial&amp;rsquo; in docker&amp;rsquo;s repository&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker search tutorial
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And them pull a docker image &amp;lsquo;tutorial&amp;rsquo; by user &amp;lsquo;learn&amp;rsquo;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker pull learn/tutorial
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;List all docker images present in the system&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker images
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Run a docker image, and execute command &amp;lsquo;echo &amp;ldquo;hello world&amp;rdquo;&amp;rsquo; in the docker
-container created out of that image&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker run ubuntu:14.04 echo &amp;quot;hello world&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Container information is stored in /var/lib/docker&lt;/p&gt;
-
-&lt;p&gt;If you run the above command multiple times, it will create a new container
-each time.&lt;/p&gt;
-
-&lt;p&gt;To know the ID of the last container, run&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker ps -l
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To list all the running containers&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker ps
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note that the above command will not show the container we last run, because
-the container which we ran last time terminated just after it finished
-executing echo command.&lt;/p&gt;
-
-&lt;p&gt;Create a new docker image by name &lt;code&gt;&amp;lt;yourname&amp;gt;/echo&lt;/code&gt; by &amp;lsquo;committing&amp;rsquo; the last
-container which you ran&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker commit &amp;lt;container ID&amp;gt; &amp;lt;yourname&amp;gt;/echo
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now running &lt;code&gt;sudo docker images&lt;/code&gt; will list you two images instead of one&lt;/p&gt;
-
-&lt;p&gt;Now you can run this new docker container like this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker run &amp;lt;yourname&amp;gt;/echo ls -alrth
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If we installed something, or created a file in the old container, it will
-be visible now in this container too.&lt;/p&gt;
-
-&lt;p&gt;Get more information about a docker image or a running container:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker inspect &amp;lt;yourname&amp;gt;/echo
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To push docker image to docker repository&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker push &amp;lt;yourname&amp;gt;/echo
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To download ubuntu Trusty base image if not present locally, and open a shell session into it&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker run -t -i ubuntu:14.04 /bin/bash
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;-i i.e. &amp;ndash;interactive=false, keeps STDIN open even if not attached&lt;/p&gt;
-
-&lt;p&gt;-t i.e. &amp;ndash;tty=false allocates a pseudo tty&lt;/p&gt;
-
-&lt;p&gt;Don&amp;rsquo;t worry what these mean. If you add these options, you&amp;rsquo;ll see that
-you already get logged in into the container shell, and the container
-only dies off once you exit from that session (usually by writing &lt;code&gt;exit&lt;/code&gt;
-or pressing CTRL + D.&lt;/p&gt;
-
-&lt;p&gt;To remove an image:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo docker rmi learn/tutorial
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;things-not-covered-in-this-tutorial&#34;&gt;Things not covered in this tutorial:&lt;/h4&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Create your own custom docker images and share with other people:
-&lt;a href=&#34;https://docs.docker.com/userguide/dockerimages/&#34;&gt;https://docs.docker.com/userguide/dockerimages/&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+      <description>Update *: Blog updated to use latest way to install docker.  After reading about docker and containers, I thought let&#39;s try them out. Here are my notes. Obviously all of them are taken from Internet. Maybe this collection here will help someone start with docker faster than spending time searching all over the internet.
+It assumes your base OS is Ubuntu 14.04 Trusty Tahr (when was the last time you saw the codename spelled &amp;lsquo;Trusty Tahr&amp;rsquo; and not &amp;lsquo;Trusty&amp;rsquo;?</description>
     </item>
-    
     
   </channel>
 </rss>

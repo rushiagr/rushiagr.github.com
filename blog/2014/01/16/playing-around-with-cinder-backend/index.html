@@ -1,124 +1,77 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.60.1" />
 
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Playing around with Cinder multi-backend &middot; rushiagr</title>
+  <meta name="description" content="" />
 
   
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
 
-  <title> Playing around with Cinder multi-backend  &middot; rushiagr </title>
-
-  
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/poole.css">
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/syntax.css">
-  <link rel="stylesheet" href="http://www.rushiagr.com/css/hyde.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="" rel="alternate" type="application/rss+xml" title="rushiagr" />
-
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
-  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
-
-  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-  <script>
-    WebFont.load({
-      google: {
-        families: ['Raleway']
-      }
-    });
-  </script>
-
+  
 </head>
 
-<body>
-
-  <div class="sidebar">
+  <body class="theme-base-08 ">
+  <aside class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <h1 class="brand"><a href="http://www.rushiagr.com">rushiagr</a></h1>
+      <a href="http://www.rushiagr.com/"><h1>rushiagr</h1></a>
       <p class="lead">
-       yet another tech guy 
+       Yet another tech guy 
       </p>
     </div>
 
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://www.rushiagr.com/">Home</a> </li>
+        <li><a href="/about/"> About </a></li><li><a href="https://github.com/rushiagr/"> Github </a></li><li><a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"> LinkedIn </a></li>
+      </ul>
+    </nav>
 
-
-    <ul class="sidebar-nav">
-      <li><a href="http://www.rushiagr.com/blog">Posts</a></li>
-      
-        <li><a href="/about/">About </a></li>
-        <li><a href="https://github.com/rushiagr">Code</a></li>
-        <li><a href="http://www.rushiagr.com/personal">Personal Blog</a></li>
-      
-      <br/>
-      
-        
-        
-        
-        
-        
-        
-        
-      
-    </ul>
-      <a href="https://twitter.com/rushiagr"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      <a href="https://www.linkedin.com/in/rushi-agrawal-0b799b15"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
-      
-      <a href="https://github.com/rushiagr"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
-
-    <p class="footnote">powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
-    &copy; 2017 Rushi Agrawal. Theme by <a href="https://github.com/natefinch/npf/">npf</a>. All rights reserved.</p>
-    
+    <p>&copy; 2019. All rights reserved. </p>
   </div>
-</div>
+</aside>
 
-
-  <div class="content container">
+    <main class="content container">
     <div class="post">
-    <h1 class="post-title">Playing around with Cinder multi-backend</h1>
-    <span class="post-date">Jan 16, 2014</span>
-    
-    <p>With Grizzly release, Cinder got equipped with another major feature &ndash; multi-backends
+  <h1>Playing around with Cinder multi-backend</h1>
+  <time datetime=2014-01-16T00:00:00Z class="post-date">Thu, Jan 16, 2014</time>
+  <p>With Grizzly release, Cinder got equipped with another major feature &ndash; multi-backends
 with filter scheduler. So now you can have more than one storage boxes for block storage
-and manage them with one Cinder deployment. Here, I&rsquo;m going to test it out using our
+and manage them with one Cinder deployment. Here, I'm going to test it out using our
 favourite method &ndash; trying it out on DevStack!</p>
-
-<p></p>
-
-<p>DevStack can provide you with two LVM backends to play around with them. But you&rsquo;ll need to restack it.</p>
-
+<p>DevStack can provide you with two LVM backends to play around with them. But you'll need to restack it.</p>
 <p>Go to the devstack directory and pull the latest code. Destroy previous DevStack deployment if it exists.</p>
-
 <pre><code>rushi@jio:~/devstack$ git pull origin master
 rushi@jio:~/devstack$ ./unstack.sh
 </code></pre>
-
 <p>Add the config option to <code>localrc</code> which give you pre-cooked multi-backend setup with two LVM backends, both of 10G. Stack</p>
-
 <pre><code>rushi@jio:~$ echo &quot;CINDER_MULTI_LVM_BACKEND=True&quot; &gt;&gt; localrc
 rushi@jio:~$ ./devstack/stack.sh
 </code></pre>
-
 <p>You can see that the cinder.conf file now has two values for enabled backends:</p>
-
 <pre><code>rushi@jio:~$ less /etc/cinder/cinder.conf | grep enabled_backends
 enabled_backends = lvmdriver-1,lvmdriver-2
 #enabled_backends=&lt;None&gt;
 </code></pre>
-
 <p>Also, you can see that there are two configuration groups created at the end of that config file, one each for configurations
 corresponding to that particular backend</p>
-
 <pre><code>rushi@jio:~$ tail /etc/cinder/cinder.conf 
 
 [lvmdriver-1]
@@ -131,28 +84,20 @@ volume_backend_name = LVM_iSCSI_2
 volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
 volume_group = stack-volumes2
 </code></pre>
-
 <p>So you have two volume groups created for respective backends. Lets check it directly without using Cinder.</p>
-
 <pre><code>rushi@jio:~$ sudo vgs
   VG             #PV #LV #SN Attr   VSize   VFree 
   stack-volumes    1   0   0 wz--n-  10.01g 10.01g
   stack-volumes2   1   0   0 wz--n-  10.01g 10.01g
   ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
 </code></pre>
-
 <p>Hmmm. Two volume groups, each of size 10G.</p>
-
 <h3 id="case-1-spreading-volumes-across-backends">Case 1: Spreading volumes across backends</h3>
-
 <p>Now, lets create a volume and see where it ends up.</p>
-
 <pre><code>rushi@jio:~$ cinder create 1
 ERROR: You must provide a username via either --os-username or env[OS_USERNAME]
 </code></pre>
-
 <p>Oops! Let me try again..</p>
-
 <pre><code>rushi@jio:~$ . devstack/openrc 
 rushi@jio:~$ cinder create 1
 +-------------------+--------------------------------------+
@@ -187,14 +132,10 @@ rushi@jio:~$ sudo vgs
   stack-volumes2   1   2   0 wz--n-  10.01g  9.01g
   ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
 </code></pre>
-
 <p>So it went to backend number 2. If you are admin (<code>source devstack/openrc admin admin</code>), you can do a <code>cinder show</code> too, to get information
 as to which host did this volume go to. Only the admin is allowed to view the host information.</p>
-
 <p>The scheduler now gets reported of the capabilities which the backends have (check out the <code>c-shr</code> screen to see it). The scheduler then weighs the backend based on these capabilities and decides which of them has higher &lsquo;weight&rsquo; to serve the next &lsquo;create&rsquo; request. By default, the &lsquo;weigher&rsquo; for scheduler is <code>CapacityWeigher</code>. That is, whichever backend has higher capacity, that backend will be chosen for the next &lsquo;create&rsquo; request.</p>
-
-<p>So in our case, when we&rsquo;ll do another &lsquo;create volume&rsquo; it will now land on to the first backend.</p>
-
+<p>So in our case, when we'll do another &lsquo;create volume&rsquo; it will now land on to the first backend.</p>
 <pre><code>rushi@jio:~$ cinder create 1
 +-------------------+--------------------------------------+
 |      Property     |                Value                 |
@@ -221,33 +162,23 @@ rushi@jio:~$ sudo vgs
   stack-volumes2   1   2   0 wz--n-  10.01g  9.01g
   ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
 </code></pre>
-
 <p>Neat!</p>
-
-<h3 id="case-2-stacking-all-volumes-at-one-backend">Case 2 : Stacking all volumes at one backend</h3>
-
+<h3 id="case-2--stacking-all-volumes-at-one-backend">Case 2 : Stacking all volumes at one backend</h3>
 <p>What if we want to keep all the volumes at only one backend? Cinder allows you to do that too!
 There is a configuration option in cinder.conf, <code>capacity_weight_multiplier</code>, which allows you to multiply the &lsquo;capacity weight&rsquo; by a number.
 So if the multiplier is 1, a backend with higher capacity will have higher weight, and will be the choice for the next volume creation request.
 This is the default case. BUT what if we set it to -1? The backend with higher available capacity will have more negative weight, which will make that backend less preferable for next &lsquo;create&rsquo; request, and hence the request will go to the backend which has lesser capacity!</p>
-
 <p>Let us see this too in action.</p>
-
 <p>Check out the config option from cinder.conf file.</p>
-
 <pre><code>rushi@jio:~$ cat /etc/cinder/cinder.conf | grep -B 3 ^capacity_weight_multiplier
 
 # Multiplier used for weighing volume capacity. Negative
 # numbers mean to stack vs spread. (floating point value)
 # capacity_weight_multiplier=1.0
 </code></pre>
-
-<p>The config option is commented out and is there just so that you can easily change it. Now uncomment it and change it&rsquo;s value to -1.</p>
-
+<p>The config option is commented out and is there just so that you can easily change it. Now uncomment it and change it's value to -1.</p>
 <p>Delete previously created volumes. Kill all the three Cinder screen processes (<code>c-api</code>, <code>c-sch</code> and <code>c-vol</code>), and restart them.</p>
-
 <p>Lets create two volumes and see where they end up..</p>
-
 <pre><code>rushi@jio:~$ cinder list
 +----+--------+------+------+-------------+----------+-------------+
 | ID | Status | Name | Size | Volume Type | Bootable | Attached to |
@@ -298,23 +229,15 @@ rushi@jio:~$ sudo vgs
   stack-volumes2   1   2   0 wz--n-  10.01g  8.01g
   ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
 </code></pre>
-
 <p>:)</p>
-
-<h3 id="case-3-custom-choice">Case 3 : Custom choice</h3>
-
-<p>What if I have two different backends (maybe one is slower, or costlier, than the other), and my users want to exactly specify how many volumes they want of each &lsquo;type&rsquo; of backends? Here, Cinder&rsquo;s &lsquo;volume types&rsquo; have us covered.</p>
-
+<h3 id="case-3--custom-choice">Case 3 : Custom choice</h3>
+<p>What if I have two different backends (maybe one is slower, or costlier, than the other), and my users want to exactly specify how many volumes they want of each &lsquo;type&rsquo; of backends? Here, Cinder's &lsquo;volume types&rsquo; have us covered.</p>
 <p>We can associate a volume type with a backend, and then the users can create a volume of whatever &lsquo;type&rsquo; they want.
-Let&rsquo;s throw some discrimination at these backends. I&rsquo;ll create two volume types: &lsquo;gold&rsquo; and &lsquo;bronze&rsquo;, and associate &lsquo;stack-volumes&rsquo; with &lsquo;gold&rsquo; and similarly for &lsquo;stack-volumes2&rsquo;. Note that this job can only be done by the administrator.</p>
-
+Let's throw some discrimination at these backends. I'll create two volume types: &lsquo;gold&rsquo; and &lsquo;bronze&rsquo;, and associate &lsquo;stack-volumes&rsquo; with &lsquo;gold&rsquo; and similarly for &lsquo;stack-volumes2&rsquo;. Note that this job can only be done by the administrator.</p>
 <p>Let us be admins</p>
-
 <pre><code>rushi@jio:~$ . devstack/openrc admin admin
 </code></pre>
-
 <p>Create both the volume types and list them.</p>
-
 <pre><code>rushi@jio:~$ cinder type-create gold
 +--------------------------------------+------+
 |                  ID                  | Name |
@@ -336,9 +259,7 @@ rushi@jio:~$ cinder type-list
 | f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze |
 +--------------------------------------+--------+
 </code></pre>
-
 <p>Get the backend names (<code>volume_backend_name</code> config option) from cinder.conf file.</p>
-
 <pre><code>rushi@jio:~$ tail /etc/cinder/cinder.conf 
 
 [lvmdriver-1]
@@ -351,15 +272,11 @@ volume_backend_name = LVM_iSCSI_2
 volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
 volume_group = stack-volumes2
 </code></pre>
-
-<p>Now let&rsquo;s associate backend <code>LVM_iSCSI</code> with volume type &lsquo;gold&rsquo;, and similarly for the other one.</p>
-
+<p>Now let's associate backend <code>LVM_iSCSI</code> with volume type &lsquo;gold&rsquo;, and similarly for the other one.</p>
 <pre><code>rushi@jio:~$ cinder type-key gold set volume_backend_name=LVM_iSCSI
 rushi@jio:~$ cinder type-key bronze set volume_backend_name=LVM_iSCSI_2
 </code></pre>
-
-<p>These association are stored as key-value pairs in the volume type&rsquo;s &lsquo;extra specs&rsquo;. Let&rsquo;s see them</p>
-
+<p>These association are stored as key-value pairs in the volume type's &lsquo;extra specs&rsquo;. Let's see them</p>
 <pre><code>rushi@jio:~$ cinder extra-specs-list 
 +--------------------------------------+--------+------------------------------------------+
 |                  ID                  |  Name  |               extra_specs                |
@@ -368,11 +285,8 @@ rushi@jio:~$ cinder type-key bronze set volume_backend_name=LVM_iSCSI_2
 | f63dd2cb-f4e7-4d6d-a84f-5bf2cc6c5671 | bronze | {u'volume_backend_name': u'LVM_iSCSI_2'} |
 +--------------------------------------+--------+------------------------------------------+
 </code></pre>
-
 <p>You can add more key-value pairs for these volume types with different key names. <code>volume_backend_name</code> is a reserved key name, though.</p>
-
-<p>Let&rsquo;s create two volumes of type &lsquo;gold&rsquo; and see where they end up being created:</p>
-
+<p>Let's create two volumes of type &lsquo;gold&rsquo; and see where they end up being created:</p>
 <pre><code>rushi@jio:~$ cinder create --volume-type gold --name costly_vol_1 1
 +-------------------+--------------------------------------+
 |      Property     |                Value                 |
@@ -425,9 +339,7 @@ rushi@jio:~$ sudo vgs
   stack-volumes2   1   0   0 wz--n-  10.01g 10.01g
   ubuntu-vg        1   2   0 wz--n- 931.27g 44.00m
 </code></pre>
-
 <p>Now create another one, but with type &lsquo;bronze&rsquo; and ensure it is created on the other backend.</p>
-
 <pre><code>rushi@jio:~$ cinder create --volume-type bronze --name cheap_vol_1 1
 +-------------------+--------------------------------------+
 |      Property     |                Value                 |
@@ -454,51 +366,44 @@ rushi@jio:~$ sudo pvs
   /dev/loop1 stack-volumes2 lvm2 a--   10.01g  9.01g
   /dev/sda5  ubuntu-vg      lvm2 a--  931.27g 44.00m
 </code></pre>
-
 <p>Done :)</p>
-
 <p>Cheers!</p>
-    
-
-     
-	
-        <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37074962-1']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-37074962-1');
-    ga('send', 'pageview');
-</script>
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-
-(function() {
-    
-    
-    if (window.location.hostname == "localhost") 
-        return;
-
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    var disqus_shortname = 'rushiagr';
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();
-</script>
-<noscript>Please enable JavaScript to view the comments powered by <a href="http://disqus.com/?ref_noscript">Disqus.</a></noscript>
-
 </div>
-</div> 
 
-</body>w
+<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "rushiagr" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </main>
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-37074962-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
 </html>

@@ -1,448 +1,47 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>rushiagr</title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/vim/index.xml</link>
+    <title>vim on rushiagr</title>
+    <link>http://www.rushiagr.com/tags/vim/</link>
+    <description>Recent content in vim on rushiagr</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Rushi Agrawal</author>
-    <copyright>0001 Rushi Agrawal</copyright>
-    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    <copyright>Rushi Agrawal</copyright>
+    <lastBuildDate>Tue, 11 Oct 2016 17:59:46 +0530</lastBuildDate>
+    
+	<atom:link href="http://www.rushiagr.com/tags/vim/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Python Engineer Beginner Mistakes</title>
       <link>http://www.rushiagr.com/blog/2016/10/11/python-engineer-beginner-mistakes/</link>
-      <pubDate>Tue, 11 Oct 2016 17:59:46 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Tue, 11 Oct 2016 17:59:46 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/10/11/python-engineer-beginner-mistakes/</guid>
-      <description>
-
-&lt;p&gt;I am writing Python code since 5 years, and I have worked with around 5-6
-entry-level Python programmers. There is a pattern I can see in their programming
-practices. My hope is by reading this article there will be lesser such
-mistakes.&lt;/p&gt;
-
-&lt;p&gt;I have worked on OpenStack for over three years, which is written in Python
-and has a very high code quality, so I feel I am qualified enough to write this
-post.&lt;/p&gt;
-
-&lt;p&gt;I&amp;rsquo;ll start with talking about these beginner-programmers first. Some of the
-people I have worked with are self-taught programmers but majority of them are
-junior developers working in startups in Bangalore. For self-taught Python
-programmers, such mistakes are understandable &amp;ndash; Python is a pretty easy
-language to pick up and code, so they don&amp;rsquo;t really have a motivation to go with
-best practices right from the start. Even if they googled &amp;lsquo;Python best
-programming practices&amp;rsquo;, they will find a really big list of practices without
-any indication about which ones are the most important and absolutely must be
-followed right from the start.  For Python beginners working in startups, I am
-guessing there are not enough senior Python programmers who can teach them the
-required best practices.&lt;/p&gt;
-
-&lt;p&gt;In this article I&amp;rsquo;m going to list the bare-minimum of these simple practices
-you should follow. Surprisingly, most of the &amp;lsquo;Beginner Python mistakes to
-avoid&amp;rsquo; articles on the web don&amp;rsquo;t talk about the bad practices I encounter. I
-think they just assume such simple things are taken care of by a programmer.
-My experience tells otherwise.&lt;/p&gt;
-
-&lt;h2 id=&#34;indentation-tabs-and-spaces&#34;&gt;Indentation, tabs and spaces.&lt;/h2&gt;
-
-&lt;p&gt;Never use tabs. Only use spaces. Use 4 spaces for a tab, always.&lt;/p&gt;
-
-&lt;p&gt;I frequently see codes which use a mix of spaces and tabs, and mix of 2-space and
-4-space indentations all in one file!  If you are coming from a different
-language, or if you already have a notion of, say, 8 spaces for a tab, then it
-might be difficult and seem unnecessary at first. But I am guessing you are
-liking the language and you look forward to writing lots and lots of Python
-code in your lifespan; in such a case, just bear with me for a few weeks and
-it&amp;rsquo;ll come naturally to you, trust me :)&lt;/p&gt;
-
-&lt;h2 id=&#34;raise-specific-exceptions&#34;&gt;Raise specific exceptions&lt;/h2&gt;
-
-&lt;p&gt;Don&amp;rsquo;t write like this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;try:
-    # do something here
-except Exception as e:
-    # handle exception
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Catching the parent &lt;code&gt;Exception&lt;/code&gt; is bad. If you know what exception the code is
-going to throw, just &lt;code&gt;except&lt;/code&gt; that specific exception. The most common example I have seen
-is when calling &lt;code&gt;get()&lt;/code&gt; method on a Django&amp;rsquo;s model. If the object is not
-present, Django throws &lt;code&gt;ObjectDoesNotExists&lt;/code&gt; exception. Catch &lt;em&gt;this&lt;/em&gt; exception,
-not Exception.&lt;/p&gt;
-
-&lt;p&gt;Most often, you do some corrective action in the &amp;lsquo;handling exception&amp;rsquo; part. If
-you are excepting (if there&amp;rsquo;s a word &amp;lsquo;excepting&amp;rsquo;) &lt;code&gt;Exception&lt;/code&gt;, then you are
-heading straight into this &amp;lsquo;handling exception&amp;rsquo; section no matter what
-exception occurred. If your database is down, the &amp;lsquo;DatabaseIsDown&amp;rsquo; (I made up
-that name) exception
-will also be caught! This might make debugging extremely hard when your app
-grows big or you start getting a lot of users.&lt;/p&gt;
-
-&lt;h2 id=&#34;trailing-whitespaces&#34;&gt;Trailing whitespaces&lt;/h2&gt;
-
-&lt;p&gt;In context of Python, whitespaces means space characters. There should be no
-line in Python code which has spaces at it&amp;rsquo;s end.&lt;/p&gt;
-
-&lt;p&gt;You might think why make such a big issue of this. The problem is
-version/source control. You invariably will use a source control system at some
-point of time, for example &amp;lsquo;git&amp;rsquo;. When you commit trailing spaces, it becomes
-difficult to read the diffs (the difference between two commits/checkins).
-Also, removing or adding more spaces might feel okay if you develop a habit of
-leaving around trailing spaces. But when you will start using a source control
-system, this will add unnecessary noise in commits, making code review and
-debugging difficult. Remember, code is read much times than is written or
-modified.&lt;/p&gt;
-
-&lt;h2 id=&#34;edge-cases-first-shallow-nesting&#34;&gt;Edge cases first. Shallow nesting.&lt;/h2&gt;
-
-&lt;p&gt;Consider two pseudo codes. These are codes for handling a request, but you can
-altogether ignore that fact.&lt;/p&gt;
-
-&lt;p&gt;Pseudo code 1:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;if request is post:
-    if parameter &#39;param1&#39; is specified:
-        if the user can be authenticated:
-            if the user can perform this action:
-                # Execute core business logic here
-            else:
-                return saying &#39;user cannot perform this action&#39;
-    else:
-        return saying &#39;parameter param1 is mandatory&#39;
-else:
-    return saying &#39;any other method apart from POST method is disallowed&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Pseudo code 2:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;if request is not post:
-    return saying &#39;any other method apart from POST method is disallowed&#39;
-
-if parameter &#39;param1&#39; is specified:
-    return saying &#39;parameter param1 is mandatory&#39;
-
-if the user can be authenticated:
-    return saying &#39;user cannot be authenticated&#39;
-
-if the user can perform this action:
-    return saying &#39;user cannot perform this action&#39;
-
-# Execute core business logic here
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;As you can see, the second code is much easier to read. You will also notice
-that the second code doesn&amp;rsquo;t have a lot of nesting, which avoids common
-problems. Can you see that I have not written one &amp;lsquo;else&amp;rsquo; section? If the core
-logic is several dozens of lines long, it becomes difficult to find out which
-&lt;code&gt;else&lt;/code&gt; belongs to which &lt;code&gt;if&lt;/code&gt; if we write in &amp;lsquo;Pseudo code 1&amp;rsquo; style.&lt;/p&gt;
-
-&lt;p&gt;I am sure while starting to write, pseudo code 1 should feel normal. But with
-very minimal effort you can very soon get used to writing code in &amp;lsquo;pseudo code
-2&amp;rsquo; style.&lt;/p&gt;
-
-&lt;p&gt;The suggestions mentioned below are minor, probably opinionated ones. These might apply to
-not only Python but any programming language. I feel that these points are
-important enough that you should start a habit of adhering to them right from
-the start. It&amp;rsquo;ll help you in the long run.&lt;/p&gt;
-
-&lt;h2 id=&#34;make-commit-messages-lengthy&#34;&gt;Make commit messages lengthy&lt;/h2&gt;
-
-&lt;p&gt;This is a fairly general trend I see. The commit messages such people generally
-write are just a few words long. Most of the beginners have started using &lt;code&gt;git&lt;/code&gt;
-as version control system. In git, such people have gotten used to using &lt;code&gt;git
-commit -m &amp;quot;your commit message here&amp;quot;&lt;/code&gt; command. If you use this command, I am
-sure you won&amp;rsquo;t even feel like writing a commit message more than what fits in
-one line :). Do you know that you can just type &lt;code&gt;git commit&lt;/code&gt; and it will open
-up an editor (vim or nano) to write the commit message? Start using this
-and stop using &lt;code&gt;-m&lt;/code&gt; flag directly on command line. Your colleagues and your
-future self will be thankful to you :).&lt;/p&gt;
-
-&lt;p&gt;I generally prefer writing a short description in the first line of commit
-message, then leave a blank line, and then write a paragraph after that to
-explain in more detail if required. The first line is the most important. Try
-to describe as much as possible concisely in this single line. But don&amp;rsquo;t ever
-let this line go above 100 characters, preferably 80. See this commit message
-as an example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Don&#39;t allow access to POST /v1/purchases API without authentication
-
-It was revealed during testing that the above mentioned API is accessible
-even when accessed without authentication. This is a security risk. This
-commit fixes it. One &#39;if&#39; condition added to reject API call if the user is
-not authenticated.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You might feel that it&amp;rsquo;s a lot of effort to write such log git commit messages.
-But you can realise it&amp;rsquo;ll not take more than 2 minutes to write this. Much less
-than how much time you spent writing code corresponding to this commit :)&lt;/p&gt;
-
-&lt;p&gt;Again, remember that commit messages are important part of documentation, and are
-extremely important for debugging later.&lt;/p&gt;
-
-&lt;h2 id=&#34;do-only-one-thing-in-a-commit&#34;&gt;Do only one thing in a commit&lt;/h2&gt;
-
-&lt;p&gt;If you are fixing three issues, make sure you create three different commits
-for each one, and never one big commit to include three bug fixes. Even if each
-of these bugfixes are just a couple of lines. If you are doing a feature work,
-then it&amp;rsquo;s okay to put all the feature work in one single commit, but for a
-bugfixes, create a separate commit for each one. As you can see, you should get
-comfortable with the idea that a commit can be as short as one line and as
-large as couple of hundred of lines.  Let go of the feeling which your brain has
-about number of lines in a commit, that it feels right only when there are about 50-100 lines
-in a commit. :)&lt;/p&gt;
-
-&lt;p&gt;If you are using git, take use of &lt;code&gt;git add -p&lt;/code&gt; to add specific chunks of code
-in git, instead of adding a complete file into git like you&amp;rsquo;re used to, by
-doing &lt;code&gt;git add file1.py&lt;/code&gt;. It&amp;rsquo;s a pretty powerful tool. Spend 15 mins to
-understand it and you&amp;rsquo;ll go &amp;lsquo;why didn&amp;rsquo;t I know about this till now!&amp;rsquo;&lt;/p&gt;
-
-&lt;p&gt;I am realizing I can actually write &amp;lsquo;Git beginner mistakes&amp;rsquo; as a separate blog
-:). But anyway, continuing..&lt;/p&gt;
-
-&lt;h2 id=&#34;spaces-after-comma-and-colon&#34;&gt;Spaces after comma and colon&lt;/h2&gt;
-
-&lt;p&gt;Just make this a habit. It improves your code readability.&lt;/p&gt;
-
-&lt;p&gt;Example 1 - bad:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def create_user(name=name,height=height,weight=weight):
-    pass
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Example 2 - good:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def create_user(name=name, height=height, weight=weight):
-    pass
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Example 3 - bad:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;request_dict={&#39;name&#39;:name,&#39;height&#39;:height}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Example 4 - good:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;request_dict = {&#39;name&#39;: name, &#39;height&#39;: height}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;write-a-lot-of-comments-and-docstrings&#34;&gt;Write a lot of comments and docstrings&lt;/h2&gt;
-
-&lt;p&gt;If something is not abvious from the code, you should write a comment about
-it. Also, make a habit of writing docstrings to functions/methods, even if it
-is just a single line. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;def create_user(name, height=None, weight=None):
-    &#39;&#39;&#39;Create a user entry in database. Returns database object created for user.&#39;&#39;&#39;
-    # Logic to create entry into db and return db object
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;write-todos-literally-everywhere&#34;&gt;Write TODOs literally everywhere&lt;/h2&gt;
-
-&lt;p&gt;While writing code, you realize it can be improved, but you don&amp;rsquo;t want to
-improve it right now as it is not that important thing at this moment. What
-should you do? Just create a TODO! I find this a very good compromise for
-smaller tasks, instead of creating an issue in an issue/bug tracker. TODOs can
-be written for improving on docstrings (TODO(rushiagr): add more description
-here), a more optimised version of code (e.g. TODO(rushiagr): can be
-optimised by using list comprehensions instead of the &amp;lsquo;for&amp;rsquo; loop), or a
-refactoring (TODO(rushiagr): create a common method of this thrice-duplicated
-code). The parenteses specify who wrote the TODO, which can be helpful if
-somebody wants to fix the TODO but doesn&amp;rsquo;t know who to contact for more
-information. But you can leave this part out too.&lt;/p&gt;
-
-&lt;p&gt;I use TODOs so much that I created a Vim abbreviation for it, so that as soon
-as I type &lt;code&gt;#t&lt;/code&gt; followed by a space, it auto-completes it to &lt;code&gt;# TODO(rushiagr):
-&lt;/code&gt;. If you&amp;rsquo;re using Vim, you can do by adding this line to your &lt;code&gt;.vimrc&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;:abbreviate #t # TODO(rushiagr):
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;parting-words&#34;&gt;Parting words&lt;/h3&gt;
-
-&lt;p&gt;My architect at Reliance used to say this: &amp;lsquo;You should not be able to
-tell by looking at code who wrote that code&amp;rsquo;. What he meant was, one should not
-be able to introduce his/her specific style of writing code into code base. Code
-should be written using a convention generally accepted by the whole of the
-team. It might not completely include everything of the best-practices of that
-language, but your team should decide what programming practices can&amp;rsquo;t be
-compromised.&lt;/p&gt;
-
-&lt;p&gt;That&amp;rsquo;s all folks! :) Do let me know what you feel about this blog by
-commenting. Do you know something which you too encountered a lot which is not
-present in this article?  Or you disagree with something I wrote?&lt;/p&gt;
-</description>
+      <description>I am writing Python code since 5 years, and I have worked with around 5-6 entry-level Python programmers. There is a pattern I can see in their programming practices. My hope is by reading this article there will be lesser such mistakes.
+I have worked on OpenStack for over three years, which is written in Python and has a very high code quality, so I feel I am qualified enough to write this post.</description>
     </item>
-    
-    
     
     <item>
       <title>You dont need Vim swap files. And how to get rid of them</title>
       <link>http://www.rushiagr.com/blog/2016/06/17/you-dont-need-vim-swap-files-and-how-to-get-rid-of-them/</link>
-      <pubDate>Fri, 17 Jun 2016 11:18:27 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Fri, 17 Jun 2016 11:18:27 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/06/17/you-dont-need-vim-swap-files-and-how-to-get-rid-of-them/</guid>
-      <description>
-
-&lt;p&gt;Estimated reading time: 5 minutes.&lt;/p&gt;
-
-&lt;p&gt;Almost all IDEs today have &amp;lsquo;autosave&amp;rsquo; feature. That is, you don&amp;rsquo;t need to
-explicitly save a file. The file is automatically saved as you type, so that
-even if your computer crashes, you don&amp;rsquo;t lose data. This makes me wonder why
-Vim&amp;rsquo;s default behavior is of using swap files. Swap files are annoying.
-I&amp;rsquo;ve seen all Vim developers, including me, struggle with swap files at one
-point in their life.&lt;/p&gt;
-
-&lt;p&gt;There is a Vim plugin for autosaving, and it has saved a lot of my time. I have
-used the plugin such that every time I enter normal mode (after making edits in
-Insert mode), it autosaves file. And more importantly, I have disabled swap
-file creation by Vim. It&amp;rsquo;s really that simple folks. You don&amp;rsquo;t really need swap
-files 99.99% of the times.&lt;/p&gt;
-
-&lt;h3 id=&#34;how-to-vim-autosave&#34;&gt;How to Vim autosave&lt;/h3&gt;
-
-&lt;p&gt;Download the plugin, which is present at
-&lt;a href=&#34;https://github.com/907th/vim-auto-save&#34;&gt;https://github.com/907th/vim-auto-save&lt;/a&gt;, and put the plugin file in &lt;code&gt;~/.vim/plugin&lt;/code&gt; directory:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mkdir -p ~/.vim/plugin
-cd ~/.vim/plugin
-wget https://raw.githubusercontent.com/907th/vim-auto-save/master/plugin/AutoSave.vim
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now open the &lt;code&gt;~/.vimrc&lt;/code&gt; file and add these lines. Comments are
-self-explanatory.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# Enable autosave plugin
-let g:auto_save = 1
-
-# Only save in Normal mode periodically. If the value is changed to &#39;1&#39;,
-# then changes are saved when you are in Insert mode too, as you type, but
-# I would say prefer not save in Insert mode
-let g:auto_save_in_insert_mode = 0
-
-# Silently autosave. If you disable this option by changing value to &#39;0&#39;,
-# then in the vim status, it will display &amp;quot;(AutoSaved at &amp;lt;current time&amp;gt;)&amp;quot; all
-# the time, which might get annoying
-let g:auto_save_silent = 1
-
-# And now turn Vim swapfile off
-set noswapfile
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;things-to-note&#34;&gt;Things to note&lt;/h3&gt;
-
-&lt;p&gt;There are a few things to note when you switch to this &amp;lsquo;autosave, no swap
-files&amp;rsquo; mode:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;You can&amp;rsquo;t just do a &lt;code&gt;:q!&lt;/code&gt; to discard unsaved changes.  Autosave already has
-saved your changes! So the only real way to discard your changes is to undo
-all the changes you&amp;rsquo;ve made (&lt;code&gt;u&lt;/code&gt; key) and then exit the file.&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Earlier, you can&amp;rsquo;t modify a Vim file which is already open in another
-terminal. Now too Vim will throw a warning message. The difference is how
-you&amp;rsquo;re notified of it. Previously, even before opening the file Vim will say
-that a swap file exists. But now, Vim will allow you to open the file, and
-start editing it too. Only when you come out of Insert mode, AND you are
-making a conflicting change, will it say:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;WARNING: The file has been changed since reading it!!!
-Do you really want to write to it (y/n)?
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;A conflicting change basically means you are making edits at a place where
-edits are already made in another terminal where that same file is open.
-For example, the file initially had &amp;lsquo;one&amp;rsquo; written on first line when it&amp;rsquo;s
-opened in both terminals. In one terminal, you add a second line saying
-&amp;lsquo;two&amp;rsquo;, and in another terminal when you add the second line saying &amp;lsquo;three&amp;rsquo;,
-we have a conflict. This is because we are writing &amp;lsquo;three&amp;rsquo; at line number 2
-where &amp;lsquo;two&amp;rsquo; is alredy written (from another terminal)&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;After reading these &amp;lsquo;things to note&amp;rsquo;, you might be thinking if it is really a good idea to autosave. Everybody is entitled to have an opinion. My opinion is that over a longer time period, getting rid of swap files saved me much more headache. I just have to be careful while exiting files.&lt;/p&gt;
-
-&lt;p&gt;I hope this helps. Questions, comments, suggestions, feedback? Comment :)&lt;/p&gt;
-
-&lt;p&gt;Thank you.&lt;/p&gt;
-</description>
+      <description>Estimated reading time: 5 minutes.
+Almost all IDEs today have &amp;lsquo;autosave&amp;rsquo; feature. That is, you don&#39;t need to explicitly save a file. The file is automatically saved as you type, so that even if your computer crashes, you don&#39;t lose data. This makes me wonder why Vim&#39;s default behavior is of using swap files. Swap files are annoying. I&#39;ve seen all Vim developers, including me, struggle with swap files at one point in their life.</description>
     </item>
-    
-    
     
     <item>
       <title>Better way to view MySQL tables</title>
       <link>http://www.rushiagr.com/blog/2015/12/12/better-way-to-view-mysql-tables/</link>
-      <pubDate>Sat, 12 Dec 2015 00:00:00 &#43;0000</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Sat, 12 Dec 2015 00:00:00 +0000</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2015/12/12/better-way-to-view-mysql-tables/</guid>
-      <description>
-
-&lt;h3 id=&#34;the-problem&#34;&gt;The problem&lt;/h3&gt;
-
-&lt;p&gt;You are trying to print a MySQL table with a large number of columns, with
-&lt;code&gt;SELECT *&lt;/code&gt; command. You type &lt;code&gt;SELECT * FROM mysql.user LIMIT 1&lt;/code&gt;, and your terminal
-becomes &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-table-with-many-rows-messy.png&#34;&gt;this&lt;/a&gt;.
-If you wanted to view more than one row, you&amp;rsquo;re in a trouble :)&lt;/p&gt;
-
-&lt;h3 id=&#34;the-solution&#34;&gt;The solution&lt;/h3&gt;
-
-&lt;p&gt;Run MySQL with this option:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mysql --pager=&amp;quot;less --chop-long-lines --quit-if-one-screen --no-init&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will make your table display only the rows it can in the current screen, something like &lt;a href=&#34;https://raw.githubusercontent.com/rushiagr/public/master/img/mysql-with-less-pager-neat.png&#34;&gt;this&lt;/a&gt;. You can
-use the arrow keys to move sideways to view the hidden column. Pressing the &amp;lsquo;right&amp;rsquo; arrow key will move half page towards right. Neat, isn&amp;rsquo;t it?&lt;/p&gt;
-
-&lt;p&gt;You can create an alias for mysql:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# Using shorter version of &#39;less&#39; flags mentioned above
-alias mysql=&#39;mysql -SFX&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You can put the above line in your &lt;code&gt;~/.bashrc&lt;/code&gt; file to load this alias
-in every new terminal session.&lt;/p&gt;
-
-&lt;h3 id=&#34;bonus-point-for-vim-users&#34;&gt;Bonus point for Vim users&lt;/h3&gt;
-
-&lt;p&gt;&lt;code&gt;less&lt;/code&gt; allows using keys &lt;code&gt;j&lt;/code&gt; and &lt;code&gt;k&lt;/code&gt; for scrolling down and scrolling up. Unfortunately, you cannot directly use keys &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move sideways using &lt;code&gt;less&lt;/code&gt;. Fortunately, you can map &lt;code&gt;h&lt;/code&gt; and &lt;code&gt;l&lt;/code&gt; to move left or right, respectively. Here&amp;rsquo;s how to do that:&lt;/p&gt;
-
-&lt;p&gt;Create a file &lt;code&gt;.lesskey&lt;/code&gt; in your home directory, with the following contents&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;l noaction 10\e)
-h noaction 10\e)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now run this command, to generate &lt;code&gt;~/.less&lt;/code&gt; file.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;lesskey
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will generate a binary file which &lt;code&gt;less&lt;/code&gt; understands. If you now start a new MySQL terminal session (of course with the above said &lt;code&gt;--pages&lt;/code&gt; flag), you can use Vim&amp;rsquo;s &lt;code&gt;HJKL&lt;/code&gt; movements. Here I have specified to move 10 characters to the right if you make one &amp;lsquo;right&amp;rsquo; Vim movement.&lt;/p&gt;
-
-&lt;h3 id=&#34;quick-setup-script&#34;&gt;Quick setup script&lt;/h3&gt;
-
-&lt;p&gt;Don&amp;rsquo;t want to do the above stuff manually? Just run this command and your computer will be set up in a second!&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sh -c &amp;quot;$(wget -q https://raw.githubusercontent.com/rushiagr/public/master/scripts/mysql-pretty-table.sh -O -)&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note that changes will take effect from a new shell session (or you can run &lt;code&gt;source ~/.bashrc&lt;/code&gt; if you want things to work in the current session too.&lt;/p&gt;
-
-&lt;h3 id=&#34;more-information&#34;&gt;More information&lt;/h3&gt;
-
-&lt;p&gt;Find more information at below links:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://unix.stackexchange.com/a/169969/91602&#34;&gt;About mapping &amp;lsquo;h&amp;rsquo; and &amp;lsquo;k&amp;rsquo; to Vim movements in &amp;lsquo;less&amp;rsquo;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/a/6422698/1143173&#34;&gt;About using &amp;lsquo;less&amp;rsquo; as MySQL pager&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Cheers!&lt;/p&gt;
-</description>
+      <description>The problem You are trying to print a MySQL table with a large number of columns, with SELECT * command. You type SELECT * FROM mysql.user LIMIT 1, and your terminal becomes this. If you wanted to view more than one row, you&#39;re in a trouble :)
+The solution Run MySQL with this option:
+mysql --pager=&amp;quot;less --chop-long-lines --quit-if-one-screen --no-init&#39;  This will make your table display only the rows it can in the current screen, something like this.</description>
     </item>
-    
     
   </channel>
 </rss>

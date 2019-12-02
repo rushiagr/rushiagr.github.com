@@ -1,120 +1,26 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>rushiagr</title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://www.rushiagr.com/tags/kubernetes/index.xml</link>
+    <title>kubernetes on rushiagr</title>
+    <link>http://www.rushiagr.com/tags/kubernetes/</link>
+    <description>Recent content in kubernetes on rushiagr</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Rushi Agrawal</author>
-    <copyright>0001 Rushi Agrawal</copyright>
-    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    <copyright>Rushi Agrawal</copyright>
+    <lastBuildDate>Tue, 16 Aug 2016 17:03:53 +0530</lastBuildDate>
+    
+	<atom:link href="http://www.rushiagr.com/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Kubernetes in 30 minutes with minikube on Mac</title>
       <link>http://www.rushiagr.com/blog/2016/08/16/kubernetes-in-30-minutes-with-minikube-on-mac/</link>
-      <pubDate>Tue, 16 Aug 2016 17:03:53 IST</pubDate>
-      <author>Rushi Agrawal</author>
+      <pubDate>Tue, 16 Aug 2016 17:03:53 +0530</pubDate>
+      
       <guid>http://www.rushiagr.com/blog/2016/08/16/kubernetes-in-30-minutes-with-minikube-on-mac/</guid>
-      <description>
-
-&lt;p&gt;Below are steps to create an express setup of Kubernetes on your Mac for quick use.&lt;/p&gt;
-
-&lt;p&gt;Minikube is a small setup by Kubernetes guys, which will spawn a virtual machine and have a tiny (but fully functional) Kubernetes cluster inside the VM. &lt;code&gt;kubectl&lt;/code&gt; (pronounced &amp;lsquo;kube (like &amp;lsquo;tube&amp;rsquo;) control`) is the command line client you&amp;rsquo;ll use to connect to the Kubernetes cluster (which runs inside the VM created by minikube, in case you forgot :) )&lt;/p&gt;
-
-&lt;p&gt;Note that you need VirtualBox installed on your system. You can do so by first installing brew cask and then installing virtualbox as outlined in the two lines below, taken from &lt;a href=&#34;https://gist.github.com/jloveland/df1bdec4705220eb5990&#34;&gt;here&lt;/a&gt;. I installed virtualbox from a different source, but the two lines below should work without a problem:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;
-brew cask install virtualbox
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;minikube-installation&#34;&gt;Minikube Installation&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.7.1/minikube-darwin-amd64
-chmod +x minikube
-sudo mv minikube /usr/local/bin/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Start minikube cluster&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;minikube start
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Just for information, config file will be located in &lt;code&gt;~/.kube/&lt;/code&gt; directory, and
-all the virtual machine bits will be present in &lt;code&gt;~/.minikube/&lt;/code&gt; directory.&lt;/p&gt;
-
-&lt;p&gt;Get status of minikube cluster&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;minikube status
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;install-kubectl-cli&#34;&gt;Install kubectl cli&lt;/h2&gt;
-
-&lt;p&gt;Don&amp;rsquo;t install &lt;code&gt;kubectl&lt;/code&gt; from brew (&lt;code&gt;brew install kubernetes-cli&lt;/code&gt;) as brew contains an older incompatible version of &lt;code&gt;kubectl&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;curl -Lo kubectl http://storage.googleapis.com/kubernetes-release/release/v1.3.0/bin/darwin/amd64/kubectl
-chmod +x kubectl
-sudo mv kubectl /usr/local/bin/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;List all pods from all namespaces. It should list two pods, one an &amp;lsquo;addon-manager&amp;rsquo; and another a &amp;lsquo;dashboard&amp;rsquo;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;kubectl get pods --all-namespaces
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Populate environment variables so that docker can connect to minikube VM&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;eval $(minikube docker-env)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now list all running docker containers inside the minikube vm. This might throw error&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker ps
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If it errors with output &lt;code&gt;Error response from daemon: client is newer than server (client API version: 1.24, server API version: 1.23)&lt;/code&gt;, then we need to install
-an older version of docker along with the current docker server installation.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;ll use DVM (docker version manager) for the same, and we need to install DVM
-first for that.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;brew update &amp;amp;&amp;amp; brew install dvm
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If &lt;code&gt;brew update&lt;/code&gt; fails, most of the times re-running &lt;code&gt;brew update&lt;/code&gt; again fixes
-the problem (else do &lt;code&gt;brew upgrade &amp;amp;&amp;amp; brew update&lt;/code&gt; and wait for an hour for it
-to finish depending upon your internet connection).&lt;/p&gt;
-
-&lt;p&gt;Now source the shell script for &lt;code&gt;dvm&lt;/code&gt; command line tool&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[[ -s &amp;quot;$(brew --prefix dvm)/dvm.sh&amp;quot; ]] &amp;amp;&amp;amp; source &amp;quot;$(brew --prefix dvm)/dvm.sh&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;View current docker version&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;dvm ls
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Install older docker version 1.11.1&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;export DOCKER_VERSION=1.11.1
-dvm install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now if you do &lt;code&gt;dvm ls&lt;/code&gt; you&amp;rsquo;ll see that your current docker version is 1.11.1.&lt;/p&gt;
-
-&lt;p&gt;Now you can use &lt;code&gt;docker ps&lt;/code&gt; to see all your docker containers for Kubernetes
-running inside minikube.&lt;/p&gt;
-
-&lt;p&gt;That&amp;rsquo;s all for this blogpost. I&amp;rsquo;ll write another blog post about how to create your own pods inside this running Kubernetes cluster.&lt;/p&gt;
-
-&lt;p&gt;Do let me know if you have comments/suggestions/edits/criticism/feedback.&lt;/p&gt;
-
-&lt;p&gt;Cheers!
-Rushi&lt;/p&gt;
-</description>
+      <description>Below are steps to create an express setup of Kubernetes on your Mac for quick use.
+Minikube is a small setup by Kubernetes guys, which will spawn a virtual machine and have a tiny (but fully functional) Kubernetes cluster inside the VM. kubectl (pronounced &amp;lsquo;kube (like &amp;lsquo;tube&amp;rsquo;) control`) is the command line client you&#39;ll use to connect to the Kubernetes cluster (which runs inside the VM created by minikube, in case you forgot :) )</description>
     </item>
-    
     
   </channel>
 </rss>
